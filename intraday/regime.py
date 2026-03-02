@@ -495,7 +495,7 @@ def compute_dow_month_stats(daily_df):
 STRATEGY_REGIME_MAP = {
     "orb":          {"trend_up", "trend_down", "gap_and_go"},
     "pullback":     {"trend_up", "trend_down"},
-    "compression":  {"range_bound"},
+    "compression":  {"range_bound", "trend_up", "trend_down"},
     "mean_revert":  {"range_bound", "volatile_two_sided"},
     "swing":        {"trend_up", "trend_down"},
     "mlr":          {"trend_up", "trend_down", "range_bound", "volatile_two_sided", "gap_and_go", "gap_and_fade"},

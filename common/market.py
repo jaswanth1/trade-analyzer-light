@@ -41,54 +41,52 @@ def fetch_india_vix():
 
 
 def vix_position_scale(vix_val):
-    """Scale position size based on VIX regime.
+    """Scale position size based on VIX using smooth piecewise linear interpolation.
 
-    Returns multiplier: 1.2 (low_vol), 1.0 (normal), 0.7 (elevated), 0.0 (stress).
+    Knots: VIX<=10 → 1.3x, 14 → 1.0x, 20 → 0.5x, >=25 → 0.0x.
+    Eliminates cliff effects from step-function thresholds.
     """
     if vix_val is None:
         return 1.0
-    if vix_val < 14:
-        return 1.2
-    elif vix_val < 18:
-        return 1.0
-    elif vix_val < 22:
-        return 0.7
-    else:
-        return 0.0
+    return round(float(np.interp(vix_val, [10, 14, 20, 25], [1.3, 1.0, 0.5, 0.0])), 3)
 
 
 def detect_nifty_regime(nifty_daily):
     """Detect Nifty market regime: bullish / bearish / range-bound.
 
-    Uses 20-day SMA crossover and recent ATR for classification.
-    Returns: regime string and a beta_scale factor (0.5-1.0).
+    Uses SMA20 crossover, SMA5 momentum confirmation, and symmetric 5d returns.
+    Returns: (regime, beta_scale, strength) 3-tuple.
+    strength is 0.0-1.0 measuring distance from SMA20.
     """
     from common.analysis_cache import get_cached, set_cached, TTL_MARKET
     cached = get_cached("nifty_regime", max_age_seconds=TTL_MARKET)
     if cached:
-        return cached["regime"], cached["beta_scale"]
+        return cached["regime"], cached["beta_scale"], cached.get("strength", 0.5)
 
     if nifty_daily.empty or len(nifty_daily) < 20:
-        return "unknown", 1.0
+        return "unknown", 1.0, 0.0
 
     close = nifty_daily["Close"]
     sma20 = close.rolling(20).mean().iloc[-1]
+    sma5 = close.rolling(5).mean().iloc[-1]
     current = close.iloc[-1]
 
-    atr = compute_atr(nifty_daily) if len(nifty_daily) >= 14 else np.nan
-    atr_pct = atr / current * 100 if not np.isnan(atr) and current > 0 else 1.0
-
     ret_5d = (current / close.iloc[-6] - 1) * 100 if len(close) >= 6 else 0
+    momentum_ok = sma5 > sma20  # short-term above long-term
 
-    if current > sma20 and ret_5d > 0:
+    # Regime strength: distance from SMA20 as % of price, capped at 2%
+    strength = min(1.0, abs(current - sma20) / sma20 * 100 / 2)
+
+    if current > sma20 and momentum_ok and ret_5d > 0.5:
         regime, beta_scale = "bullish", 1.0
-    elif current < sma20 and ret_5d < -1:
+    elif current < sma20 and not momentum_ok and ret_5d < -0.5:
         regime, beta_scale = "bearish", 0.5
     else:
         regime, beta_scale = "range", 0.75
 
-    set_cached("nifty_regime", {"regime": regime, "beta_scale": beta_scale})
-    return regime, beta_scale
+    strength = round(strength, 3)
+    set_cached("nifty_regime", {"regime": regime, "beta_scale": beta_scale, "strength": strength})
+    return regime, beta_scale, strength
 
 
 def check_earnings_proximity(symbol, days_ahead=3):

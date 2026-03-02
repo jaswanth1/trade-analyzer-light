@@ -17,397 +17,59 @@ Usage: python -m intraday.mlr_config
 """
 
 import argparse
-from datetime import datetime, time as dtime
+from datetime import datetime
 from pathlib import Path
 
 import numpy as np
-import pandas as pd
 import yaml
 
 from common.data import (
     PROJECT_ROOT, TICKERS, BENCHMARK, fetch_yf,
 )
-from common.indicators import compute_atr
+from common.indicators import compute_atr, _to_ist
+
+from intraday.mlr_stats import (
+    # Constants re-exported for use in this module
+    MONTE_CARLO_ITERS,
+    OOS_TRAIN_RATIO,
+    ROUND_TRIP_COST_PCT,
+    MORNING_CUTOFF_HOUR,
+    MORNING_CUTOFF_MIN,
+    SETTLE_TIME,
+    PHASE_WINDOWS,
+    GAP_UP_LARGE,
+    GAP_UP_SMALL,
+    GAP_DOWN_SMALL,
+    GAP_DOWN_LARGE,
+    MIN_PROFILE_PREDICTABILITY,
+    MIN_PROFILE_SAMPLE,
+    DOW_NAMES,
+    # Compute functions
+    compute_morning_low_stats,
+    compute_ev_combos,
+    validate_oos,
+    compute_mae_analysis,
+    monte_carlo_ci,
+    compute_dow_month_stats,
+    compute_open_type_profiles,
+    _sanitize,
+)
 
 # ── Tunable Constants ────────────────────────────────────────────────
 
 MIN_SAMPLE = 15              # minimum trading days with morning low for enable
 MIN_WIN_RATE = 50.0          # minimum recovery win rate to enable
 EV_THRESHOLD = 0.0           # minimum EV to enable
-MONTE_CARLO_ITERS = 10000    # bootstrap iterations for CIs
-OOS_TRAIN_RATIO = 0.70       # walk-forward: train on first 70%
-ROUND_TRIP_COST_PCT = 0.10   # brokerage + STT + slippage
-MORNING_CUTOFF_HOUR = 11     # session low must form before this hour
-MORNING_CUTOFF_MIN = 0
 
 INTRADAY_DIR = PROJECT_ROOT / "intraday"
 CONFIG_PATH = INTRADAY_DIR / "mlr_config.yaml"
 DOC_PATH = INTRADAY_DIR / "mlr_config_guide.md"
 
-TIME_BUCKETS = [
-    ("09:15-09:45", dtime(9, 15), dtime(9, 45)),
-    ("09:45-10:15", dtime(9, 45), dtime(10, 15)),
-    ("10:15-10:45", dtime(10, 15), dtime(10, 45)),
-    ("10:45-11:00", dtime(10, 45), dtime(11, 0)),
-]
-
-DOW_NAMES = {0: "Monday", 1: "Tuesday", 2: "Wednesday", 3: "Thursday", 4: "Friday"}
-
-
-# ── Step 1: Compute morning low stats per trading day ────────────────
-
-def compute_morning_low_stats(intra_df, daily_df):
-    """Per trading day: when did session low form, recovery metrics.
-
-    Returns DataFrame with columns:
-        date, low_time, low_bucket, low_price, close_price, open_price,
-        recovery_to_close_pct, recovery_to_high_pct, time_to_recovery_bars,
-        gap_pct, prev_close
-    """
-    if intra_df.empty or daily_df.empty:
-        return pd.DataFrame()
-
-    records = []
-    dates = sorted(intra_df.index.date)
-    unique_dates = list(dict.fromkeys(dates))
-
-    for i, d in enumerate(unique_dates):
-        day_bars = intra_df[intra_df.index.date == d]
-        if len(day_bars) < 6:
-            continue
-
-        day_open = float(day_bars["Open"].iloc[0])
-        day_close = float(day_bars["Close"].iloc[-1])
-        day_high = float(day_bars["High"].max())
-
-        # Find session low
-        low_idx = day_bars["Low"].idxmin()
-        low_price = float(day_bars.loc[low_idx, "Low"])
-        low_time = low_idx
-
-        # Check if low is in morning window
-        if low_time.hour > MORNING_CUTOFF_HOUR or (
-            low_time.hour == MORNING_CUTOFF_HOUR and low_time.minute > MORNING_CUTOFF_MIN
-        ):
-            continue  # skip non-morning lows
-
-        # Previous close
-        prev_close = None
-        if i > 0:
-            prev_date = unique_dates[i - 1]
-            prev_bars = intra_df[intra_df.index.date == prev_date]
-            if not prev_bars.empty:
-                prev_close = float(prev_bars["Close"].iloc[-1])
-
-        if prev_close is None or prev_close <= 0:
-            # Try daily_df
-            daily_before = daily_df[daily_df.index.date < d]
-            if daily_before.empty:
-                continue
-            prev_close = float(daily_before["Close"].iloc[-1])
-
-        if prev_close <= 0 or low_price <= 0:
-            continue
-
-        gap_pct = (day_open - prev_close) / prev_close * 100
-
-        recovery_to_close = (day_close - low_price) / low_price * 100
-        recovery_to_high = (day_high - low_price) / low_price * 100
-
-        # Time to recovery: bars from low until price recovers to open price
-        low_bar_pos = day_bars.index.get_loc(low_idx)
-        bars_after_low = day_bars.iloc[low_bar_pos:]
-        time_to_recovery = len(bars_after_low)  # default: didn't fully recover
-        for j in range(1, len(bars_after_low)):
-            if float(bars_after_low["Close"].iloc[j]) >= day_open:
-                time_to_recovery = j
-                break
-
-        # Time bucket classification
-        lt = low_time.time()
-        low_bucket = "other"
-        for bucket_name, bstart, bend in TIME_BUCKETS:
-            if bstart <= lt < bend:
-                low_bucket = bucket_name
-                break
-
-        records.append({
-            "date": d,
-            "low_time": low_time,
-            "low_bucket": low_bucket,
-            "low_price": low_price,
-            "close_price": day_close,
-            "open_price": day_open,
-            "high_price": day_high,
-            "recovery_to_close_pct": round(recovery_to_close, 3),
-            "recovery_to_high_pct": round(recovery_to_high, 3),
-            "time_to_recovery_bars": time_to_recovery,
-            "gap_pct": round(gap_pct, 3),
-            "prev_close": prev_close,
-            "dow": d.weekday(),
-            "month": d.month,
-        })
-
-    return pd.DataFrame(records)
-
-
-# ── Step 2: EV-optimized entry delay / target / stop combos ─────────
-
-def compute_ev_combos(stats_df):
-    """Grid search: entry delay × stop × target for best EV.
-
-    Entry delay: 2/3/5 bars after low
-    Stop: 0.2/0.3/0.5% below low
-    Target: 1.0/1.5/2.0/2.5/3.0%
-
-    EV = (WR × target) − ((1−WR) × stop) − cost
-
-    Returns dict with best combo parameters and all combo results.
-    """
-    if stats_df.empty:
-        return {"best": None, "combos": []}
-
-    entry_delays = [2, 3, 5]
-    stop_pcts = [0.2, 0.3, 0.5]
-    target_pcts = [1.0, 1.5, 2.0, 2.5, 3.0]
-
-    combos = []
-
-    for delay in entry_delays:
-        for stop_pct in stop_pcts:
-            for target_pct in target_pcts:
-                wins = 0
-                losses = 0
-
-                for _, row in stats_df.iterrows():
-                    # Simulated entry: low + recovery after 'delay' bars
-                    # Use recovery_to_high as max favorable, recovery_to_close as realized
-                    recovery = row["recovery_to_high_pct"]
-                    # Approximate: did recovery exceed target_pct?
-                    # And did drawdown from entry exceed stop_pct?
-                    # Entry is approximately at low + small recovery (delay bars)
-                    entry_recovery = min(0.2 * delay, row["recovery_to_close_pct"])
-                    remaining_upside = row["recovery_to_high_pct"] - entry_recovery
-
-                    if remaining_upside >= target_pct:
-                        wins += 1
-                    elif row["recovery_to_close_pct"] < entry_recovery - stop_pct:
-                        losses += 1
-                    elif remaining_upside < target_pct:
-                        losses += 1  # didn't hit target
-
-                n = wins + losses
-                if n < 5:
-                    continue
-
-                wr = wins / n * 100
-                ev = (wr / 100 * target_pct) - ((1 - wr / 100) * stop_pct) - ROUND_TRIP_COST_PCT
-
-                combos.append({
-                    "entry_delay": delay,
-                    "stop_pct": stop_pct,
-                    "target_pct": target_pct,
-                    "wins": wins,
-                    "losses": losses,
-                    "n": n,
-                    "win_rate": round(wr, 1),
-                    "ev": round(ev, 4),
-                })
-
-    if not combos:
-        return {"best": None, "combos": combos}
-
-    # Best by EV
-    best = max(combos, key=lambda c: c["ev"])
-    return {"best": best, "combos": combos}
-
-
-# ── Step 3: Walk-forward OOS validation ──────────────────────────────
-
-def validate_oos(stats_df, best_combo):
-    """70/30 walk-forward split. Returns OOS metrics and degradation flag."""
-    if stats_df.empty or best_combo is None:
-        return {"oos_valid": False, "degraded": True}
-
-    n = len(stats_df)
-    split = int(n * OOS_TRAIN_RATIO)
-    if split < 10 or n - split < 5:
-        return {"oos_valid": False, "degraded": False}
-
-    oos_df = stats_df.iloc[split:]
-    target_pct = best_combo["target_pct"]
-    stop_pct = best_combo["stop_pct"]
-    entry_delay = best_combo["entry_delay"]
-
-    wins = 0
-    total = 0
-    for _, row in oos_df.iterrows():
-        entry_recovery = min(0.2 * entry_delay, row["recovery_to_close_pct"])
-        remaining_upside = row["recovery_to_high_pct"] - entry_recovery
-        total += 1
-        if remaining_upside >= target_pct:
-            wins += 1
-
-    if total == 0:
-        return {"oos_valid": False, "degraded": True}
-
-    oos_wr = wins / total * 100
-    oos_ev = (oos_wr / 100 * target_pct) - ((1 - oos_wr / 100) * stop_pct) - ROUND_TRIP_COST_PCT
-
-    # Degraded if OOS win rate drops >15pp or EV goes negative
-    is_wr = best_combo["win_rate"]
-    degraded = (is_wr - oos_wr) > 15 or oos_ev < -0.5
-
-    return {
-        "oos_valid": True,
-        "oos_win_rate": round(oos_wr, 1),
-        "oos_ev": round(oos_ev, 4),
-        "oos_n": total,
-        "degraded": degraded,
-    }
-
-
-# ── Step 4: MAE analysis (max adverse excursion) ────────────────────
-
-def compute_mae_analysis(stats_df):
-    """p90 max adverse excursion from entry → optimal stop.
-
-    MAE is approximated as the gap between open price and low price
-    as percentage of open.
-    """
-    if stats_df.empty:
-        return {"mae_p90": 0, "mae_median": 0}
-
-    # MAE: how much did price drop from open to the session low?
-    mae_values = []
-    for _, row in stats_df.iterrows():
-        if row["open_price"] > 0:
-            mae = (row["open_price"] - row["low_price"]) / row["open_price"] * 100
-            mae_values.append(mae)
-
-    if not mae_values:
-        return {"mae_p90": 0, "mae_median": 0}
-
-    return {
-        "mae_p90": round(float(np.percentile(mae_values, 90)), 3),
-        "mae_median": round(float(np.median(mae_values)), 3),
-    }
-
-
-# ── Step 5: Monte Carlo bootstrap CIs ───────────────────────────────
-
-def monte_carlo_ci(stats_df, best_combo, n_iter=MONTE_CARLO_ITERS):
-    """Bootstrap 95% CIs for EV, WR, and max drawdown."""
-    if stats_df.empty or best_combo is None:
-        return {}
-
-    target_pct = best_combo["target_pct"]
-    stop_pct = best_combo["stop_pct"]
-    entry_delay = best_combo["entry_delay"]
-
-    # Build per-trade PnL series
-    pnls = []
-    for _, row in stats_df.iterrows():
-        entry_recovery = min(0.2 * entry_delay, row["recovery_to_close_pct"])
-        remaining_upside = row["recovery_to_high_pct"] - entry_recovery
-        if remaining_upside >= target_pct:
-            pnls.append(target_pct - ROUND_TRIP_COST_PCT)
-        else:
-            pnls.append(-stop_pct - ROUND_TRIP_COST_PCT)
-
-    if not pnls:
-        return {}
-
-    pnls = np.array(pnls)
-    rng = np.random.default_rng(42)
-
-    ev_samples = []
-    wr_samples = []
-    dd_samples = []
-
-    for _ in range(n_iter):
-        sample = rng.choice(pnls, size=len(pnls), replace=True)
-        ev_samples.append(float(sample.mean()))
-        wr_samples.append(float((sample > 0).mean() * 100))
-
-        # Max drawdown of cumulative PnL
-        cum = np.cumsum(sample)
-        running_max = np.maximum.accumulate(cum)
-        drawdowns = running_max - cum
-        dd_samples.append(float(drawdowns.max()))
-
-    return {
-        "ev_ci_lower": round(float(np.percentile(ev_samples, 2.5)), 4),
-        "ev_ci_upper": round(float(np.percentile(ev_samples, 97.5)), 4),
-        "wr_ci_lower": round(float(np.percentile(wr_samples, 2.5)), 1),
-        "wr_ci_upper": round(float(np.percentile(wr_samples, 97.5)), 1),
-        "max_dd_ci_upper": round(float(np.percentile(dd_samples, 95)), 3),
-    }
-
-
-# ── Step 6: DOW and month-period stats ───────────────────────────────
-
-def compute_dow_month_stats(stats_df):
-    """Per-DOW and month_period recovery rates."""
-    if stats_df.empty:
-        return {"dow": {}, "month_period": {}}
-
-    dow_stats = {}
-    for dow_num in range(5):
-        subset = stats_df[stats_df["dow"] == dow_num]
-        if len(subset) < 3:
-            continue
-        wins = (subset["recovery_to_close_pct"] > 1.0).sum()
-        dow_stats[DOW_NAMES[dow_num]] = {
-            "win_rate": round(wins / len(subset) * 100, 1),
-            "avg_recovery": round(float(subset["recovery_to_close_pct"].mean()), 2),
-            "n": len(subset),
-        }
-
-    # Month periods
-    month_stats = {}
-    for label, months in [("Q1", [1, 2, 3]), ("Q2", [4, 5, 6]),
-                           ("Q3", [7, 8, 9]), ("Q4", [10, 11, 12])]:
-        subset = stats_df[stats_df["month"].isin(months)]
-        if len(subset) < 3:
-            continue
-        wins = (subset["recovery_to_close_pct"] > 1.0).sum()
-        month_stats[label] = {
-            "win_rate": round(wins / len(subset) * 100, 1),
-            "avg_recovery": round(float(subset["recovery_to_close_pct"].mean()), 2),
-            "n": len(subset),
-        }
-
-    return {"dow": dow_stats, "month_period": month_stats}
-
-
-# ── Step 7: Time bucket stats ────────────────────────────────────────
-
-def compute_time_bucket_stats(stats_df):
-    """Probability of morning low forming in each 30-min bucket."""
-    if stats_df.empty:
-        return {}
-
-    total = len(stats_df)
-    bucket_stats = {}
-    for bucket_name, _, _ in TIME_BUCKETS:
-        subset = stats_df[stats_df["low_bucket"] == bucket_name]
-        n = len(subset)
-        if n == 0:
-            continue
-        bucket_stats[bucket_name] = {
-            "probability": round(n / total * 100, 1),
-            "avg_recovery": round(float(subset["recovery_to_close_pct"].mean()), 2),
-            "n": n,
-        }
-
-    return bucket_stats
-
 
 # ── Step 8: Should-enable decision ───────────────────────────────────
 
 def should_enable(best_combo, oos_result, mc_result, sample_size):
-    """Enable if: EV > 0, WR ≥ 50%, sample ≥ 15, MC lower CI > −0.5%, OOS not fragile."""
+    """Enable if: EV > 0, WR >= 50%, sample >= 15, MC lower CI > -0.5%, OOS not fragile."""
     if best_combo is None:
         return False
     if sample_size < MIN_SAMPLE:
@@ -426,13 +88,13 @@ def should_enable(best_combo, oos_result, mc_result, sample_size):
 # ── Step 9: Edge strength score ──────────────────────────────────────
 
 def compute_edge_strength(best_combo, oos_result, mc_result, sample_size):
-    """Composite edge strength 1–5."""
+    """Composite edge strength 1-5."""
     if best_combo is None:
         return 0
 
     score = 0.0
 
-    # EV contribution (0–1.5)
+    # EV contribution (0-1.5)
     ev = best_combo["ev"]
     if ev > 0.5:
         score += 1.5
@@ -441,26 +103,26 @@ def compute_edge_strength(best_combo, oos_result, mc_result, sample_size):
     elif ev > 0:
         score += 0.5
 
-    # Win rate contribution (0–1.0)
+    # Win rate contribution (0-1.0)
     wr = best_combo["win_rate"]
     if wr >= 65:
         score += 1.0
     elif wr >= 55:
         score += 0.5
 
-    # Sample size contribution (0–1.0)
+    # Sample size contribution (0-1.0)
     if sample_size >= 50:
         score += 1.0
     elif sample_size >= 30:
         score += 0.5
 
-    # OOS validation (0–1.0)
+    # OOS validation (0-1.0)
     if oos_result.get("oos_valid") and not oos_result.get("degraded"):
         score += 0.75
         if oos_result.get("oos_ev", 0) > 0.1:
             score += 0.25
 
-    # Monte Carlo stability (0–0.5)
+    # Monte Carlo stability (0-0.5)
     if mc_result.get("ev_ci_lower", -1) > 0:
         score += 0.5
 
@@ -475,9 +137,10 @@ def process_ticker(symbol, cfg, verbose=False):
         print(f"  Processing {symbol}...", end=" ", flush=True)
 
     # Fetch data: 60d of 5-min (yfinance/Upstox limit) + 1y daily for stats
-    # fetch_yf handles cache → yfinance → Upstox fallback transparently
+    # fetch_yf handles cache -> yfinance -> Upstox fallback transparently
     try:
-        intra_df = fetch_yf(symbol, period="60d", interval="5m")
+        intra_raw = fetch_yf(symbol, period="60d", interval="5m")
+        intra_df = _to_ist(intra_raw) if not intra_raw.empty else intra_raw
         daily_df = fetch_yf(symbol, period="1y", interval="1d")
     except Exception as e:
         if verbose:
@@ -489,12 +152,19 @@ def process_ticker(symbol, cfg, verbose=False):
             print("SKIP (insufficient data)")
         return None
 
-    # Step 1: Morning low stats
+    # Step 1a: Morning low stats (default cutoff for strategy use)
+    # Finds the low within 10:00-11:30 morning window on each day
     stats_df = compute_morning_low_stats(intra_df, daily_df)
     if stats_df.empty or len(stats_df) < MIN_SAMPLE:
         if verbose:
-            print(f"SKIP ({len(stats_df)} morning low days < {MIN_SAMPLE})")
+            print(f"SKIP ({len(stats_df) if not stats_df.empty else 0} morning low days < {MIN_SAMPLE})")
         return None
+
+    # Step 1b: Full-session low analysis (wide cutoff) — for phase window discovery
+    # Discovers when THIS stock's morning window low forms across all phases
+    full_session_df = compute_morning_low_stats(
+        intra_df, daily_df, low_cutoff_hour=15, low_cutoff_min=15,
+    )
 
     sample_size = len(stats_df)
 
@@ -514,8 +184,8 @@ def process_ticker(symbol, cfg, verbose=False):
     # Step 6: DOW/month
     seasonality = compute_dow_month_stats(stats_df)
 
-    # Step 7: Time buckets
-    buckets = compute_time_bucket_stats(stats_df)
+    # Step 7: Predictability-scored open-type profiles
+    phase_stats = compute_open_type_profiles(stats_df, full_session_df)
 
     # Step 8: Enable decision
     enabled = should_enable(best, oos, mc, sample_size)
@@ -565,14 +235,36 @@ def process_ticker(symbol, cfg, verbose=False):
     if mc:
         result["monte_carlo"] = mc
 
-    result["best_time_buckets"] = buckets
+    # Predictability-scored profiles per opening type
+    if phase_stats:
+        result["profiles"] = phase_stats.get("profiles", {})
+        result["low_cutoff_recommendation"] = phase_stats.get("low_cutoff_recommendation", "11:30")
+
     result["dow_stats"] = seasonality.get("dow", {})
     result["month_period_stats"] = seasonality.get("month_period", {})
 
     status = "ENABLED" if enabled else "disabled"
     if verbose:
-        print(f"{status} | edge={edge} | EV={best['ev']:.3f} | WR={best['win_rate']:.0f}% | n={sample_size}"
-              if best else f"{status} | no valid combos")
+        cutoff = result.get("low_cutoff_recommendation", "11:30")
+        profiles_data = result.get("profiles", {})
+        if best:
+            print(f"{status} | edge={edge} | EV={best['ev']:.3f} | WR={best['win_rate']:.0f}% | n={sample_size}")
+        else:
+            print(f"{status} | no valid combos")
+        for ot_name in ("gap_down_large", "gap_down_small", "flat", "gap_up_small", "gap_up_large"):
+            prof = profiles_data.get(ot_name)
+            if not prof:
+                continue
+            low1 = prof.get("low_1", {})
+            window = low1.get("window", "?")
+            drop = prof.get("avg_drop_from_open_pct", 0)
+            recov = low1.get("avg_recovery_pct", 0)
+            recov_by = low1.get("recovery_by", "?")
+            rec_open = prof.get("recovered_past_open_pct", 0)
+            pred = prof.get("predictability", 0)
+            print(f"  {ot_name} (n={prof['n']}, pred={pred:.2f}): "
+                  f"low@{window} -> -{drop:.1f}% drop -> +{recov:.1f}% recov by {recov_by} | "
+                  f"{rec_open:.0f}% recover past open")
 
     return result
 
@@ -586,8 +278,9 @@ def build_yaml(ticker_results, output_path=CONFIG_PATH):
         "description": "MLR (Morning Low Recovery) per-ticker config — auto-generated",
         "methodology": (
             "60 days of 5-min data + 1 year daily data analyzed per ticker. Morning lows "
-            "(before 11:00) identified, recovery stats computed, EV-optimal entry/stop/target "
-            "grid-searched, validated with 70/30 walk-forward OOS, Monte Carlo 95% CIs for robustness."
+            "identified, full-session phase analysis discovers per-stock low/high formation "
+            "windows, EV-optimal entry/stop/target grid-searched, validated with 70/30 "
+            "walk-forward OOS, Monte Carlo 95% CIs for robustness."
         ),
         "tickers": {},
     }
@@ -604,6 +297,8 @@ def build_yaml(ticker_results, output_path=CONFIG_PATH):
         "enabled": enabled_count,
         "disabled": len(ticker_results) - enabled_count,
     }
+
+    config = _sanitize(config)
 
     with open(output_path, "w") as f:
         yaml.dump(config, f, default_flow_style=False, sort_keys=False, allow_unicode=True)
@@ -622,21 +317,23 @@ def generate_documentation(ticker_results, output_path=DOC_PATH):
         "",
         "## What is MLR?",
         "",
-        "Morning Low Recovery buys stocks that form their daily low in the first",
-        "90 minutes of trading (9:15–11:00 AM IST) and show confirmed reversal.",
-        "Data shows ~57% of daily lows form in this window, with average +2.2%",
-        "recovery to close.",
+        "Morning Low Recovery buys stocks that form their post-settle daily low",
+        "(after 10:00 AM, once opening noise clears) and show confirmed reversal.",
+        "The first 45 minutes are ignored — every stock shows extreme moves then.",
+        "The real edge is in lows that form after the dust settles.",
         "",
         "## How the Config Works",
         "",
         "For each ticker, the generator:",
         "1. Fetches 60 days of 5-minute OHLCV data (+ 1 year daily)",
-        "2. Identifies days where the session low formed before 11:00 AM",
-        "3. Computes recovery statistics (to close, to high)",
-        "4. Grid-searches optimal entry delay, stop, and target combinations",
-        "5. Validates with 70/30 walk-forward out-of-sample test",
-        "6. Runs Monte Carlo bootstrap for 95% confidence intervals",
-        "7. Computes DOW/month seasonality and time-bucket probabilities",
+        "2. Identifies days where the session low formed in the morning window",
+        "3. Runs full-session phase analysis — discovers when each stock forms lows/highs",
+        "4. Computes recovery statistics (to close, to high)",
+        "5. Grid-searches optimal entry delay, stop, and target combinations",
+        "6. Validates with 70/30 walk-forward out-of-sample test",
+        "7. Runs Monte Carlo bootstrap for 95% confidence intervals",
+        "8. Computes DOW/month seasonality and per-phase window probabilities",
+        "9. Recommends per-stock low cutoff based on where 80%+ of lows form",
         "",
         "## Enabled Tickers",
         "",
@@ -646,19 +343,51 @@ def generate_documentation(ticker_results, output_path=DOC_PATH):
     disabled = {s: r for s, r in ticker_results.items() if r and not r.get("enabled")}
 
     if enabled:
-        lines.append("| Ticker | Edge | EV | WR% | Sample | Avg Recovery |")
-        lines.append("|--------|------|----|-----|--------|-------------|")
+        lines.append("| Ticker | Edge | EV | WR% | n | Avg Rec | Cutoff |")
+        lines.append("|--------|------|----|-----|---|---------|--------|")
         for sym, r in sorted(enabled.items(), key=lambda x: x[1].get("edge_strength", 0), reverse=True):
+            cutoff = r.get("low_cutoff_recommendation", "11:30")
             lines.append(
                 f"| {sym.replace('.NS', '')} | {r.get('edge_strength', 0)} | "
                 f"{r.get('ev', 0):.3f} | {r.get('win_rate', 0):.0f}% | "
-                f"{r.get('sample_size', 0)} | {r.get('avg_recovery_to_close_pct', 0):.1f}% |"
+                f"{r.get('sample_size', 0)} | {r.get('avg_recovery_to_close_pct', 0):.1f}% | {cutoff} |"
             )
+
+        # Per-stock open-type profiles
+        lines.extend(["", "### Open-Type Profiles", ""])
+        lines.append("Predictability-scored profiles per opening type (drop -> recovery -> timing):")
+        lines.append("")
+        ot_order = ("gap_down_large", "gap_down_small", "flat", "gap_up_small", "gap_up_large")
+        for sym, r in sorted(enabled.items(), key=lambda x: x[1].get("edge_strength", 0), reverse=True):
+            profiles = r.get("profiles", {})
+            if not profiles:
+                continue
+            sym_short = sym.replace('.NS', '')
+            lines.append(f"**{sym_short}**:")
+            lines.append("")
+            lines.append("| Open Type | n | Pred | Low Window | Drop% | Recovery% | Recov By | Past Open% |")
+            lines.append("|-----------|---|------|------------|-------|-----------|----------|------------|")
+            for otype in ot_order:
+                prof = profiles.get(otype)
+                if not prof:
+                    continue
+                low1 = prof.get("low_1", {})
+                window = low1.get("window", "—")
+                drop = prof.get("avg_drop_from_open_pct", 0)
+                recov = low1.get("avg_recovery_pct", 0)
+                recov_by = low1.get("recovery_by", "—") or "—"
+                rec_open = prof.get("recovered_past_open_pct", 0)
+                pred = prof.get("predictability", 0)
+                label = otype.replace("_", " ").title()
+                lines.append(
+                    f"| {label} | {prof['n']} | {pred:.2f} | {window} | "
+                    f"{drop:.1f} | {recov:.1f} | {recov_by} | {rec_open:.0f}% |"
+                )
+            lines.append("")
     else:
         lines.append("No tickers enabled.")
 
     lines.extend([
-        "",
         "## Disabled Tickers",
         "",
     ])

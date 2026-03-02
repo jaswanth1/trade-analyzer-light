@@ -11,6 +11,7 @@ Usage: python -m scalp.config
 """
 
 import argparse
+import math
 from pathlib import Path
 
 import numpy as np
@@ -31,7 +32,7 @@ PHASE_P_VALUE_MAX = 0.10    # significance level for binomial test
 BEARISH_OC_THRESHOLD = -0.2 # avg O→C below this = bearish gap type
 BEARISH_UPCLOSE_MIN = 40.0  # up-close rate below this = bearish
 ATR_CHASE_FRACTION = 0.67   # max_move_from_open = this × ATR%
-ROUND_TRIP_COST_PCT = 0.10  # brokerage + STT + slippage + bid-ask spread
+ROUND_TRIP_COST_PCT = NSE_ROUND_TRIP_COST_PCT  # unified from common.risk
 FDR_ALPHA = 0.10            # Benjamini-Hochberg false discovery rate
 OOS_TRAIN_RATIO = 0.70      # walk-forward: train on first 70% of days
 OOS_DEGRADATION_PENALTY = 0.5  # edge_strength penalty multiplier if OOS degrades
@@ -49,6 +50,7 @@ from common.indicators import (
     compute_atr, compute_beta, classify_gaps,
     compute_time_window_stats, compute_probability_matrix,
 )
+from common.risk import NSE_ROUND_TRIP_COST_PCT
 
 CONFIG_PATH = SCALP_CONFIG_PATH
 DOC_PATH = SCALP_DIR / "scalp_config_guide.md"
@@ -276,7 +278,13 @@ def compute_ev_combos(prob_df: pd.DataFrame) -> dict:
         pool = significant_combos if significant_combos else [c for c in gap_combos if c["ev_adjusted"] > EV_THRESHOLD]
 
         if pool:
-            best = max(pool, key=lambda c: c["ev_adjusted"])
+            # Rank by EV / SE(p) — penalizes small N naturally (t-stat-like)
+            for c in pool:
+                n = max(c["n"], 1)
+                p_adj = c["p_adjusted"]
+                se = math.sqrt(p_adj * (1 - p_adj) / n)
+                c["selection_score"] = c["ev_adjusted"] / max(se, 0.01)
+            best = max(pool, key=lambda c: c["selection_score"])
             results[gap_type] = best
         else:
             results[gap_type] = None
@@ -295,7 +303,7 @@ def validate_oos(prob_df: pd.DataFrame, ev_combos: dict) -> dict:
 
     dates = sorted(prob_df["date"].unique())
     split_idx = int(len(dates) * OOS_TRAIN_RATIO)
-    if split_idx < 5 or len(dates) - split_idx < 3:
+    if split_idx < 5 or len(dates) - split_idx < 5:
         return {"degraded": False, "oos_results": {}}
 
     test_dates = set(dates[split_idx:])
@@ -319,7 +327,7 @@ def validate_oos(prob_df: pd.DataFrame, ev_combos: dict) -> dict:
         ]
 
         n_oos = len(oos_sub)
-        if n_oos < 3:
+        if n_oos < MIN_SAMPLE:
             oos_results[gap_type] = {"n": n_oos, "win_rate": None, "ev": None}
             continue
 
@@ -709,28 +717,31 @@ def compute_pca_edge_strengths(configs: list[dict]) -> list[dict]:
     pca = PCA(n_components=1)
     scores_1d = pca.fit_transform(X_scaled).flatten()
 
-    # PC1 loadings as weights (absolute values, normalized to sum=1)
-    loadings = np.abs(pca.components_[0])
-    weights = loadings / loadings.sum()
+    # Orient PC1 so positive = better edge (best_ev has positive correlation)
+    # If PC1 loading for best_ev is negative, flip all scores
+    ev_idx = feature_names.index("best_ev")
+    if pca.components_[0][ev_idx] < 0:
+        scores_1d = -scores_1d
 
-    # Recompute scores using PCA-derived weights
+    # Use PC1 scores directly — they capture signed, variance-weighted combinations
+    # Rank-normalize to [0, 1] across tickers for stable 1-5 mapping
+    score_min, score_max = scores_1d.min(), scores_1d.max()
+    if score_max > score_min:
+        normed_scores = (scores_1d - score_min) / (score_max - score_min)
+    else:
+        normed_scores = np.full_like(scores_1d, 0.5)
+
     for i, cfg in enumerate(configs):
-        feats = extract_feature_vector(
-            cfg["_ev_combos"], cfg["_meta"], cfg["_active_phases"], cfg["_gap_stats"]
-        )
-        norm_feats = [
-            normalize(feats["best_ev"], 0, 0.8),
-            normalize(feats["tradability"], 40, 80),
-            normalize(feats["best_phase_wr"], 50, 75),
-            normalize(feats["best_n"], 5, 30),
-            normalize(feats["trap_safety"], 30, 70),
-            normalize(feats["tradable_pct"], 10, 60),
-        ]
-        pca_score = sum(w * f for w, f in zip(weights, norm_feats))
+        pca_score = float(normed_scores[i])
         new_edge = max(1, min(5, round(pca_score * 4) + 1))
 
         # Apply OOS penalty
         if cfg.get("_oos", {}).get("degraded", False):
+            new_edge = max(1, new_edge - 1)
+
+        # Apply Monte Carlo fragility penalty — CI crossing zero = unreliable edge
+        mc = cfg.get("_mc_results", {})
+        if mc and any(v.get("fragile", False) for v in mc.values()):
             new_edge = max(1, new_edge - 1)
 
         cfg["edge_strength"] = new_edge
@@ -805,7 +816,9 @@ def derive_config(symbol: str, meta: dict, ev_combos: dict, gap_stats: dict,
         b = target / stop if stop > 0 else 1
         kelly_raw = (p * b - (1 - p)) / b if b > 0 else 0
     kelly = kelly_raw * KELLY_FRACTION  # half-Kelly for estimation error safety
-    if kelly < 0.08:
+    if kelly <= 0:
+        aggressiveness = "none"
+    elif kelly < 0.08:
         aggressiveness = "low"
     elif kelly < 0.15:
         aggressiveness = "medium"
@@ -898,6 +911,20 @@ def derive_config(symbol: str, meta: dict, ev_combos: dict, gap_stats: dict,
         },
         "notes": " ".join(notes_parts),
     }
+
+    # Per-gap-type optimal combos (used by backtest for gap-specific target/stop)
+    gap_combos = {}
+    for g, c in ev_combos.items():
+        if c is not None and c["ev_adjusted"] > 0:
+            gap_combos[g] = {
+                "target_pct": float(c["target_pct"]),
+                "stop_pct": float(c["stop_pct"]),
+                "ev": round(float(c["ev_adjusted"]), 3),
+                "win_rate": round(float(c["win_rate"]), 1),
+                "n": int(c["n"]),
+            }
+    if gap_combos:
+        config["gap_combos"] = gap_combos
 
     # Feature 6: MAE analysis
     if mae_analysis:

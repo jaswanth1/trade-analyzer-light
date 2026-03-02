@@ -296,28 +296,47 @@ def compute_candle_imbalance(df):
     return imbalance.clip(-1, 1).fillna(0)
 
 
-def compute_session_low_info(intra_ist):
+def compute_session_low_info(intra_ist, low_cutoff_hour=11, low_cutoff_min=30):
     """Session low analysis for Morning Low Recovery strategy.
 
-    Extracts today's bars, finds the session low, computes recovery metrics.
+    Finds the POST-SETTLE session low (after 10:00 AM). The first 45 minutes
+    are opening noise — every stock makes extreme moves there. The real MLR
+    edge is the dip that forms after the dust settles.
+
+    Args:
+        intra_ist: intraday bars in IST timezone
+        low_cutoff_hour/min: max hour:min for low to qualify.
+            Default 11:30. Per-stock overrides from mlr_config use this
+            to adapt the window to each stock's actual low-formation pattern.
 
     Returns dict with:
         low_price, low_time, low_bar_idx, bars_since_low,
-        recovery_pct, low_in_morning (before 11:00 AM).
+        recovery_pct, low_in_morning,
+        drop_from_open_pct, recovery_bar_vol_ratio.
     Returns empty dict if insufficient data.
     """
     if intra_ist.empty:
         return {}
+
+    from datetime import time as dtime
+    SETTLE = dtime(10, 0)
 
     today = intra_ist.index[-1].date()
     today_bars = intra_ist[intra_ist.index.date == today]
     if len(today_bars) < 3:
         return {}
 
-    # Find session low
-    low_idx = today_bars["Low"].idxmin()
-    low_price = float(today_bars.loc[low_idx, "Low"])
+    # Post-settle bars: ignore opening noise before 10:00
+    post_settle = today_bars[today_bars.index.time >= SETTLE]
+    if len(post_settle) < 2:
+        # Before 10:00 — not enough post-settle data yet, use all bars as fallback
+        post_settle = today_bars
+
+    # Find session low in post-settle bars only
+    low_idx = post_settle["Low"].idxmin()
+    low_price = float(post_settle.loc[low_idx, "Low"])
     low_time = low_idx
+    # bar_idx relative to today_bars (for RSI lookup etc.)
     low_bar_pos = today_bars.index.get_loc(low_idx)
     bars_since_low = len(today_bars) - 1 - low_bar_pos
 
@@ -325,8 +344,29 @@ def compute_session_low_info(intra_ist):
     current_close = float(today_bars["Close"].iloc[-1])
     recovery_pct = (current_close - low_price) / low_price * 100 if low_price > 0 else 0.0
 
-    # Morning window: low occurred before 11:00 AM
-    low_in_morning = low_time.hour < 11 or (low_time.hour == 11 and low_time.minute == 0)
+    # Drop depth from day open to session low (how real is the dip?)
+    day_open = float(today_bars["Open"].iloc[0])
+    drop_from_open_pct = (day_open - low_price) / day_open * 100 if day_open > 0 else 0.0
+
+    # Recovery-bar volume vs sell-bar volume (buying conviction check)
+    # Only count post-settle bars for volume analysis (ignore opening volume noise)
+    recovery_bar_vol_ratio = 1.0
+    post_low_pos = post_settle.index.get_loc(low_idx)
+    post_bars_since = len(post_settle) - 1 - post_low_pos
+    if post_low_pos > 0 and post_bars_since > 0:
+        sell_bars = post_settle.iloc[:post_low_pos + 1]
+        recovery_bars = post_settle.iloc[post_low_pos + 1:]
+        if not sell_bars.empty and not recovery_bars.empty:
+            sell_avg_vol = float(sell_bars["Volume"].mean())
+            recovery_avg_vol = float(recovery_bars["Volume"].mean())
+            if sell_avg_vol > 0:
+                recovery_bar_vol_ratio = recovery_avg_vol / sell_avg_vol
+
+    # Morning window: low occurred before the cutoff
+    low_in_morning = (
+        low_time.hour < low_cutoff_hour
+        or (low_time.hour == low_cutoff_hour and low_time.minute <= low_cutoff_min)
+    )
 
     return {
         "low_price": low_price,
@@ -335,4 +375,6 @@ def compute_session_low_info(intra_ist):
         "bars_since_low": bars_since_low,
         "recovery_pct": recovery_pct,
         "low_in_morning": low_in_morning,
+        "drop_from_open_pct": drop_from_open_pct,
+        "recovery_bar_vol_ratio": recovery_bar_vol_ratio,
     }

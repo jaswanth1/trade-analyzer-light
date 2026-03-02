@@ -60,7 +60,7 @@ Full scanner (existing behavior) enhanced with **strategy time-relevance**:
 | Compression | 10:00-14:00 | Mid-session squeeze detection |
 | Mean-revert | 10:00-14:30 | Needs VWAP bands to develop |
 | Swing | 9:15-15:00 | All day, wider targets |
-| MLR | 9:30-11:30 | Morning low recovery, works in all regimes |
+| MLR | 10:00-11:30 | Morning low recovery (post-settle), works in all regimes |
 
 - **EXPIRED**: strategy window has passed → skip entirely (don't evaluate)
 - **FADING**: past 75% of window → -0.05 score penalty
@@ -186,11 +186,16 @@ Top 3 setups also get LLM-powered explanations with cricket analogies and rupee 
 
 **Concept**: Data analysis shows 57% of daily lows form between 9:15–11:00 AM, with average +2.2% recovery to close and +3.1% to subsequent high. MLR buys the morning dip after reversal confirmation.
 
+**Post-settle filtering**: The first 45 minutes (9:15–10:00) are opening noise — every stock makes extreme moves there. The real MLR edge is the dip that forms *after the dust settles*. Both the config generator and live strategy ignore bars before 10:00 AM IST.
+
 **How it's built**:
-- Session low must form in the morning window (before 11:00 AM)
+- **Time window**: 10:00–11:30 IST (post-settle only)
+- Session low must form in the morning window (default before 11:30 AM; **per-stock adaptive** from config's `low_cutoff_recommendation`)
 - At least 2 bars since the low (reversal confirmation, not catching a falling knife)
+- **Minimum drop depth filter**: dip must be ≥ 0.3× ATR from open — rejects noise dips that aren't real sell-offs
+- **Recovery-bar volume ratio**: avg volume on recovery bars vs sell bars must be ≥ 0.8× (buying conviction check, using only post-settle bars)
 - 7 conditions checked:
-  1. **Morning low formed** — session low occurred 9:15–11:00
+  1. **Morning low formed** — post-settle session low occurred 10:00–11:30
   2. **Recovery started** — price recovered ≥0.3% from session low
   3. **Volume confirmation** — cumulative RVOL > 1.2× on recovery bars
   4. **RSI turning** — RSI(14) was ≤35 near low, now rising
@@ -199,17 +204,21 @@ Top 3 setups also get LLM-powered explanations with cricket analogies and rupee 
   7. **No lower lows** — last 2 bars' low > session low
 - Must meet ≥4 of 7 conditions, with morning low + recovery + no lower lows mandatory
 - Entry: current close (or VWAP if above)
-- Stop: session low − 0.3% buffer
-- Target: previous close or pivot level (minimum 1.5% from entry)
-- **Exempt from `nifty_ok` gate** — works in bearish markets too
+- **ATR-adaptive stop**: session low − 0.15× ATR (scales with volatility, not a fixed %)
+- **Target**: previous close or pivot level; falls back to entry + 0.8× ATR if no structural target is above entry
+- **Exempt from both `nifty_ok` and `vwap_gate`** — works in bearish markets and intentionally buys below VWAP (VWAP reclaim is an internal condition, not a pre-filter)
 
 **Config calibration** (`mlr_config.yaml`):
 - Optional precomputed per-ticker config from `python -m intraday.mlr_config`
+- **Per-stock phase window discovery**: analyzes 10 post-settle intraday phases (30-min windows from 10:00 to 15:15) to find when each stock forms its low and high. Outputs top 2 low phases, top 2 high phases, and `low_cutoff_recommendation` per ticker
+- **Opening type correlation**: classifies each day's open as `gap_up` (≥+0.3%), `gap_down` (≤−0.3%), or `flat`, then tracks low/high formation windows per opening type. E.g., a stock may form lows at 10:30–11:00 on gap-down days but 11:00–11:30 on flat days
+- The live strategy uses the per-ticker cutoff (e.g., some stocks form lows by 10:30, others by 12:00)
 - Overrides stop/target with historically optimal values per ticker
-- Includes DOW favorability, Monte Carlo CIs, and OOS validation
+- EV simulation uses actual PnL (3-outcome: target hit, stopped out, or exit-at-close with real close_vs_entry) with proportional entry model
+- Includes DOW favorability, Monte Carlo CIs, and OOS walk-forward validation
 
 **Confidence scoring**:
-- Base 0.50, bonuses for strong RVOL (+0.10), deep RSI bounce (+0.08), VWAP reclaim (+0.07), consistent candle structure (+0.05), gap-down day (+0.05), favorable DOW (+0.05)
+- Base 0.50, bonuses for strong RVOL (+0.10), deep RSI bounce (+0.08), VWAP reclaim (+0.07), consistent candle structure (+0.05), gap-down day (+0.05), favorable DOW (+0.05), deep drop depth (+0.05)
 - Penalty for strong_down trend (−0.10)
 
 **Best regime**: All day types — pattern works across trending, range-bound, volatile, and gap days.
@@ -367,9 +376,9 @@ The VWAP gate is direction-aware:
 - **Long signals**: price must be above VWAP
 - **Short signals**: price must be below VWAP
 
-### MLR Nifty Gate Exemption
+### MLR Gate Exemptions
 
-MLR is exempt from the `nifty_ok` gate. Unlike trend-following strategies that need a healthy market, morning low recovery works in bearish conditions — stocks that gap down or sell off in the morning often bounce regardless of Nifty direction.
+MLR is exempt from both the `nifty_ok` and `vwap_gate` checks. Unlike trend-following strategies that need a healthy market, morning low recovery works in bearish conditions — stocks that gap down or sell off in the morning often bounce regardless of Nifty direction. The VWAP gate is also bypassed because MLR intentionally buys stocks recovering *from below* VWAP; the strategy's own condition #5 (VWAP reclaim) handles this check internally.
 
 ---
 

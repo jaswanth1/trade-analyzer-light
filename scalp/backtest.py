@@ -25,12 +25,13 @@ from common.data import (
 )
 from common.analysis_cache import get_cached, TTL_DAILY
 from common.indicators import compute_atr, compute_vwap, _to_ist, classify_gaps
+from common.risk import NSE_ROUND_TRIP_COST_PCT, effective_cost
 
 CONFIG_PATH = SCALP_CONFIG_PATH
 REPORT_PATH = SCALP_DIR / "backtest_report.md"
 
-# Phase definitions (mirrors scanner)
-PHASE_WINDOWS = {
+# Default phase definitions (overridden by config if available)
+DEFAULT_PHASE_WINDOWS = {
     "AVOID_ZONE":      (dtime(9, 15), dtime(9, 30)),
     "MORNING_SCALP":   (dtime(9, 30), dtime(10, 30)),
     "LATE_MORNING":    (dtime(10, 30), dtime(11, 30)),
@@ -42,9 +43,28 @@ PHASE_WINDOWS = {
 }
 
 
-def get_phase(t):
+def _parse_time(s):
+    """Parse 'HH:MM' string to time object."""
+    h, m = map(int, s.split(":"))
+    return dtime(h, m)
+
+
+def load_phase_windows(config):
+    """Load phase windows from config, fallback to defaults."""
+    phases_cfg = config.get("global", {}).get("phases", {})
+    if not phases_cfg:
+        return DEFAULT_PHASE_WINDOWS
+    windows = {}
+    for name, window in phases_cfg.items():
+        if "start" in window and "end" in window:
+            windows[name] = (_parse_time(str(window["start"])), _parse_time(str(window["end"])))
+    return windows if windows else DEFAULT_PHASE_WINDOWS
+
+
+def get_phase(t, phase_windows=None):
     """Determine phase from time."""
-    for name, (start, end) in PHASE_WINDOWS.items():
+    windows = phase_windows or DEFAULT_PHASE_WINDOWS
+    for name, (start, end) in windows.items():
         if start <= t < end:
             return name
     return "POST_MARKET"
@@ -60,6 +80,7 @@ class SimTrade:
     target_pct: float = 0.0
     stop_pct: float = 0.0
     pnl_pct: float = 0.0
+    cost_pct: float = 0.0
     mae_pct: float = 0.0
     phase: str = ""
     gap_type: str = ""
@@ -75,6 +96,7 @@ class BacktestEngine:
         self.capital = capital
         self.initial_capital = capital
         self.config = config or {}
+        self.phase_windows = load_phase_windows(self.config)
         self.trades: list[SimTrade] = []
         self.ticker_data: dict = {}
         self.ticker_configs: dict = {}
@@ -112,10 +134,14 @@ class BacktestEngine:
                 elif str(intra_df.index.tz) != "Asia/Kolkata":
                     intra_df.index = intra_df.index.tz_convert("Asia/Kolkata")
 
+                # Compute average daily volume for slippage modeling
+                avg_daily_vol = float(daily_df["Volume"].iloc[-20:].mean()) if len(daily_df) >= 20 else None
+
                 self.ticker_data[sym] = {
                     "intraday": intra_df,
                     "daily": daily_df,
                     "gaps": gap_df,
+                    "avg_daily_volume": avg_daily_vol,
                 }
                 self.ticker_configs[sym] = tc
             except Exception as e:
@@ -270,10 +296,18 @@ class BacktestEngine:
                 continue
 
             gap_type = self._get_gap_type(sym, trade_date)
-            target_pct = risk.get("base_target_pct", 1.0)
-            stop_pct = risk.get("base_stop_pct", 1.5)
+
+            # Use gap-specific optimal combo if available, else base target/stop
+            gap_combos = tc.get("gap_combos", {})
+            if gap_type in gap_combos:
+                target_pct = gap_combos[gap_type]["target_pct"]
+                stop_pct = gap_combos[gap_type]["stop_pct"]
+            else:
+                target_pct = risk.get("base_target_pct", 1.0)
+                stop_pct = risk.get("base_stop_pct", 1.5)
             max_hold = risk.get("max_hold_minutes", 45)
             max_trades = risk.get("max_trades_per_day", 1)
+            avg_daily_vol = data.get("avg_daily_volume")
 
             active_trade = None
             trades_today = 0
@@ -287,7 +321,7 @@ class BacktestEngine:
                 if t < dtime(9, 15) or t >= dtime(15, 15):
                     continue
 
-                phase = get_phase(t)
+                phase = get_phase(t, self.phase_windows)
                 bars_so_far = day_bars.iloc[:i + 1]
 
                 # If in a trade, check exit conditions
@@ -301,11 +335,14 @@ class BacktestEngine:
                     target_price = active_trade.entry_price * (1 + target_pct / 100)
                     stop_price = active_trade.entry_price * (1 - stop_pct / 100)
 
+                    cost = effective_cost(active_trade.entry_price, avg_daily_vol)
+
                     # Check target hit
                     if bar["High"] >= target_price:
                         active_trade.exit_time = bar_time
                         active_trade.exit_price = target_price
-                        active_trade.pnl_pct = target_pct
+                        active_trade.pnl_pct = target_pct - cost
+                        active_trade.cost_pct = cost
                         active_trade.result = "target"
                         day_trades.append(active_trade)
                         active_trade = None
@@ -315,7 +352,8 @@ class BacktestEngine:
                     if bar["Low"] <= stop_price:
                         active_trade.exit_time = bar_time
                         active_trade.exit_price = stop_price
-                        active_trade.pnl_pct = -stop_pct
+                        active_trade.pnl_pct = -(stop_pct + cost)
+                        active_trade.cost_pct = cost
                         active_trade.result = "stop"
                         day_trades.append(active_trade)
                         active_trade = None
@@ -330,7 +368,8 @@ class BacktestEngine:
                     if mins_held >= max_hold:
                         active_trade.exit_time = bar_time
                         active_trade.exit_price = bar["Close"]
-                        active_trade.pnl_pct = (bar["Close"] / active_trade.entry_price - 1) * 100
+                        active_trade.pnl_pct = (bar["Close"] / active_trade.entry_price - 1) * 100 - cost
+                        active_trade.cost_pct = cost
                         active_trade.result = "time_exit"
                         day_trades.append(active_trade)
                         active_trade = None
@@ -365,9 +404,11 @@ class BacktestEngine:
             # EOD exit for any remaining trade
             if active_trade is not None:
                 last_bar = day_bars.iloc[-1]
+                cost = effective_cost(active_trade.entry_price, avg_daily_vol)
                 active_trade.exit_time = day_bars.index[-1]
                 active_trade.exit_price = last_bar["Close"]
-                active_trade.pnl_pct = (last_bar["Close"] / active_trade.entry_price - 1) * 100
+                active_trade.pnl_pct = (last_bar["Close"] / active_trade.entry_price - 1) * 100 - cost
+                active_trade.cost_pct = cost
                 active_trade.result = "eod_exit"
                 day_trades.append(active_trade)
 
@@ -440,25 +481,25 @@ class BacktestEngine:
             if std_r > 0:
                 sharpe = round((mean_r / std_r) * math.sqrt(250), 2)
 
-        # Sortino
+        # Sortino (need n>=2 for ddof=1)
         sortino = None
-        if losses:
+        if len(losses) > 1:
             down_std = np.std(losses, ddof=1)
             if down_std > 0:
                 sortino = round((np.mean(pnls) / down_std) * math.sqrt(250), 2)
 
         # Max drawdown from equity curve
-        equities = [e["equity"] for e in self.daily_equity]
-        if equities:
+        equities = np.array([e["equity"] for e in self.daily_equity])
+        if len(equities) > 0:
             peak = np.maximum.accumulate(equities)
-            dd = (peak - equities) / peak * 100
+            dd = np.where(peak > 0, (peak - equities) / peak * 100, 0)
             max_dd = float(np.max(dd))
         else:
             max_dd = 0
 
         # Profit factor
         gross_profit = sum(wins) if wins else 0
-        gross_loss = abs(sum(losses)) if losses else 1
+        gross_loss = abs(sum(losses)) if losses else 0
         profit_factor = round(gross_profit / gross_loss, 2) if gross_loss > 0 else float('inf')
 
         # Win/loss streaks
@@ -472,6 +513,10 @@ class BacktestEngine:
                 loss_streak += 1
                 win_streak = 0
                 max_loss_streak = max(max_loss_streak, loss_streak)
+
+        # Transaction cost drag
+        total_cost_drag = sum(t.cost_pct for t in self.trades)
+        avg_cost_per_trade = total_cost_drag / n if n > 0 else 0
 
         # Per-result breakdown
         results = {}
@@ -494,6 +539,8 @@ class BacktestEngine:
             "max_loss_streak": max_loss_streak,
             "avg_bars_held": round(np.mean([t.bars_held for t in self.trades]), 1),
             "avg_mae_pct": round(np.mean([t.mae_pct for t in self.trades]), 3),
+            "total_cost_drag": round(total_cost_drag, 3),
+            "avg_cost_per_trade": round(avg_cost_per_trade, 3),
             "result_breakdown": results,
         }
 
@@ -600,6 +647,8 @@ class BacktestEngine:
         lines.append(f"| Max Loss Streak | {metrics['max_loss_streak']} |")
         lines.append(f"| Avg Bars Held | {metrics['avg_bars_held']} |")
         lines.append(f"| Avg MAE | {metrics['avg_mae_pct']}% |")
+        lines.append(f"| Total Cost Drag | {metrics['total_cost_drag']:.3f}% |")
+        lines.append(f"| Avg Cost/Trade | {metrics['avg_cost_per_trade']:.3f}% |")
 
         # Result breakdown
         rb = metrics.get("result_breakdown", {})

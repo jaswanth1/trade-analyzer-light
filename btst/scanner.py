@@ -1162,7 +1162,7 @@ def main():
     nifty_new_lows = nifty_making_new_lows(nifty_ist) if not nifty_ist.empty else True
 
     nifty_daily = fetch_yf(BENCHMARK, period="6mo", interval="1d")
-    nifty_regime, beta_scale = detect_nifty_regime(nifty_daily)
+    nifty_regime, beta_scale, _regime_strength = detect_nifty_regime(nifty_daily)
 
     nifty_state = {
         "regime": nifty_regime,

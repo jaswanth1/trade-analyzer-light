@@ -17,6 +17,19 @@ def compute_atr(daily_df, period=14):
     return tr.rolling(period).mean().iloc[-1]
 
 
+def compute_atr_percentile(daily_df, period=14, lookback=60):
+    """Current ATR's percentile rank over last `lookback` days. Returns 0-100."""
+    h = daily_df["High"]
+    l = daily_df["Low"]
+    c = daily_df["Close"].shift(1)
+    tr = pd.concat([h - l, (h - c).abs(), (l - c).abs()], axis=1).max(axis=1)
+    atr_series = tr.rolling(period).mean().dropna().tail(lookback)
+    if len(atr_series) < 10:
+        return 50.0
+    current = atr_series.iloc[-1]
+    return round((atr_series < current).sum() / len(atr_series) * 100, 1)
+
+
 def compute_beta(daily_df, bench_df):
     """Cov/Var regression beta on daily returns."""
     ret_s = daily_df["Close"].pct_change().dropna()

@@ -194,7 +194,7 @@ class BTSTBacktestEngine:
         # Nifty state
         from common.market import nifty_making_new_lows
         nifty_new_lows = nifty_making_new_lows(nifty_today) if not nifty_today.empty else False
-        nifty_regime, beta_scale = detect_nifty_regime(nifty_daily)
+        nifty_regime, beta_scale, _regime_strength = detect_nifty_regime(nifty_daily)
         nifty_state = {
             "regime": nifty_regime,
             "new_lows": nifty_new_lows,

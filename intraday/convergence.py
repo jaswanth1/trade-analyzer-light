@@ -224,14 +224,23 @@ def compute_historical_hit_rate(symbol: str, daily_df, strategy: str,
             match = weak_open and recovery
 
         if match:
-            # Next day's return as outcome
-            next_open = float(next_row.get("Open", next_row.name) if "Open" in gap_df.columns else 0)
-            next_close = float(next_row.get("Close", 0) if "Close" in gap_df.columns else 0)
-            if next_open > 0:
-                next_return = (next_close - next_open) / next_open * 100
-                if not is_long:
-                    next_return = -next_return  # invert for shorts
-                matches.append(next_return)
+            if strategy == "mlr":
+                # MLR is intraday — measure same-day recovery (close vs open)
+                # not next-day return, since the trade exits same day
+                day_open_val = float(row.get("Open", 0)) if "Open" in gap_df.columns else 0
+                day_close_val = float(row.get("Close", 0)) if "Close" in gap_df.columns else 0
+                if day_open_val > 0:
+                    intraday_return = (day_close_val - day_open_val) / day_open_val * 100
+                    matches.append(intraday_return)
+            else:
+                # Other strategies: next day's return as outcome
+                next_open = float(next_row.get("Open", next_row.name) if "Open" in gap_df.columns else 0)
+                next_close = float(next_row.get("Close", 0) if "Close" in gap_df.columns else 0)
+                if next_open > 0:
+                    next_return = (next_close - next_open) / next_open * 100
+                    if not is_long:
+                        next_return = -next_return  # invert for shorts
+                    matches.append(next_return)
 
     sample_size = len(matches)
     if sample_size == 0:

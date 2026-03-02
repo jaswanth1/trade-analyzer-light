@@ -10,8 +10,8 @@ MAX_RISK_PER_TRADE_PCT = 0.5
 CORR_CLUSTER_THRESHOLD = 0.6
 CORR_LOOKBACK_DAYS = 20
 
-# Round-trip cost for MIS intraday on NSE (brokerage + STT + exchange fees)
-NSE_ROUND_TRIP_COST_PCT = 0.08
+# Round-trip cost for MIS intraday on NSE (brokerage + STT + exchange fees + slippage)
+NSE_ROUND_TRIP_COST_PCT = 0.10
 
 # Net direction cap — max positions in same direction
 MAX_SAME_DIRECTION = 4

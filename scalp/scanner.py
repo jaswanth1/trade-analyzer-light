@@ -18,7 +18,7 @@ from zoneinfo import ZoneInfo
 from common.data import fetch_yf, GAP_THRESHOLDS, SCALP_CONFIG_PATH, SCALP_REPORT_DIR
 
 CONFIG_PATH = SCALP_CONFIG_PATH
-from common.indicators import compute_vwap, compute_atr, _to_ist, classify_gaps
+from common.indicators import compute_vwap, compute_atr, compute_atr_percentile, _to_ist, classify_gaps
 from common.market import (
     fetch_india_vix, vix_position_scale, detect_nifty_regime,
     check_earnings_proximity, nifty_making_new_lows, higher_lows_pattern,
@@ -41,6 +41,7 @@ MAX_DAILY_DRAWDOWN_PCT = 1.5    # hard stop: cease trading if daily loss exceeds
 DEFAULT_MAX_HOLD_MINUTES = 45   # time-exit: close stale positions after this
 BREAKEVEN_TRIGGER = 0.5         # move stop to breakeven when profit reaches this × target
 TRAIL_TRIGGER = 0.75            # start trailing stop when profit reaches this × target
+REENTRY_COOLDOWN_MINUTES = 30   # block re-entry on same ticker within N min after exit
 
 # Volume seasonality multipliers (relative to daily median per window)
 VOLUME_SEASONALITY = {
@@ -248,7 +249,9 @@ def evaluate_ticker(ticker_cfg, intra_df, daily_df, nifty_ist, nifty_ok, phase, 
     # VWAP
     vwap_val = intra_today["vwap"].iloc[-1] if "vwap" in intra_today.columns else np.nan
     above_vwap = ltp > vwap_val if not np.isnan(vwap_val) else False
+    vwap_dist_pct = (ltp - vwap_val) / vwap_val * 100 if not np.isnan(vwap_val) and vwap_val > 0 else 0.0
     result["vwap_val"] = vwap_val
+    result["vwap_dist_pct"] = round(vwap_dist_pct, 3)
 
     # VWAP reclaim
     vwap_reclaimed = vwap_reclaim_check(intra_today)
@@ -260,8 +263,10 @@ def evaluate_ticker(ticker_cfg, intra_df, daily_df, nifty_ist, nifty_ok, phase, 
     # ATR
     atr_val = compute_atr(daily_df) if len(daily_df) >= 14 else np.nan
     atr_pct = atr_val / ltp * 100 if not np.isnan(atr_val) and ltp > 0 else np.nan
+    atr_rank = compute_atr_percentile(daily_df) if len(daily_df) >= 14 else 50.0
     result["atr_val"] = atr_val
     result["atr_pct"] = atr_pct
+    result["atr_rank"] = atr_rank
 
     # Day range
     day_range_pct = (intra_today["High"].max() - intra_today["Low"].min()) / day_open * 100 if day_open > 0 else 0
@@ -322,7 +327,7 @@ def evaluate_ticker(ticker_cfg, intra_df, daily_df, nifty_ist, nifty_ok, phase, 
     conditions["volume_ok"] = vol_ratio >= min_vol if not np.isnan(vol_ratio) else False
 
     min_range = entry_conds.get("min_range_multiple_of_atr", 0)
-    range_ok = (day_range_pct >= atr_pct * min_range) if not np.isnan(atr_pct) else True
+    range_ok = (day_range_pct >= atr_pct * min_range) if not np.isnan(atr_pct) else (min_range == 0)
     conditions["range_ok"] = range_ok
 
     max_move = entry_conds.get("max_move_from_open_pct", 999)
@@ -340,9 +345,16 @@ def evaluate_ticker(ticker_cfg, intra_df, daily_df, nifty_ist, nifty_ok, phase, 
     # Must-have gates: if ANY fails, cannot be ACTIVE
     must_have = ["gap_preferred", "above_vwap", "nifty_ok"]
     # Weighted nice-to-haves
+    # Continuous VWAP weight: 0 if below, scales 0→1 as dist goes 0→0.3%, caps at 1.0
+    vwap_continuous_weight = min(1.0, max(0.0, vwap_dist_pct / 0.3)) if vwap_dist_pct > 0 else 0.0
+
+    # ATR percentile weight: expanding vol (P50+) favors scalps, compressed (P30-) hurts
+    # Maps [20, 80] → [0, 1], so P50 = 0.5, P80+ = 1.0, P20- = 0.0
+    atr_pctl_weight = min(1.0, max(0.0, (atr_rank - 20) / 60))
+
     condition_weights = {
         "gap_preferred": 3.0,   # critical
-        "above_vwap": 2.5,
+        "above_vwap": 2.5,     # gate stays binary, weight uses continuous below
         "nifty_ok": 2.5,
         "vwap_reclaimed": 2.0,
         "higher_low": 1.5,
@@ -358,9 +370,17 @@ def evaluate_ticker(ticker_cfg, intra_df, daily_df, nifty_ist, nifty_ok, phase, 
     result["conditions_met"] = met
     result["conditions_total"] = total
 
-    # Weighted score (0-1)
-    total_weight = sum(condition_weights.get(k, 1.0) for k in conditions)
-    weighted_score = sum(condition_weights.get(k, 1.0) for k, v in conditions.items() if v)
+    # Weighted score (0-1): continuous weights for VWAP and ATR percentile
+    # ATR percentile is an additive bonus (weight 1.0) not tied to a binary condition
+    atr_bonus_weight = 1.0
+    total_weight = sum(condition_weights.get(k, 1.0) for k in conditions) + atr_bonus_weight
+    weighted_score = atr_bonus_weight * atr_pctl_weight  # start with ATR bonus
+    for k, v in conditions.items():
+        w = condition_weights.get(k, 1.0)
+        if k == "above_vwap":
+            weighted_score += w * vwap_continuous_weight
+        elif v:
+            weighted_score += w
     result["weighted_score"] = weighted_score / total_weight if total_weight > 0 else 0
 
     # Check must-have gates
@@ -376,6 +396,14 @@ def evaluate_ticker(ticker_cfg, intra_df, daily_df, nifty_ist, nifty_ok, phase, 
     if atr_target_mult and atr_stop_mult and not np.isnan(atr_pct) and atr_pct > 0:
         target_pct = round(atr_target_mult * atr_pct, 2)
         stop_pct = round(atr_stop_mult * atr_pct, 2)
+
+    # MAE-informed stop tightening: if p90 of winners never drew down past
+    # optimal_stop, use it (tighter stop = better RR without losing winners)
+    mae = risk.get("mae_analysis", {})
+    if mae:
+        optimal_stop = mae.get("optimal_stop_pct")
+        if optimal_stop and 0 < optimal_stop < stop_pct:
+            stop_pct = round(optimal_stop, 2)
 
     # Deduct round-trip transaction costs from target for realistic RR
     effective_target_pct = max(target_pct - NSE_ROUND_TRIP_COST_PCT, 0.01)
@@ -433,6 +461,10 @@ def evaluate_ticker(ticker_cfg, intra_df, daily_df, nifty_ist, nifty_ok, phase, 
     elif not range_ok or vol_tag == "Contraction":
         result["signal"] = "STAND_ASIDE"
         result["action_text"] = "Low edge — range compression or volume contraction"
+    elif must_have_pass and result["weighted_score"] >= 0.60:
+        failed = [k for k, v in conditions.items() if not v]
+        result["signal"] = "WATCH"
+        result["action_text"] = f"Building — needs: {', '.join(failed)} (score {result['weighted_score']:.0%})"
     else:
         result["signal"] = "NO_TRADE"
         result["action_text"] = f"Conditions not met ({met}/{total}, score {result['weighted_score']:.0%})"
@@ -510,8 +542,8 @@ def evaluate_positions(positions, ticker_states, phase, now_ist=None):
             urgency = "TARGET HIT — Book profits"
         elif phase == "CLOSING":
             urgency = "EXIT — Flatten by 15:15"
-        elif not np.isnan(minutes_held) and minutes_held > max_hold and pnl_pct < 0.1:
-            urgency = f"TIME EXIT — Held {int(minutes_held)}min, edge decayed"
+        elif not np.isnan(minutes_held) and minutes_held > max_hold:
+            urgency = f"TIME EXIT — Held {int(minutes_held)}min ({pnl_pct:+.2f}%), edge decayed"
         elif profit_ratio >= TRAIL_TRIGGER:
             urgency = f"TRAIL STOP — Move stop to {fmt(recommended_stop)}"
         elif profit_ratio >= BREAKEVEN_TRIGGER:
@@ -535,6 +567,69 @@ def evaluate_positions(positions, ticker_states, phase, now_ist=None):
             "notes": pos.get("notes", ""),
         })
     return results
+
+
+# ── Edge Decay Monitoring ──────────────────────────────────────────────────
+
+def compute_edge_decay(tickers_cfg, lookback_days=14):
+    """Compare recent per-symbol win rate from journal against config expectation.
+
+    Returns dict of {symbol: {recent_wr, expected_wr, n_recent, decaying}} for symbols
+    where recent performance significantly diverges from historical.
+    """
+    try:
+        from common.db import _select
+        from datetime import timedelta
+    except ImportError:
+        return {}
+
+    cutoff = (datetime.now(IST) - timedelta(days=lookback_days)).isoformat()
+    rows = _select(
+        "trades", "*",
+        where="status = %s AND scanner_type = %s AND exit_time >= %s",
+        params=["closed", "scalp", cutoff],
+        order="exit_time",
+    )
+    if not rows:
+        return {}
+
+    # Group trades by symbol
+    by_sym = {}
+    for r in rows:
+        sym = r.get("symbol")
+        if sym:
+            by_sym.setdefault(sym, []).append(r)
+
+    decay_signals = {}
+    for tc in tickers_cfg:
+        sym = tc["symbol"]
+        trades = by_sym.get(sym, [])
+        if len(trades) < 5:  # need minimum sample
+            continue
+
+        wins = sum(1 for t in trades if (t.get("pnl") or 0) > 0)
+        recent_wr = wins / len(trades) * 100
+
+        # Expected win rate from config notes (extract from best combo)
+        # Use 55% as default expected win rate if not parseable
+        expected_wr = 55.0
+        notes = tc.get("notes", "")
+        import re
+        match = re.search(r"(\d+)% hit", notes)
+        if match:
+            expected_wr = float(match.group(1))
+
+        # Flag as decaying if recent WR is >15pp below expected
+        decaying = recent_wr < expected_wr - 15
+
+        decay_signals[sym] = {
+            "recent_wr": round(recent_wr, 1),
+            "expected_wr": round(expected_wr, 1),
+            "n_recent": len(trades),
+            "decaying": decaying,
+        }
+
+    return decay_signals
 
 
 # ── Cached Report Data ──────────────────────────────────────────────────────
@@ -777,6 +872,13 @@ def build_ai_context(phase, now_ist, ticker_states, position_states, nifty_state
     lines.append(f"Nifty: {'Above VWAP, not making lows' if nifty_state['ok'] else 'Making new lows / Below VWAP'} | Regime: {regime}")
     if vix:
         lines.append(f"India VIX: {vix} ({vix_regime})")
+    regime_strength = nifty_state.get('regime_strength', 0)
+    lines.append(f"Regime strength: {regime_strength:.0%}")
+    # Edge decay warnings
+    edge_decay = nifty_state.get('edge_decay', {})
+    decaying = {sym: d for sym, d in edge_decay.items() if d.get("decaying")}
+    if decaying:
+        lines.append(f"EDGE DECAY: {', '.join(s.replace('.NS','') + f' (WR {d['recent_wr']:.0f}% vs {d['expected_wr']:.0f}%)' for s, d in decaying.items())}")
     lines.append("")
 
     # Ticker states
@@ -784,7 +886,10 @@ def build_ai_context(phase, now_ist, ticker_states, position_states, nifty_state
         if ts["signal"] == "DISABLED":
             continue
         lines.append(f"--- {ts['symbol']} ({ts['name']}) ---")
+        vwap_dist = ts.get('vwap_dist_pct', 0)
+        atr_rank = ts.get('atr_rank', 50)
         lines.append(f"  LTP: {fmt(ts['ltp'])} | Chg: {fmt(ts['change_pct'])}% | Gap: {ts['gap_type']} ({fmt(ts['gap_pct'])}%)")
+        lines.append(f"  VWAP: {fmt(ts.get('vwap_val'))} (dist: {vwap_dist:+.2f}%) | ATR: {fmt(ts.get('atr_pct'))}% [P{atr_rank:.0f}]")
         lines.append(f"  Signal: {ts['signal']} | Conditions: {ts['conditions_met']}/{ts['conditions_total']}")
         lines.append(f"  Action: {ts['action_text']}")
         if ts["signal"] in ("ACTIVE", "WATCH"):
@@ -1115,11 +1220,12 @@ def render_dashboard(now_ist, phase, ticker_states, position_states, nifty_state
     lines.append(box_top())
     nifty_indicator = "Above VWAP" if nifty_state.get("above_vwap") else "Below VWAP"
     regime = nifty_state.get("regime", "unknown").upper()
+    regime_strength = nifty_state.get("regime_strength", 0)
     vix_val = nifty_state.get("vix")
     vix_regime = nifty_state.get("vix_regime", "unknown")
     vix_str = f"VIX: {vix_val} ({vix_regime.upper()})" if vix_val else "VIX: N/A"
     lines.append(box_line(f"SCALP SCANNER - {now_ist.strftime('%Y-%m-%d %H:%M')} IST"))
-    lines.append(box_line(f"Phase: {PHASE_LABELS.get(phase, phase)}   Nifty: {nifty_indicator} [{regime}]"))
+    lines.append(box_line(f"Phase: {PHASE_LABELS.get(phase, phase)}   Nifty: {nifty_indicator} [{regime} {regime_strength:.0%}]"))
     lines.append(box_line(f"{vix_str}"))
     lines.append(box_mid())
 
@@ -1267,7 +1373,7 @@ def main():
     vix_val, vix_regime = fetch_india_vix()
     vix_scale = vix_position_scale(vix_val)
     if vix_val:
-        print(f"  VIX: {vix_val} ({vix_regime}) | Position scale: {vix_scale}x")
+        print(f"  VIX: {vix_val} ({vix_regime}) | Position scale: {vix_scale:.3f}x")
     else:
         # Conservative default when VIX unavailable — don't trade full size blind
         vix_scale = 0.7
@@ -1323,12 +1429,40 @@ def main():
     # Evaluate positions (with time-exit and trailing stop logic)
     position_states = evaluate_positions(positions_cfg, ticker_states, phase, now_ist)
 
+    # Re-entry cooldown: block ACTIVE signals on recently exited symbols
+    recently_exited = set()
+    for pos in positions_cfg:
+        if pos.get("status") == "closed" and pos.get("exit_time"):
+            try:
+                exit_time = datetime.strptime(pos["exit_time"], "%Y-%m-%d %H:%M")
+                exit_time = exit_time.replace(tzinfo=IST)
+                minutes_since = (now_ist - exit_time).total_seconds() / 60
+                if 0 <= minutes_since <= REENTRY_COOLDOWN_MINUTES:
+                    recently_exited.add(pos["symbol"])
+            except (ValueError, TypeError):
+                pass
+    if recently_exited:
+        for s in ticker_states:
+            if s["symbol"] in recently_exited and s["signal"] == "ACTIVE":
+                s["signal"] = "WATCH"
+                s["action_text"] = f"Cooldown — re-entry blocked {REENTRY_COOLDOWN_MINUTES} min after exit"
+
     # ── Portfolio-level risk management ──
     # Detect Nifty regime
     nifty_daily = fetch_yf(benchmark, period="2mo", interval="1d")
-    nifty_regime, beta_scale = detect_nifty_regime(nifty_daily)
+    nifty_regime, beta_scale, regime_strength = detect_nifty_regime(nifty_daily)
     nifty_state["regime"] = nifty_regime
     nifty_state["beta_scale"] = beta_scale
+    nifty_state["regime_strength"] = regime_strength
+
+    # Regime-conditioned target scaling: tighten targets in adverse regimes
+    regime_target_scale = {"bullish": 1.0, "range": 0.90, "bearish": 0.80}.get(nifty_regime, 0.90)
+    if regime_target_scale < 1.0:
+        for s in ticker_states:
+            if s.get("target_pct") and s.get("entry_price") and not np.isnan(s["entry_price"]):
+                s["target_pct"] = round(s["target_pct"] * regime_target_scale, 2)
+                s["target_price"] = s["entry_price"] * (1 + s["target_pct"] / 100)
+                s["rr_ratio"] = round(s["target_pct"] / s["stop_pct"], 2) if s.get("stop_pct", 0) > 0 else 0
 
     # Feature 3: VIX stress — force STAND_ASIDE if stress
     if vix_regime == "stress":
@@ -1338,7 +1472,7 @@ def main():
                 s["action_text"] = f"VIX STRESS ({vix_val}) — all entries suspended"
 
     # Daily drawdown check — open positions + today's realized P&L
-    open_pnl_pct = sum(ps["pnl_pct"] for ps in position_states) if position_states else 0
+    open_pnl_pct = sum(ps.get("pnl_pct", 0) for ps in position_states) if position_states else 0
     realized_pnl = 0
     try:
         from common.db import get_today_realized_pnl
@@ -1384,6 +1518,19 @@ def main():
             if near:
                 earnings_warnings[tc["symbol"]] = edate
 
+    # Edge decay monitoring — compare recent performance vs config expectation
+    print("  Checking edge decay...")
+    edge_decay = {}
+    try:
+        edge_decay = compute_edge_decay(tickers_cfg)
+        decaying_syms = {sym for sym, d in edge_decay.items() if d["decaying"]}
+        if decaying_syms:
+            short_names = [s.replace(".NS", "") for s in decaying_syms]
+            print(f"  EDGE DECAY WARNING: {', '.join(short_names)}")
+    except Exception:
+        pass
+    nifty_state["edge_decay"] = edge_decay
+
     # Apply portfolio risk filters to active signals
     for s in active_signals:
         # Daily drawdown hard stop
@@ -1423,6 +1570,15 @@ def main():
                     s["signal"] = "WATCH"
                     s["action_text"] = f"DOW AVOID — poor win rate on {now_ist.strftime('%A')}s"
                 break
+
+        # Edge decay warning — downgrade if recent win rate significantly below expected
+        decay_info = edge_decay.get(s["symbol"])
+        if decay_info and decay_info["decaying"]:
+            s["signal"] = "WATCH"
+            s["action_text"] = (
+                f"EDGE DECAY — recent WR {decay_info['recent_wr']:.0f}% vs "
+                f"expected {decay_info['expected_wr']:.0f}% (N={decay_info['n_recent']})"
+            )
 
         # Feature 9: Correlation cluster limit
         cid = sym_to_cluster.get(s["symbol"])

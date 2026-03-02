@@ -27,54 +27,47 @@ For each ticker, the generator:
 | Ticker | Edge | EV | WR% | n | Avg Rec | Cutoff |
 |--------|------|----|-----|---|---------|--------|
 | KFINTECH | 5 | 0.641 | 78% | 58 | 0.5% | 15:15 |
-| IDBI | 5 | 0.734 | 66% | 58 | 0.8% | 15:15 |
-| ADANIPOWER | 5 | 0.622 | 81% | 58 | 0.6% | 14:30 |
+| ADANIPOWER | 5 | 0.605 | 79% | 58 | 0.6% | 14:30 |
 | GRAPHITE | 5 | 0.851 | 67% | 58 | 0.8% | 11:30 |
-| BHEL | 5 | 0.632 | 76% | 58 | 0.7% | 15:15 |
+| BHEL | 5 | 0.615 | 74% | 58 | 0.7% | 15:15 |
 | SCI | 5 | 0.547 | 69% | 58 | 0.6% | 15:15 |
 | NBCC | 5 | 0.556 | 72% | 58 | 0.5% | 15:15 |
 | CUMMINSIND | 5 | 0.514 | 67% | 58 | 0.6% | 15:15 |
 | VBL | 5 | 0.602 | 78% | 58 | 0.7% | 14:30 |
+| ANANTRAJ | 5 | 0.876 | 71% | 58 | 0.7% | 15:15 |
 | AEROFLEX | 5 | 0.930 | 76% | 58 | 0.6% | 15:15 |
 | SAILIFE | 4 | 0.542 | 52% | 58 | 0.7% | 14:30 |
 | CAMS | 4 | 0.496 | 69% | 58 | 0.5% | 15:15 |
+| IDBI | 4 | 0.708 | 64% | 58 | 0.8% | 15:15 |
 | BSE | 4 | 0.659 | 59% | 58 | 0.6% | 15:15 |
-| PFC | 4 | 0.355 | 53% | 58 | 0.7% | 15:15 |
+| PFC | 4 | 0.338 | 52% | 58 | 0.8% | 15:15 |
 | ABCAPITAL | 4 | 0.607 | 59% | 58 | 0.6% | 15:15 |
-| INDIANB | 4 | 0.477 | 64% | 58 | 0.9% | 14:30 |
+| INDIANB | 4 | 0.478 | 53% | 58 | 0.9% | 14:30 |
 | TATAPOWER | 4 | 0.300 | 59% | 58 | 0.4% | 15:15 |
 | COALINDIA | 4 | 0.397 | 62% | 58 | 0.6% | 14:00 |
 | GPIL | 4 | 0.691 | 60% | 58 | 0.7% | 15:15 |
 | ADANIENT | 4 | 0.395 | 60% | 58 | 0.4% | 15:15 |
-| BEL | 4 | 0.376 | 57% | 58 | 0.5% | 15:15 |
+| BEL | 4 | 0.358 | 55% | 58 | 0.5% | 15:15 |
 | HAL | 4 | 0.331 | 55% | 58 | 0.5% | 15:15 |
 | DATAPATTNS | 4 | 0.823 | 62% | 58 | 0.8% | 11:30 |
-| MTARTECH | 4 | 0.959 | 59% | 58 | 0.9% | 15:15 |
-| RVNL | 4 | 0.607 | 62% | 58 | 0.8% | 15:15 |
-| FINCABLES | 4 | 0.419 | 64% | 58 | 1.0% | 15:15 |
+| MTARTECH | 4 | 0.915 | 57% | 58 | 0.9% | 15:15 |
+| RVNL | 4 | 0.581 | 64% | 58 | 0.8% | 15:15 |
+| FINCABLES | 4 | 0.402 | 62% | 58 | 1.0% | 15:15 |
 | HAVELLS | 4 | 0.313 | 53% | 58 | 0.5% | 14:30 |
 | NETWEB | 4 | 0.822 | 55% | 58 | 0.8% | 11:30 |
-| EXIDEIND | 4 | 0.456 | 72% | 58 | 0.3% | 15:15 |
+| EXIDEIND | 4 | 0.456 | 72% | 58 | 0.4% | 15:15 |
 | TRENT | 4 | 0.404 | 62% | 58 | 0.7% | 14:30 |
-| ANANTRAJ | 4 | 0.906 | 60% | 58 | 0.7% | 15:15 |
 | GLENMARK | 4 | 0.401 | 59% | 58 | 0.6% | 15:15 |
 
 ### Open-Type Profiles
 
-Predictability-scored profiles per opening type (drop → recovery → timing):
+Predictability-scored profiles per opening type (drop -> recovery -> timing):
 
 **KFINTECH**:
 
 | Open Type | n | Pred | Low Window | Drop% | Recovery% | Recov By | Past Open% |
 |-----------|---|------|------------|-------|-----------|----------|------------|
 | Flat | 18 | 0.42 | 10:00-10:30 | 1.1 | 0.7 | 10:00-10:30 | 28% |
-
-**IDBI**:
-
-| Open Type | n | Pred | Low Window | Drop% | Recovery% | Recov By | Past Open% |
-|-----------|---|------|------------|-------|-----------|----------|------------|
-| Gap Down Large | 4 | 0.53 | 11:00-11:30 | 0.8 | -0.3 | — | 25% |
-| Gap Up Large | 6 | 0.50 | 10:30-11:00 | 1.6 | 1.9 | 10:30-11:00 | 33% |
 
 **ADANIPOWER**:
 
@@ -94,6 +87,7 @@ Predictability-scored profiles per opening type (drop → recovery → timing):
 
 | Open Type | n | Pred | Low Window | Drop% | Recovery% | Recov By | Past Open% |
 |-----------|---|------|------------|-------|-----------|----------|------------|
+| Gap Down Large | 6 | 0.42 | 11:00-11:30 | 0.9 | 1.8 | — | 33% |
 | Gap Down Small | 5 | 0.48 | 10:00-10:30 | 1.4 | 0.9 | 10:00-10:30 | 40% |
 
 **SCI**:
@@ -119,10 +113,19 @@ Predictability-scored profiles per opening type (drop → recovery → timing):
 | Gap Down Small | 13 | 0.43 | 10:00-10:30 | 0.8 | 1.4 | 10:00-10:30 | 38% |
 | Gap Up Small | 12 | 0.45 | 11:00-11:30 | 0.8 | 0.8 | 11:00-11:30 | 58% |
 
+**ANANTRAJ**:
+
+| Open Type | n | Pred | Low Window | Drop% | Recovery% | Recov By | Past Open% |
+|-----------|---|------|------------|-------|-----------|----------|------------|
+| Gap Down Large | 4 | 0.44 | 10:00-10:30 | -0.2 | 0.4 | 10:00-10:30 | 50% |
+| Gap Up Small | 11 | 0.42 | 10:30-11:00 | 1.0 | 2.0 | 10:30-11:00 | 46% |
+| Gap Up Large | 4 | 0.49 | 10:00-10:30 | 1.6 | -0.4 | — | 0% |
+
 **AEROFLEX**:
 
 | Open Type | n | Pred | Low Window | Drop% | Recovery% | Recov By | Past Open% |
 |-----------|---|------|------------|-------|-----------|----------|------------|
+| Gap Down Large | 5 | 0.41 | 10:00-10:30 | 0.6 | 0.6 | 10:00-10:30 | 60% |
 | Gap Up Large | 7 | 0.57 | 10:00-10:30 | -0.1 | 1.0 | 10:00-10:30 | 71% |
 
 **SAILIFE**:
@@ -139,17 +142,25 @@ Predictability-scored profiles per opening type (drop → recovery → timing):
 | Gap Down Small | 17 | 0.47 | 10:00-10:30 | 0.7 | 1.0 | 10:00-10:30 | 47% |
 | Gap Up Large | 4 | 0.54 | 11:00-11:30 | 0.8 | 1.6 | 11:00-11:30 | 75% |
 
+**IDBI**:
+
+| Open Type | n | Pred | Low Window | Drop% | Recovery% | Recov By | Past Open% |
+|-----------|---|------|------------|-------|-----------|----------|------------|
+| Gap Down Large | 4 | 0.58 | 11:00-11:30 | 0.8 | -0.3 | — | 50% |
+| Gap Up Large | 6 | 0.50 | 10:30-11:00 | 1.6 | 1.9 | 10:30-11:00 | 33% |
+
 **BSE**:
 
 | Open Type | n | Pred | Low Window | Drop% | Recovery% | Recov By | Past Open% |
 |-----------|---|------|------------|-------|-----------|----------|------------|
+| Gap Down Large | 3 | 0.42 | 10:00-10:30 | 0.1 | -0.1 | 10:30-11:00 | 67% |
 | Gap Up Large | 6 | 0.61 | 10:00-10:30 | 0.4 | 2.4 | 10:00-10:30 | 67% |
 
 **PFC**:
 
 | Open Type | n | Pred | Low Window | Drop% | Recovery% | Recov By | Past Open% |
 |-----------|---|------|------------|-------|-----------|----------|------------|
-| Gap Down Large | 3 | 0.43 | 10:30-11:00 | 0.1 | -0.3 | — | 33% |
+| Gap Down Large | 3 | 0.68 | 10:30-11:00 | 0.1 | 0.5 | 10:30-11:00 | 67% |
 | Gap Down Small | 11 | 0.44 | 10:00-10:30 | 0.3 | 1.4 | 10:00-10:30 | 54% |
 | Gap Up Small | 14 | 0.44 | 10:00-10:30 | 0.5 | 0.6 | 10:00-10:30 | 57% |
 | Gap Up Large | 3 | 0.72 | 10:30-11:00 | 3.0 | 1.7 | — | 0% |
@@ -207,6 +218,7 @@ Predictability-scored profiles per opening type (drop → recovery → timing):
 | Open Type | n | Pred | Low Window | Drop% | Recovery% | Recov By | Past Open% |
 |-----------|---|------|------------|-------|-----------|----------|------------|
 | Gap Down Large | 3 | 0.80 | 10:00-10:30 | 2.6 | 1.2 | — | 0% |
+| Gap Down Small | 6 | 0.42 | 10:00-10:30 | 0.7 | 0.6 | 10:00-10:30 | 50% |
 | Flat | 36 | 0.40 | 10:00-10:30 | 0.5 | 0.8 | 10:00-10:30 | 61% |
 | Gap Up Small | 12 | 0.40 | 10:00-10:30 | 0.4 | 0.0 | 10:00-10:30 | 58% |
 
@@ -267,14 +279,6 @@ Predictability-scored profiles per opening type (drop → recovery → timing):
 | Gap Down Small | 9 | 0.40 | 10:00-10:30 | 0.8 | 1.0 | 10:00-10:30 | 44% |
 | Gap Up Small | 12 | 0.47 | 10:00-10:30 | 0.6 | 1.4 | 10:00-10:30 | 67% |
 
-**ANANTRAJ**:
-
-| Open Type | n | Pred | Low Window | Drop% | Recovery% | Recov By | Past Open% |
-|-----------|---|------|------------|-------|-----------|----------|------------|
-| Gap Down Large | 4 | 0.44 | 10:00-10:30 | -0.2 | 0.4 | 10:00-10:30 | 50% |
-| Gap Up Small | 11 | 0.42 | 10:30-11:00 | 1.0 | 2.0 | 10:30-11:00 | 46% |
-| Gap Up Large | 4 | 0.49 | 10:00-10:30 | 1.6 | -0.4 | — | 0% |
-
 **GLENMARK**:
 
 | Open Type | n | Pred | Low Window | Drop% | Recovery% | Recov By | Past Open% |
@@ -296,4 +300,4 @@ Predictability-scored profiles per opening type (drop → recovery → timing):
 - OOS train/test split: 70/30
 - Monte Carlo iterations: 10,000
 
-Generated: 2026-03-02 13:50
+Generated: 2026-03-02 15:10

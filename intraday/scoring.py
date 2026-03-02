@@ -256,10 +256,12 @@ def evaluate_symbol(symbol, intra_df, daily_df, nifty_state, vix_info,
 
             dow_data = dow_month_stats.get(dow_name, {})
             dow_all = dow_data.get("all", {})
-            dow_wr = dow_all.get("win_rate", overall_wr)
+            dow_n = dow_all.get("sample_size", dow_all.get("n", 0))
+            dow_wr = dow_all.get("win_rate", overall_wr) if dow_n >= 10 else overall_wr
 
             mp_data = dow_data.get(month_period, {})
-            mp_wr = mp_data.get("win_rate", overall_wr)
+            mp_n = mp_data.get("sample_size", mp_data.get("n", 0))
+            mp_wr = mp_data.get("win_rate", overall_wr) if mp_n >= 10 else overall_wr
 
         candidate["dow_name"] = dow_name
         candidate["dow_wr"] = dow_wr
@@ -380,6 +382,7 @@ def evaluate_symbol(symbol, intra_df, daily_df, nifty_state, vix_info,
         candidate["time_status"] = time_rel["note"]
         candidate["time_window_status"] = time_rel["status"]
 
+        score_adjustments = max(-0.20, min(0.20, score_adjustments))
         final_score = max(0, min(1.0, raw_conf + score_adjustments))
         candidate["score"] = round(final_score, 2)
 

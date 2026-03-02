@@ -76,6 +76,7 @@ def evaluate_mlr(symbol, intra_ist, daily_df, opening_range, symbol_regime,
     bars_since_low = low_info["bars_since_low"]
     recovery_pct = low_info["recovery_pct"]
     drop_from_open_pct = low_info["drop_from_open_pct"]
+    drop_from_high_pct = low_info.get("drop_from_high_pct", drop_from_open_pct)
     recovery_vol_ratio = low_info["recovery_bar_vol_ratio"]
 
     # Guard: session low must be in morning window (before 11:00)
@@ -92,9 +93,13 @@ def evaluate_mlr(symbol, intra_ist, daily_df, opening_range, symbol_regime,
         return None
 
     # Guard: minimum drop depth — the dip must be real, not noise
+    # Use max(from_open, from_high) — on gap-up days the dip is from intraday
+    # high, not from open (e.g., open 101.5 → high 103 → low 101: from_open=0.5%
+    # but from_high=1.9%). Without this, gap-up MLR setups get rejected.
     atr_pct = atr / ltp * 100 if ltp > 0 else 0
     min_drop_pct = 0.3 * atr_pct
-    if drop_from_open_pct < min_drop_pct:
+    effective_drop = max(drop_from_open_pct, drop_from_high_pct)
+    if effective_drop < min_drop_pct:
         return None
 
     # Previous close for target reference
@@ -130,12 +135,12 @@ def evaluate_mlr(symbol, intra_ist, daily_df, opening_range, symbol_regime,
     if not np.isnan(vwap_val) and vwap_val > 0:
         cond_vwap = ltp >= vwap_val * 0.998  # within 0.2% of VWAP or above
 
-    # 6. Candle structure — last 2 bars positive imbalance (buyer dominance)
+    # 6. Candle structure — last 3 bars positive imbalance (buyer dominance)
     imbalance = compute_candle_imbalance(today_bars)
     cond_candle = False
-    if len(imbalance) >= 2:
-        last_2_imb = imbalance.iloc[-2:]
-        cond_candle = all(float(v) > 0 for v in last_2_imb)
+    if len(imbalance) >= 3:
+        last_3_imb = imbalance.iloc[-3:]
+        cond_candle = all(float(v) > 0 for v in last_3_imb)
 
     # 7. No lower lows — last 2 bars' low > session low (reversal structure intact)
     cond_no_lower = False
@@ -146,7 +151,7 @@ def evaluate_mlr(symbol, intra_ist, daily_df, opening_range, symbol_regime,
     conditions = {
         "morning_low": {
             "met": cond_morning_low,
-            "detail": f"Session low {low_price:.2f} at {low_time_str}, drop {drop_from_open_pct:.1f}% from open ({min_drop_pct:.1f}% ATR threshold)",
+            "detail": f"Session low {low_price:.2f} at {low_time_str}, drop {effective_drop:.1f}% (open:{drop_from_open_pct:.1f}%, high:{drop_from_high_pct:.1f}%), threshold {min_drop_pct:.1f}%",
         },
         "recovery_started": {
             "met": cond_recovery,
@@ -166,7 +171,7 @@ def evaluate_mlr(symbol, intra_ist, daily_df, opening_range, symbol_regime,
         },
         "candle_structure": {
             "met": cond_candle,
-            "detail": "Last 2 bars positive imbalance" if cond_candle else "Last 2 bars not all positive",
+            "detail": "Last 3 bars positive imbalance" if cond_candle else "Last 3 bars not all positive",
         },
         "no_lower_lows": {
             "met": cond_no_lower,
@@ -290,6 +295,6 @@ def evaluate_mlr(symbol, intra_ist, daily_df, opening_range, symbol_regime,
     return _build_result(
         "mlr", "long", entry, stop, target, conf, conditions,
         f"MLR long: session low {low_price:.2f} at {low_time_str}, "
-        f"drop {drop_from_open_pct:.1f}%, recovery {recovery_pct:.1f}%, "
+        f"drop {effective_drop:.1f}%, recovery {recovery_pct:.1f}%, "
         f"vol ratio {recovery_vol_ratio:.1f}x, RSI {rsi_val:.0f}",
     )

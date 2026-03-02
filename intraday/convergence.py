@@ -137,7 +137,12 @@ def compute_convergence_score(candidate: dict, today_bars, daily_df,
         conflicting.append("rel_strength")
 
     total = len(aligned) + len(conflicting)
-    score = round(len(aligned) / max(total, 1) * 100)
+    if total < 4:
+        # Insufficient dimensions — don't claim high convergence
+        # Use 7 (max possible) as denominator so 2 aligned = 28%, not 100%
+        score = round(len(aligned) / 7 * 100)
+    else:
+        score = round(len(aligned) / max(total, 1) * 100)
 
     return {
         "score": score,
@@ -154,7 +159,8 @@ def compute_historical_hit_rate(symbol: str, daily_df, strategy: str,
     """Scan 6 months of daily data for similar setups.
 
     Simplified proxy: match on direction + day_type pattern + gap classification.
-    For each matching historical day, check if next-day return was profitable.
+    For each matching historical day, check if same-day intraday return (open→close)
+    was profitable — all strategies are intraday, so we measure intraday edge.
 
     Returns {hit_rate, sample_size, avg_return, context}.
     """
@@ -179,9 +185,8 @@ def compute_historical_hit_rate(symbol: str, daily_df, strategy: str,
     matches = []
     is_long = direction == "long"
 
-    for i in range(len(gap_df) - 1):
+    for i in range(len(gap_df)):
         row = gap_df.iloc[i]
-        next_row = gap_df.iloc[i + 1]
 
         # Match criteria (simplified proxy):
         # 1. Same gap direction tendency
@@ -224,23 +229,15 @@ def compute_historical_hit_rate(symbol: str, daily_df, strategy: str,
             match = weak_open and recovery
 
         if match:
-            if strategy == "mlr":
-                # MLR is intraday — measure same-day recovery (close vs open)
-                # not next-day return, since the trade exits same day
-                day_open_val = float(row.get("Open", 0)) if "Open" in gap_df.columns else 0
-                day_close_val = float(row.get("Close", 0)) if "Close" in gap_df.columns else 0
-                if day_open_val > 0:
-                    intraday_return = (day_close_val - day_open_val) / day_open_val * 100
-                    matches.append(intraday_return)
-            else:
-                # Other strategies: next day's return as outcome
-                next_open = float(next_row.get("Open", next_row.name) if "Open" in gap_df.columns else 0)
-                next_close = float(next_row.get("Close", 0) if "Close" in gap_df.columns else 0)
-                if next_open > 0:
-                    next_return = (next_close - next_open) / next_open * 100
-                    if not is_long:
-                        next_return = -next_return  # invert for shorts
-                    matches.append(next_return)
+            # All strategies are intraday — measure same-day return (open→close)
+            # Using next-day return for intraday strategies is look-ahead bias
+            day_open_val = float(row.get("Open", 0)) if "Open" in gap_df.columns else 0
+            day_close_val = float(row.get("Close", 0)) if "Close" in gap_df.columns else 0
+            if day_open_val > 0:
+                intraday_return = (day_close_val - day_open_val) / day_open_val * 100
+                if not is_long:
+                    intraday_return = -intraday_return
+                matches.append(intraday_return)
 
     sample_size = len(matches)
     if sample_size == 0:

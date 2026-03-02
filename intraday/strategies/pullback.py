@@ -7,7 +7,7 @@ import numpy as np
 
 from common.indicators import compute_atr
 from intraday.features import (
-    compute_ema, compute_macd, compute_intraday_levels,
+    compute_ema, compute_ema_slope, compute_macd, compute_intraday_levels,
 )
 from intraday.strategies._common import _build_result
 
@@ -67,6 +67,14 @@ def evaluate_pullback(symbol, intra_ist, daily_df, symbol_regime):
     # 20 EMA on intraday
     ema20 = compute_ema(today_bars["Close"], 20)
     ema20_val = float(ema20.iloc[-1])
+
+    # EMA20 slope veto: if the moving average itself is rolling over,
+    # the "pullback" is likely a trend reversal, not a continuation
+    ema20_slope = compute_ema_slope(ema20, lookback=5)
+    if trend in ("strong_up", "mild_up") and ema20_slope < -0.05:
+        return None  # EMA20 declining — trend weakening, not a pullback
+    if trend in ("strong_down", "mild_down") and ema20_slope > 0.05:
+        return None  # EMA20 rising — downtrend weakening
 
     # VWAP
     vwap_val = float(today_bars["vwap"].iloc[-1]) if "vwap" in today_bars.columns else ema20_val

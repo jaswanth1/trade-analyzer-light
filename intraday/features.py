@@ -348,6 +348,12 @@ def compute_session_low_info(intra_ist, low_cutoff_hour=11, low_cutoff_min=30):
     day_open = float(today_bars["Open"].iloc[0])
     drop_from_open_pct = (day_open - low_price) / day_open * 100 if day_open > 0 else 0.0
 
+    # Drop from intraday high to session low (catches gap-up dips where
+    # stock opens high, runs higher, then dips — drop_from_open misses these)
+    pre_low_bars = today_bars.iloc[:low_bar_pos + 1] if low_bar_pos > 0 else today_bars.iloc[:1]
+    intraday_high = float(pre_low_bars["High"].max())
+    drop_from_high_pct = (intraday_high - low_price) / intraday_high * 100 if intraday_high > 0 else 0.0
+
     # Recovery-bar volume vs sell-bar volume (buying conviction check)
     # Only count post-settle bars for volume analysis (ignore opening volume noise)
     recovery_bar_vol_ratio = 1.0
@@ -376,5 +382,6 @@ def compute_session_low_info(intra_ist, low_cutoff_hour=11, low_cutoff_min=30):
         "recovery_pct": recovery_pct,
         "low_in_morning": low_in_morning,
         "drop_from_open_pct": drop_from_open_pct,
+        "drop_from_high_pct": drop_from_high_pct,
         "recovery_bar_vol_ratio": recovery_bar_vol_ratio,
     }

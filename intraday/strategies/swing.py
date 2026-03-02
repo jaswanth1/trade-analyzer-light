@@ -6,7 +6,7 @@ Multi-day swing entry on daily breakout pullback.
 import numpy as np
 
 from common.indicators import compute_atr
-from intraday.features import compute_ema
+from intraday.features import compute_ema, compute_cumulative_rvol
 from intraday.strategies._common import _build_result
 
 
@@ -49,6 +49,13 @@ def evaluate_swing(symbol, intra_ist, daily_df, symbol_regime):
     if not broke_out:
         return None
 
+    # Volume confirmation: breakout day volume must be above average
+    # A close breakout without volume = weak conviction, high false breakout rate
+    vol = daily_df["Volume"]
+    avg_vol_20d = float(vol.iloc[-22:-2].mean()) if len(vol) >= 22 else float(vol.iloc[:-2].mean())
+    breakout_vol = float(vol.iloc[-2:].max())  # highest vol in breakout window
+    breakout_vol_ok = breakout_vol > 1.2 * avg_vol_20d if avg_vol_20d > 0 else False
+
     # Today's intraday pullback toward yesterday's close or 9 EMA
     prev_close = float(close.iloc[-2]) if len(close) >= 2 else ltp
     ema9_daily = float(compute_ema(close, 9).iloc[-1])
@@ -71,15 +78,26 @@ def evaluate_swing(symbol, intra_ist, daily_df, symbol_regime):
         vwap_val = float(today_bars["vwap"].iloc[-1])
         above_vwap = intra_ltp > vwap_val if not np.isnan(vwap_val) else False
 
+    # Intraday cumulative RVOL (institutional participation today)
+    cum_rvol = compute_cumulative_rvol(intra_ist)
+    current_rvol = float(cum_rvol.iloc[-1]) if not cum_rvol.empty and not np.isnan(cum_rvol.iloc[-1]) else 1.0
+    intraday_vol_ok = current_rvol > 1.0
+
     conditions = {
         "breakout_confirmed": {"met": broke_out, "detail": f"Daily close above 20d high {close_20d_high:.2f}"},
+        "breakout_volume": {"met": breakout_vol_ok, "detail": f"Breakout vol {breakout_vol:.0f} vs 20d avg {avg_vol_20d:.0f} (need >1.2x)"},
         "pullback_to_support": {"met": pulled_back, "detail": f"Low {intra_low:.2f} near support {support_level:.2f}"},
         "above_vwap": {"met": above_vwap, "detail": "LTP vs VWAP"},
+        "intraday_rvol": {"met": intraday_vol_ok, "detail": f"Cum RVOL {current_rvol:.2f}x"},
         "trend_strong": {"met": trend == "strong_up", "detail": f"Daily trend: {trend}"},
         "weekly_aligned": {"met": weekly_trend != "down", "detail": f"Weekly trend: {weekly_trend}"},
     }
 
     if not (broke_out and pulled_back):
+        return None
+
+    # Reject breakout without volume conviction
+    if not breakout_vol_ok:
         return None
 
     # Swing low for stop (lowest low of last 5 daily bars)
@@ -94,6 +112,8 @@ def evaluate_swing(symbol, intra_ist, daily_df, symbol_regime):
         conf += 0.15
     if pulled_back:
         conf += 0.1
+    if intraday_vol_ok:
+        conf += 0.05
 
     return _build_result(
         "swing", "long", intra_ltp, stop, target, min(conf, 0.95), conditions,

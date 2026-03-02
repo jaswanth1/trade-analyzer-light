@@ -7,7 +7,7 @@ import numpy as np
 
 from common.indicators import compute_atr
 from intraday.features import (
-    compute_rsi, compute_bollinger, compute_keltner,
+    compute_rsi, compute_ema, compute_bollinger, compute_keltner,
     compute_squeeze, compute_volume_ratio, compute_intraday_levels,
 )
 from intraday.strategies._common import _build_result
@@ -119,6 +119,16 @@ def evaluate_compression(symbol, intra_ist, daily_df, symbol_regime):
     breakout_down = ltp < comp_low
     trend = symbol_regime.get("trend", "sideways")
 
+    # EMA-9 momentum confirmation — penalize breakouts against momentum
+    ema9 = compute_ema(close, 9) if len(close) >= 9 else None
+    ema9_slope_penalty = 0.0
+    if ema9 is not None and len(ema9) >= 3:
+        ema9_slope = float(ema9.iloc[-1]) - float(ema9.iloc[-3])
+        if breakout_up and ema9_slope < 0:
+            ema9_slope_penalty = -0.10  # momentum doesn't support upside breakout
+        elif breakout_down and ema9_slope > 0:
+            ema9_slope_penalty = -0.10  # momentum doesn't support downside breakout
+
     conf = 0.5
     if volume_expansion:
         conf += 0.2
@@ -132,6 +142,8 @@ def evaluate_compression(symbol, intra_ist, daily_df, symbol_regime):
     # FIX: HTF level proximity — cap target at daily R1/S1 (natural reversal zones)
     levels = compute_intraday_levels(daily_df)
 
+    conf += ema9_slope_penalty
+
     if breakout_up:
         conditions["direction_bias"] = {
             "met": trend not in ("strong_down",),
@@ -139,7 +151,7 @@ def evaluate_compression(symbol, intra_ist, daily_df, symbol_regime):
         }
         if trend in ("strong_up", "mild_up"):
             conf += 0.1
-        raw_target = ltp + atr
+        raw_target = ltp + 1.5 * atr
         r1 = levels.get("r1", raw_target)
         target = min(raw_target, r1) if r1 > ltp else raw_target
         return _build_result(
@@ -153,7 +165,7 @@ def evaluate_compression(symbol, intra_ist, daily_df, symbol_regime):
         }
         if trend in ("strong_down", "mild_down"):
             conf += 0.1
-        raw_target = ltp - atr
+        raw_target = ltp - 1.5 * atr
         s1 = levels.get("s1", raw_target)
         target = max(raw_target, s1) if s1 < ltp else raw_target
         return _build_result(

@@ -42,7 +42,7 @@ def evaluate_orb(symbol, intra_ist, daily_df, opening_range, day_type, symbol_re
     atr = compute_atr(daily_df) if len(daily_df) >= 14 else or_range * 2
     if np.isnan(atr):
         atr = or_range * 2
-    buffer = 0.1 * atr
+    buffer = 0.15 * atr
 
     today = intra_ist.index[-1].date()
     today_bars = intra_ist[intra_ist.index.date == today]

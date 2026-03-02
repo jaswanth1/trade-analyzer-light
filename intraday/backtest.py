@@ -96,6 +96,14 @@ class SignalResult:
     convergence: str = ""          # convergence summary (e.g. "4/6 MACD,RSI,VWAP,imbalance")
     regime: str = ""               # market regime at time of signal
 
+    # Prediction context (for LLM reasoning)
+    conditions: dict = field(default_factory=dict)     # strategy conditions (met/unmet)
+    gates: dict = field(default_factory=dict)           # vwap_gate, nifty_ok, etc.
+    day_type: str = ""                                  # market day type at scan time
+    score_raw: float = 0.0                              # raw confidence before adjustments
+    historical_hit_rate: float = 0.0                    # historical WR for this setup
+    historical_sample_size: int = 0                     # sample size for hit rate
+
     # Price journey tracking
     mfe_time: str = ""             # when MFE was reached
     mae_time: str = ""             # when MAE was reached
@@ -106,11 +114,13 @@ class SignalResult:
 class IntradayBacktestEngine:
     """Backtest engine for the intraday scanner."""
 
-    def __init__(self, target_date, capital=1000000, config=None):
+    def __init__(self, target_date, capital=1000000, config=None, use_llm=False):
         self.target_date = target_date  # date object — the day we're testing
         self.capital = capital
         self.config = config or {}
+        self.use_llm = use_llm
         self.all_signals: list[SignalResult] = []
+        self.market_context: dict = {}
         self.data_cache: dict = {}  # {symbol: {"daily": df, "intra": df}}
         self.symbols = list(TICKERS.keys())
 
@@ -343,12 +353,14 @@ class IntradayBacktestEngine:
             now_ist=mock_dt, data_override=data_override, skip_llm=True,
         )
 
-        # Only collect STRONG/ACTIVE — these are the signals the scanner
-        # would actually recommend for trading
+        # Collect STRONG/ACTIVE/WATCH — skip only AVOID
+        # WATCH signals provide learning value (borderline calls)
         n_total = len(candidates or [])
         n_actionable = 0
+        n_watch = 0
         for c in (candidates or []):
-            if c.get("signal") not in ("STRONG", "ACTIVE"):
+            tier = c.get("signal", "AVOID")
+            if tier == "AVOID":
                 continue
             sig = SignalResult(
                 symbol=c["symbol"],
@@ -360,17 +372,102 @@ class IntradayBacktestEngine:
                 target_price=c.get("target_price", 0),
                 stop_price=c.get("stop_price", 0),
                 score=c.get("score", 0),
-                signal_tier=c.get("signal", "WATCH"),
+                signal_tier=tier,
                 rr_ratio=c.get("rr_ratio", 0),
                 reason=c.get("signal_reason", ""),
                 convergence=c.get("convergence_detail", ""),
                 regime=c.get("symbol_regime", {}).get("trend", "") if isinstance(c.get("symbol_regime"), dict) else str(c.get("symbol_regime", "")),
+                # Prediction context for LLM reasoning
+                conditions=c.get("conditions", {}),
+                gates=c.get("gates", {}),
+                day_type=c.get("day_type", ""),
+                score_raw=c.get("confidence", 0),
+                historical_hit_rate=c.get("historical_hit_rate", 0),
+                historical_sample_size=c.get("historical_sample_size", 0),
             )
             self.all_signals.append(sig)
-            n_actionable += 1
+            if tier in ("STRONG", "ACTIVE"):
+                n_actionable += 1
+            else:
+                n_watch += 1
 
         print(f"    Candidates: {n_total} | "
-              f"Actionable (STRONG/ACTIVE): {n_actionable}")
+              f"Actionable (STRONG/ACTIVE): {n_actionable} | "
+              f"Watch: {n_watch}")
+
+    # ── Market Context Capture ─────────────────────────────────────────
+
+    def _capture_market_context(self):
+        """Capture actual market conditions for target_date.
+
+        Returns dict with Nifty stats, VIX, and per-signal price summaries
+        so the LLM can compare prediction context with actual behavior.
+        """
+        ctx = {"date": self.target_date.isoformat()}
+
+        # Nifty day stats
+        nifty_bars = self._get_actual_day_data("_nifty")
+        if not nifty_bars.empty:
+            nifty_open = float(nifty_bars["Open"].iloc[0])
+            nifty_close = float(nifty_bars["Close"].iloc[-1])
+            nifty_high = float(nifty_bars["High"].max())
+            nifty_low = float(nifty_bars["Low"].min())
+            nifty_range = nifty_high - nifty_low
+            nifty_chg = (nifty_close - nifty_open) / nifty_open * 100 if nifty_open > 0 else 0
+            direction = "up" if nifty_chg > 0.1 else ("down" if nifty_chg < -0.1 else "flat")
+
+            # ATR context
+            nifty_daily = self.data_cache.get("_nifty", {}).get("daily", pd.DataFrame())
+            atr = 0
+            if not nifty_daily.empty and len(nifty_daily) >= 14:
+                atr_series = compute_atr(nifty_daily, period=14)
+                if not atr_series.empty:
+                    atr = float(atr_series.iloc[-1])
+
+            ctx["nifty"] = {
+                "open": nifty_open, "close": nifty_close,
+                "high": nifty_high, "low": nifty_low,
+                "range": nifty_range, "change_pct": round(nifty_chg, 2),
+                "direction": direction,
+                "atr_14": round(atr, 2),
+                "range_vs_atr": round(nifty_range / atr, 2) if atr > 0 else 0,
+            }
+
+        # VIX
+        vix_val, vix_regime = self.data_cache.get("_vix", (None, "normal"))
+        ctx["vix"] = {"value": vix_val, "regime": vix_regime}
+
+        # Day type (from full-day nifty data)
+        if not nifty_bars.empty:
+            nifty_daily = self.data_cache.get("_nifty", {}).get("daily", pd.DataFrame())
+            try:
+                day_info = classify_day_type(nifty_bars, nifty_daily)
+                ctx["day_type"] = day_info.get("type", "unknown")
+            except Exception:
+                ctx["day_type"] = "unknown"
+
+        # Per-signal actual price summary
+        signal_summaries = {}
+        for sig in self.all_signals:
+            if sig.symbol in signal_summaries:
+                continue
+            bars = self._get_actual_day_data(sig.symbol)
+            if bars.empty:
+                continue
+            sym_open = float(bars["Open"].iloc[0])
+            sym_close = float(bars["Close"].iloc[-1])
+            sym_high = float(bars["High"].max())
+            sym_low = float(bars["Low"].min())
+            sym_chg = (sym_close - sym_open) / sym_open * 100 if sym_open > 0 else 0
+            signal_summaries[sig.symbol] = {
+                "open": sym_open, "close": sym_close,
+                "high": sym_high, "low": sym_low,
+                "change_pct": round(sym_chg, 2),
+                "direction": "up" if sym_chg > 0.3 else ("down" if sym_chg < -0.3 else "flat"),
+            }
+        ctx["symbols"] = signal_summaries
+
+        return ctx
 
     # ── Signal Validation ─────────────────────────────────────────────
 
@@ -628,14 +725,20 @@ class IntradayBacktestEngine:
         # Phase 4: Validate
         self.validate_signals()
 
-        # Phase 5: Report
-        report = generate_report(self.target_date, self.all_signals)
+        # Phase 5: Capture market context (for LLM reasoning)
+        self.market_context = self._capture_market_context()
+
+        # Phase 6: Report
+        report = generate_report(
+            self.target_date, self.all_signals,
+            use_llm=self.use_llm, market_context=self.market_context,
+        )
         return report
 
 
 # ── Multi-Day Runner ──────────────────────────────────────────────────────
 
-def run_multi_day(start_date, end_date, capital=1000000, config=None):
+def run_multi_day(start_date, end_date, capital=1000000, config=None, use_llm=False):
     """Run backtest across a date range and aggregate results."""
     all_signals = []
     day_summaries = []
@@ -647,7 +750,8 @@ def run_multi_day(start_date, end_date, capital=1000000, config=None):
             current += timedelta(days=1)
             continue
 
-        engine = IntradayBacktestEngine(current, capital=capital, config=config)
+        engine = IntradayBacktestEngine(current, capital=capital, config=config,
+                                        use_llm=use_llm)
         report = engine.run()
         if report is None:
             current += timedelta(days=1)
@@ -656,15 +760,17 @@ def run_multi_day(start_date, end_date, capital=1000000, config=None):
         # Collect signals
         all_signals.extend(engine.all_signals)
 
-        # Day summary
-        entered = sum(1 for s in engine.all_signals if s.entry_hit)
-        correct = sum(1 for s in engine.all_signals if s.outcome == "CORRECT")
-        wrong = sum(1 for s in engine.all_signals if s.outcome == "WRONG")
-        close_calls = sum(1 for s in engine.all_signals if s.outcome == "CLOSE_CALL")
+        # Day summary (actionable signals only for headline stats)
+        day_actionable = [s for s in engine.all_signals
+                          if s.signal_tier in ("STRONG", "ACTIVE")]
+        entered = sum(1 for s in day_actionable if s.entry_hit)
+        correct = sum(1 for s in day_actionable if s.outcome == "CORRECT")
+        wrong = sum(1 for s in day_actionable if s.outcome == "WRONG")
+        close_calls = sum(1 for s in day_actionable if s.outcome == "CLOSE_CALL")
         wr = correct / entered * 100 if entered > 0 else 0
         day_summaries.append({
             "date": current,
-            "signals": len(engine.all_signals),
+            "signals": len(day_actionable),
             "entered": entered,
             "correct": correct,
             "wrong": wrong,
@@ -699,13 +805,14 @@ def run_multi_day(start_date, end_date, capital=1000000, config=None):
         )
     lines.append("")
 
-    # Overall stats
-    total = len(all_signals)
-    entered = sum(1 for s in all_signals if s.entry_hit)
-    correct = sum(1 for s in all_signals if s.outcome == "CORRECT")
-    wrong = sum(1 for s in all_signals if s.outcome == "WRONG")
-    close_calls = sum(1 for s in all_signals if s.outcome == "CLOSE_CALL")
-    no_entry = sum(1 for s in all_signals if s.outcome == "NO_ENTRY")
+    # Overall stats (actionable only)
+    agg_actionable = [s for s in all_signals if s.signal_tier in ("STRONG", "ACTIVE")]
+    total = len(agg_actionable)
+    entered = sum(1 for s in agg_actionable if s.entry_hit)
+    correct = sum(1 for s in agg_actionable if s.outcome == "CORRECT")
+    wrong = sum(1 for s in agg_actionable if s.outcome == "WRONG")
+    close_calls = sum(1 for s in agg_actionable if s.outcome == "CLOSE_CALL")
+    no_entry = sum(1 for s in agg_actionable if s.outcome == "NO_ENTRY")
     wr = correct / entered * 100 if entered > 0 else 0
 
     lines.append("## Overall Summary\n")
@@ -715,8 +822,8 @@ def run_multi_day(start_date, end_date, capital=1000000, config=None):
     lines.append(f"- Win rate (entered): {wr:.1f}%")
     lines.append(f"- Close calls: {close_calls}\n")
 
-    # Per-strategy across all days
-    strategies = sorted(set(s.strategy for s in all_signals if s.strategy))
+    # Per-strategy across all days (actionable only)
+    strategies = sorted(set(s.strategy for s in agg_actionable if s.strategy))
     if strategies:
         lines.append("## Per-Strategy (All Days)\n")
         lines.append("| Strategy | Signals | Entered | Win Rate | "
@@ -724,7 +831,7 @@ def run_multi_day(start_date, end_date, capital=1000000, config=None):
         lines.append("|----------|---------|---------|----------|"
                       "---------|---------|")
         for strat in strategies:
-            ss = [s for s in all_signals if s.strategy == strat]
+            ss = [s for s in agg_actionable if s.strategy == strat]
             n = len(ss)
             n_entered = sum(1 for s in ss if s.entry_hit)
             n_won = sum(1 for s in ss if s.outcome == "CORRECT")
@@ -788,7 +895,8 @@ def main():
 
     if args.date:
         target = date.fromisoformat(args.date)
-        engine = IntradayBacktestEngine(target, capital=args.capital, config=config)
+        engine = IntradayBacktestEngine(target, capital=args.capital,
+                                        config=config, use_llm=args.llm)
         report = engine.run()
         if report:
             INTRADAY_REPORT_DIR.mkdir(parents=True, exist_ok=True)
@@ -797,30 +905,11 @@ def main():
                 f.write(report + "\n")
             print(f"\n  Report saved: {path}")
 
-            # Optional LLM summary
-            if args.llm:
-                try:
-                    from common.llm import call_llm
-                    summary_prompt = (
-                        f"Summarize this intraday backtest report in 200 words. "
-                        f"Focus on what worked, what didn't, and key takeaways:\n\n"
-                        f"{report[:3000]}"
-                    )
-                    llm_summary = call_llm(
-                        [{"role": "user", "content": summary_prompt}],
-                        max_tokens=500,
-                    )
-                    if llm_summary:
-                        with open(path, "a") as f:
-                            f.write(f"\n---\n\n## AI Summary\n\n{llm_summary}\n")
-                        print("  LLM summary appended to report")
-                except Exception as e:
-                    print(f"  [WARN] LLM summary failed: {e}")
-
     elif args.start and args.end:
         start = date.fromisoformat(args.start)
         end = date.fromisoformat(args.end)
-        run_multi_day(start, end, capital=args.capital, config=config)
+        run_multi_day(start, end, capital=args.capital, config=config,
+                      use_llm=args.llm)
     else:
         parser.error("Provide --date or both --start and --end")
 

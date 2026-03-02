@@ -1,0 +1,280 @@
+# Trading System
+
+Intraday scalp scanner and overnight BTST analyzer for Indian equity markets (NSE).
+
+## Project Structure
+
+```
+common/              Shared utilities
+  data.py            OHLCV fetching (yfinance + Upstox gap-fill + Supabase cache)
+  data_cache.py      Supabase-backed OHLCV bar cache
+  analysis_cache.py  Supabase-backed analysis metric cache (VIX, regimes, hit rates)
+  indicators.py      Technical indicators (ATR, VWAP, gaps)
+  market.py          Market-level utilities (VIX, Nifty regime, institutional flow, earnings)
+  risk.py            Position sizing, correlation clusters, portfolio heat
+  upstox.py          Upstox API integration (auth, token management, REST data)
+  db.py              Supabase (PostgreSQL) persistence layer
+  llm.py             LLM advisory (Ollama / OpenAI / any OpenAI-compatible endpoint)
+  display.py         Terminal box-drawing utilities
+  journal.py         SQLite trade journal (fallback)
+  news.py            Stock news fetching + LLM sentiment scoring
+scalp/               Intraday scalp trading
+  config.py          Fetch OHLCV → compute indicators → cache → generate scalp_config.yaml
+  scanner.py         Live scalp scanner with LLM advisory
+  backtest.py        Replay historical bars through scanner logic
+btst/                Buy Today Sell Tomorrow
+  scanner.py         BTST signal scanner (last 90 min of market)
+  regime.py          Overnight DOW/month-period statistics
+  convergence.py     Daily convergence scoring + overnight hit rate
+  explanations.py    Educational + LLM explanations for BTST
+intraday/            Time-aware multi-strategy intraday & swing scanner
+  scanner.py         Main orchestrator: phase detection → evaluate → rank → dashboard → report
+  backtest.py        Replay historical days through scanner pipeline, validate signals
+  explanations.py    Template + LLM educational explanations (per-phase)
+  features.py        Technical indicators (EMA, RSI, MACD, Bollinger, Keltner, squeeze)
+  regime.py          Day-type + symbol-level regime classification
+  strategies.py      Strategy modules (ORB, pullback, compression, mean-revert, swing, MLR)
+  convergence.py     Convergence scoring + historical pattern replay
+  mlr_config.py      MLR config generator (precomputed per-ticker recovery stats)
+migrations/          Supabase SQL migrations (run once in SQL Editor)
+main.py              FastAPI app (unrelated)
+```
+
+## Setup
+
+```bash
+uv sync
+```
+
+## Scalp Trading Workflow
+
+### 1. Build scalp config
+
+Fetches OHLCV data, computes indicators (gap analysis, probability matrix, time window stats), caches results in Supabase `analysis_cache`, and generates optimal `scalp_config.yaml`. Subsequent runs skip fresh cache entries.
+
+```bash
+python -m scalp.config                      # smart cache — only recomputes stale tickers
+python -m scalp.config --force              # force full recomputation
+python -m scalp.config --skip-explanation   # skip the guide doc
+```
+
+### 2. Run the live scalp scanner
+
+Evaluates all tickers against config rules, checks VIX/Nifty regime, computes position sizes, and calls LLM for advisory.
+
+```bash
+python -m scalp.scanner
+```
+
+Runs in two modes automatically:
+- **Live market** (09:15-15:15) — signals, positions, conditions dashboard
+- **Prep mode** (pre/post market) — next-session scenario analysis
+
+### 3. Backtest
+
+Replays historical 5-min bars through scanner logic. Loads data from `fetch_yf()` and `analysis_cache`. Generates `backtest_report.md`.
+
+```bash
+python -m scalp.backtest
+python -m scalp.backtest --start 2026-01-01 --end 2026-02-25 --capital 500000
+```
+
+## BTST (Buy Today Sell Tomorrow)
+
+Scans for stocks closing near day high with volume surge. Designed to run in the last 90 minutes of trading (after 2:30 PM).
+
+```bash
+python -m btst.scanner           # runs after 2:30 PM only
+python -m btst.scanner --force   # manual override, runs anytime
+```
+
+### BTST Signal Types
+
+| Signal | Criteria |
+|--------|----------|
+| **STRONG_BUY** | All gates pass + score >= 85% + overnight WR > 55% |
+| **BUY** | All gates pass + score >= 70% |
+| **WATCH** | Some conditions met, score < 70% |
+| **AVOID** | Gate failed, earnings near, or VIX stress |
+
+### BTST Gates (must all pass)
+
+- Close in top 20% of day range
+- Trading above VWAP
+- Nifty not bearish / not making new lows
+
+### BTST Risk Limits
+
+- Max 3 concurrent BTST positions
+- Max 30% of capital in BTST
+- Correlation cluster limit (max 2 from same cluster)
+- Auto-skip on VIX > 22 or earnings within 3 days
+
+## Intraday Scanner
+
+Time-aware multi-strategy scanner. Auto-detects market phase and adapts output — no CLI flags needed for mode selection. Evaluates all tickers across 6 strategies, ranks by conviction, applies portfolio risk overlays, and generates educational explanations with AI advisory.
+
+```bash
+python -m intraday.scanner            # auto-detects phase and runs
+python -m intraday.scanner --force    # force LIVE mode anytime (testing)
+python -m intraday.scanner --manage   # position management only
+```
+
+### Time Phases (Auto-Detected)
+
+| Window | Phase | Output |
+|--------|-------|--------|
+| Before 9:00 | **PRE_MARKET** | Conditional IF-THEN gap-scenario setups from daily data |
+| 9:00 - 9:15 | **PRE_LIVE** | Refined setups using pre-market auction data + institutional volume signals |
+| 9:15 - 15:15 | **LIVE** | Full scanner with time-relevance per strategy |
+| After 15:15 | **POST_MARKET** | Session review + tomorrow's watchlist |
+
+### Strategies
+
+| Strategy | Window | Day Types | Description |
+|----------|--------|-----------|-------------|
+| **ORB** | 9:15-12:00 | trend_up, trend_down, gap_and_go | Opening range breakout with volume confirmation |
+| **Pullback** | 9:30-14:30 | trend_up, trend_down | Pullback to EMA20/VWAP in trending market |
+| **Compression** | 10:00-14:00 | range_bound | Bollinger squeeze breakout (BB inside Keltner) |
+| **Mean-Revert** | 10:00-14:30 | range_bound, volatile_two_sided | Reversion to VWAP from extended levels |
+| **Swing** | 9:15-15:00 | trend_up, trend_down | Multi-day (1-5d) entry on daily breakout pullback |
+| **MLR** | 9:30-11:30 | all day types | Morning Low Recovery — buys confirmed reversal off session low |
+
+Strategy windows enforce time-relevance: EXPIRED = skip, FADING (>75% elapsed) = -0.05 penalty, PRIME = no penalty.
+
+**MLR** is exempt from the `nifty_ok` gate — data shows 57% of daily lows form before 11:00 AM with avg +2.2% recovery to close, and the pattern holds in bearish markets.
+
+### Signal Tiers
+
+| Signal | Criteria |
+|--------|----------|
+| **STRONG** | Score >= 80%, RR >= 2.0, regime aligned, DOW+month favorable |
+| **ACTIVE** | Score >= 65%, RR >= 1.5, regime compatible |
+| **WATCH** | Score 50-65% or one gate failed |
+| **AVOID** | VIX stress, earnings, illiquid, regime mismatch |
+
+### Educational Output
+
+Every setup includes a template-based explanation covering: stock profile (ATR in ₹, beta), strategy logic, ₹ terms per ₹1L capital, convergence breakdown, historical context, timing, risks, and verdict. Top 3 setups also get LLM-powered explanations with cricket analogies and rupee terms, adapted per phase.
+
+If nothing qualifies, the scanner says "none" explicitly.
+
+### Risk Limits
+
+- Max 5 concurrent intraday positions, max 50% of capital
+- Max 2 positions per sector, max 2 per correlation cluster
+- Net direction cap: max 4 longs or 4 shorts
+- Daily drawdown circuit breaker at -2%, P&L velocity breaker (3 losses in 30 min)
+- Per-strategy daily loss budgets, repeat-entry guard
+- Auto-skip on VIX > 22 or earnings within 3 days
+- Hard exit at 15:00, lunch window exit for low-progress trades
+
+Reports saved to `intraday/reports/` named by phase: `pre_market_*.md`, `pre_live_*.md`, `intraday_*.md`, `post_market_*.md`.
+
+### Intraday Backtest
+
+Replays historical days through the intraday scanner's phase-aware pipeline. Simulates post-market T-1, pre-market T, and live scans at 4 time points. Validates all signals against actual data (entry hit, target/stop, MFE/MAE).
+
+```bash
+python -m intraday.backtest --date 2026-02-20                        # Single day
+python -m intraday.backtest --start 2026-02-10 --end 2026-02-20     # Date range
+python -m intraday.backtest --date 2026-02-20 --capital 500000       # Custom capital
+python -m intraday.backtest --date 2026-02-20 --llm                  # Add LLM summary
+```
+
+Reports saved to `intraday/reports/backtest_*.md`.
+
+### MLR Config Generator
+
+Precomputes per-ticker Morning Low Recovery statistics: recovery probabilities by time bucket, EV-optimal entry/stop/target via grid search, walk-forward OOS validation, Monte Carlo 95% CIs, and DOW/month seasonality. Output consumed by the live scanner for ticker-specific calibration.
+
+```bash
+python -m intraday.mlr_config              # process all tickers
+python -m intraday.mlr_config -v           # verbose progress per ticker
+python -m intraday.mlr_config -t RELIANCE.NS  # single ticker
+```
+
+Generates `intraday/mlr_config.yaml` + `intraday/mlr_config_guide.md`.
+
+See [`intraday/HOW_IT_WORKS.md`](intraday/HOW_IT_WORKS.md) for full implementation details.
+
+## Upstox Integration (Optional)
+
+Upstox provides **real-time gap-fill** for intraday data. When yfinance's last bar is stale (>1 min old during market hours), the system fills the gap with Upstox live candles. It also serves as a full fallback if yfinance returns nothing.
+
+**Without Upstox**: All scanners work fine using yfinance only. Upstox is purely additive — if no valid token exists, the system silently falls back to yfinance-only mode.
+
+### Setup
+
+1. Add credentials to `.env.local` (or `.env`):
+
+```
+UPSTOX_API_KEY=your-api-key
+UPSTOX_API_SECRET=your-api-secret
+UPSTOX_CALL_BACK_URL=http://localhost:9000/api/v1/upstox/callback
+```
+
+2. Generate an access token (valid ~22 hours, must be refreshed daily):
+
+```bash
+python -m common.upstox
+```
+
+This opens your browser to the Upstox login page. After logging in, Upstox redirects to the callback URL with an auth code. Paste the code back into the terminal. The token is saved to both Supabase (`upstox_tokens` table) and a local fallback file (`~/.upstox_token.json`).
+
+3. Verify it's working:
+
+```bash
+python -c "from common.upstox import is_upstox_available; print(is_upstox_available())"
+```
+
+### Token Lifecycle
+
+| Step | What Happens |
+|------|-------------|
+| `python -m common.upstox` | Opens browser → Upstox login → redirects with auth code |
+| Paste auth code | Exchanges code for access token via Upstox API |
+| Token saved | Stored in Supabase `upstox_tokens` + `~/.upstox_token.json` |
+| Token used | All `fetch_yf()` calls check Upstox for real-time gap-fill |
+| Token expires | After ~22 hours — run `python -m common.upstox` again next morning |
+
+### What Uses Upstox
+
+| Feature | Without Upstox | With Upstox |
+|---------|---------------|-------------|
+| Intraday OHLCV | yfinance (may lag 1-2 min) | yfinance + Upstox real-time gap-fill |
+| Daily OHLCV | yfinance | yfinance (Upstox not needed) |
+| Batch LTP | yfinance last close | Upstox real-time LTP |
+| Full fallback | yfinance only | Upstox if yfinance returns empty |
+
+## Trade Journal
+
+```bash
+python -c "from common.journal import init_db, get_portfolio_metrics; init_db(); print(get_portfolio_metrics())"
+```
+
+## LLM Configuration
+
+Set in `.env` (or `scalp_config.yaml` under `global`):
+
+```
+LLM_BASE_URL=http://localhost:11434/v1   # Ollama (default)
+LLM_API_KEY=not-needed
+LLM_MODEL=qwen3:8b
+```
+
+Switch to any OpenAI-compatible provider by changing the URL and key:
+
+```
+# Lightning AI
+LLM_BASE_URL=https://lightning.ai/api/v1
+LLM_API_KEY=your-key
+LLM_MODEL=lightning-ai/gpt-oss-20b
+
+# OpenAI
+LLM_BASE_URL=https://api.openai.com/v1
+LLM_API_KEY=sk-your-key
+LLM_MODEL=gpt-4.1
+```
+
+All scanners share the same `common/llm.py` module.

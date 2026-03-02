@@ -1,0 +1,2928 @@
+generated: '2026-03-02T11:08:47.364664'
+description: MLR (Morning Low Recovery) per-ticker config — auto-generated
+methodology: 60 days of 5-min data + 1 year daily data analyzed per ticker. Morning
+  lows (before 11:00) identified, recovery stats computed, EV-optimal entry/stop/target
+  grid-searched, validated with 70/30 walk-forward OOS, Monte Carlo 95% CIs for robustness.
+tickers:
+  ABCAPITAL.NS:
+    enabled: true
+    name: Aditya Birla Capital
+    edge_strength: 5
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.39
+    avg_recovery_to_high_pct: 2.76
+    pct_recovery_above_1: 58.6
+    pct_recovery_above_3: 12.1
+    mae_p90: 3.315
+    mae_median: 1.376
+    dow_favorable: &id004 !!python/object/apply:numpy._core.multiarray.scalar
+    - &id002 !!python/object/apply:numpy.dtype
+      args:
+      - b1
+      - false
+      - true
+      state: !!python/tuple
+      - 3
+      - '|'
+      - null
+      - null
+      - null
+      - -1
+      - -1
+      - 0
+    - !!binary |
+      AQ==
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 1.5
+    ev: 1.0483
+    win_rate: 79.3
+    oos_win_rate: 88.9
+    oos_ev: 1.2111
+    monte_carlo:
+      ev_ci_lower: 0.8724
+      ev_ci_upper: 1.2241
+      wr_ci_lower: 69.0
+      wr_ci_upper: 89.7
+      max_dd_ci_upper: 1.2
+    best_time_buckets:
+      09:15-09:45:
+        probability: 12.1
+        avg_recovery: 0.53
+        n: 7
+      09:45-10:15:
+        probability: 12.1
+        avg_recovery: 0.38
+        n: 7
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - &id001 !!python/object/apply:numpy.dtype
+          args:
+          - f8
+          - false
+          - true
+          state: !!python/tuple
+          - 3
+          - <
+          - null
+          - null
+          - null
+          - -1
+          - -1
+          - 0
+        - !!binary |
+          zczMzMwsUkA=
+        avg_recovery: 1.45
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMysUEA=
+        avg_recovery: 1.52
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmamQEA=
+        avg_recovery: 1.09
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAACAUUA=
+        avg_recovery: 1.52
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmbmSkA=
+        avg_recovery: 1.39
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAABAUEA=
+        avg_recovery: 1.52
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzMzRkA=
+        avg_recovery: 1.09
+        n: 18
+  ADANIENT.NS:
+    enabled: true
+    name: Adani Enterprises
+    edge_strength: 4
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.14
+    avg_recovery_to_high_pct: 2.49
+    pct_recovery_above_1: 36.2
+    pct_recovery_above_3: 8.6
+    mae_p90: 3.027
+    mae_median: 1.049
+    dow_favorable: &id003 !!python/object/apply:numpy._core.multiarray.scalar
+    - *id002
+    - !!binary |
+      AA==
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 1.5
+    ev: 0.7259
+    win_rate: 60.3
+    oos_win_rate: 61.1
+    oos_ev: 0.7389
+    monte_carlo:
+      ev_ci_lower: 0.5207
+      ev_ci_upper: 0.931
+      wr_ci_lower: 48.3
+      wr_ci_upper: 72.4
+      max_dd_ci_upper: 1.8
+    best_time_buckets:
+      09:15-09:45:
+        probability: 3.4
+        avg_recovery: 0.36
+        n: 2
+      09:45-10:15:
+        probability: 19.0
+        avg_recovery: 0.27
+        n: 11
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzMzQkA=
+        avg_recovery: 1.02
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          mpmZmZnZREA=
+        avg_recovery: 1.6
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.11
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAAREA=
+        avg_recovery: 1.21
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMzMLkA=
+        avg_recovery: 0.78
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAABARUA=
+        avg_recovery: 1.21
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzMzNkA=
+        avg_recovery: 0.98
+        n: 18
+  ADANIPORTS.NS:
+    enabled: true
+    name: Adani Ports
+    edge_strength: 5
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.04
+    avg_recovery_to_high_pct: 2.14
+    pct_recovery_above_1: 36.2
+    pct_recovery_above_3: 5.2
+    mae_p90: 2.386
+    mae_median: 0.843
+    dow_favorable: *id003
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 1.0
+    ev: 0.5276
+    win_rate: 69.0
+    oos_win_rate: 88.9
+    oos_ev: 0.7667
+    monte_carlo:
+      ev_ci_lower: 0.3828
+      ev_ci_upper: 0.6724
+      wr_ci_lower: 56.9
+      wr_ci_upper: 81.0
+      max_dd_ci_upper: 1.5
+    best_time_buckets:
+      09:15-09:45:
+        probability: 6.9
+        avg_recovery: 0.73
+        n: 4
+      09:45-10:15:
+        probability: 15.5
+        avg_recovery: 0.3
+        n: 9
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzMzQkA=
+        avg_recovery: 1.18
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.31
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAAOUA=
+        avg_recovery: 0.95
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.16
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          mpmZmZkZN0A=
+        avg_recovery: 0.69
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAACARkA=
+        avg_recovery: 1.24
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzOzMEA=
+        avg_recovery: 0.6
+        n: 18
+  ADANIPOWER.NS:
+    enabled: true
+    name: Adani Power
+    edge_strength: 4
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.42
+    avg_recovery_to_high_pct: 2.88
+    pct_recovery_above_1: 46.6
+    pct_recovery_above_3: 10.3
+    mae_p90: 3.092
+    mae_median: 1.134
+    dow_favorable: *id003
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 1.5
+    ev: 0.7552
+    win_rate: 62.1
+    oos_win_rate: 72.2
+    oos_ev: 0.9278
+    monte_carlo:
+      ev_ci_lower: 0.55
+      ev_ci_upper: 0.9603
+      wr_ci_lower: 50.0
+      wr_ci_upper: 74.1
+      max_dd_ci_upper: 1.8
+    best_time_buckets:
+      09:15-09:45:
+        probability: 3.4
+        avg_recovery: 0.34
+        n: 2
+      09:45-10:15:
+        probability: 13.8
+        avg_recovery: 0.34
+        n: 8
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAADARkA=
+        avg_recovery: 1.31
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMysUEA=
+        avg_recovery: 1.79
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          mpmZmZnZREA=
+        avg_recovery: 1.51
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAAPkA=
+        avg_recovery: 1.08
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          mpmZmZkZR0A=
+        avg_recovery: 1.33
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAABASkA=
+        avg_recovery: 1.53
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmamQEA=
+        avg_recovery: 1.17
+        n: 18
+  AEROFLEX.NS:
+    enabled: true
+    name: Aeroflex Industries
+    edge_strength: 5
+    sample_size: 58
+    avg_recovery_to_close_pct: 2.0
+    avg_recovery_to_high_pct: 4.66
+    pct_recovery_above_1: 67.2
+    pct_recovery_above_3: 22.4
+    mae_p90: 3.654
+    mae_median: 1.516
+    dow_favorable: *id004
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 3.0
+    ev: 1.9069
+    win_rate: 69.0
+    oos_win_rate: 77.8
+    oos_ev: 2.1889
+    monte_carlo:
+      ev_ci_lower: 1.5207
+      ev_ci_upper: 2.2931
+      wr_ci_lower: 56.9
+      wr_ci_upper: 81.0
+      max_dd_ci_upper: 1.5
+    best_time_buckets:
+      09:15-09:45:
+        probability: 5.2
+        avg_recovery: 0.59
+        n: 3
+      09:45-10:15:
+        probability: 12.1
+        avg_recovery: 0.53
+        n: 7
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMzMT0A=
+        avg_recovery: 2.15
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAADAUkA=
+        avg_recovery: 2.45
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzPTVEA=
+        avg_recovery: 2.42
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAATkA=
+        avg_recovery: 1.49
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmbmSkA=
+        avg_recovery: 1.45
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAgUkA=
+        avg_recovery: 2.09
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMzMS0A=
+        avg_recovery: 1.8
+        n: 18
+  ANANTRAJ.NS:
+    enabled: false
+    name: Anant Raj
+    edge_strength: 4
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.74
+    avg_recovery_to_high_pct: 3.9
+    pct_recovery_above_1: 56.9
+    pct_recovery_above_3: 19.0
+    mae_p90: 3.557
+    mae_median: 1.762
+    dow_favorable: *id004
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 2.5
+    ev: 1.5621
+    win_rate: 69.0
+    oos_win_rate: 38.9
+    oos_ev: 0.75
+    monte_carlo:
+      ev_ci_lower: 1.2362
+      ev_ci_upper: 1.8879
+      wr_ci_lower: 56.9
+      wr_ci_upper: 81.0
+      max_dd_ci_upper: 1.5
+    best_time_buckets:
+      09:15-09:45:
+        probability: 3.4
+        avg_recovery: 0.49
+        n: 2
+      09:45-10:15:
+        probability: 19.0
+        avg_recovery: 0.34
+        n: 11
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMzMT0A=
+        avg_recovery: 1.93
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmYmTUA=
+        avg_recovery: 1.52
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAADAUkA=
+        avg_recovery: 1.58
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAAPkA=
+        avg_recovery: 0.9
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmbmSkA=
+        avg_recovery: 2.59
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAABASkA=
+        avg_recovery: 1.6
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMysUEA=
+        avg_recovery: 2.05
+        n: 18
+  BEL.NS:
+    enabled: true
+    name: Bharat Electronics
+    edge_strength: 5
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.22
+    avg_recovery_to_high_pct: 2.34
+    pct_recovery_above_1: 48.3
+    pct_recovery_above_3: 1.7
+    mae_p90: 2.427
+    mae_median: 0.878
+    dow_favorable: *id004
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 1.0
+    ev: 0.7759
+    win_rate: 89.7
+    oos_win_rate: 94.4
+    oos_ev: 0.8333
+    monte_carlo:
+      ev_ci_lower: 0.6724
+      ev_ci_upper: 0.8586
+      wr_ci_lower: 81.0
+      wr_ci_upper: 96.6
+      max_dd_ci_upper: 0.9
+    best_time_buckets:
+      09:15-09:45:
+        probability: 8.6
+        avg_recovery: 0.42
+        n: 5
+      09:45-10:15:
+        probability: 10.3
+        avg_recovery: 0.4
+        n: 6
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMzMT0A=
+        avg_recovery: 1.4
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.07
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          mpmZmZnZREA=
+        avg_recovery: 1.5
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.24
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAABAQ0A=
+        avg_recovery: 0.94
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAATkA=
+        avg_recovery: 1.39
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzMzNkA=
+        avg_recovery: 0.85
+        n: 18
+  BHEL.NS:
+    enabled: true
+    name: Bharat Heavy Electricals
+    edge_strength: 5
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.54
+    avg_recovery_to_high_pct: 3.08
+    pct_recovery_above_1: 58.6
+    pct_recovery_above_3: 6.9
+    mae_p90: 3.211
+    mae_median: 1.172
+    dow_favorable: *id004
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 1.5
+    ev: 1.1069
+    win_rate: 82.8
+    oos_win_rate: 72.2
+    oos_ev: 0.9278
+    monte_carlo:
+      ev_ci_lower: 0.931
+      ev_ci_upper: 1.2534
+      wr_ci_lower: 72.4
+      wr_ci_upper: 91.4
+      max_dd_ci_upper: 0.9
+    best_time_buckets:
+      09:15-09:45:
+        probability: 8.6
+        avg_recovery: 1.4
+        n: 5
+      09:45-10:15:
+        probability: 8.6
+        avg_recovery: 0.52
+        n: 5
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMzMT0A=
+        avg_recovery: 1.69
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmYmTUA=
+        avg_recovery: 1.6
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmYmTUA=
+        avg_recovery: 1.61
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.34
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAADATkA=
+        avg_recovery: 1.43
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAABAT0A=
+        avg_recovery: 1.68
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.21
+        n: 18
+  BSE.NS:
+    enabled: true
+    name: BSE Limited
+    edge_strength: 5
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.41
+    avg_recovery_to_high_pct: 3.07
+    pct_recovery_above_1: 55.2
+    pct_recovery_above_3: 8.6
+    mae_p90: 2.957
+    mae_median: 1.324
+    dow_favorable: *id003
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 1.5
+    ev: 1.3121
+    win_rate: 94.8
+    oos_win_rate: 88.9
+    oos_ev: 1.2111
+    monte_carlo:
+      ev_ci_lower: 1.1948
+      ev_ci_upper: 1.4
+      wr_ci_lower: 87.9
+      wr_ci_upper: 100.0
+      max_dd_ci_upper: 0.6
+    best_time_buckets:
+      09:15-09:45:
+        probability: 8.6
+        avg_recovery: 0.42
+        n: 5
+      09:45-10:15:
+        probability: 20.7
+        avg_recovery: 0.34
+        n: 12
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAABAS0A=
+        avg_recovery: 1.72
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmYmTUA=
+        avg_recovery: 1.65
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAADAUkA=
+        avg_recovery: 1.42
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.37
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAABAQ0A=
+        avg_recovery: 0.93
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAATkA=
+        avg_recovery: 1.45
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzMzRkA=
+        avg_recovery: 1.32
+        n: 18
+  CAMS.NS:
+    enabled: true
+    name: Computer Age Mgmt Services
+    edge_strength: 5
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.13
+    avg_recovery_to_high_pct: 2.53
+    pct_recovery_above_1: 43.1
+    pct_recovery_above_3: 3.4
+    mae_p90: 3.079
+    mae_median: 1.309
+    dow_favorable: *id003
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 1.5
+    ev: 0.8724
+    win_rate: 69.0
+    oos_win_rate: 66.7
+    oos_ev: 0.8333
+    monte_carlo:
+      ev_ci_lower: 0.6672
+      ev_ci_upper: 1.0776
+      wr_ci_lower: 56.9
+      wr_ci_upper: 81.0
+      max_dd_ci_upper: 1.5
+    best_time_buckets:
+      09:15-09:45:
+        probability: 8.6
+        avg_recovery: 0.39
+        n: 5
+      09:45-10:15:
+        probability: 12.1
+        avg_recovery: 0.22
+        n: 7
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAABAS0A=
+        avg_recovery: 1.16
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          mpmZmZnZREA=
+        avg_recovery: 1.22
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          mpmZmZnZREA=
+        avg_recovery: 1.04
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAAREA=
+        avg_recovery: 1.21
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAABAQ0A=
+        avg_recovery: 1.07
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.15
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMzMO0A=
+        avg_recovery: 1.11
+        n: 18
+  COALINDIA.NS:
+    enabled: true
+    name: Coal India
+    edge_strength: 4
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.21
+    avg_recovery_to_high_pct: 2.21
+    pct_recovery_above_1: 37.9
+    pct_recovery_above_3: 8.6
+    mae_p90: 2.007
+    mae_median: 0.684
+    dow_favorable: *id003
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 1.5
+    ev: 0.6086
+    win_rate: 53.4
+    oos_win_rate: 61.1
+    oos_ev: 0.7389
+    monte_carlo:
+      ev_ci_lower: 0.4034
+      ev_ci_upper: 0.8138
+      wr_ci_lower: 41.4
+      wr_ci_upper: 65.5
+      max_dd_ci_upper: 2.4
+    best_time_buckets:
+      09:15-09:45:
+        probability: 5.2
+        avg_recovery: 0.53
+        n: 3
+      09:45-10:15:
+        probability: 3.4
+        avg_recovery: 0.46
+        n: 2
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAADARkA=
+        avg_recovery: 1.34
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          mpmZmZnZREA=
+        avg_recovery: 1.26
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          mpmZmZnZREA=
+        avg_recovery: 1.32
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAAPkA=
+        avg_recovery: 0.89
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMzMPkA=
+        avg_recovery: 1.2
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAACARkA=
+        avg_recovery: 1.4
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzMzNkA=
+        avg_recovery: 0.8
+        n: 18
+  CUMMINSIND.NS:
+    enabled: true
+    name: Cummins India
+    edge_strength: 5
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.36
+    avg_recovery_to_high_pct: 2.59
+    pct_recovery_above_1: 53.4
+    pct_recovery_above_3: 6.9
+    mae_p90: 2.585
+    mae_median: 0.928
+    dow_favorable: *id003
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 1.5
+    ev: 0.9017
+    win_rate: 70.7
+    oos_win_rate: 77.8
+    oos_ev: 1.0222
+    monte_carlo:
+      ev_ci_lower: 0.6966
+      ev_ci_upper: 1.0783
+      wr_ci_lower: 58.6
+      wr_ci_upper: 81.1
+      max_dd_ci_upper: 1.5
+    best_time_buckets:
+      09:15-09:45:
+        probability: 5.2
+        avg_recovery: 0.46
+        n: 3
+      09:45-10:15:
+        probability: 13.8
+        avg_recovery: 0.34
+        n: 8
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAABAS0A=
+        avg_recovery: 1.45
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.06
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmYmTUA=
+        avg_recovery: 1.44
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.73
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmbmSkA=
+        avg_recovery: 1.21
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAATkA=
+        avg_recovery: 1.58
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzNzQ0A=
+        avg_recovery: 0.89
+        n: 18
+  DATAPATTNS.NS:
+    enabled: true
+    name: Data Patterns
+    edge_strength: 5
+    sample_size: 58
+    avg_recovery_to_close_pct: 2.16
+    avg_recovery_to_high_pct: 4.47
+    pct_recovery_above_1: 65.5
+    pct_recovery_above_3: 25.9
+    mae_p90: 4.324
+    mae_median: 1.312
+    dow_favorable: *id004
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 2.5
+    ev: 1.8879
+    win_rate: 81.0
+    oos_win_rate: 83.3
+    oos_ev: 1.95
+    monte_carlo:
+      ev_ci_lower: 1.6086
+      ev_ci_upper: 2.1672
+      wr_ci_lower: 70.7
+      wr_ci_upper: 91.4
+      max_dd_ci_upper: 1.2
+    best_time_buckets:
+      09:45-10:15:
+        probability: 19.0
+        avg_recovery: 0.58
+        n: 11
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMwsUkA=
+        avg_recovery: 2.3
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMzsVkA=
+        avg_recovery: 2.35
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMysUEA=
+        avg_recovery: 2.5
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.94
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          mpmZmZkZR0A=
+        avg_recovery: 1.73
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAABAUEA=
+        avg_recovery: 2.42
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMysUEA=
+        avg_recovery: 1.59
+        n: 18
+  EXIDEIND.NS:
+    enabled: true
+    name: Exide Industries
+    edge_strength: 5
+    sample_size: 58
+    avg_recovery_to_close_pct: 0.94
+    avg_recovery_to_high_pct: 2.03
+    pct_recovery_above_1: 39.7
+    pct_recovery_above_3: 0.0
+    mae_p90: 2.244
+    mae_median: 1.006
+    dow_favorable: *id003
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 1.0
+    ev: 0.6517
+    win_rate: 79.3
+    oos_win_rate: 77.8
+    oos_ev: 0.6333
+    monte_carlo:
+      ev_ci_lower: 0.5276
+      ev_ci_upper: 0.7759
+      wr_ci_lower: 69.0
+      wr_ci_upper: 89.7
+      max_dd_ci_upper: 1.2
+    best_time_buckets:
+      09:15-09:45:
+        probability: 8.6
+        avg_recovery: 0.46
+        n: 5
+      09:45-10:15:
+        probability: 15.5
+        avg_recovery: 0.3
+        n: 9
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAABAS0A=
+        avg_recovery: 1.21
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmamQEA=
+        avg_recovery: 0.88
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmamQEA=
+        avg_recovery: 0.86
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.04
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMzMPkA=
+        avg_recovery: 0.79
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAAREA=
+        avg_recovery: 1.0
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzNzQ0A=
+        avg_recovery: 0.81
+        n: 18
+  FINCABLES.NS:
+    enabled: false
+    name: Finolex Cables
+    edge_strength: 4
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.71
+    avg_recovery_to_high_pct: 2.88
+    pct_recovery_above_1: 55.2
+    pct_recovery_above_3: 20.7
+    mae_p90: 2.652
+    mae_median: 1.0
+    dow_favorable: *id003
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 2.5
+    ev: 1.0034
+    win_rate: 48.3
+    oos_win_rate: 72.2
+    oos_ev: 1.65
+    monte_carlo:
+      ev_ci_lower: 0.6776
+      ev_ci_upper: 1.3293
+      wr_ci_lower: 36.2
+      wr_ci_upper: 60.3
+      max_dd_ci_upper: 2.7
+    best_time_buckets:
+      09:15-09:45:
+        probability: 5.2
+        avg_recovery: 0.44
+        n: 3
+      09:45-10:15:
+        probability: 12.1
+        avg_recovery: 0.27
+        n: 7
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAADARkA=
+        avg_recovery: 1.88
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmYmTUA=
+        avg_recovery: 1.73
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmYmTUA=
+        avg_recovery: 1.29
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAACAUUA=
+        avg_recovery: 2.13
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          mpmZmZkZR0A=
+        avg_recovery: 1.59
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAATkA=
+        avg_recovery: 1.85
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzMzRkA=
+        avg_recovery: 1.38
+        n: 18
+  GLENMARK.NS:
+    enabled: true
+    name: Glenmark Pharmaceuticals
+    edge_strength: 5
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.1
+    avg_recovery_to_high_pct: 2.21
+    pct_recovery_above_1: 43.1
+    pct_recovery_above_3: 3.4
+    mae_p90: 2.039
+    mae_median: 0.823
+    dow_favorable: *id003
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 1.5
+    ev: 0.8431
+    win_rate: 67.2
+    oos_win_rate: 66.7
+    oos_ev: 0.8333
+    monte_carlo:
+      ev_ci_lower: 0.6379
+      ev_ci_upper: 1.0483
+      wr_ci_lower: 55.2
+      wr_ci_upper: 79.3
+      max_dd_ci_upper: 1.5
+    best_time_buckets:
+      09:15-09:45:
+        probability: 5.2
+        avg_recovery: 0.19
+        n: 3
+      09:45-10:15:
+        probability: 15.5
+        avg_recovery: 0.2
+        n: 9
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAADARkA=
+        avg_recovery: 1.13
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.16
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAAOUA=
+        avg_recovery: 0.95
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.17
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          mpmZmZkZR0A=
+        avg_recovery: 1.1
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAADAR0A=
+        avg_recovery: 1.16
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmamQEA=
+        avg_recovery: 0.97
+        n: 18
+  GPIL.NS:
+    enabled: true
+    name: Godawari Power & Ispat
+    edge_strength: 4
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.77
+    avg_recovery_to_high_pct: 3.46
+    pct_recovery_above_1: 65.5
+    pct_recovery_above_3: 17.2
+    mae_p90: 3.466
+    mae_median: 1.282
+    dow_favorable: *id004
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 2.5
+    ev: 1.4224
+    win_rate: 63.8
+    oos_win_rate: 61.1
+    oos_ev: 1.35
+    monte_carlo:
+      ev_ci_lower: 1.0966
+      ev_ci_upper: 1.7483
+      wr_ci_lower: 51.7
+      wr_ci_upper: 75.9
+      max_dd_ci_upper: 1.8
+    best_time_buckets:
+      09:15-09:45:
+        probability: 1.7
+        avg_recovery: 1.32
+        n: 1
+      09:45-10:15:
+        probability: 15.5
+        avg_recovery: 0.43
+        n: 9
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          mpmZmZm5VkA=
+        avg_recovery: 2.36
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzPTVEA=
+        avg_recovery: 2.48
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMysUEA=
+        avg_recovery: 1.84
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.26
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAABAQ0A=
+        avg_recovery: 0.94
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAADgUEA=
+        avg_recovery: 1.74
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMyMTkA=
+        avg_recovery: 1.84
+        n: 18
+  GRAPHITE.NS:
+    enabled: true
+    name: Graphite India
+    edge_strength: 5
+    sample_size: 58
+    avg_recovery_to_close_pct: 2.01
+    avg_recovery_to_high_pct: 4.16
+    pct_recovery_above_1: 65.5
+    pct_recovery_above_3: 19.0
+    mae_p90: 3.548
+    mae_median: 1.178
+    dow_favorable: *id004
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 2.5
+    ev: 1.7483
+    win_rate: 75.9
+    oos_win_rate: 83.3
+    oos_ev: 1.95
+    monte_carlo:
+      ev_ci_lower: 1.4224
+      ev_ci_upper: 2.0276
+      wr_ci_lower: 63.8
+      wr_ci_upper: 86.2
+      max_dd_ci_upper: 1.2
+    best_time_buckets:
+      09:15-09:45:
+        probability: 1.7
+        avg_recovery: 0.32
+        n: 1
+      09:45-10:15:
+        probability: 17.2
+        avg_recovery: 0.47
+        n: 10
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMwsUkA=
+        avg_recovery: 2.01
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzPTVEA=
+        avg_recovery: 2.19
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMysUEA=
+        avg_recovery: 3.03
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAATkA=
+        avg_recovery: 1.29
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          mpmZmZkZR0A=
+        avg_recovery: 1.46
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAACAUUA=
+        avg_recovery: 2.02
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMzMS0A=
+        avg_recovery: 1.98
+        n: 18
+  HAL.NS:
+    enabled: true
+    name: Hindustan Aeronautics
+    edge_strength: 4
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.18
+    avg_recovery_to_high_pct: 2.31
+    pct_recovery_above_1: 51.7
+    pct_recovery_above_3: 3.4
+    mae_p90: 2.84
+    mae_median: 1.027
+    dow_favorable: *id004
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 1.5
+    ev: 0.7552
+    win_rate: 62.1
+    oos_win_rate: 66.7
+    oos_ev: 0.8333
+    monte_carlo:
+      ev_ci_lower: 0.55
+      ev_ci_upper: 0.9603
+      wr_ci_lower: 50.0
+      wr_ci_upper: 74.1
+      max_dd_ci_upper: 1.8
+    best_time_buckets:
+      09:15-09:45:
+        probability: 6.9
+        avg_recovery: 0.25
+        n: 4
+      09:45-10:15:
+        probability: 10.3
+        avg_recovery: 0.28
+        n: 6
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzNzVEA=
+        avg_recovery: 1.61
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmamQEA=
+        avg_recovery: 0.99
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          mpmZmZnZREA=
+        avg_recovery: 1.3
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAATkA=
+        avg_recovery: 1.15
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          mpmZmZkZR0A=
+        avg_recovery: 0.91
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAATkA=
+        avg_recovery: 1.34
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmamQEA=
+        avg_recovery: 0.82
+        n: 18
+  HAVELLS.NS:
+    enabled: true
+    name: Havells India
+    edge_strength: 5
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.03
+    avg_recovery_to_high_pct: 2.09
+    pct_recovery_above_1: 44.8
+    pct_recovery_above_3: 1.7
+    mae_p90: 2.345
+    mae_median: 0.778
+    dow_favorable: *id003
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 1.0
+    ev: 0.631
+    win_rate: 77.6
+    oos_win_rate: 88.9
+    oos_ev: 0.7667
+    monte_carlo:
+      ev_ci_lower: 0.5069
+      ev_ci_upper: 0.7552
+      wr_ci_lower: 67.2
+      wr_ci_upper: 87.9
+      max_dd_ci_upper: 1.2
+    best_time_buckets:
+      09:15-09:45:
+        probability: 1.7
+        avg_recovery: 0.64
+        n: 1
+      09:45-10:15:
+        probability: 12.1
+        avg_recovery: 0.4
+        n: 7
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzMzQkA=
+        avg_recovery: 0.96
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          mpmZmZnZREA=
+        avg_recovery: 1.17
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          mpmZmZnZREA=
+        avg_recovery: 0.99
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAAREA=
+        avg_recovery: 0.96
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAADATkA=
+        avg_recovery: 1.03
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAACAS0A=
+        avg_recovery: 1.15
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzMzNkA=
+        avg_recovery: 0.75
+        n: 18
+  IDBI.NS:
+    enabled: true
+    name: IDBI Bank
+    edge_strength: 5
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.7
+    avg_recovery_to_high_pct: 3.64
+    pct_recovery_above_1: 56.9
+    pct_recovery_above_3: 17.2
+    mae_p90: 3.435
+    mae_median: 1.054
+    dow_favorable: *id003
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 2.0
+    ev: 1.369
+    win_rate: 75.9
+    oos_win_rate: 83.3
+    oos_ev: 1.5333
+    monte_carlo:
+      ev_ci_lower: 1.1414
+      ev_ci_upper: 1.5966
+      wr_ci_lower: 65.5
+      wr_ci_upper: 86.2
+      max_dd_ci_upper: 1.2
+    best_time_buckets:
+      09:15-09:45:
+        probability: 3.4
+        avg_recovery: 0.57
+        n: 2
+      09:45-10:15:
+        probability: 13.8
+        avg_recovery: 0.29
+        n: 8
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAADARkA=
+        avg_recovery: 1.18
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmYmTUA=
+        avg_recovery: 1.58
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMysUEA=
+        avg_recovery: 2.21
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 0.9
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAADATkA=
+        avg_recovery: 2.4
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAABAT0A=
+        avg_recovery: 2.0
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzMzRkA=
+        avg_recovery: 1.04
+        n: 18
+  INDIANB.NS:
+    enabled: true
+    name: Indian Bank
+    edge_strength: 5
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.55
+    avg_recovery_to_high_pct: 2.66
+    pct_recovery_above_1: 60.3
+    pct_recovery_above_3: 13.8
+    mae_p90: 2.44
+    mae_median: 0.805
+    dow_favorable: *id004
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 1.5
+    ev: 0.9897
+    win_rate: 75.9
+    oos_win_rate: 83.3
+    oos_ev: 1.1167
+    monte_carlo:
+      ev_ci_lower: 0.7845
+      ev_ci_upper: 1.1655
+      wr_ci_lower: 63.8
+      wr_ci_upper: 86.2
+      max_dd_ci_upper: 1.2
+    best_time_buckets:
+      09:15-09:45:
+        probability: 3.4
+        avg_recovery: 0.64
+        n: 2
+      09:45-10:15:
+        probability: 6.9
+        avg_recovery: 0.28
+        n: 4
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMzMT0A=
+        avg_recovery: 1.59
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMysUEA=
+        avg_recovery: 1.8
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAADAUkA=
+        avg_recovery: 1.95
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAAREA=
+        avg_recovery: 1.3
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmbmSkA=
+        avg_recovery: 1.12
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAACAUUA=
+        avg_recovery: 1.7
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzNzQ0A=
+        avg_recovery: 1.22
+        n: 18
+  KFINTECH.NS:
+    enabled: true
+    name: KFin Technologies
+    edge_strength: 4
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.33
+    avg_recovery_to_high_pct: 2.87
+    pct_recovery_above_1: 55.2
+    pct_recovery_above_3: 10.3
+    mae_p90: 2.794
+    mae_median: 1.474
+    dow_favorable: *id003
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 2.0
+    ev: 1.0276
+    win_rate: 60.3
+    oos_win_rate: 72.2
+    oos_ev: 1.2889
+    monte_carlo:
+      ev_ci_lower: 0.7241
+      ev_ci_upper: 1.2931
+      wr_ci_lower: 46.6
+      wr_ci_upper: 72.4
+      max_dd_ci_upper: 1.815
+    best_time_buckets:
+      09:15-09:45:
+        probability: 8.6
+        avg_recovery: 0.29
+        n: 5
+      09:45-10:15:
+        probability: 12.1
+        avg_recovery: 0.27
+        n: 7
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAADARkA=
+        avg_recovery: 1.47
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAADAUkA=
+        avg_recovery: 1.59
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          mpmZmZnZREA=
+        avg_recovery: 1.04
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.53
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAADATkA=
+        avg_recovery: 1.08
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAATkA=
+        avg_recovery: 1.33
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzMzRkA=
+        avg_recovery: 1.33
+        n: 18
+  MTARTECH.NS:
+    enabled: true
+    name: MTAR Technologies
+    edge_strength: 5
+    sample_size: 58
+    avg_recovery_to_close_pct: 2.61
+    avg_recovery_to_high_pct: 4.82
+    pct_recovery_above_1: 84.5
+    pct_recovery_above_3: 31.0
+    mae_p90: 4.645
+    mae_median: 1.413
+    dow_favorable: *id004
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 3.0
+    ev: 1.8517
+    win_rate: 67.2
+    oos_win_rate: 72.2
+    oos_ev: 2.0111
+    monte_carlo:
+      ev_ci_lower: 1.4655
+      ev_ci_upper: 2.2379
+      wr_ci_lower: 55.2
+      wr_ci_upper: 79.3
+      max_dd_ci_upper: 1.5
+    best_time_buckets:
+      09:15-09:45:
+        probability: 3.4
+        avg_recovery: 2.02
+        n: 2
+      09:45-10:15:
+        probability: 13.8
+        avg_recovery: 1.11
+        n: 8
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzNzVEA=
+        avg_recovery: 2.38
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzPTVEA=
+        avg_recovery: 3.35
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMzsVkA=
+        avg_recovery: 2.34
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAACAUUA=
+        avg_recovery: 2.01
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzMTV0A=
+        avg_recovery: 2.82
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAADgVUA=
+        avg_recovery: 2.96
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzNzU0A=
+        avg_recovery: 1.83
+        n: 18
+  NBCC.NS:
+    enabled: false
+    name: NBCC (India)
+    edge_strength: 3
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.44
+    avg_recovery_to_high_pct: 3.14
+    pct_recovery_above_1: 50.0
+    pct_recovery_above_3: 12.1
+    mae_p90: 3.642
+    mae_median: 1.579
+    dow_favorable: *id004
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 2.5
+    ev: 1.1431
+    win_rate: 53.4
+    oos_win_rate: 33.3
+    oos_ev: 0.6
+    monte_carlo:
+      ev_ci_lower: 0.7707
+      ev_ci_upper: 1.469
+      wr_ci_lower: 39.7
+      wr_ci_upper: 65.5
+      max_dd_ci_upper: 2.4
+    best_time_buckets:
+      09:15-09:45:
+        probability: 5.2
+        avg_recovery: 0.42
+        n: 3
+      09:45-10:15:
+        probability: 13.8
+        avg_recovery: 0.32
+        n: 8
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMzMT0A=
+        avg_recovery: 2.28
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.22
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmamQEA=
+        avg_recovery: 1.17
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAATkA=
+        avg_recovery: 1.1
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          mpmZmZkZR0A=
+        avg_recovery: 1.42
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.31
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.73
+        n: 18
+  NETWEB.NS:
+    enabled: true
+    name: Netweb Technologies
+    edge_strength: 5
+    sample_size: 58
+    avg_recovery_to_close_pct: 2.08
+    avg_recovery_to_high_pct: 4.75
+    pct_recovery_above_1: 58.6
+    pct_recovery_above_3: 22.4
+    mae_p90: 4.061
+    mae_median: 1.655
+    dow_favorable: *id004
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 2.5
+    ev: 1.7948
+    win_rate: 77.6
+    oos_win_rate: 72.2
+    oos_ev: 1.65
+    monte_carlo:
+      ev_ci_lower: 1.469
+      ev_ci_upper: 2.0741
+      wr_ci_lower: 65.5
+      wr_ci_upper: 87.9
+      max_dd_ci_upper: 1.2
+    best_time_buckets:
+      09:15-09:45:
+        probability: 8.6
+        avg_recovery: 0.95
+        n: 5
+      09:45-10:15:
+        probability: 24.1
+        avg_recovery: 0.47
+        n: 14
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMwsUkA=
+        avg_recovery: 2.32
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          mpmZmZnZREA=
+        avg_recovery: 1.73
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmYmTUA=
+        avg_recovery: 1.86
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAATkA=
+        avg_recovery: 2.0
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAADATkA=
+        avg_recovery: 2.46
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAABAT0A=
+        avg_recovery: 2.26
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.67
+        n: 18
+  NTPC.NS:
+    enabled: true
+    name: NTPC
+    edge_strength: 4
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.02
+    avg_recovery_to_high_pct: 1.82
+    pct_recovery_above_1: 36.2
+    pct_recovery_above_3: 5.2
+    mae_p90: 1.688
+    mae_median: 0.543
+    dow_favorable: *id003
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 1.0
+    ev: 0.4655
+    win_rate: 63.8
+    oos_win_rate: 66.7
+    oos_ev: 0.5
+    monte_carlo:
+      ev_ci_lower: 0.3207
+      ev_ci_upper: 0.6103
+      wr_ci_lower: 51.7
+      wr_ci_upper: 75.9
+      max_dd_ci_upper: 1.8
+    best_time_buckets:
+      09:15-09:45:
+        probability: 5.2
+        avg_recovery: 0.39
+        n: 3
+      09:45-10:15:
+        probability: 10.3
+        avg_recovery: 0.21
+        n: 6
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMxMO0A=
+        avg_recovery: 0.77
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.13
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmamQEA=
+        avg_recovery: 1.03
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAAREA=
+        avg_recovery: 1.05
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMzMPkA=
+        avg_recovery: 1.12
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAACARkA=
+        avg_recovery: 1.18
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzOzMEA=
+        avg_recovery: 0.68
+        n: 18
+  PFC.NS:
+    enabled: true
+    name: Power Finance Corp
+    edge_strength: 5
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.44
+    avg_recovery_to_high_pct: 2.57
+    pct_recovery_above_1: 58.6
+    pct_recovery_above_3: 12.1
+    mae_p90: 2.6
+    mae_median: 1.083
+    dow_favorable: *id004
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 1.5
+    ev: 0.8431
+    win_rate: 67.2
+    oos_win_rate: 83.3
+    oos_ev: 1.1167
+    monte_carlo:
+      ev_ci_lower: 0.6379
+      ev_ci_upper: 1.0483
+      wr_ci_lower: 55.2
+      wr_ci_upper: 79.3
+      max_dd_ci_upper: 1.5
+    best_time_buckets:
+      09:15-09:45:
+        probability: 5.2
+        avg_recovery: 0.42
+        n: 3
+      09:45-10:15:
+        probability: 12.1
+        avg_recovery: 0.41
+        n: 7
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMzMT0A=
+        avg_recovery: 1.54
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMysUEA=
+        avg_recovery: 1.54
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmYmTUA=
+        avg_recovery: 1.8
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.11
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmbmSkA=
+        avg_recovery: 1.2
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAABAT0A=
+        avg_recovery: 1.64
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.01
+        n: 18
+  RVNL.NS:
+    enabled: true
+    name: Rail Vikas Nigam
+    edge_strength: 5
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.61
+    avg_recovery_to_high_pct: 3.33
+    pct_recovery_above_1: 48.3
+    pct_recovery_above_3: 19.0
+    mae_p90: 3.208
+    mae_median: 1.233
+    dow_favorable: *id003
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 2.0
+    ev: 1.2172
+    win_rate: 69.0
+    oos_win_rate: 55.6
+    oos_ev: 0.9222
+    monte_carlo:
+      ev_ci_lower: 0.9517
+      ev_ci_upper: 1.4828
+      wr_ci_lower: 56.9
+      wr_ci_upper: 81.0
+      max_dd_ci_upper: 1.5
+    best_time_buckets:
+      09:15-09:45:
+        probability: 3.4
+        avg_recovery: 0.33
+        n: 2
+      09:45-10:15:
+        probability: 15.5
+        avg_recovery: 0.3
+        n: 9
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAABAS0A=
+        avg_recovery: 1.7
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.32
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmamQEA=
+        avg_recovery: 1.3
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.32
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmbmSkA=
+        avg_recovery: 2.33
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAADAR0A=
+        avg_recovery: 1.42
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 2.05
+        n: 18
+  SAILIFE.NS:
+    enabled: true
+    name: SBI Life Insurance
+    edge_strength: 4
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.68
+    avg_recovery_to_high_pct: 3.22
+    pct_recovery_above_1: 62.1
+    pct_recovery_above_3: 24.1
+    mae_p90: 3.496
+    mae_median: 0.935
+    dow_favorable: *id004
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 2.5
+    ev: 1.1897
+    win_rate: 55.2
+    oos_win_rate: 61.1
+    oos_ev: 1.35
+    monte_carlo:
+      ev_ci_lower: 0.8172
+      ev_ci_upper: 1.5155
+      wr_ci_lower: 41.4
+      wr_ci_upper: 67.2
+      max_dd_ci_upper: 2.1
+    best_time_buckets:
+      09:15-09:45:
+        probability: 1.7
+        avg_recovery: 0.17
+        n: 1
+      09:45-10:15:
+        probability: 12.1
+        avg_recovery: 0.52
+        n: 7
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMzMT0A=
+        avg_recovery: 1.45
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMysUEA=
+        avg_recovery: 1.76
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMysUEA=
+        avg_recovery: 1.65
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.62
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAADATkA=
+        avg_recovery: 1.91
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAABAUEA=
+        avg_recovery: 1.79
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMzMS0A=
+        avg_recovery: 1.45
+        n: 18
+  SCI.NS:
+    enabled: true
+    name: Shipping Corp of India
+    edge_strength: 4
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.69
+    avg_recovery_to_high_pct: 3.59
+    pct_recovery_above_1: 53.4
+    pct_recovery_above_3: 15.5
+    mae_p90: 3.472
+    mae_median: 1.483
+    dow_favorable: *id003
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 2.5
+    ev: 1.3759
+    win_rate: 62.1
+    oos_win_rate: 66.7
+    oos_ev: 1.5
+    monte_carlo:
+      ev_ci_lower: 1.05
+      ev_ci_upper: 1.7017
+      wr_ci_lower: 50.0
+      wr_ci_upper: 74.1
+      max_dd_ci_upper: 1.8
+    best_time_buckets:
+      09:15-09:45:
+        probability: 6.9
+        avg_recovery: 0.67
+        n: 4
+      09:45-10:15:
+        probability: 20.7
+        avg_recovery: 0.18
+        n: 12
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAABAS0A=
+        avg_recovery: 2.51
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMysUEA=
+        avg_recovery: 1.95
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.24
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAAREA=
+        avg_recovery: 1.08
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmbmSkA=
+        avg_recovery: 1.66
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAABASkA=
+        avg_recovery: 1.72
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          zczMzMzMS0A=
+        avg_recovery: 1.64
+        n: 18
+  TATAPOWER.NS:
+    enabled: true
+    name: Tata Power
+    edge_strength: 5
+    sample_size: 58
+    avg_recovery_to_close_pct: 0.93
+    avg_recovery_to_high_pct: 1.86
+    pct_recovery_above_1: 34.5
+    pct_recovery_above_3: 0.0
+    mae_p90: 1.853
+    mae_median: 0.905
+    dow_favorable: *id003
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 1.0
+    ev: 0.5897
+    win_rate: 74.1
+    oos_win_rate: 77.8
+    oos_ev: 0.6333
+    monte_carlo:
+      ev_ci_lower: 0.4448
+      ev_ci_upper: 0.7138
+      wr_ci_lower: 62.1
+      wr_ci_upper: 84.5
+      max_dd_ci_upper: 1.2
+    best_time_buckets:
+      09:15-09:45:
+        probability: 3.4
+        avg_recovery: 0.19
+        n: 2
+      09:45-10:15:
+        probability: 12.1
+        avg_recovery: 0.3
+        n: 7
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzMzQkA=
+        avg_recovery: 0.95
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAAOUA=
+        avg_recovery: 0.74
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          mpmZmZnZREA=
+        avg_recovery: 0.92
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAAPkA=
+        avg_recovery: 1.0
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAABAQ0A=
+        avg_recovery: 1.03
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAAREA=
+        avg_recovery: 1.06
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzMzNkA=
+        avg_recovery: 0.62
+        n: 18
+  TRENT.NS:
+    enabled: true
+    name: Trent
+    edge_strength: 5
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.32
+    avg_recovery_to_high_pct: 2.58
+    pct_recovery_above_1: 51.7
+    pct_recovery_above_3: 6.9
+    mae_p90: 2.854
+    mae_median: 1.074
+    dow_favorable: *id003
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 1.5
+    ev: 0.9017
+    win_rate: 70.7
+    oos_win_rate: 83.3
+    oos_ev: 1.1167
+    monte_carlo:
+      ev_ci_lower: 0.6966
+      ev_ci_upper: 1.0776
+      wr_ci_lower: 58.6
+      wr_ci_upper: 81.0
+      max_dd_ci_upper: 1.5
+    best_time_buckets:
+      09:15-09:45:
+        probability: 6.9
+        avg_recovery: 0.59
+        n: 4
+      09:45-10:15:
+        probability: 8.6
+        avg_recovery: 0.28
+        n: 5
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAABAS0A=
+        avg_recovery: 1.37
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          mpmZmZnZREA=
+        avg_recovery: 1.04
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAADAUkA=
+        avg_recovery: 1.6
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.77
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAABAQ0A=
+        avg_recovery: 0.95
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAATkA=
+        avg_recovery: 1.4
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          ZmZmZmamQEA=
+        avg_recovery: 1.15
+        n: 18
+  VBL.NS:
+    enabled: true
+    name: Varun Beverages
+    edge_strength: 4
+    sample_size: 58
+    avg_recovery_to_close_pct: 1.33
+    avg_recovery_to_high_pct: 2.55
+    pct_recovery_above_1: 50.0
+    pct_recovery_above_3: 8.6
+    mae_p90: 2.595
+    mae_median: 1.082
+    dow_favorable: *id003
+    optimal_entry_delay: 2
+    optimal_stop_pct: 0.2
+    optimal_target_pct: 2.0
+    ev: 0.8379
+    win_rate: 51.7
+    oos_win_rate: 44.4
+    oos_ev: 0.6778
+    monte_carlo:
+      ev_ci_lower: 0.5724
+      ev_ci_upper: 1.1414
+      wr_ci_lower: 39.7
+      wr_ci_upper: 65.5
+      max_dd_ci_upper: 2.4
+    best_time_buckets:
+      09:15-09:45:
+        probability: 3.4
+        avg_recovery: 0.27
+        n: 2
+      09:45-10:15:
+        probability: 10.3
+        avg_recovery: 0.19
+        n: 6
+    dow_stats:
+      Monday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAABAS0A=
+        avg_recovery: 1.63
+        n: 11
+      Tuesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.49
+        n: 12
+      Wednesday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.13
+        n: 12
+      Thursday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAAAASUA=
+        avg_recovery: 1.49
+        n: 10
+      Friday:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          mpmZmZkZR0A=
+        avg_recovery: 0.98
+        n: 13
+    month_period_stats:
+      Q1:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          AAAAAABASkA=
+        avg_recovery: 1.33
+        n: 40
+      Q4:
+        win_rate: !!python/object/apply:numpy._core.multiarray.scalar
+        - *id001
+        - !!binary |
+          MzMzMzMzRkA=
+        avg_recovery: 1.32
+        n: 18
+summary:
+  total_tickers: 34
+  enabled: 31
+  disabled: 3

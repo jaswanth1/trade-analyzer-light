@@ -1,0 +1,24 @@
+# Secrets
+.env
+.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Data / output
+output/
+scalp_reports/
+btst_reports/
+intraday_reports/
+*.db
+
+# Models (Phase 2)
+models/

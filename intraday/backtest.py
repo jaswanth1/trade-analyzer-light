@@ -5,13 +5,16 @@ Intraday Scanner Backtest
 Replays historical days through the intraday scanner's phase-aware pipeline:
   1. Post-market T-1 — tomorrow's watchlist (gap scenarios for T)
   2. Pre-market T — gap scenarios with daily data only
-  3. Live scans at 09:30, 11:00, 13:00, 14:30 on T
+  3. Live scans — continuous (default, every N min) or 4-point (--fast)
   4. Validates all signals against actual T data (entry hit, target/stop, MFE/MAE)
 
 Pre-live (9:00-9:15) is skipped — yfinance doesn't store pre-market auction data.
 
 Usage:
     python -m intraday.backtest --date 2026-02-20
+    python -m intraday.backtest --date 2026-02-20 --fast          # old 4-point mode
+    python -m intraday.backtest --date 2026-02-20 --scan-interval 15
+    python -m intraday.backtest --date 2026-02-20 --interval 1m   # 1-min candles
     python -m intraday.backtest --start 2026-02-10 --end 2026-02-20
     python -m intraday.backtest --date 2026-02-20 --capital 500000
     python -m intraday.backtest --date 2026-02-20 --llm
@@ -114,12 +117,17 @@ class SignalResult:
 class IntradayBacktestEngine:
     """Backtest engine for the intraday scanner."""
 
-    def __init__(self, target_date, capital=1000000, config=None, use_llm=False):
+    def __init__(self, target_date, capital=1000000, config=None, use_llm=False,
+                 fast=False, scan_interval=30, interval="5m"):
         self.target_date = target_date  # date object — the day we're testing
         self.capital = capital
         self.config = config or {}
         self.use_llm = use_llm
+        self.fast = fast                # True = old 4-point mode
+        self.scan_interval = scan_interval  # minutes between continuous scans
+        self.interval = interval        # "5m" or "1m" candle width
         self.all_signals: list[SignalResult] = []
+        self._seen_signals: set = set()  # dedup key: (symbol, strategy, direction)
         self.market_context: dict = {}
         self.data_cache: dict = {}  # {symbol: {"daily": df, "intra": df}}
         self.symbols = list(TICKERS.keys())
@@ -127,12 +135,18 @@ class IntradayBacktestEngine:
     # ── Data Fetching ──────────────────────────────────────────────────
 
     def fetch_all_data(self):
-        """Pre-fetch daily (6mo) + intraday (5min, 5d) data for all tickers + Nifty."""
-        print(f"  Fetching data for {len(self.symbols)} tickers + Nifty...")
+        """Pre-fetch daily (6mo) + intraday data for all tickers + Nifty."""
+        # 1m candles: yfinance limits to 7d; 5m: 5d
+        intra_period = "7d" if self.interval == "1m" else "5d"
+        intra_label = self.interval
+        if self.interval == "1m":
+            print(f"  [NOTE] Using 1-min candles — slower evaluation, finer resolution")
+        print(f"  Fetching data for {len(self.symbols)} tickers + Nifty "
+              f"(intraday: {intra_label}, period: {intra_period})...")
 
         # Nifty
         nifty_daily = fetch_yf(BENCHMARK, period="6mo", interval="1d")
-        nifty_intra = fetch_yf(BENCHMARK, period="5d", interval="5m")
+        nifty_intra = fetch_yf(BENCHMARK, period=intra_period, interval=self.interval)
         self.data_cache["_nifty"] = {"daily": nifty_daily, "intra": nifty_intra}
 
         # VIX (single fetch, reused across phases)
@@ -145,7 +159,7 @@ class IntradayBacktestEngine:
         # Tickers
         for sym in self.symbols:
             daily = fetch_yf(sym, period="6mo", interval="1d")
-            intra = fetch_yf(sym, period="5d", interval="5m")
+            intra = fetch_yf(sym, period=intra_period, interval=self.interval)
             self.data_cache[sym] = {"daily": daily, "intra": intra}
 
         # Sector indices
@@ -395,6 +409,83 @@ class IntradayBacktestEngine:
               f"Actionable (STRONG/ACTIVE): {n_actionable} | "
               f"Watch: {n_watch}")
 
+    def run_continuous_live_scan(self):
+        """Continuous live scanning from 09:30 to 15:15 at scan_interval-min steps.
+
+        Deduplicates signals via self._seen_signals keyed on (symbol, strategy, direction).
+        Seed the seen set from pre/post-market signals before calling this.
+        """
+        # Seed seen set from signals already collected (post-market, pre-market)
+        for sig in self.all_signals:
+            self._seen_signals.add((sig.symbol, sig.strategy, sig.direction))
+
+        start_minutes = 9 * 60 + 30   # 09:30
+        end_minutes = 15 * 60 + 15     # 15:15
+        scan_times = []
+        t = start_minutes
+        while t <= end_minutes:
+            h, m = divmod(t, 60)
+            scan_times.append(dtime(h, m))
+            t += self.scan_interval
+
+        print(f"\n  Continuous scanning: {len(scan_times)} scan points "
+              f"(every {self.scan_interval} min, 09:30-15:15)")
+
+        total_new = 0
+        for scan_time in scan_times:
+            mock_dt = datetime.combine(self.target_date, scan_time, tzinfo=IST)
+            label = scan_time.strftime("%H:%M")
+
+            t_minus_1 = self._get_prev_trading_day()
+            data_override = self._build_data_override(t_minus_1, mock_dt)
+
+            candidates = _run_live_scan(
+                self.config, self.symbols,
+                now_ist=mock_dt, data_override=data_override, skip_llm=True,
+            )
+
+            n_new = 0
+            for c in (candidates or []):
+                tier = c.get("signal", "AVOID")
+                if tier == "AVOID":
+                    continue
+                key = (c["symbol"], c.get("strategy", ""), c.get("direction", "long"))
+                if key in self._seen_signals:
+                    continue  # already seen this signal
+                self._seen_signals.add(key)
+
+                sig = SignalResult(
+                    symbol=c["symbol"],
+                    name=c.get("name", c["symbol"]),
+                    phase=f"live_{label}",
+                    strategy=c.get("strategy", ""),
+                    direction=c.get("direction", "long"),
+                    entry_price=c.get("entry_price", 0),
+                    target_price=c.get("target_price", 0),
+                    stop_price=c.get("stop_price", 0),
+                    score=c.get("score", 0),
+                    signal_tier=tier,
+                    rr_ratio=c.get("rr_ratio", 0),
+                    reason=c.get("signal_reason", ""),
+                    convergence=c.get("convergence_detail", ""),
+                    regime=c.get("symbol_regime", {}).get("trend", "") if isinstance(c.get("symbol_regime"), dict) else str(c.get("symbol_regime", "")),
+                    conditions=c.get("conditions", {}),
+                    gates=c.get("gates", {}),
+                    day_type=c.get("day_type", ""),
+                    score_raw=c.get("confidence", 0),
+                    historical_hit_rate=c.get("historical_hit_rate", 0),
+                    historical_sample_size=c.get("historical_sample_size", 0),
+                )
+                self.all_signals.append(sig)
+                n_new += 1
+
+            if n_new > 0:
+                print(f"    {label}: +{n_new} new signals")
+            total_new += n_new
+
+        print(f"  Continuous scan complete: {total_new} new signals across "
+              f"{len(scan_times)} scan points")
+
     # ── Market Context Capture ─────────────────────────────────────────
 
     def _capture_market_context(self):
@@ -420,9 +511,12 @@ class IntradayBacktestEngine:
             nifty_daily = self.data_cache.get("_nifty", {}).get("daily", pd.DataFrame())
             atr = 0
             if not nifty_daily.empty and len(nifty_daily) >= 14:
-                atr_series = compute_atr(nifty_daily, period=14)
-                if not atr_series.empty:
-                    atr = float(atr_series.iloc[-1])
+                try:
+                    atr = float(compute_atr(nifty_daily, period=14))
+                    if np.isnan(atr):
+                        atr = 0
+                except Exception:
+                    atr = 0
 
             ctx["nifty"] = {
                 "open": nifty_open, "close": nifty_close,
@@ -717,10 +811,15 @@ class IntradayBacktestEngine:
         # Phase 2: Pre-market T
         self.run_pre_market_t()
 
-        # Phase 3: Live scans at 4 points
-        live_times = [dtime(9, 30), dtime(11, 0), dtime(13, 0), dtime(14, 30)]
-        for t in live_times:
-            self.run_live_scan_at(t)
+        # Phase 3: Live scans
+        if self.fast:
+            # Old 4-point mode
+            live_times = [dtime(9, 30), dtime(11, 0), dtime(13, 0), dtime(14, 30)]
+            for t in live_times:
+                self.run_live_scan_at(t)
+        else:
+            # Continuous scanning (default)
+            self.run_continuous_live_scan()
 
         # Phase 4: Validate
         self.validate_signals()
@@ -738,7 +837,8 @@ class IntradayBacktestEngine:
 
 # ── Multi-Day Runner ──────────────────────────────────────────────────────
 
-def run_multi_day(start_date, end_date, capital=1000000, config=None, use_llm=False):
+def run_multi_day(start_date, end_date, capital=1000000, config=None, use_llm=False,
+                  fast=False, scan_interval=30, interval="5m"):
     """Run backtest across a date range and aggregate results."""
     all_signals = []
     day_summaries = []
@@ -751,7 +851,9 @@ def run_multi_day(start_date, end_date, capital=1000000, config=None, use_llm=Fa
             continue
 
         engine = IntradayBacktestEngine(current, capital=capital, config=config,
-                                        use_llm=use_llm)
+                                        use_llm=use_llm, fast=fast,
+                                        scan_interval=scan_interval,
+                                        interval=interval)
         report = engine.run()
         if report is None:
             current += timedelta(days=1)
@@ -873,6 +975,9 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""Examples:
   python -m intraday.backtest --date 2026-02-20
+  python -m intraday.backtest --date 2026-02-20 --fast
+  python -m intraday.backtest --date 2026-02-20 --scan-interval 15
+  python -m intraday.backtest --date 2026-02-20 --interval 1m
   python -m intraday.backtest --start 2026-02-10 --end 2026-02-20
   python -m intraday.backtest --date 2026-02-20 --capital 500000
   python -m intraday.backtest --date 2026-02-20 --llm""",
@@ -884,6 +989,13 @@ def main():
                         help="Starting capital (default: 1000000)")
     parser.add_argument("--llm", action="store_true",
                         help="Add LLM summary to report (off by default)")
+    parser.add_argument("--fast", action="store_true",
+                        help="Use old 4-point scan mode instead of continuous")
+    parser.add_argument("--scan-interval", type=int, default=30,
+                        help="Minutes between continuous scans (default: 30)")
+    parser.add_argument("--interval", type=str, default="5m",
+                        choices=["1m", "5m"],
+                        help="Candle interval (default: 5m)")
     args = parser.parse_args()
 
     # Load config
@@ -896,7 +1008,10 @@ def main():
     if args.date:
         target = date.fromisoformat(args.date)
         engine = IntradayBacktestEngine(target, capital=args.capital,
-                                        config=config, use_llm=args.llm)
+                                        config=config, use_llm=args.llm,
+                                        fast=args.fast,
+                                        scan_interval=args.scan_interval,
+                                        interval=args.interval)
         report = engine.run()
         if report:
             INTRADAY_REPORT_DIR.mkdir(parents=True, exist_ok=True)
@@ -909,7 +1024,9 @@ def main():
         start = date.fromisoformat(args.start)
         end = date.fromisoformat(args.end)
         run_multi_day(start, end, capital=args.capital, config=config,
-                      use_llm=args.llm)
+                      use_llm=args.llm, fast=args.fast,
+                      scan_interval=args.scan_interval,
+                      interval=args.interval)
     else:
         parser.error("Provide --date or both --start and --end")
 

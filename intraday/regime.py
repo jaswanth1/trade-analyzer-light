@@ -232,8 +232,8 @@ def reclassify_day_type(nifty_intra_ist, nifty_daily):
 
 # ── Symbol-Level Regime ──────────────────────────────────────────────────
 
-def classify_symbol_regime(daily_df, intra_ist, nifty_daily=None):
-    """Per-symbol regime tags (5 dimensions).
+def classify_symbol_regime(daily_df, intra_ist, nifty_daily=None, sector_daily=None):
+    """Per-symbol regime tags (5 dimensions + sector RS).
 
     Returns:
         trend: "strong_up" | "mild_up" | "sideways" | "mild_down" | "strong_down"
@@ -241,6 +241,8 @@ def classify_symbol_regime(daily_df, intra_ist, nifty_daily=None):
         liquidity: "normal" | "illiquid"
         momentum: "accelerating" | "steady" | "decelerating"
         relative_strength: "outperforming" | "inline" | "underperforming"
+        sector_relative_strength: "outperforming" | "inline" | "underperforming"
+        sector_vs_market: "outperforming" | "inline" | "underperforming"
     """
     default = {
         "trend": "sideways",
@@ -351,6 +353,31 @@ def classify_symbol_regime(daily_df, intra_ist, nifty_daily=None):
         elif diff < -0.5:
             relative_strength = "underperforming"
 
+    # Sector relative strength: stock vs sector, sector vs Nifty
+    sector_relative_strength = "inline"
+    sector_vs_market = "inline"
+    if sector_daily is not None and not sector_daily.empty and len(sector_daily) >= 2:
+        sector_ret = (
+            float(sector_daily["Close"].iloc[-1]) / float(sector_daily["Close"].iloc[-2]) - 1
+        ) * 100
+        stock_ret_1d = (price / float(close.iloc[-2]) - 1) * 100 if len(close) >= 2 else 0
+        # Stock vs sector (±0.5% threshold)
+        stock_vs_sector = stock_ret_1d - sector_ret
+        if stock_vs_sector > 0.5:
+            sector_relative_strength = "outperforming"
+        elif stock_vs_sector < -0.5:
+            sector_relative_strength = "underperforming"
+        # Sector vs Nifty (±0.3% threshold)
+        if nifty_daily is not None and not nifty_daily.empty and len(nifty_daily) >= 2:
+            nifty_ret = (
+                float(nifty_daily["Close"].iloc[-1]) / float(nifty_daily["Close"].iloc[-2]) - 1
+            ) * 100
+            sec_vs_nifty = sector_ret - nifty_ret
+            if sec_vs_nifty > 0.3:
+                sector_vs_market = "outperforming"
+            elif sec_vs_nifty < -0.3:
+                sector_vs_market = "underperforming"
+
     # Weekly trend alignment (multi-timeframe)
     weekly_trend = "sideways"
     if len(daily_df) >= 40:
@@ -373,6 +400,8 @@ def classify_symbol_regime(daily_df, intra_ist, nifty_daily=None):
         "liquidity": liquidity,
         "momentum": momentum,
         "relative_strength": relative_strength,
+        "sector_relative_strength": sector_relative_strength,
+        "sector_vs_market": sector_vs_market,
         "weekly_trend": weekly_trend,
     }
 

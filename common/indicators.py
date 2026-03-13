@@ -2,6 +2,8 @@
 Technical indicator computations shared across scanners and reports.
 """
 
+import warnings
+
 import numpy as np
 import pandas as pd
 
@@ -98,6 +100,24 @@ def _to_ist(intraday_df):
 
 def compute_vwap(intraday_df):
     """Compute daily VWAP reset per day."""
+    # Safety check: VWAP day boundaries require IST-aware index.
+    # If the index is UTC or naive, groupby("date") will split at UTC midnight
+    # instead of IST midnight, producing wrong VWAP values.
+    if not intraday_df.empty and intraday_df.index.tz is not None:
+        tz_name = str(intraday_df.index.tz)
+        if "Kolkata" not in tz_name and "IST" not in tz_name and "+05:30" not in tz_name:
+            warnings.warn(
+                f"compute_vwap() received data with tz={tz_name}. "
+                "Expected IST (Asia/Kolkata). Day boundaries may be wrong. "
+                "Call _to_ist() before compute_vwap().",
+                stacklevel=2,
+            )
+    elif not intraday_df.empty and intraday_df.index.tz is None:
+        warnings.warn(
+            "compute_vwap() received timezone-naive data. "
+            "Expected IST (Asia/Kolkata). Call _to_ist() before compute_vwap().",
+            stacklevel=2,
+        )
     df = intraday_df.copy()
     df["typical"] = (df["High"] + df["Low"] + df["Close"]) / 3
     df["tp_vol"] = df["typical"] * df["Volume"]

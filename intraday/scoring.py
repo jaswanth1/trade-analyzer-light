@@ -151,9 +151,15 @@ def evaluate_symbol(symbol, intra_df, daily_df, nifty_state, vix_info,
     vol_ratio = compute_volume_ratio(intra_ist)
     current_vol_ratio = float(vol_ratio.iloc[-1]) if not vol_ratio.empty and not np.isnan(vol_ratio.iloc[-1]) else 1.0
 
-    # Classify symbol regime (with Nifty for relative strength)
+    # Get sector data (needed for both regime classification and mean-revert)
+    sym_sector = cfg.get("sector", "")
+    sym_sector_df = sector_data.get(sym_sector, pd.DataFrame())
+
+    # Classify symbol regime (with Nifty for relative strength + sector RS)
     nifty_daily = nifty_state.get("nifty_daily")
-    symbol_regime = classify_symbol_regime(daily_df, intra_ist, nifty_daily=nifty_daily)
+    symbol_regime = classify_symbol_regime(
+        daily_df, intra_ist, nifty_daily=nifty_daily, sector_daily=sym_sector_df,
+    )
 
     # Get eligible strategies
     day_type = day_type_info.get("type", "range_bound")
@@ -161,10 +167,6 @@ def evaluate_symbol(symbol, intra_df, daily_df, nifty_state, vix_info,
 
     if not eligible:
         return candidates
-
-    # Get sector data for mean-revert sector check
-    sym_sector = cfg.get("sector", "")
-    sym_sector_df = sector_data.get(sym_sector, pd.DataFrame())
 
     # Run each eligible strategy
     for strategy_name in eligible:
@@ -310,6 +312,16 @@ def evaluate_symbol(symbol, intra_df, daily_df, nifty_state, vix_info,
             score_adjustments -= 0.03
         if symbol_regime.get("relative_strength") == "outperforming":
             score_adjustments += 0.02
+
+        # Sector RS bonus: top stock in top sector = strongest signal
+        sec_rs = symbol_regime.get("sector_relative_strength", "inline")
+        sec_vs_mkt = symbol_regime.get("sector_vs_market", "inline")
+        if sec_rs == "outperforming" and sec_vs_mkt == "outperforming":
+            score_adjustments += 0.04  # top stock in top sector
+        elif sec_rs == "outperforming" or sec_vs_mkt == "outperforming":
+            score_adjustments += 0.02  # one outperforming
+        elif sec_rs == "underperforming" and sec_vs_mkt == "underperforming":
+            score_adjustments -= 0.03  # weakest stock in weakest sector
 
         # ── News sentiment adjustment ──
         sym_news = (news_data or {}).get(symbol, {})

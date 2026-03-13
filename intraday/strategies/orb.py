@@ -8,7 +8,7 @@ import numpy as np
 from common.indicators import compute_atr
 from intraday.features import (
     compute_rsi, compute_ema_slope, compute_ema, compute_opening_range,
-    compute_intraday_levels, compute_cumulative_rvol,
+    compute_intraday_levels, compute_cumulative_rvol, compute_candle_imbalance,
 )
 from intraday.strategies._common import _build_result
 
@@ -78,6 +78,10 @@ def evaluate_orb(symbol, intra_ist, daily_df, opening_range, day_type, symbol_re
     long_breakout = all(float(c) > or_high + buffer for c in last_2)
     short_breakout = all(float(c) < or_low - buffer for c in last_2)
 
+    # Breakout candle imbalance — buyer/seller dominance of the breakout bars
+    imbalance_series = compute_candle_imbalance(today_bars.iloc[-2:])
+    avg_imbalance = float(imbalance_series.mean()) if not imbalance_series.empty else 0.0
+
     # FIX: Failed ORB re-entry — if OR was broken one direction then reversed, skip
     all_closes = today_bars["Close"].values
     had_long_break = any(float(c) > or_high + buffer for c in all_closes[6:-2])
@@ -119,6 +123,13 @@ def evaluate_orb(symbol, intra_ist, daily_df, opening_range, day_type, symbol_re
         }
         conditions["regime_ok"] = {"met": True, "detail": f"Trend {trend} allows long"}
 
+        # Breakout candle imbalance (soft boost, not hard gate)
+        imbalance_ok = avg_imbalance > 0.3
+        conditions["breakout_imbalance"] = {
+            "met": imbalance_ok,
+            "detail": f"Avg imbalance {avg_imbalance:.2f} (boost >0.3 for long)",
+        }
+
         # Levels for target
         levels = compute_intraday_levels(daily_df)
         r1 = levels.get("r1", ltp + atr)
@@ -132,6 +143,8 @@ def evaluate_orb(symbol, intra_ist, daily_df, opening_range, day_type, symbol_re
         if day_type in ("trend_up", "gap_and_go"):
             conf += 0.15
         if trend in ("strong_up", "mild_up"):
+            conf += 0.1
+        if imbalance_ok:
             conf += 0.1
         conf -= time_penalty
 
@@ -169,6 +182,13 @@ def evaluate_orb(symbol, intra_ist, daily_df, opening_range, day_type, symbol_re
         }
         conditions["regime_ok"] = {"met": True, "detail": f"Trend {trend} allows short"}
 
+        # Breakout candle imbalance (soft boost, not hard gate)
+        imbalance_ok = avg_imbalance < -0.3
+        conditions["breakout_imbalance"] = {
+            "met": imbalance_ok,
+            "detail": f"Avg imbalance {avg_imbalance:.2f} (boost <-0.3 for short)",
+        }
+
         levels = compute_intraday_levels(daily_df)
         s1 = levels.get("s1", ltp - atr)
 
@@ -181,6 +201,8 @@ def evaluate_orb(symbol, intra_ist, daily_df, opening_range, day_type, symbol_re
         if day_type in ("trend_down", "gap_and_go"):
             conf += 0.15
         if trend in ("strong_down", "mild_down"):
+            conf += 0.1
+        if imbalance_ok:
             conf += 0.1
         conf -= time_penalty
 

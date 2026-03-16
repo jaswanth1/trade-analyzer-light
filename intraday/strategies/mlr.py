@@ -298,10 +298,11 @@ def evaluate_mlr(symbol, intra_ist, daily_df, opening_range, symbol_regime,
     conf = max(0.1, min(conf, 0.95))
 
     # Best high phase info for trader (when to expect target hit)
+    # Prefer post-low high phase (tradeable) over absolute high phase
     high_phase_info = ""
     if ticker_cfg:
-        bhp = ticker_cfg.get("best_high_phase")
-        tw = ticker_cfg.get("avg_trade_window_mins", 0)
+        bhp = ticker_cfg.get("best_post_low_high_phase")
+        tw = ticker_cfg.get("avg_post_low_trade_window_mins", 0)
         if bhp:
             high_phase_info = f", target window ~{bhp} ({tw:.0f}min)"
 

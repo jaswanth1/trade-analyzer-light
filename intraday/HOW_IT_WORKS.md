@@ -240,14 +240,25 @@ Per-ticker summary in config: `avg_drop_norm`, `avg_high_norm`, `avg_recovery_no
 For each of the 10 phase windows, the config computes a low and high score:
 - **Low score** = `pct_is_session_low × avg_drop_norm` — phases that are both frequent AND deep score highest
 - **High score** = `pct_is_session_high × avg_high_norm` — phases that are both frequent AND tall score highest
-- **Best low phase / best high phase**: the phase window with the highest composite score
+- **Post-low high score** = `pct_is_post_low_high × avg_post_low_high_norm` — like high score, but only counts highs that form AFTER the session low (tradeable MFE)
+- **Best low phase / best high phase / best post-low high phase**: the phase window with the highest composite score
 
-This produces actionable guidance like: "KFINTECH's best low phase is 10:00–10:30 (0.5x ATR dip, 65% probability), best high phase is 13:00–13:30 (1.2x ATR peak, 40% probability), giving a ~150-minute trade window."
+The **post-low high** is the key actionable metric. The absolute session high (`best_high_phase`) is informational — it tells you the best the stock did all day. But the post-low high (`best_post_low_high_phase`) tells you the best price you could actually capture after buying the dip. On days where the session high forms *before* the session low (e.g., high at 10:00, low at 11:00), the absolute MFE overstates what's tradeable. The EV grid search, OOS validation, and Monte Carlo all use post-low MFE (`recovery_to_post_low_high_pct`) to avoid this inflation.
+
+This produces actionable guidance like: "KFINTECH's best low phase is 10:00–10:30 (0.5x ATR dip, 65% probability), best post-low high phase is 13:00–13:30 (1.2x ATR peak, 40% probability), giving a ~150-minute trade window."
 
 Per-profile (opening type) the config includes:
-- Top 1-2 **high windows** with probability, avg_high_pct, avg_high_norm (parallel to existing low windows)
-- `avg_trade_window_mins`: median time from low to high in minutes
-- `best_low_phase` and `best_high_phase` per opening type
+- Top 1-2 **high windows** with probability, avg_high_pct, avg_high_norm (absolute session high — informational)
+- Top 1-2 **post-low high windows** with probability, avg_high_pct, avg_high_norm (post-low high — tradeable)
+- `avg_post_low_trade_window_mins`: time from low to post-low high in minutes
+- `best_low_phase`, `best_high_phase`, and `best_post_low_high_phase` per opening type
+
+| Field | Description |
+|-------|-------------|
+| `post_low_high_norm` | ATR-normalized post-low high from open (tradeable peak magnitude) |
+| `recovery_to_post_low_high_pct` | Recovery % from low to post-low high (tradeable MFE) |
+| `low_to_post_low_high_bars` | Bar count from low to post-low high (trade duration) |
+| `best_post_low_high_phase` | Phase window where the post-low high most often forms |
 
 **Live strategy adaptation**:
 - Minimum drop threshold uses `avg_drop_norm`: `min_drop = max(0.3, avg_drop_norm × 0.5) × atr_pct` — stocks with historically shallow dips get a lower threshold, stocks with deep dips get a higher one

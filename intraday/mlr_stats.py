@@ -150,6 +150,16 @@ def compute_morning_low_stats(intra_df, daily_df, low_cutoff_hour=None,
         high_price = float(post_settle.loc[high_idx, "High"])
         high_time = high_idx
 
+        # Post-low high: highest price AFTER the low (tradeable MFE)
+        post_low_bars = post_settle[post_settle.index > low_idx]
+        if not post_low_bars.empty:
+            post_low_high_idx = post_low_bars["High"].idxmax()
+            post_low_high_price = float(post_low_bars.loc[post_low_high_idx, "High"])
+            post_low_high_time = post_low_high_idx
+        else:
+            post_low_high_price = low_price
+            post_low_high_time = low_time
+
         # Previous close
         prev_close = None
         if i > 0:
@@ -171,6 +181,7 @@ def compute_morning_low_stats(intra_df, daily_df, low_cutoff_hour=None,
         open_type = _classify_open_type(gap_pct)
         recovery_to_close = (day_close - low_price) / low_price * 100
         recovery_to_high = (high_price - low_price) / low_price * 100
+        recovery_to_post_low_high = (post_low_high_price - low_price) / low_price * 100
 
         # Time to recovery: bars from morning low until price recovers to open
         low_bar_pos_in_post = post_settle.index.get_loc(low_idx)
@@ -185,6 +196,10 @@ def compute_morning_low_stats(intra_df, daily_df, low_cutoff_hour=None,
         low_phase = _classify_phase(low_time.time())
         high_phase = _classify_phase(high_time.time())
 
+        # Post-low high derived fields
+        post_low_high_phase = _classify_phase(post_low_high_time.time())
+        post_low_high_from_open_pct = (post_low_high_price - day_open) / day_open * 100 if day_open > 0 else 0
+
         # Richer stats — drop depth, high above open, sequencing, completion
         drop_from_open_pct = (day_open - low_price) / day_open * 100 if day_open > 0 else 0
         high_from_open_pct = (high_price - day_open) / day_open * 100 if day_open > 0 else 0
@@ -196,6 +211,10 @@ def compute_morning_low_stats(intra_df, daily_df, low_cutoff_hour=None,
         high_bar_pos_in_day = post_settle.index.get_loc(high_idx)
         low_to_high_bars = max(0, high_bar_pos_in_day - low_bar_pos_in_day)
 
+        # Bars between low and post-low high
+        post_low_high_bar_pos = post_settle.index.get_loc(post_low_high_time) if post_low_high_time in post_settle.index else low_bar_pos_in_day
+        low_to_post_low_high_bars = max(0, post_low_high_bar_pos - low_bar_pos_in_day)
+
         # ATR normalization: look up the 14-day ATR as of this date
         daily_before_d = atr_series[atr_series.index.date <= d]
         day_atr = float(daily_before_d.iloc[-1]) if not daily_before_d.empty and not np.isnan(daily_before_d.iloc[-1]) else 0
@@ -205,6 +224,7 @@ def compute_morning_low_stats(intra_df, daily_df, low_cutoff_hour=None,
         high_norm = round(high_from_open_pct / day_atr_pct, 3) if day_atr_pct > 0 else 0
         recovery_norm = round(recovery_to_close / day_atr_pct, 3) if day_atr_pct > 0 else 0
         range_norm = round((high_price - low_price) / day_atr, 3) if day_atr > 0 else 0
+        post_low_high_norm = round(post_low_high_from_open_pct / day_atr_pct, 3) if day_atr_pct > 0 else 0
 
         # Recovery-by-phase: which phase window did price first recover to open?
         recovery_by_phase = None
@@ -229,6 +249,13 @@ def compute_morning_low_stats(intra_df, daily_df, low_cutoff_hour=None,
             "open_price": day_open,
             "recovery_to_close_pct": round(recovery_to_close, 3),
             "recovery_to_high_pct": round(recovery_to_high, 3),
+            "recovery_to_post_low_high_pct": round(recovery_to_post_low_high, 3),
+            "post_low_high_price": post_low_high_price,
+            "post_low_high_time": post_low_high_time,
+            "post_low_high_phase": post_low_high_phase,
+            "post_low_high_from_open_pct": round(post_low_high_from_open_pct, 3),
+            "post_low_high_norm": post_low_high_norm,
+            "low_to_post_low_high_bars": low_to_post_low_high_bars,
             "time_to_recovery_bars": time_to_recovery,
             "gap_pct": round(gap_pct, 3),
             "prev_close": prev_close,
@@ -293,7 +320,8 @@ def compute_ev_combos(stats_df):
                     entry_recovery_pct = recovery_fraction * row["recovery_to_close_pct"]
 
                     # MFE from entry = max upside remaining after entry
-                    mfe = row["recovery_to_high_pct"] - entry_recovery_pct
+                    # Use post-low high (tradeable MFE) — only bars AFTER the low
+                    mfe = row["recovery_to_post_low_high_pct"] - entry_recovery_pct
                     # Close-to-entry PnL (exit at close if neither target nor stop hit)
                     close_vs_entry = row["recovery_to_close_pct"] - entry_recovery_pct
 
@@ -356,7 +384,8 @@ def validate_oos(stats_df, best_combo):
         recovery_fraction = min(1.0, entry_delay / ttr)
         entry_recovery = recovery_fraction * row["recovery_to_close_pct"]
 
-        mfe = row["recovery_to_high_pct"] - entry_recovery
+        # Use post-low high (tradeable MFE) — only bars AFTER the low
+        mfe = row["recovery_to_post_low_high_pct"] - entry_recovery
         close_vs_entry = row["recovery_to_close_pct"] - entry_recovery
 
         if mfe >= target_pct:
@@ -432,7 +461,8 @@ def monte_carlo_ci(stats_df, best_combo, n_iter=MONTE_CARLO_ITERS):
         recovery_fraction = min(1.0, entry_delay / ttr)
         entry_recovery = recovery_fraction * row["recovery_to_close_pct"]
 
-        mfe = row["recovery_to_high_pct"] - entry_recovery
+        # Use post-low high (tradeable MFE) — only bars AFTER the low
+        mfe = row["recovery_to_post_low_high_pct"] - entry_recovery
         close_vs_entry = row["recovery_to_close_pct"] - entry_recovery
 
         if mfe >= target_pct:
@@ -517,17 +547,19 @@ def compute_phase_heatmap(stats_df):
       Low side:  pct_is_session_low, avg_drop_norm, median_drop_norm, low_score
       High side: pct_is_session_high, avg_high_norm, median_high_norm, high_score
 
-    Plus derived summary: best_low_phase, best_high_phase,
-    avg_low_to_high_bars, avg_trade_window_mins.
+    Plus derived summary: best_low_phase, best_post_low_high_phase,
+    avg_low_to_high_bars, avg_post_low_trade_window_mins.
 
     Returns dict with 'phases' (per-phase data), 'best_low_phase',
-    'best_high_phase', 'avg_low_to_high_bars', 'avg_trade_window_mins'.
+    'best_post_low_high_phase', 'avg_low_to_high_bars',
+    'avg_post_low_trade_window_mins'.
     """
     if stats_df.empty:
         return {}
 
     n_days = len(stats_df)
     has_norm = "drop_norm" in stats_df.columns and stats_df["drop_norm"].sum() > 0
+    has_post_low = "post_low_high_phase" in stats_df.columns
 
     phases = {}
     for phase_name, _, _ in PHASE_WINDOWS:
@@ -555,6 +587,21 @@ def compute_phase_heatmap(stats_df):
             avg_high_norm = 0.0
             median_high_norm = 0.0
 
+        # Post-low high stats: only highs that form AFTER the low (tradeable)
+        if has_post_low:
+            plh_in_phase = stats_df[stats_df["post_low_high_phase"] == phase_name]
+            n_plh = len(plh_in_phase)
+            pct_plh = round(n_plh / n_days * 100, 1) if n_days > 0 else 0
+            if has_norm and n_plh > 0:
+                avg_plh_norm = round(float(plh_in_phase["post_low_high_norm"].mean()), 3)
+            else:
+                avg_plh_norm = 0.0
+            plh_score = round(pct_plh / 100 * avg_plh_norm, 3)
+        else:
+            pct_plh = 0.0
+            avg_plh_norm = 0.0
+            plh_score = 0.0
+
         # Composite scores: probability × magnitude
         # A good low phase has high pct_low AND deep normalized dip
         low_score = round(pct_low / 100 * avg_drop_norm, 3)
@@ -569,11 +616,14 @@ def compute_phase_heatmap(stats_df):
             "avg_high_norm": avg_high_norm,
             "median_high_norm": median_high_norm,
             "high_score": high_score,
+            "pct_is_post_low_high": pct_plh,
+            "avg_post_low_high_norm": avg_plh_norm,
+            "post_low_high_score": plh_score,
         }
 
     # Best phases by composite score
     best_low = max(phases.items(), key=lambda x: x[1]["low_score"])[0] if phases else None
-    best_high = max(phases.items(), key=lambda x: x[1]["high_score"])[0] if phases else None
+    best_post_low_high = max(phases.items(), key=lambda x: x[1]["post_low_high_score"])[0] if phases else None
 
     # Trade window: bars between low and high
     if "low_to_high_bars" in stats_df.columns:
@@ -588,13 +638,19 @@ def compute_phase_heatmap(stats_df):
         avg_l2h = 0
         median_l2h = 0
 
+    # Post-low trade window
+    if "low_to_post_low_high_bars" in stats_df.columns:
+        avg_pl2h = round(float(stats_df["low_to_post_low_high_bars"].mean()), 1)
+    else:
+        avg_pl2h = 0
+
     return {
         "phases": phases,
         "best_low_phase": best_low,
-        "best_high_phase": best_high,
+        "best_post_low_high_phase": best_post_low_high,
         "avg_low_to_high_bars": avg_l2h,
         "median_low_to_high_bars": median_l2h,
-        "avg_trade_window_mins": round(avg_l2h * 5, 0),
+        "avg_post_low_trade_window_mins": round(avg_pl2h * 5, 0),
     }
 
 
@@ -621,15 +677,15 @@ def compute_open_type_profiles(stats_df, full_session_df=None):
     For each of 5 open types, computes:
     - Overall stats: n, pct_of_days, predictability, low_before_high_pct,
       recovered_past_open_pct, avg_drop_from_open_pct, avg_high_from_open_pct,
-      high_window
+      post_low_high_window
     - ATR-normalized metrics: avg_drop_norm, median_drop_norm,
       avg_high_norm, median_high_norm
     - Top 1-2 low windows with: probability, avg_drop_pct, drop_std,
       avg_recovery_pct, recovery_std, median_recovery_pct,
       recovered_past_open_pct, recovery_by, avg_drop_norm, n
     - Top 1-2 high windows with: probability, avg_high_pct, avg_high_norm, n
-    - Trade window: avg_low_to_high_bars, avg_trade_window_mins,
-      best_low_phase, best_high_phase
+    - Trade window: avg_low_to_high_bars, avg_post_low_trade_window_mins,
+      best_low_phase, best_post_low_high_phase
 
     Only includes open types with predictability >= MIN_PROFILE_PREDICTABILITY
     and n >= MIN_PROFILE_SAMPLE.
@@ -671,9 +727,17 @@ def compute_open_type_profiles(stats_df, full_session_df=None):
         avg_drop = round(float(subset["drop_from_open_pct"].mean()), 2)
         avg_high = round(float(subset["high_from_open_pct"].mean()), 2)
 
-        # High-phase distribution
+        # High-phase distribution (used for high_N windows)
         high_counts = subset["high_phase"].value_counts()
-        high_window = high_counts.index[0] if not high_counts.empty else None
+
+        # Post-low high phase distribution
+        has_plh = "post_low_high_phase" in subset.columns
+        if has_plh:
+            plh_counts = subset["post_low_high_phase"].value_counts()
+            post_low_high_window = plh_counts.index[0] if not plh_counts.empty else None
+        else:
+            plh_counts = pd.Series(dtype=int)
+            post_low_high_window = None
 
         # ATR-normalized aggregate metrics for this open type
         has_norm = "drop_norm" in subset.columns and subset["drop_norm"].sum() > 0
@@ -692,7 +756,7 @@ def compute_open_type_profiles(stats_df, full_session_df=None):
         else:
             avg_l2h = 0
 
-        # Per-open-type phase heatmap for best_low/best_high phase
+        # Per-open-type phase heatmap for best_low/best_post_low_high phase
         otype_heatmap = compute_phase_heatmap(subset) if len(subset) >= MIN_PROFILE_SAMPLE else {}
 
         # ── Low-phase distribution -> Herfindahl for concentration ──
@@ -730,7 +794,6 @@ def compute_open_type_profiles(stats_df, full_session_df=None):
             "recovered_past_open_pct": recovered_past_open_pct,
             "avg_drop_from_open_pct": avg_drop,
             "avg_high_from_open_pct": avg_high,
-            "high_window": high_window,
             # ATR-normalized metrics
             "avg_drop_norm": avg_drop_norm,
             "median_drop_norm": median_drop_norm,
@@ -738,9 +801,10 @@ def compute_open_type_profiles(stats_df, full_session_df=None):
             "median_high_norm": median_high_norm_val,
             # Trade window
             "avg_low_to_high_bars": avg_l2h,
-            "avg_trade_window_mins": round(avg_l2h * 5, 0),
             "best_low_phase": otype_heatmap.get("best_low_phase"),
-            "best_high_phase": otype_heatmap.get("best_high_phase"),
+            "post_low_high_window": post_low_high_window,
+            "best_post_low_high_phase": otype_heatmap.get("best_post_low_high_phase"),
+            "avg_post_low_trade_window_mins": otype_heatmap.get("avg_post_low_trade_window_mins", 0),
         }
 
         # ── Top low windows (up to 2) ──
@@ -801,6 +865,28 @@ def compute_open_type_profiles(stats_df, full_session_df=None):
                 "avg_high_norm": h_avg_norm,
                 "n": h_n,
             }
+
+        # ── Top post-low high windows (up to 2) — tradeable highs only ──
+        if has_plh and not plh_counts.empty:
+            for rank, (phase_name, phase_count) in enumerate(plh_counts.items()):
+                if rank >= 2:
+                    break
+                if phase_count < 2:
+                    continue
+
+                plh_subset = subset[subset["post_low_high_phase"] == phase_name]
+                plh_n = len(plh_subset)
+                plh_prob = round(plh_n / n * 100, 1)
+                plh_avg_pct = round(float(plh_subset["post_low_high_from_open_pct"].mean()), 2)
+                plh_avg_norm = round(float(plh_subset["post_low_high_norm"].mean()), 3) if has_norm and plh_n > 0 else 0.0
+
+                profile[f"post_low_high_{rank + 1}"] = {
+                    "window": phase_name,
+                    "probability": plh_prob,
+                    "avg_high_pct": plh_avg_pct,
+                    "avg_high_norm": plh_avg_norm,
+                    "n": plh_n,
+                }
 
         profiles[otype] = profile
 

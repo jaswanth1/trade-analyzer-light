@@ -544,13 +544,15 @@ intraday/
 │   ├── post_market_2026-02-26_1530.md
 │   └── ...
 ├── scanner.py           # Main orchestrator (time-aware, phase dispatch)
+├── outlook.py           # Market Outlook Predictor (time-aware: pre/live/post)
 ├── backtest.py          # Historical backtest: replay phases, validate signals
 ├── explanations.py      # Template + LLM educational explanations
-├── strategies.py        # 6 strategy implementations
+├── strategies/          # 6 strategy implementations (incl. mlr.py)
 ├── features.py          # Intraday technical indicators (incl. session low analysis)
 ├── regime.py            # Day-type + symbol-level regime (6 dimensions)
 ├── convergence.py       # Convergence scoring + historical replay
 ├── mlr_config.py        # MLR config generator (precomputed per-ticker stats)
+├── mlr_stats.py         # MLR computation library (stats, heatmap, profiles)
 └── HOW_IT_WORKS.md
 ```
 

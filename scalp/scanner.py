@@ -980,9 +980,7 @@ def get_ai_advisory(context, config, prep_mode=False):
         {"role": "system", "content": sys_prompt},
         {"role": "user", "content": context},
     ]
-    max_tok = 4096 if prep_mode else 2048
-
-    return call_llm(messages, max_tokens=max_tok)
+    return call_llm(messages)
 
 
 # ── Dashboard Rendering ─────────────────────────────────────────────────────

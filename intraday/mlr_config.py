@@ -52,6 +52,7 @@ from intraday.mlr_stats import (
     monte_carlo_ci,
     compute_dow_month_stats,
     compute_open_type_profiles,
+    compute_phase_heatmap,
     _sanitize,
 )
 
@@ -199,6 +200,12 @@ def process_ticker(symbol, cfg, verbose=False):
     pct_above_1 = round(float((stats_df["recovery_to_close_pct"] > 1.0).mean() * 100), 1)
     pct_above_3 = round(float((stats_df["recovery_to_close_pct"] > 3.0).mean() * 100), 1)
 
+    # ATR-normalized summary stats
+    has_norm = "drop_norm" in stats_df.columns and stats_df["drop_norm"].sum() > 0
+    avg_drop_norm = round(float(stats_df["drop_norm"].mean()), 3) if has_norm else 0.0
+    avg_high_norm = round(float(stats_df["high_norm"].mean()), 3) if has_norm else 0.0
+    avg_recovery_norm = round(float(stats_df["recovery_norm"].mean()), 3) if has_norm else 0.0
+
     # DOW favorability for today
     today_dow = datetime.now().weekday()
     dow_name = DOW_NAMES.get(today_dow, "")
@@ -217,6 +224,10 @@ def process_ticker(symbol, cfg, verbose=False):
         "mae_p90": mae.get("mae_p90", 0),
         "mae_median": mae.get("mae_median", 0),
         "dow_favorable": dow_favorable,
+        # ATR-normalized summary
+        "avg_drop_norm": avg_drop_norm,
+        "avg_high_norm": avg_high_norm,
+        "avg_recovery_norm": avg_recovery_norm,
     }
 
     if best:
@@ -235,10 +246,16 @@ def process_ticker(symbol, cfg, verbose=False):
     if mc:
         result["monte_carlo"] = mc
 
-    # Predictability-scored profiles per opening type
+    # Predictability-scored profiles per opening type + heatmap
     if phase_stats:
         result["profiles"] = phase_stats.get("profiles", {})
         result["low_cutoff_recommendation"] = phase_stats.get("low_cutoff_recommendation", "11:30")
+        # Overall heatmap summary
+        heatmap = phase_stats.get("heatmap", {})
+        if heatmap:
+            result["best_low_phase"] = heatmap.get("best_low_phase")
+            result["best_high_phase"] = heatmap.get("best_high_phase")
+            result["avg_trade_window_mins"] = heatmap.get("avg_trade_window_mins", 0)
 
     result["dow_stats"] = seasonality.get("dow", {})
     result["month_period_stats"] = seasonality.get("month_period", {})
@@ -247,8 +264,13 @@ def process_ticker(symbol, cfg, verbose=False):
     if verbose:
         cutoff = result.get("low_cutoff_recommendation", "11:30")
         profiles_data = result.get("profiles", {})
+        best_lp = result.get("best_low_phase", "?")
+        best_hp = result.get("best_high_phase", "?")
+        tw = result.get("avg_trade_window_mins", 0)
         if best:
-            print(f"{status} | edge={edge} | EV={best['ev']:.3f} | WR={best['win_rate']:.0f}% | n={sample_size}")
+            print(f"{status} | edge={edge} | EV={best['ev']:.3f} | WR={best['win_rate']:.0f}% | n={sample_size} | "
+                  f"drop={avg_drop_norm:.2f}x ATR | high={avg_high_norm:.2f}x ATR | "
+                  f"low@{best_lp} -> high@{best_hp} ({tw:.0f}min)")
         else:
             print(f"{status} | no valid combos")
         for ot_name in ("gap_down_large", "gap_down_small", "flat", "gap_up_small", "gap_up_large"):
@@ -256,15 +278,20 @@ def process_ticker(symbol, cfg, verbose=False):
             if not prof:
                 continue
             low1 = prof.get("low_1", {})
-            window = low1.get("window", "?")
+            high1 = prof.get("high_1", {})
+            l_win = low1.get("window", "?")
+            h_win = high1.get("window", "?")
             drop = prof.get("avg_drop_from_open_pct", 0)
+            drop_n = prof.get("avg_drop_norm", 0)
             recov = low1.get("avg_recovery_pct", 0)
             recov_by = low1.get("recovery_by", "?")
             rec_open = prof.get("recovered_past_open_pct", 0)
             pred = prof.get("predictability", 0)
+            tw_ot = prof.get("avg_trade_window_mins", 0)
             print(f"  {ot_name} (n={prof['n']}, pred={pred:.2f}): "
-                  f"low@{window} -> -{drop:.1f}% drop -> +{recov:.1f}% recov by {recov_by} | "
-                  f"{rec_open:.0f}% recover past open")
+                  f"low@{l_win}({drop_n:.2f}x ATR) -> high@{h_win} | "
+                  f"-{drop:.1f}% drop -> +{recov:.1f}% recov by {recov_by} | "
+                  f"{rec_open:.0f}% past open | window {tw_ot:.0f}min")
 
     return result
 
@@ -343,14 +370,17 @@ def generate_documentation(ticker_results, output_path=DOC_PATH):
     disabled = {s: r for s, r in ticker_results.items() if r and not r.get("enabled")}
 
     if enabled:
-        lines.append("| Ticker | Edge | EV | WR% | n | Avg Rec | Cutoff |")
-        lines.append("|--------|------|----|-----|---|---------|--------|")
+        lines.append("| Ticker | Edge | EV | WR% | n | Avg Rec | Drop(xATR) | High(xATR) | Best Low | Best High | Window | Cutoff |")
+        lines.append("|--------|------|----|-----|---|---------|------------|------------|----------|-----------|--------|--------|")
         for sym, r in sorted(enabled.items(), key=lambda x: x[1].get("edge_strength", 0), reverse=True):
             cutoff = r.get("low_cutoff_recommendation", "11:30")
             lines.append(
                 f"| {sym.replace('.NS', '')} | {r.get('edge_strength', 0)} | "
                 f"{r.get('ev', 0):.3f} | {r.get('win_rate', 0):.0f}% | "
-                f"{r.get('sample_size', 0)} | {r.get('avg_recovery_to_close_pct', 0):.1f}% | {cutoff} |"
+                f"{r.get('sample_size', 0)} | {r.get('avg_recovery_to_close_pct', 0):.1f}% | "
+                f"{r.get('avg_drop_norm', 0):.2f}x | {r.get('avg_high_norm', 0):.2f}x | "
+                f"{r.get('best_low_phase', '—')} | {r.get('best_high_phase', '—')} | "
+                f"{r.get('avg_trade_window_mins', 0):.0f}min | {cutoff} |"
             )
 
         # Per-stock open-type profiles
@@ -365,23 +395,26 @@ def generate_documentation(ticker_results, output_path=DOC_PATH):
             sym_short = sym.replace('.NS', '')
             lines.append(f"**{sym_short}**:")
             lines.append("")
-            lines.append("| Open Type | n | Pred | Low Window | Drop% | Recovery% | Recov By | Past Open% |")
-            lines.append("|-----------|---|------|------------|-------|-----------|----------|------------|")
+            lines.append("| Open Type | n | Pred | Low Window | Drop(xATR) | High Window | High(xATR) | Window(min) | Past Open% |")
+            lines.append("|-----------|---|------|------------|------------|-------------|------------|-------------|------------|")
             for otype in ot_order:
                 prof = profiles.get(otype)
                 if not prof:
                     continue
                 low1 = prof.get("low_1", {})
-                window = low1.get("window", "—")
-                drop = prof.get("avg_drop_from_open_pct", 0)
-                recov = low1.get("avg_recovery_pct", 0)
-                recov_by = low1.get("recovery_by", "—") or "—"
+                high1 = prof.get("high_1", {})
+                l_window = low1.get("window", "—")
+                h_window = high1.get("window", "—") if high1 else "—"
+                drop_n = prof.get("avg_drop_norm", 0)
+                high_n = prof.get("avg_high_norm", 0)
+                tw = prof.get("avg_trade_window_mins", 0)
                 rec_open = prof.get("recovered_past_open_pct", 0)
                 pred = prof.get("predictability", 0)
                 label = otype.replace("_", " ").title()
                 lines.append(
-                    f"| {label} | {prof['n']} | {pred:.2f} | {window} | "
-                    f"{drop:.1f} | {recov:.1f} | {recov_by} | {rec_open:.0f}% |"
+                    f"| {label} | {prof['n']} | {pred:.2f} | {l_window} | "
+                    f"{drop_n:.2f}x | {h_window} | {high_n:.2f}x | "
+                    f"{tw:.0f} | {rec_open:.0f}% |"
                 )
             lines.append("")
     else:

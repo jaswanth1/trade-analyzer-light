@@ -259,7 +259,6 @@ def _generate_signal_reasoning(sig, market_context):
     prompt = _build_signal_prompt(sig, market_context)
     response = call_llm(
         [{"role": "user", "content": prompt}],
-        max_tokens=400,
         temperature=0.3,
     )
     return response
@@ -336,7 +335,6 @@ Provide analysis in these sections (keep each to 2-3 sentences):
 
     response = call_llm(
         [{"role": "user", "content": prompt}],
-        max_tokens=800,
         temperature=0.3,
     )
     return response

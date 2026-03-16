@@ -438,7 +438,6 @@ def generate_llm_explanation(candidates, mode, market_context=None):
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_content},
         ],
-        max_tokens=800,
         temperature=0.4,
     )
 

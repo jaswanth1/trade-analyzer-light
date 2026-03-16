@@ -266,7 +266,6 @@ def generate_btst_llm_explanation(signals, market_context):
             {"role": "system", "content": BTST_LLM_SYSTEM_PROMPT},
             {"role": "user", "content": user_content},
         ],
-        max_tokens=800,
         temperature=0.4,
     )
 

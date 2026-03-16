@@ -97,7 +97,12 @@ def evaluate_mlr(symbol, intra_ist, daily_df, opening_range, symbol_regime,
     # high, not from open (e.g., open 101.5 → high 103 → low 101: from_open=0.5%
     # but from_high=1.9%). Without this, gap-up MLR setups get rejected.
     atr_pct = atr / ltp * 100 if ltp > 0 else 0
-    min_drop_pct = 0.3 * atr_pct
+    # Data-driven minimum: use half the stock's historical avg normalized drop
+    # (in ATR units), floored at 0.3x ATR to avoid noise entries
+    base_drop_factor = 0.3
+    if ticker_cfg and ticker_cfg.get("avg_drop_norm"):
+        base_drop_factor = max(0.3, ticker_cfg["avg_drop_norm"] * 0.5)
+    min_drop_pct = base_drop_factor * atr_pct
     effective_drop = max(drop_from_open_pct, drop_from_high_pct)
     if effective_drop < min_drop_pct:
         return None
@@ -292,9 +297,17 @@ def evaluate_mlr(symbol, intra_ist, daily_df, opening_range, symbol_regime,
 
     conf = max(0.1, min(conf, 0.95))
 
+    # Best high phase info for trader (when to expect target hit)
+    high_phase_info = ""
+    if ticker_cfg:
+        bhp = ticker_cfg.get("best_high_phase")
+        tw = ticker_cfg.get("avg_trade_window_mins", 0)
+        if bhp:
+            high_phase_info = f", target window ~{bhp} ({tw:.0f}min)"
+
     return _build_result(
         "mlr", "long", entry, stop, target, conf, conditions,
         f"MLR long: session low {low_price:.2f} at {low_time_str}, "
-        f"drop {effective_drop:.1f}%, recovery {recovery_pct:.1f}%, "
-        f"vol ratio {recovery_vol_ratio:.1f}x, RSI {rsi_val:.0f}",
+        f"drop {effective_drop:.1f}% ({effective_drop / atr_pct:.1f}x ATR), recovery {recovery_pct:.1f}%, "
+        f"vol ratio {recovery_vol_ratio:.1f}x, RSI {rsi_val:.0f}{high_phase_info}",
     )

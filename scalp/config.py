@@ -1229,10 +1229,10 @@ def print_summary(configs: list[dict]):
 
 # ── Documentation Generation ──────────────────────────────────────
 
-def _call_llm(config, messages, max_tokens=1800):
+def _call_llm(config, messages):
     """Call LLM via common.llm. Returns string or None."""
     from common.llm import call_llm
-    return call_llm(messages, max_tokens=max_tokens)
+    return call_llm(messages)
 
 
 def _generate_template_explanation(cfg: dict) -> str:
@@ -1616,7 +1616,7 @@ def _generate_llm_explanation(cfg: dict, config: dict) -> str | None:
         {"role": "user", "content": f"Explain this ticker's scalping configuration:\n\n{user_content}"},
     ]
 
-    return _call_llm(config, messages, max_tokens=1500)
+    return _call_llm(config, messages)
 
 
 def generate_documentation(configs: list[dict], existing_config: dict):

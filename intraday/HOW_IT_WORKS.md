@@ -211,11 +211,47 @@ Top 3 setups also get LLM-powered explanations with cricket analogies and rupee 
 **Config calibration** (`mlr_config.yaml`):
 - Optional precomputed per-ticker config from `python -m intraday.mlr_config`
 - **Per-stock phase window discovery**: analyzes 10 post-settle intraday phases (30-min windows from 10:00 to 15:15) to find when each stock forms its low and high. Outputs top 2 low phases, top 2 high phases, and `low_cutoff_recommendation` per ticker
-- **Opening type correlation**: classifies each day's open as `gap_up` (≥+0.3%), `gap_down` (≤−0.3%), or `flat`, then tracks low/high formation windows per opening type. E.g., a stock may form lows at 10:30–11:00 on gap-down days but 11:00–11:30 on flat days
+- **Opening type correlation**: classifies each day's open into 5 types (`gap_down_large`, `gap_down_small`, `flat`, `gap_up_small`, `gap_up_large`), then tracks low/high formation windows per opening type. E.g., a stock may form lows at 10:30–11:00 on gap-down days but 11:00–11:30 on flat days
 - The live strategy uses the per-ticker cutoff (e.g., some stocks form lows by 10:30, others by 12:00)
 - Overrides stop/target with historically optimal values per ticker
 - EV simulation uses actual PnL (3-outcome: target hit, stopped out, or exit-at-close with real close_vs_entry) with proportional entry model
 - Includes DOW favorability, Monte Carlo CIs, and OOS walk-forward validation
+
+**ATR-normalized analysis**:
+
+Every metric is computed both as raw percentage AND as a multiple of the stock's 14-day ATR. This is critical because a 1% dip means very different things for different stocks:
+- ADANIPOWER (ATR ~4%): 1% dip = 0.25x ATR — noise, not tradeable
+- CAMS (ATR ~1%): 1% dip = 1.0x ATR — significant sell-off, real signal
+
+Per-day normalized fields computed during config generation:
+
+| Field | Formula | What it tells you |
+|-------|---------|-------------------|
+| `drop_norm` | `drop_from_open_pct / atr_pct` | Dip depth in ATR units |
+| `high_norm` | `high_from_open_pct / atr_pct` | Session high in ATR units |
+| `recovery_norm` | `recovery_to_close_pct / atr_pct` | Recovery magnitude in ATR units |
+| `range_norm` | `(high - low) / atr` | Day's actual range vs expected range |
+| `low_to_high_bars` | `high_bar_pos - low_bar_pos` | Bars between low and high (tradeable window) |
+
+Per-ticker summary in config: `avg_drop_norm`, `avg_high_norm`, `avg_recovery_norm` — the stock's typical dip, peak, and recovery as ATR multiples.
+
+**Phase heatmap**:
+
+For each of the 10 phase windows, the config computes a low and high score:
+- **Low score** = `pct_is_session_low × avg_drop_norm` — phases that are both frequent AND deep score highest
+- **High score** = `pct_is_session_high × avg_high_norm` — phases that are both frequent AND tall score highest
+- **Best low phase / best high phase**: the phase window with the highest composite score
+
+This produces actionable guidance like: "KFINTECH's best low phase is 10:00–10:30 (0.5x ATR dip, 65% probability), best high phase is 13:00–13:30 (1.2x ATR peak, 40% probability), giving a ~150-minute trade window."
+
+Per-profile (opening type) the config includes:
+- Top 1-2 **high windows** with probability, avg_high_pct, avg_high_norm (parallel to existing low windows)
+- `avg_trade_window_mins`: median time from low to high in minutes
+- `best_low_phase` and `best_high_phase` per opening type
+
+**Live strategy adaptation**:
+- Minimum drop threshold uses `avg_drop_norm`: `min_drop = max(0.3, avg_drop_norm × 0.5) × atr_pct` — stocks with historically shallow dips get a lower threshold, stocks with deep dips get a higher one
+- Signal output includes the expected target window: "target window ~13:00-13:30 (150min)"
 
 **Confidence scoring**:
 - Base 0.50, bonuses for strong RVOL (+0.10), deep RSI bounce (+0.08), VWAP reclaim (+0.07), consistent candle structure (+0.05), gap-down day (+0.05), favorable DOW (+0.05), deep drop depth (+0.05)
@@ -665,3 +701,79 @@ Reports saved to `intraday/reports/backtest_YYYY-MM-DD.md` with:
 - Wrong calls analysis table
 
 Multi-day runs produce per-day reports + an aggregate report.
+
+---
+
+## Market Outlook (`intraday/outlook.py`)
+
+A standalone forecasting tool that synthesizes regime, breadth, sector rotation, historical patterns, and seasonality into a next-session (or rest-of-session) forecast.
+
+### Usage
+
+```bash
+python -m intraday.outlook              # auto-detects mode from IST clock
+python -m intraday.outlook --no-llm     # skip the LLM call
+python -m intraday.outlook --mode live  # force a specific mode (testing)
+```
+
+### Time-Aware Modes
+
+The outlook auto-detects one of three modes based on the IST clock:
+
+| Time | Mode | Forecasts for |
+|------|------|---------------|
+| Before 9:15 | **PRE_MARKET** | Today's upcoming session |
+| 9:15 – 15:30 | **LIVE** | Rest of today's session |
+| After 15:30 | **POST_MARKET** | Next trading day |
+
+### What It Computes
+
+| Step | Function | What it does |
+|------|----------|-------------|
+| 1 | `_fetch_all_data()` | Nifty (daily + 5m), all 34 stocks (daily), sector indices |
+| 2 | `_analyze_market_structure()` | VIX, regime, day type, institutional flow, RSI, MACD, ATR, pivot levels. In live mode: adds session progress (open/high/low/last, change%, bars elapsed) |
+| 3 | `_analyze_breadth()` | % above EMA20, advance/decline ratio, trend distribution (strong_up through strong_down) across the 34-stock universe |
+| 4 | `_analyze_sector_rotation()` | Per-sector 1d/5d returns, leader stock identification, sorted by performance |
+| 5 | `_match_historical_patterns()` | Filters Nifty daily for similar regime days (same side of SMA20) → next-day return distribution. DOW + month-period seasonality for the target date |
+| 6 | `_build_forecast()` | Heuristic synthesis of all signals into direction, day type, strategies, risk level |
+| 7 | `_call_llm_outlook()` | LLM prompt with all analysis → 200-400 word plain-English outlook |
+
+### Forecast Logic
+
+**Directional signals** (each contributes ±0.2 to ±0.3):
+- Nifty regime (bullish/bearish/range)
+- Breadth (% above EMA20 > 60% = positive)
+- Institutional flow (net_buying/net_selling)
+- Historical regime match (avg next-day return)
+
+**In live mode**: intraday momentum (session change %) is added as an additional signal, and the forecast predicts "continuation higher / drift lower / sideways" instead of gap direction.
+
+**Day type prediction**: VIX-based (>22 = volatile, <14 + bullish = trend_up, etc.). In live mode, uses the actual classified day type from intraday bars.
+
+**Risk level**: 0-4 factor count (VIX elevated/stress, bearish regime, weak breadth, net selling) → LOW / MODERATE / ELEVATED / HIGH / VERY HIGH.
+
+### Dashboard Layout
+
+```
+╔════════════════════════════════════════════════════════════════════════╗
+║  MARKET OUTLOOK — [session label based on mode]                      ║
+╠════════════════════════════════════════════════════════════════════════╣
+║  SESSION PROGRESS (live mode only)                                   ║
+║  Open: 22,480 | High: 22,550 | Low: 22,350 | Last: 22,410          ║
+║  Change: -0.29% | Range: 0.89% | Bars: 48 | Time: 13:15            ║
+╠═══════════════════════════════════════════════════════════════════════╣
+║  MARKET STRUCTURE                                                    ║
+║  BREADTH                                                             ║
+║  SECTOR ROTATION (Leading / Lagging)                                 ║
+║  HISTORICAL PATTERNS (DOW + month seasonality, regime match)         ║
+║  FORECAST (Gap/Bias, Day Type, Risk, Strategies, Watch Sectors)      ║
+║  AI OUTLOOK (LLM plain-English summary)                              ║
+╚════════════════════════════════════════════════════════════════════════╝
+```
+
+### Output
+
+| Output | Location |
+|--------|----------|
+| Terminal dashboard | stdout |
+| Markdown report | `intraday/reports/outlook_YYYY-MM-DD_HHMM.md` |

@@ -20,13 +20,24 @@ BATCH_SIZE = 500
 
 # ── Helpers ──────────────────────────────────────────────────────────────
 
+_supa_ok_cache: tuple[float, bool] | None = None
+
 def _supa_ok() -> bool:
-    """Check if Supabase is reachable."""
+    """Check if Supabase is reachable (cached for 60s on failure, 300s on success)."""
+    global _supa_ok_cache
+    import time as _time
+    if _supa_ok_cache is not None:
+        ts, ok = _supa_ok_cache
+        ttl = 300 if ok else 60
+        if _time.monotonic() - ts < ttl:
+            return ok
     try:
         from common.db import _supabase_available
-        return _supabase_available()
+        ok = _supabase_available()
     except Exception:
-        return False
+        ok = False
+    _supa_ok_cache = (_time.monotonic(), ok)
+    return ok
 
 
 def _now_ist() -> datetime:

@@ -115,7 +115,7 @@ def get_intraday_advisory(context, config=None):
         {"role": "user", "content": context},
     ]
 
-    return call_llm(messages, max_tokens=1000)
+    return call_llm(messages)
 
 
 # ── Dashboard Rendering ────────────────────────────────────────────────

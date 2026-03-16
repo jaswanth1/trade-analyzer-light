@@ -42,7 +42,7 @@ def _get_conn():
     url = os.environ.get("SUPABASE_DB_URL")
     if not url:
         raise RuntimeError("Missing SUPABASE_DB_URL in env")
-    conn = psycopg2.connect(url)
+    conn = psycopg2.connect(url, connect_timeout=5)
     conn.autocommit = True
     return conn
 

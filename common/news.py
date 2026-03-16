@@ -90,7 +90,6 @@ def score_news_sentiment(headlines_by_symbol: dict[str, list[dict]]) -> dict[str
 
     response = call_llm(
         [{"role": "user", "content": prompt}],
-        max_tokens=600,
         temperature=0.1,
     )
 
@@ -136,7 +135,6 @@ def fetch_market_context() -> str:
 
     response = call_llm(
         [{"role": "user", "content": prompt}],
-        max_tokens=300,
         temperature=0.3,
     )
 

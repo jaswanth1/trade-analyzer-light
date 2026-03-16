@@ -100,7 +100,9 @@ def compute_morning_low_stats(intra_df, daily_df, low_cutoff_hour=None,
         recovery_to_close_pct, recovery_to_high_pct, time_to_recovery_bars,
         gap_pct, prev_close, dow, month,
         drop_from_open_pct, high_from_open_pct, low_before_high,
-        recovered_past_open, recovery_by_phase
+        recovered_past_open, recovery_by_phase,
+        day_atr, day_atr_pct, drop_norm, high_norm, recovery_norm,
+        range_norm, low_to_high_bars
     """
     if intra_df.empty or daily_df.empty:
         return pd.DataFrame()
@@ -108,6 +110,14 @@ def compute_morning_low_stats(intra_df, daily_df, low_cutoff_hour=None,
     cutoff_h = low_cutoff_hour if low_cutoff_hour is not None else MORNING_CUTOFF_HOUR
     cutoff_m = low_cutoff_min if low_cutoff_min is not None else MORNING_CUTOFF_MIN
     cutoff_time = dtime(cutoff_h, cutoff_m)
+
+    # Pre-compute rolling 14-day ATR series from daily data for normalization
+    d_high = daily_df["High"]
+    d_low = daily_df["Low"]
+    d_prev_close = daily_df["Close"].shift(1)
+    d_tr = pd.concat([d_high - d_low, (d_high - d_prev_close).abs(),
+                       (d_low - d_prev_close).abs()], axis=1).max(axis=1)
+    atr_series = d_tr.rolling(14, min_periods=7).mean()
 
     records = []
     dates = sorted(intra_df.index.date)
@@ -181,6 +191,21 @@ def compute_morning_low_stats(intra_df, daily_df, low_cutoff_hour=None,
         low_before_high = low_time < high_time
         recovered_past_open = day_close >= day_open
 
+        # Bars between low and high — the tradeable window duration
+        low_bar_pos_in_day = post_settle.index.get_loc(low_idx)
+        high_bar_pos_in_day = post_settle.index.get_loc(high_idx)
+        low_to_high_bars = max(0, high_bar_pos_in_day - low_bar_pos_in_day)
+
+        # ATR normalization: look up the 14-day ATR as of this date
+        daily_before_d = atr_series[atr_series.index.date <= d]
+        day_atr = float(daily_before_d.iloc[-1]) if not daily_before_d.empty and not np.isnan(daily_before_d.iloc[-1]) else 0
+        day_atr_pct = day_atr / day_open * 100 if day_open > 0 and day_atr > 0 else 0
+        # Normalized metrics: dip/high/recovery as multiples of ATR
+        drop_norm = round(drop_from_open_pct / day_atr_pct, 3) if day_atr_pct > 0 else 0
+        high_norm = round(high_from_open_pct / day_atr_pct, 3) if day_atr_pct > 0 else 0
+        recovery_norm = round(recovery_to_close / day_atr_pct, 3) if day_atr_pct > 0 else 0
+        range_norm = round((high_price - low_price) / day_atr, 3) if day_atr > 0 else 0
+
         # Recovery-by-phase: which phase window did price first recover to open?
         recovery_by_phase = None
         if recovered_past_open:
@@ -214,6 +239,14 @@ def compute_morning_low_stats(intra_df, daily_df, low_cutoff_hour=None,
             "low_before_high": low_before_high,
             "recovered_past_open": recovered_past_open,
             "recovery_by_phase": recovery_by_phase,
+            # ATR-normalized fields
+            "day_atr": round(day_atr, 4),
+            "day_atr_pct": round(day_atr_pct, 3),
+            "drop_norm": drop_norm,
+            "high_norm": high_norm,
+            "recovery_norm": recovery_norm,
+            "range_norm": range_norm,
+            "low_to_high_bars": low_to_high_bars,
         })
 
     return pd.DataFrame(records)
@@ -475,7 +508,97 @@ def compute_dow_month_stats(stats_df):
     return {"dow": dow_stats, "month_period": month_stats}
 
 
-# ── Step 7: Predictability-scored open-type profiles ─────────────────
+# ── Step 7a: Normalized phase heatmap ────────────────────────────────
+
+def compute_phase_heatmap(stats_df):
+    """ATR-normalized low/high heatmap across all 10 phase windows.
+
+    For each phase, computes:
+      Low side:  pct_is_session_low, avg_drop_norm, median_drop_norm, low_score
+      High side: pct_is_session_high, avg_high_norm, median_high_norm, high_score
+
+    Plus derived summary: best_low_phase, best_high_phase,
+    avg_low_to_high_bars, avg_trade_window_mins.
+
+    Returns dict with 'phases' (per-phase data), 'best_low_phase',
+    'best_high_phase', 'avg_low_to_high_bars', 'avg_trade_window_mins'.
+    """
+    if stats_df.empty:
+        return {}
+
+    n_days = len(stats_df)
+    has_norm = "drop_norm" in stats_df.columns and stats_df["drop_norm"].sum() > 0
+
+    phases = {}
+    for phase_name, _, _ in PHASE_WINDOWS:
+        low_in_phase = stats_df[stats_df["low_phase"] == phase_name]
+        high_in_phase = stats_df[stats_df["high_phase"] == phase_name]
+
+        n_low = len(low_in_phase)
+        n_high = len(high_in_phase)
+        pct_low = round(n_low / n_days * 100, 1) if n_days > 0 else 0
+        pct_high = round(n_high / n_days * 100, 1) if n_days > 0 else 0
+
+        # Normalized low stats (in ATR units)
+        if has_norm and n_low > 0:
+            avg_drop_norm = round(float(low_in_phase["drop_norm"].mean()), 3)
+            median_drop_norm = round(float(low_in_phase["drop_norm"].median()), 3)
+        else:
+            avg_drop_norm = 0.0
+            median_drop_norm = 0.0
+
+        # Normalized high stats (in ATR units)
+        if has_norm and n_high > 0:
+            avg_high_norm = round(float(high_in_phase["high_norm"].mean()), 3)
+            median_high_norm = round(float(high_in_phase["high_norm"].median()), 3)
+        else:
+            avg_high_norm = 0.0
+            median_high_norm = 0.0
+
+        # Composite scores: probability × magnitude
+        # A good low phase has high pct_low AND deep normalized dip
+        low_score = round(pct_low / 100 * avg_drop_norm, 3)
+        high_score = round(pct_high / 100 * avg_high_norm, 3)
+
+        phases[phase_name] = {
+            "pct_is_session_low": pct_low,
+            "avg_drop_norm": avg_drop_norm,
+            "median_drop_norm": median_drop_norm,
+            "low_score": low_score,
+            "pct_is_session_high": pct_high,
+            "avg_high_norm": avg_high_norm,
+            "median_high_norm": median_high_norm,
+            "high_score": high_score,
+        }
+
+    # Best phases by composite score
+    best_low = max(phases.items(), key=lambda x: x[1]["low_score"])[0] if phases else None
+    best_high = max(phases.items(), key=lambda x: x[1]["high_score"])[0] if phases else None
+
+    # Trade window: bars between low and high
+    if "low_to_high_bars" in stats_df.columns:
+        valid = stats_df[stats_df["low_before_high"] == True]
+        if not valid.empty:
+            avg_l2h = round(float(valid["low_to_high_bars"].mean()), 1)
+            median_l2h = round(float(valid["low_to_high_bars"].median()), 1)
+        else:
+            avg_l2h = 0
+            median_l2h = 0
+    else:
+        avg_l2h = 0
+        median_l2h = 0
+
+    return {
+        "phases": phases,
+        "best_low_phase": best_low,
+        "best_high_phase": best_high,
+        "avg_low_to_high_bars": avg_l2h,
+        "median_low_to_high_bars": median_l2h,
+        "avg_trade_window_mins": round(avg_l2h * 5, 0),
+    }
+
+
+# ── Step 7b: Predictability-scored open-type profiles ────────────────
 
 def _compute_predictability(concentration, cov, completion_rate, sequencing_rate):
     """Composite predictability score (0-1).
@@ -499,14 +622,20 @@ def compute_open_type_profiles(stats_df, full_session_df=None):
     - Overall stats: n, pct_of_days, predictability, low_before_high_pct,
       recovered_past_open_pct, avg_drop_from_open_pct, avg_high_from_open_pct,
       high_window
+    - ATR-normalized metrics: avg_drop_norm, median_drop_norm,
+      avg_high_norm, median_high_norm
     - Top 1-2 low windows with: probability, avg_drop_pct, drop_std,
       avg_recovery_pct, recovery_std, median_recovery_pct,
-      recovered_past_open_pct, recovery_by, n
+      recovered_past_open_pct, recovery_by, avg_drop_norm, n
+    - Top 1-2 high windows with: probability, avg_high_pct, avg_high_norm, n
+    - Trade window: avg_low_to_high_bars, avg_trade_window_mins,
+      best_low_phase, best_high_phase
 
     Only includes open types with predictability >= MIN_PROFILE_PREDICTABILITY
     and n >= MIN_PROFILE_SAMPLE.
 
-    Also returns low_cutoff_recommendation (phase that captures >=80% of lows).
+    Also returns low_cutoff_recommendation (phase that captures >=80% of lows)
+    and overall_heatmap (phase heatmap across all open types).
     """
     if stats_df.empty:
         return {"profiles": {}, "low_cutoff_recommendation": "11:30"}
@@ -542,9 +671,29 @@ def compute_open_type_profiles(stats_df, full_session_df=None):
         avg_drop = round(float(subset["drop_from_open_pct"].mean()), 2)
         avg_high = round(float(subset["high_from_open_pct"].mean()), 2)
 
-        # Most common high window
+        # High-phase distribution
         high_counts = subset["high_phase"].value_counts()
         high_window = high_counts.index[0] if not high_counts.empty else None
+
+        # ATR-normalized aggregate metrics for this open type
+        has_norm = "drop_norm" in subset.columns and subset["drop_norm"].sum() > 0
+        if has_norm:
+            avg_drop_norm = round(float(subset["drop_norm"].mean()), 3)
+            median_drop_norm = round(float(subset["drop_norm"].median()), 3)
+            avg_high_norm_val = round(float(subset["high_norm"].mean()), 3)
+            median_high_norm_val = round(float(subset["high_norm"].median()), 3)
+        else:
+            avg_drop_norm = median_drop_norm = avg_high_norm_val = median_high_norm_val = 0.0
+
+        # Trade window: bars between low and high
+        if "low_to_high_bars" in subset.columns:
+            valid_l2h = subset[subset["low_before_high"] == True]
+            avg_l2h = round(float(valid_l2h["low_to_high_bars"].mean()), 1) if not valid_l2h.empty else 0
+        else:
+            avg_l2h = 0
+
+        # Per-open-type phase heatmap for best_low/best_high phase
+        otype_heatmap = compute_phase_heatmap(subset) if len(subset) >= MIN_PROFILE_SAMPLE else {}
 
         # ── Low-phase distribution -> Herfindahl for concentration ──
         low_counts = subset["low_phase"].value_counts()
@@ -582,6 +731,16 @@ def compute_open_type_profiles(stats_df, full_session_df=None):
             "avg_drop_from_open_pct": avg_drop,
             "avg_high_from_open_pct": avg_high,
             "high_window": high_window,
+            # ATR-normalized metrics
+            "avg_drop_norm": avg_drop_norm,
+            "median_drop_norm": median_drop_norm,
+            "avg_high_norm": avg_high_norm_val,
+            "median_high_norm": median_high_norm_val,
+            # Trade window
+            "avg_low_to_high_bars": avg_l2h,
+            "avg_trade_window_mins": round(avg_l2h * 5, 0),
+            "best_low_phase": otype_heatmap.get("best_low_phase"),
+            "best_high_phase": otype_heatmap.get("best_high_phase"),
         }
 
         # ── Top low windows (up to 2) ──
@@ -599,6 +758,9 @@ def compute_open_type_profiles(stats_df, full_session_df=None):
             p_rec_vals = phase_subset["recovery_to_close_pct"]
             p_rec_open = phase_subset["recovered_past_open"]
 
+            # Normalized drop for this specific phase window
+            p_drop_norm = round(float(phase_subset["drop_norm"].mean()), 3) if has_norm and p_n > 0 else 0.0
+
             # Median recovery-by phase for this window
             recov_phases = phase_subset["recovery_by_phase"].dropna()
             recovery_by = None
@@ -610,6 +772,7 @@ def compute_open_type_profiles(stats_df, full_session_df=None):
                 "probability": prob,
                 "avg_drop_pct": round(float(p_drop_vals.mean()), 2),
                 "drop_std": round(float(p_drop_vals.std()), 2) if p_n >= 2 else 0.0,
+                "avg_drop_norm": p_drop_norm,
                 "avg_recovery_pct": round(float(p_rec_vals.mean()), 2),
                 "recovery_std": round(float(p_rec_vals.std()), 2) if p_n >= 2 else 0.0,
                 "median_recovery_pct": round(float(p_rec_vals.median()), 2),
@@ -618,11 +781,36 @@ def compute_open_type_profiles(stats_df, full_session_df=None):
                 "n": p_n,
             }
 
+        # ── Top high windows (up to 2) — parallel to low windows ──
+        for rank, (phase_name, phase_count) in enumerate(high_counts.items()):
+            if rank >= 2:
+                break
+            if phase_count < 2:
+                continue
+
+            h_subset = subset[subset["high_phase"] == phase_name]
+            h_n = len(h_subset)
+            h_prob = round(h_n / n * 100, 1)
+            h_avg_pct = round(float(h_subset["high_from_open_pct"].mean()), 2)
+            h_avg_norm = round(float(h_subset["high_norm"].mean()), 3) if has_norm and h_n > 0 else 0.0
+
+            profile[f"high_{rank + 1}"] = {
+                "window": phase_name,
+                "probability": h_prob,
+                "avg_high_pct": h_avg_pct,
+                "avg_high_norm": h_avg_norm,
+                "n": h_n,
+            }
+
         profiles[otype] = profile
+
+    # Overall heatmap across all open types
+    overall_heatmap = compute_phase_heatmap(stats_df) if not stats_df.empty else {}
 
     return {
         "profiles": profiles,
         "low_cutoff_recommendation": recommended_cutoff,
+        "heatmap": overall_heatmap,
     }
 
 

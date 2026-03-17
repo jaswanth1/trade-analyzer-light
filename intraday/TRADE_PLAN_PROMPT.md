@@ -85,7 +85,7 @@ Captures: Nifty regime, VIX level, breadth, sector rotation, historical pattern 
 
 ### 4B. Intraday Scanner (Pre-Market)
 ```bash
-python -m intraday.scanner
+python -m intraday.scanner --force
 ```
 Captures: Conditional gap-scenario setups (IF gap-up/gap-down/flat → strategy + entry/target/stop), convergence scores, watchlist. The scanner auto-detects the current phase.
 

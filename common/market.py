@@ -51,6 +51,43 @@ def vix_position_scale(vix_val):
     return round(float(np.interp(vix_val, [10, 14, 20, 25], [1.3, 1.0, 0.5, 0.0])), 3)
 
 
+def compute_market_context_scores(nifty_daily, vix_val, inst_flow, regime_strength=None):
+    """Produce continuous market-level scores (0.0 to 1.0).
+
+    Following institutional practice: market context modulates signal
+    strength through continuous weighting, not binary gates.
+
+    Returns dict:
+        regime_score: 0.0 = strongly bearish, 0.5 = range, 1.0 = strongly bullish
+        vix_score: 0.0 = extreme stress, 1.0 = calm
+        flow_score: 0.0 = heavy selling, 0.5 = neutral, 1.0 = heavy buying
+    """
+    # Regime score: use strength from detect_nifty_regime
+    if regime_strength is None:
+        regime_strength = 0.5
+
+    regime, _, _ = detect_nifty_regime(nifty_daily) if not nifty_daily.empty else ("range", 1.0, 0.5)
+    if regime == "bearish":
+        regime_score = 0.5 - 0.35 * regime_strength
+    elif regime == "bullish":
+        regime_score = 0.5 + 0.35 * regime_strength
+    else:
+        regime_score = 0.5
+
+    # VIX score: smooth continuous mapping
+    vix_score = float(np.interp(vix_val or 16, [10, 14, 18, 22, 30], [1.0, 0.85, 0.65, 0.4, 0.1]))
+
+    # Flow score
+    flow_map = {"net_buying": 0.8, "neutral": 0.5, "net_selling": 0.2}
+    flow_score = flow_map.get(inst_flow, 0.5)
+
+    return {
+        "regime_score": round(regime_score, 3),
+        "vix_score": round(vix_score, 3),
+        "flow_score": round(flow_score, 3),
+    }
+
+
 def detect_nifty_regime(nifty_daily):
     """Detect Nifty market regime: bullish / bearish / range-bound.
 

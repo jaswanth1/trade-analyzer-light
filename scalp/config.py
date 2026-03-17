@@ -21,6 +21,17 @@ from scipy.stats import binomtest
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
+from common.data import (
+    PROJECT_ROOT, SCALP_CONFIG_PATH, SCALP_DIR,
+    TICKERS, BENCHMARK, fetch_yf, fetch_ticker_info,
+)
+from common.analysis_cache import get_cached, set_cached, TTL_DAILY
+from common.indicators import (
+    compute_atr, compute_beta, classify_gaps,
+    compute_time_window_stats, compute_probability_matrix,
+)
+from common.risk import NSE_ROUND_TRIP_COST_PCT
+
 # ── Tunable Constants ──────────────────────────────────────────────
 MIN_SAMPLE = 5              # minimum N for a combo to be considered
 MIN_TRADABILITY = 55        # minimum overall score to enable
@@ -40,17 +51,6 @@ KELLY_FRACTION = 0.5           # half-Kelly to account for estimation error
 MONTE_CARLO_ITERS = 10000     # bootstrap iterations for confidence intervals
 DOW_WR_AVOID_THRESHOLD = 40.0 # avoid days with win rate below this
 PHASE_TRAP_THRESHOLD = 50.0   # trap rate above this removes gap_type from phase
-
-from common.data import (
-    PROJECT_ROOT, SCALP_CONFIG_PATH, SCALP_DIR,
-    TICKERS, BENCHMARK, fetch_yf, fetch_ticker_info,
-)
-from common.analysis_cache import get_cached, set_cached, TTL_DAILY
-from common.indicators import (
-    compute_atr, compute_beta, classify_gaps,
-    compute_time_window_stats, compute_probability_matrix,
-)
-from common.risk import NSE_ROUND_TRIP_COST_PCT
 
 CONFIG_PATH = SCALP_CONFIG_PATH
 DOC_PATH = SCALP_DIR / "scalp_config_guide.md"

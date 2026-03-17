@@ -134,7 +134,8 @@ def evaluate_orb(symbol, intra_ist, daily_df, opening_range, day_type, symbol_re
         levels = compute_intraday_levels(daily_df)
         r1 = levels.get("r1", ltp + atr)
 
-        target = min(ltp + 1.5 * or_range, ltp + atr, r1)
+        rr_target = min(ltp + 1.5 * or_range, ltp + atr)
+        target = min(rr_target, r1) if r1 > ltp else rr_target
         stop = or_low  # structural stop at OR low
 
         conf = 0.5
@@ -192,7 +193,8 @@ def evaluate_orb(symbol, intra_ist, daily_df, opening_range, day_type, symbol_re
         levels = compute_intraday_levels(daily_df)
         s1 = levels.get("s1", ltp - atr)
 
-        target = max(ltp - 1.5 * or_range, ltp - atr, s1)
+        rr_target = max(ltp - 1.5 * or_range, ltp - atr)
+        target = max(rr_target, s1) if s1 < ltp else rr_target
         stop = or_high  # structural stop at OR high
 
         conf = 0.5

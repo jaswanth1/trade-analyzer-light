@@ -230,6 +230,73 @@ def reclassify_day_type(nifty_intra_ist, nifty_daily):
     }
 
 
+def detect_regime_transition(nifty_ist, nifty_daily):
+    """Detect if Nifty is transitioning between regimes intraday.
+
+    Compares the first-hour regime (opening character) with the current
+    regime (latest bars). Transitions are where the biggest opportunities
+    emerge — a stock suppressed during a bearish morning becomes actionable
+    as the market stabilizes.
+
+    Returns dict:
+        transition: None | "bear_to_range" | "range_to_bull" | "bull_to_range" | "range_to_bear"
+        transition_strength: 0.0-1.0 (how confident the transition is)
+        regime_score_adjustment: additive adjustment to regime_score
+    """
+    result = {"transition": None, "transition_strength": 0.0, "regime_score_adjustment": 0.0}
+
+    if nifty_ist is None or nifty_ist.empty:
+        return result
+
+    today = nifty_ist.index[-1].date()
+    today_bars = nifty_ist[nifty_ist.index.date == today]
+    if len(today_bars) < 12:  # need at least 1 hour of data
+        return result
+
+    # First-hour character (first 12 bars = 60 min of 5-min data)
+    first_hour = today_bars.head(12)
+    fh_ret = (float(first_hour["Close"].iloc[-1]) / float(first_hour["Open"].iloc[0]) - 1) * 100
+    fh_range = (float(first_hour["High"].max()) - float(first_hour["Low"].min()))
+
+    # Recent character (last 6 bars = 30 min)
+    recent = today_bars.tail(6)
+    recent_ret = (float(recent["Close"].iloc[-1]) / float(recent["Open"].iloc[0]) - 1) * 100
+
+    # Full session return
+    session_ret = (float(today_bars["Close"].iloc[-1]) / float(today_bars["Open"].iloc[0]) - 1) * 100
+
+    # Detect transitions
+    if fh_ret < -0.3 and recent_ret > 0.2 and session_ret > fh_ret + 0.3:
+        # Morning was bearish, recent bars turning positive
+        strength = min(1.0, abs(recent_ret - fh_ret) / 1.5)
+        result["transition"] = "bear_to_range"
+        result["transition_strength"] = round(strength, 3)
+        result["regime_score_adjustment"] = round(0.12 * strength, 3)
+
+    elif fh_ret > 0.3 and recent_ret < -0.2 and session_ret < fh_ret - 0.3:
+        # Morning was bullish, recent bars turning negative
+        strength = min(1.0, abs(fh_ret - recent_ret) / 1.5)
+        result["transition"] = "bull_to_range"
+        result["transition_strength"] = round(strength, 3)
+        result["regime_score_adjustment"] = round(-0.08 * strength, 3)
+
+    elif abs(fh_ret) < 0.2 and recent_ret > 0.4:
+        # Flat morning, breaking out bullish
+        strength = min(1.0, recent_ret / 1.0)
+        result["transition"] = "range_to_bull"
+        result["transition_strength"] = round(strength, 3)
+        result["regime_score_adjustment"] = round(0.10 * strength, 3)
+
+    elif abs(fh_ret) < 0.2 and recent_ret < -0.4:
+        # Flat morning, breaking down bearish
+        strength = min(1.0, abs(recent_ret) / 1.0)
+        result["transition"] = "range_to_bear"
+        result["transition_strength"] = round(strength, 3)
+        result["regime_score_adjustment"] = round(-0.10 * strength, 3)
+
+    return result
+
+
 # ── Symbol-Level Regime ──────────────────────────────────────────────────
 
 def classify_symbol_regime(daily_df, intra_ist, nifty_daily=None, sector_daily=None):
@@ -310,20 +377,27 @@ def classify_symbol_regime(daily_df, intra_ist, nifty_daily=None, sector_daily=N
         else:
             volatility = "normal"
 
-    # Liquidity: today's volume vs 20-day intraday median
+    # Liquidity: today's volume vs 20-day intraday median (time-normalized)
+    # During live market hours, today's cumulative volume is lower than a full-day
+    # median simply because the session isn't over yet. We normalize by comparing
+    # today's bars-so-far against the same number of bars from historical days.
     liquidity = "normal"
     if not intra_ist.empty:
         today = intra_ist.index[-1].date()
         today_bars = intra_ist[intra_ist.index.date == today]
         if not today_bars.empty:
             today_vol = today_bars["Volume"].sum()
+            today_bar_count = len(today_bars)
             dates = sorted(intra_ist.index.date)
             unique_dates = list(dict.fromkeys(dates))
             if len(unique_dates) > 1:
                 hist_dates = unique_dates[:-1][-20:]
                 hist_vols = []
                 for d in hist_dates:
-                    day_vol = intra_ist[intra_ist.index.date == d]["Volume"].sum()
+                    day_bars = intra_ist[intra_ist.index.date == d]
+                    # Compare same number of bars (time-normalized)
+                    comparable_bars = day_bars.head(today_bar_count)
+                    day_vol = comparable_bars["Volume"].sum()
                     hist_vols.append(day_vol)
                 if hist_vols:
                     median_vol = float(np.median(hist_vols))
@@ -394,6 +468,21 @@ def classify_symbol_regime(daily_df, intra_ist, nifty_daily=None, sector_daily=N
             else:
                 weekly_trend = "sideways"
 
+    # Counter-trend strength: stock diverging from Nifty direction intraday.
+    # High values mean the stock is bucking the market — a valuable signal
+    # that should boost ranking in bearish/bullish markets alike.
+    counter_trend_strength = 0.0
+    if nifty_daily is not None and not nifty_daily.empty and len(nifty_daily) >= 2:
+        nifty_ret_1d = (
+            float(nifty_daily["Close"].iloc[-1]) / float(nifty_daily["Close"].iloc[-2]) - 1
+        ) * 100
+        stock_ret_1d = (price / float(close.iloc[-2]) - 1) * 100 if len(close) >= 2 else 0
+        # Stock is green when Nifty is red (or vice versa)
+        if nifty_ret_1d < -0.3 and stock_ret_1d > 0.3:
+            counter_trend_strength = min(1.0, (stock_ret_1d - nifty_ret_1d) / 3.0)
+        elif nifty_ret_1d > 0.3 and stock_ret_1d < -0.3:
+            counter_trend_strength = min(1.0, (nifty_ret_1d - stock_ret_1d) / 3.0)
+
     result = {
         "trend": trend,
         "volatility": volatility,
@@ -403,6 +492,7 @@ def classify_symbol_regime(daily_df, intra_ist, nifty_daily=None, sector_daily=N
         "sector_relative_strength": sector_relative_strength,
         "sector_vs_market": sector_vs_market,
         "weekly_trend": weekly_trend,
+        "counter_trend_strength": round(counter_trend_strength, 3),
     }
 
     if symbol:
@@ -523,9 +613,16 @@ def compute_dow_month_stats(daily_df):
 
 STRATEGY_REGIME_MAP = {
     "orb":          {"trend_up", "trend_down", "gap_and_go"},
-    "pullback":     {"trend_up", "trend_down"},
+    # Pullback now eligible on gap_and_fade: if a stock has a strong individual
+    # trend but the MARKET gap faded, the stock's trend may continue — pullback
+    # entries into that trend are valid. The extra trend check in
+    # get_eligible_strategies ensures only strong-trend stocks qualify.
+    "pullback":     {"trend_up", "trend_down", "gap_and_fade"},
     "compression":  {"range_bound", "trend_up", "trend_down"},
-    "mean_revert":  {"range_bound", "volatile_two_sided"},
+    # Mean-revert is a natural fit for gap_and_fade: the gap created an
+    # overextension, the fade IS mean-reversion. Also added gap_and_go for
+    # stocks that overextended in the gap direction.
+    "mean_revert":  {"range_bound", "volatile_two_sided", "gap_and_fade", "gap_and_go"},
     "swing":        {"trend_up", "trend_down"},
     "mlr":          {"trend_up", "trend_down", "range_bound", "volatile_two_sided", "gap_and_go", "gap_and_fade"},
 }

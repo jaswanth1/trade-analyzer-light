@@ -23,10 +23,10 @@ def evaluate_mean_revert(symbol, intra_ist, daily_df, symbol_regime, day_type,
     - RSI exhaustion confirmation (RSI > 75 for short, < 25 for long)
     - Sector-relative check: skip if sector moving in same direction
     """
-    if day_type not in ("range_bound", "volatile_two_sided"):
-        return None
+    # Day-type eligibility is handled by STRATEGY_REGIME_MAP in regime.py.
+    # No redundant day_type check here — the caller already filters by day type.
 
-    # FIX: Trend veto — mean-revert loses in strong trends
+    # Trend veto — mean-revert loses in strong trends
     trend = symbol_regime.get("trend", "sideways")
     if trend in ("strong_up", "strong_down"):
         return None

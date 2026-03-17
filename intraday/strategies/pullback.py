@@ -150,12 +150,15 @@ def evaluate_pullback(symbol, intra_ist, daily_df, symbol_regime):
             pullback_low = float(today_bars["Low"].iloc[-3:].min())
             stop = pullback_low - 0.1 * atr
 
-            # Target: min(R1 distance, 1.5R) instead of day_high
+            # Target: min(R1 distance, 1.5R) — but only use R1 if it's above entry
             risk = ltp - stop
-            r1 = levels.get("r1", ltp + 2 * risk)
-            r1_target = r1
             rr_target = ltp + 1.5 * risk
-            target = min(r1_target, rr_target)
+            r1 = levels.get("r1", 0)
+            # Only cap at R1 if R1 is a valid resistance ABOVE current price
+            if r1 > ltp:
+                target = min(r1, rr_target)
+            else:
+                target = rr_target
 
             conf = 0.5
             if rejection:
@@ -219,10 +222,13 @@ def evaluate_pullback(symbol, intra_ist, daily_df, symbol_regime):
             stop = pullback_high + 0.1 * atr
 
             risk = stop - ltp
-            s1 = levels.get("s1", ltp - 2 * risk)
-            s1_target = s1
             rr_target = ltp - 1.5 * risk
-            target = max(s1_target, rr_target)
+            s1 = levels.get("s1", 0)
+            # Only cap at S1 if S1 is a valid support BELOW current price
+            if 0 < s1 < ltp:
+                target = max(s1, rr_target)
+            else:
+                target = rr_target
 
             conf = 0.5
             if rejection:

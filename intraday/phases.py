@@ -1506,10 +1506,11 @@ def _run_live_scan(config, symbols, now_ist=None, data_override=None,
 
     nifty_ist = compute_vwap(_to_ist(nifty_intra)) if not nifty_intra.empty else pd.DataFrame()
     nifty_new_lows = nifty_making_new_lows(nifty_ist) if not nifty_ist.empty else True
-    nifty_regime, beta_scale, _regime_strength = detect_nifty_regime(nifty_daily)
+    nifty_regime, beta_scale, regime_strength = detect_nifty_regime(nifty_daily)
 
     nifty_state = {
         "regime": nifty_regime,
+        "regime_strength": regime_strength,
         "new_lows": nifty_new_lows,
         "beta_scale": beta_scale,
         "nifty_ist": nifty_ist,
@@ -1579,6 +1580,31 @@ def _run_live_scan(config, symbols, now_ist=None, data_override=None,
             news_data = {}
 
     nifty_state["institutional_flow"] = inst_flow
+
+    # Compute continuous market context scores for multi-factor scoring
+    from common.market import compute_market_context_scores
+    market_ctx = compute_market_context_scores(
+        nifty_daily, vix_val, inst_flow, regime_strength
+    )
+
+    # Detect regime transition (bear→range, range→bull, etc.)
+    from intraday.regime import detect_regime_transition
+    transition = detect_regime_transition(nifty_ist, nifty_daily)
+    if transition["transition"]:
+        # Apply transition adjustment to regime score
+        market_ctx["regime_score"] = round(
+            max(0.0, min(1.0,
+                market_ctx["regime_score"] + transition["regime_score_adjustment"])),
+            3,
+        )
+        market_ctx["regime_transition"] = transition["transition"]
+        market_ctx["transition_strength"] = transition["transition_strength"]
+        if not data_override:
+            print(f"  Regime transition: {transition['transition']} "
+                  f"(strength: {transition['transition_strength']:.2f}, "
+                  f"regime_score adjusted to {market_ctx['regime_score']:.2f})")
+
+    nifty_state["market_ctx"] = market_ctx
 
     # Adjust VIX scale if net_selling
     if inst_flow == "net_selling":
@@ -1695,7 +1721,7 @@ def _run_live_scan(config, symbols, now_ist=None, data_override=None,
         print(f"  Total candidates: {len(all_candidates)}")
 
     # Rank signals
-    all_candidates = rank_signals(all_candidates)
+    all_candidates = rank_signals(all_candidates, nifty_regime=nifty_regime)
 
     # In backtest mode, return candidates early (skip portfolio filters, persistence, LLM)
     if skip_llm:
@@ -1754,40 +1780,56 @@ def _run_live_scan(config, symbols, now_ist=None, data_override=None,
                 c["signal"] = "WATCH"
                 c["signal_reason"] = f"Position limit (max {MAX_INTRADAY_POSITIONS})"
 
-    # Position sizing for active signals — with per-stock beta
+    # Position sizing for ALL non-AVOID signals — with per-stock beta.
+    # Institutional approach: sizing IS the risk control, not signal filtering.
+    # STRONG/ACTIVE get full sizing; WATCH gets reduced sizing proportional
+    # to composite score, so traders see opportunity with appropriate size.
     bench_daily = nifty_daily
     for c in all_candidates:
-        if c.get("signal") in ("STRONG", "ACTIVE"):
-            wr = c["score"]
-            rr = c["rr_ratio"] if c["rr_ratio"] > 0 else 1.5
-            kelly = max(0, (wr * rr - (1 - wr)) / rr) * 0.5  # half-Kelly
-            size_mult = c.get("size_multiplier", 1.0)
+        if c.get("signal") == "AVOID":
+            c["recommended_qty"] = 0
+            c["capital_allocated"] = 0
+            c["capital_at_risk"] = 0
+            c["risk_pct"] = 0
+            c["stock_beta"] = 1.0
+            continue
 
-            sym = c["symbol"]
-            sym_daily = all_data.get(sym, {}).get("daily", pd.DataFrame())
-            stock_beta = 1.0
-            if not sym_daily.empty and not bench_daily.empty:
-                try:
-                    stock_beta = compute_beta(sym_daily, bench_daily)
-                    if np.isnan(stock_beta):
-                        stock_beta = 1.0
-                except Exception:
+        wr = c["score"]
+        rr = c["rr_ratio"] if c["rr_ratio"] > 0 else 1.5
+        kelly = max(0, (wr * rr - (1 - wr)) / rr) * 0.5  # half-Kelly
+        size_mult = c.get("size_multiplier", 1.0)
+
+        # WATCH tier: scale down sizing proportional to composite score
+        # Score 0.52+ (ACTIVE) = full size, score 0.38 (WATCH floor) = ~25% size
+        if c.get("signal") == "WATCH":
+            score_scale = max(0.15, (wr - 0.30) / 0.30)  # 0.15 at 0.34, 0.73 at 0.52
+            size_mult *= score_scale
+
+        sym = c["symbol"]
+        sym_daily = all_data.get(sym, {}).get("daily", pd.DataFrame())
+        stock_beta = 1.0
+        if not sym_daily.empty and not bench_daily.empty:
+            try:
+                stock_beta = compute_beta(sym_daily, bench_daily)
+                if np.isnan(stock_beta):
                     stock_beta = 1.0
-            individual_beta_scale = compute_individual_beta_scale(stock_beta)
+            except Exception:
+                stock_beta = 1.0
+        individual_beta_scale = compute_individual_beta_scale(stock_beta)
 
-            pos_size = compute_position_size(
-                capital=intraday_capital * size_mult,
-                kelly_fraction=max(kelly, 0.05),
-                entry_price=c["entry_price"],
-                stop_pct=c["stop_pct"],
-                vix_scale=vix_scale,
-                beta_scale=individual_beta_scale,
-            )
-            c["recommended_qty"] = pos_size["quantity"]
-            c["capital_allocated"] = pos_size["capital_allocated"]
-            c["capital_at_risk"] = pos_size["capital_at_risk"]
-            c["risk_pct"] = pos_size["risk_pct"]
-            c["stock_beta"] = round(stock_beta, 2)
+        pos_size = compute_position_size(
+            capital=intraday_capital * size_mult,
+            kelly_fraction=max(kelly, 0.05),
+            entry_price=c["entry_price"],
+            stop_pct=c["stop_pct"],
+            vix_scale=vix_scale,
+            beta_scale=individual_beta_scale,
+        )
+        c["recommended_qty"] = pos_size["quantity"]
+        c["capital_allocated"] = pos_size["capital_allocated"]
+        c["capital_at_risk"] = pos_size["capital_at_risk"]
+        c["risk_pct"] = pos_size["risk_pct"]
+        c["stock_beta"] = round(stock_beta, 2)
 
     # ── Supabase persistence ──
     strong_signals = [c for c in all_candidates if c.get("signal") in ("STRONG", "ACTIVE")]

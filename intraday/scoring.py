@@ -13,8 +13,8 @@ import yaml
 from zoneinfo import ZoneInfo
 
 from common.data import TICKERS, PROJECT_ROOT
-from common.indicators import compute_vwap, _to_ist
-from common.market import check_earnings_proximity
+from common.indicators import compute_vwap, _to_ist, compute_atr as compute_atr_series
+from common.market import check_earnings_proximity, compute_market_context_scores
 from intraday.convergence import compute_convergence_score, compute_historical_hit_rate
 from intraday.features import (
     compute_opening_range, compute_intraday_levels, compute_volume_ratio,
@@ -120,6 +120,128 @@ def compute_time_relevance(strategy, now_ist=None):
     }
 
 
+# ── Multi-Factor Scoring (replaces binary gates) ────────────────────
+
+FACTOR_WEIGHTS = {
+    "market_regime":       0.12,
+    "vwap_alignment":      0.08,
+    "stock_trend":         0.15,
+    "convergence":         0.15,
+    "relative_strength":   0.10,
+    "momentum":            0.05,
+    "seasonality":         0.05,
+    "news_sentiment":      0.05,
+    "strategy_confidence": 0.15,
+    "rr_quality":          0.10,
+}
+
+
+def compute_composite_score(candidate, market_ctx, symbol_regime, convergence_pct,
+                             dow_wr, mp_wr, news_sentiment, vwap_distance_atrs,
+                             counter_trend_strength=0.0):
+    """Unified multi-factor scoring following institutional methodology.
+
+    Every dimension produces a 0.0-1.0 factor score. The composite is the
+    weighted average. No binary gates — all factors are continuous.
+
+    Returns (composite_score, factor_details_dict).
+    """
+    factors = {}
+    direction = candidate.get("direction", "long")
+
+    # Market regime
+    factors["market_regime"] = market_ctx.get("regime_score", 0.5)
+
+    # VWAP alignment: continuous distance measure
+    if direction == "long":
+        vwap_f = np.interp(vwap_distance_atrs, [-1.0, -0.3, 0, 0.3, 1.0],
+                           [0.1, 0.3, 0.55, 0.8, 1.0])
+    else:
+        vwap_f = np.interp(-vwap_distance_atrs, [-1.0, -0.3, 0, 0.3, 1.0],
+                           [0.1, 0.3, 0.55, 0.8, 1.0])
+    factors["vwap_alignment"] = float(vwap_f)
+
+    # Stock trend strength
+    trend = symbol_regime.get("trend", "sideways")
+    if direction == "long":
+        t_map = {"strong_up": 1.0, "mild_up": 0.75, "sideways": 0.5,
+                 "mild_down": 0.3, "strong_down": 0.15}
+    else:
+        t_map = {"strong_down": 1.0, "mild_down": 0.75, "sideways": 0.5,
+                 "mild_up": 0.3, "strong_up": 0.15}
+    factors["stock_trend"] = t_map.get(trend, 0.5)
+
+    # Convergence
+    factors["convergence"] = convergence_pct / 100.0
+
+    # Relative strength + counter-trend bonus
+    rs = symbol_regime.get("relative_strength", "inline")
+    rs_map = {"outperforming": 0.85, "inline": 0.5, "underperforming": 0.2}
+    rs_val = rs_map.get(rs, 0.5)
+    if counter_trend_strength > 0:
+        rs_val = min(1.0, rs_val + 0.25 * counter_trend_strength)
+    factors["relative_strength"] = rs_val
+
+    # Momentum
+    mom = symbol_regime.get("momentum", "steady")
+    factors["momentum"] = {"accelerating": 0.85, "steady": 0.5, "decelerating": 0.2}.get(mom, 0.5)
+
+    # Seasonality
+    dow_f = float(np.interp(dow_wr, [20, 40, 50, 60, 80], [0.15, 0.35, 0.5, 0.65, 0.85]))
+    mp_f = float(np.interp(mp_wr, [20, 40, 50, 60, 80], [0.15, 0.35, 0.5, 0.65, 0.85]))
+    factors["seasonality"] = (dow_f + mp_f) / 2
+
+    # News sentiment
+    factors["news_sentiment"] = float(np.interp(
+        news_sentiment if direction == "long" else -news_sentiment,
+        [-1.0, -0.3, 0, 0.3, 1.0], [0.1, 0.35, 0.5, 0.65, 0.9]))
+
+    # Strategy raw confidence
+    factors["strategy_confidence"] = candidate.get("confidence", 0.5)
+
+    # RR quality
+    rr = candidate.get("rr_ratio", 1.0)
+    factors["rr_quality"] = float(np.interp(rr, [0.5, 1.2, 2.0, 3.0, 5.0],
+                                            [0.0, 0.3, 0.6, 0.85, 1.0]))
+
+    # Weighted composite
+    composite = sum(FACTOR_WEIGHTS[k] * factors[k] for k in FACTOR_WEIGHTS)
+
+    # Sector RS bonus (additive)
+    sec_rs = symbol_regime.get("sector_relative_strength", "inline")
+    sec_vs = symbol_regime.get("sector_vs_market", "inline")
+    if sec_rs == "outperforming" and sec_vs == "outperforming":
+        composite += 0.03
+    elif sec_rs == "underperforming" and sec_vs == "underperforming":
+        composite -= 0.02
+
+    # Weekly trend penalty for trend-following strategies
+    weekly = symbol_regime.get("weekly_trend", "sideways")
+    strat = candidate.get("strategy", "")
+    if strat in ("orb", "pullback", "swing"):
+        if (trend in ("strong_up", "mild_up") and weekly == "down") or \
+           (trend in ("strong_down", "mild_down") and weekly == "up"):
+            composite -= 0.04
+
+    # Historical hit rate bonus/penalty
+    hist_rate = candidate.get("historical_hit_rate", 50)
+    hist_n = candidate.get("historical_sample_size", 0)
+    if hist_n >= 10:
+        if hist_rate > 60:
+            composite += 0.03
+        elif hist_rate < 40:
+            composite -= 0.03
+
+    # Time relevance
+    if candidate.get("time_window_status") == "FADING":
+        composite -= 0.03
+
+    # VIX score from market context
+    composite = composite * (0.7 + 0.3 * market_ctx.get("vix_score", 0.65))
+
+    return round(max(0.0, min(1.0, composite)), 3), factors
+
+
 def evaluate_symbol(symbol, intra_df, daily_df, nifty_state, vix_info,
                     day_type_info, dow_month_stats, sector_data,
                     news_data=None, now_ist=None, skip_earnings_check=False):
@@ -213,34 +335,21 @@ def evaluate_symbol(symbol, intra_df, daily_df, nifty_state, vix_info,
         candidate["symbol_regime"] = symbol_regime
         candidate["day_type"] = day_type
 
-        # ── Bug Fix #1: Direction-aware VWAP gate ──
+        # ── Compute VWAP distance in ATR units (continuous) ──
         vwap_val = float(today_bars["vwap"].iloc[-1]) if "vwap" in today_bars.columns else np.nan
         direction = candidate.get("direction", "long")
-        if not np.isnan(vwap_val):
-            if direction == "long":
-                vwap_gate = ltp > vwap_val
-            else:
-                vwap_gate = ltp < vwap_val
-        else:
-            vwap_gate = False
 
-        # Must-have gates
-        nifty_regime = nifty_state.get("regime", "unknown")
-        nifty_new_lows = nifty_state.get("new_lows", False)
-        nifty_ok = (nifty_regime != "bearish") and (not nifty_new_lows)
+        # ATR for normalization (compute_atr returns a scalar)
+        try:
+            _atr_raw = compute_atr_series(today_bars, period=14) if len(today_bars) >= 14 else None
+            atr_val = float(_atr_raw) if _atr_raw is not None and not np.isnan(_atr_raw) else (ltp * 0.02)
+        except Exception:
+            atr_val = ltp * 0.02
+        vwap_distance_atrs = (ltp - vwap_val) / atr_val if atr_val > 0 and not np.isnan(vwap_val) else 0.0
 
-        # MLR is exempt from nifty_ok gate (works in bearish markets)
-        # and vwap_gate (buys stocks recovering FROM below VWAP — the strategy
-        # itself checks VWAP reclaim as condition #5)
+        # ── Hard filters (mechanical/fundamental only) ──
         is_mlr = candidate["strategy"] == "mlr"
-
-        gates = {
-            "vwap_gate": vwap_gate if not is_mlr else True,
-            "nifty_ok": nifty_ok if not is_mlr else True,
-            "not_illiquid": symbol_regime.get("liquidity") != "illiquid",
-        }
-        candidate["gates"] = gates
-        gates_pass = all(gates.values())
+        is_illiquid = symbol_regime.get("liquidity") == "illiquid"
 
         # DOW/month-period adjustments
         _now = now_ist or datetime.now(IST)
@@ -287,167 +396,113 @@ def evaluate_symbol(symbol, intra_df, daily_df, nifty_state, vix_info,
                 candidate["target_pct"] / candidate["stop_pct"], 2
             ) if candidate["stop_pct"] > 0 else 0
 
-        # Weighted confidence score
-        raw_conf = candidate["confidence"]
-        score_adjustments = 0.0
-        if vwap_gate:
-            score_adjustments += 0.05
-        if nifty_ok:
-            score_adjustments += 0.05
-        if dow_wr > 55:
-            score_adjustments += 0.05
-        elif dow_wr < 45:
-            score_adjustments -= 0.05
-        if mp_wr > 55:
-            score_adjustments += 0.03
-        elif mp_wr < 45:
-            score_adjustments -= 0.03
-        if candidate["rr_ratio"] >= 2.0:
-            score_adjustments += 0.05
+        # ── Convergence score (computed BEFORE scoring, not after) ──
+        conv = compute_convergence_score(candidate, today_bars, daily_df, symbol_regime)
+        candidate["convergence_score"] = conv["score"]
+        candidate["convergence_detail"] = f"{conv['n_aligned']}/{conv['total']} ({', '.join(conv['aligned'])})"
 
-        # Momentum + relative strength bonuses
-        if symbol_regime.get("momentum") == "accelerating":
-            score_adjustments += 0.03
-        elif symbol_regime.get("momentum") == "decelerating":
-            score_adjustments -= 0.03
-        if symbol_regime.get("relative_strength") == "outperforming":
-            score_adjustments += 0.02
+        # ── Historical hit rate ──
+        hist = compute_historical_hit_rate(symbol, daily_df, candidate["strategy"],
+                                           direction, day_type, dow_name)
+        candidate["historical_hit_rate"] = hist["hit_rate"]
+        candidate["historical_sample_size"] = hist["sample_size"]
+        candidate["historical_context"] = hist["context"]
 
-        # Sector RS bonus: top stock in top sector = strongest signal
-        sec_rs = symbol_regime.get("sector_relative_strength", "inline")
-        sec_vs_mkt = symbol_regime.get("sector_vs_market", "inline")
-        if sec_rs == "outperforming" and sec_vs_mkt == "outperforming":
-            score_adjustments += 0.04  # top stock in top sector
-        elif sec_rs == "outperforming" or sec_vs_mkt == "outperforming":
-            score_adjustments += 0.02  # one outperforming
-        elif sec_rs == "underperforming" and sec_vs_mkt == "underperforming":
-            score_adjustments -= 0.03  # weakest stock in weakest sector
-
-        # ── News sentiment adjustment ──
+        # ── News sentiment ──
         sym_news = (news_data or {}).get(symbol, {})
         news_sentiment = sym_news.get("sentiment", 0)
         has_material = sym_news.get("has_material_event", False)
         candidate["news_sentiment"] = news_sentiment
         candidate["news_summary"] = sym_news.get("summary", "")
-
-        if has_material and (
+        candidate["_news_avoid"] = (has_material and (
             (direction == "long" and news_sentiment < -0.3) or
-            (direction == "short" and news_sentiment > 0.3)
-        ):
-            # Material news opposes trade direction — force AVOID later
-            candidate["_news_avoid"] = True
-        else:
-            candidate["_news_avoid"] = False
+            (direction == "short" and news_sentiment > 0.3)))
 
-        if news_sentiment > 0.5 and direction == "long":
-            score_adjustments += 0.05
-        elif news_sentiment < -0.5 and direction == "long":
-            score_adjustments -= 0.05
-        elif news_sentiment < -0.5 and direction == "short":
-            score_adjustments += 0.05
-        elif news_sentiment > 0.5 and direction == "short":
-            score_adjustments -= 0.05
+        # ── Counter-trend strength ──
+        # Use the value from classify_symbol_regime (daily data, more robust),
+        # enhanced with intraday divergence if available
+        counter_trend = symbol_regime.get("counter_trend_strength", 0.0)
+        nifty_ist = nifty_state.get("nifty_ist")
+        if nifty_ist is not None and not nifty_ist.empty:
+            nifty_today = nifty_ist[nifty_ist.index.date == today]
+            if not nifty_today.empty and len(nifty_today) >= 2:
+                nifty_ret = (float(nifty_today["Close"].iloc[-1]) / float(nifty_today["Open"].iloc[0]) - 1) * 100
+                stock_ret = candidate["change_pct"]
+                intra_ct = 0.0
+                if nifty_ret < -0.3 and stock_ret > 0.3:
+                    intra_ct = min(1.0, (stock_ret - nifty_ret) / 3.0)
+                elif nifty_ret > 0.3 and stock_ret < -0.3:
+                    intra_ct = min(1.0, (nifty_ret - stock_ret) / 3.0)
+                # Take the stronger of daily and intraday counter-trend signals
+                counter_trend = max(counter_trend, intra_ct)
+        candidate["counter_trend_strength"] = round(counter_trend, 3)
 
-        # ── Convergence score ──
-        conv = compute_convergence_score(candidate, today_bars, daily_df,
-                                         symbol_regime)
-        candidate["convergence_score"] = conv["score"]
-        candidate["convergence_detail"] = (
-            f"{conv['n_aligned']}/{conv['total']} "
-            f"({', '.join(conv['aligned'])})"
-        )
+        # ── Market context (from nifty_state or compute fresh) ──
+        market_ctx = nifty_state.get("market_ctx")
+        if market_ctx is None:
+            vix_val_local, _ = vix_info
+            market_ctx = compute_market_context_scores(
+                nifty_state.get("nifty_daily", pd.DataFrame()),
+                vix_val_local,
+                nifty_state.get("institutional_flow", "neutral"),
+                nifty_state.get("regime_strength", 0.5),
+            )
 
-        candidate["_convergence_weak"] = False
-        if conv["score"] > 70:
-            score_adjustments += 0.08
-        elif conv["score"] < 40:
-            candidate["_convergence_weak"] = True
-
-        # ── Historical hit rate ──
-        hist = compute_historical_hit_rate(
-            symbol, daily_df, candidate["strategy"],
-            direction, day_type, dow_name,
-        )
-        candidate["historical_hit_rate"] = hist["hit_rate"]
-        candidate["historical_sample_size"] = hist["sample_size"]
-        candidate["historical_context"] = hist["context"]
-
-        candidate["_history_weak"] = False
-        if hist["sample_size"] >= 10 and hist["hit_rate"] > 60:
-            score_adjustments += 0.05
-        elif hist["sample_size"] >= 10 and hist["hit_rate"] < 40:
-            candidate["_history_weak"] = True
-
-        # ── Weekly trend alignment ──
-        weekly_trend = symbol_regime.get("weekly_trend", "sideways")
-        daily_trend = symbol_regime.get("trend", "sideways")
-        strategy_name = candidate["strategy"]
-        # If weekly and daily disagree for trend-following strategies → reduce confidence
-        if strategy_name in ("orb", "pullback", "swing"):
-            if daily_trend in ("strong_up", "mild_up") and weekly_trend == "down":
-                score_adjustments -= 0.05
-            elif daily_trend in ("strong_down", "mild_down") and weekly_trend == "up":
-                score_adjustments -= 0.05
-
-        # ── Time-relevance adjustment (LIVE mode) ──
-        score_adjustments += time_rel["penalty"]
+        # ── Time-relevance ──
         candidate["time_status"] = time_rel["note"]
         candidate["time_window_status"] = time_rel["status"]
 
-        score_adjustments = max(-0.20, min(0.20, score_adjustments))
-        final_score = max(0, min(1.0, raw_conf + score_adjustments))
-        candidate["score"] = round(final_score, 2)
+        # ── Compute composite score ──
+        composite, factor_scores = compute_composite_score(
+            candidate, market_ctx, symbol_regime, conv["score"],
+            dow_wr, mp_wr, news_sentiment, vwap_distance_atrs,
+            counter_trend,
+        )
+        candidate["score"] = composite
+        candidate["factor_scores"] = factor_scores
 
-        # VIX info
+        # ── Signal tier assignment (simple thresholds, no binary gates) ──
         vix_val, vix_regime = vix_info
 
-        # Apply news/convergence/history overrides before tier assignment
-        if candidate.get("_news_avoid"):
-            candidate["signal"] = "AVOID"
-            candidate["signal_reason"] = f"Material news opposes {direction} (sentiment {news_sentiment:+.1f})"
-        elif candidate.get("_convergence_weak"):
-            candidate["signal"] = "WATCH"
-            candidate["signal_reason"] = f"Weak convergence: {candidate['convergence_detail']}"
-        elif candidate.get("_history_weak") and hist["sample_size"] >= 10:
-            candidate["signal"] = "WATCH"
-            candidate["signal_reason"] = f"Historical hit rate {hist['hit_rate']:.0f}% on {hist['sample_size']} samples"
-        elif vix_regime == "stress":
-            candidate["signal"] = "AVOID"
-            candidate["signal_reason"] = f"VIX STRESS ({vix_val})"
-        elif not gates_pass:
-            failed = [k for k, v in gates.items() if not v]
-            candidate["signal"] = "AVOID"
-            candidate["signal_reason"] = f"Gate blocked: {', '.join(failed)}"
-        elif dow_wr < 40 or mp_wr < 40:
-            candidate["signal"] = "WATCH"
-            candidate["signal_reason"] = f"DOW WR {dow_wr:.0f}% / Month WR {mp_wr:.0f}% too low"
-        elif final_score >= 0.80 and candidate["rr_ratio"] >= 2.0:
-            candidate["signal"] = "STRONG"
-            candidate["signal_reason"] = f"Score {final_score:.0%}, RR {candidate['rr_ratio']:.1f}"
-        elif final_score >= 0.65 and candidate["rr_ratio"] >= 1.5:
-            candidate["signal"] = "ACTIVE"
-            candidate["signal_reason"] = f"Score {final_score:.0%}, RR {candidate['rr_ratio']:.1f}"
-        elif final_score >= 0.50:
-            candidate["signal"] = "WATCH"
-            candidate["signal_reason"] = f"Score {final_score:.0%} — borderline"
-        else:
-            candidate["signal"] = "AVOID"
-            candidate["signal_reason"] = f"Score {final_score:.0%} too low"
-
-        # Earnings check (skip in backtest — makes network calls)
+        # Hard filters only: mechanical and fundamental
         near_earnings = False
         earnings_date = ""
         if not skip_earnings_check:
             near_earnings, earnings_date = check_earnings_proximity(symbol, days_ahead=3)
-        if near_earnings:
+
+        if candidate.get("_news_avoid"):
+            candidate["signal"] = "AVOID"
+            candidate["signal_reason"] = f"Material news opposes {direction} (sentiment {news_sentiment:+.1f})"
+        elif near_earnings:
             candidate["signal"] = "AVOID"
             candidate["signal_reason"] = f"Earnings on {earnings_date}"
+        elif is_illiquid:
+            candidate["signal"] = "AVOID"
+            candidate["signal_reason"] = "Illiquid stock"
+        elif composite >= 0.68:
+            candidate["signal"] = "STRONG"
+            candidate["signal_reason"] = f"Composite {composite:.0%} — strong multi-factor alignment"
+        elif composite >= 0.52:
+            candidate["signal"] = "ACTIVE"
+            candidate["signal_reason"] = f"Composite {composite:.0%} — adequate edge"
+        elif composite >= 0.38:
+            candidate["signal"] = "WATCH"
+            candidate["signal_reason"] = f"Composite {composite:.0%} — monitor"
+        else:
+            candidate["signal"] = "AVOID"
+            candidate["signal_reason"] = f"Composite {composite:.0%} — insufficient edge"
 
-        # Position sizing hint for swing (wider stop → smaller size)
+        # Position sizing hints
         candidate["size_multiplier"] = 0.5 if candidate["strategy"] == "swing" else 1.0
-        # Expiry week sizing reduction
         if month_period == "expiry_week":
             candidate["size_multiplier"] *= 0.7
+
+        # Keep gates dict for backward compatibility (reporting)
+        candidate["gates"] = {
+            "vwap_alignment": f"{vwap_distance_atrs:+.2f} ATR",
+            "market_regime": f"{market_ctx.get('regime_score', 0.5):.2f}",
+            "liquidity": "normal" if not is_illiquid else "illiquid",
+        }
 
         candidates.append(candidate)
 
@@ -456,19 +511,48 @@ def evaluate_symbol(symbol, intra_df, daily_df, nifty_state, vix_info,
 
 # ── Signal Ranking ───────────────────────────────────────────────────────
 
-def rank_signals(all_candidates):
-    """Rank all candidates across symbols.
+def rank_signals(all_candidates, nifty_regime="range"):
+    """Rank all candidates with universe-level relative strength.
 
-    Sort: STRONG > ACTIVE > WATCH; within tier by score * rr_ratio.
-    Apply portfolio risk overlays.
+    Institutional approach: rank candidates not just by individual score
+    but by how they compare to the rest of the universe. In a bearish market,
+    stocks bucking the trend get a bigger RS boost because that outperformance
+    is rarer and more meaningful.
+
+    Sort: STRONG > ACTIVE > WATCH; within tier by RS-boosted composite.
     """
     signal_order = {"STRONG": 0, "ACTIVE": 1, "WATCH": 2, "AVOID": 3}
+
+    # Compute universe-level relative strength percentile
+    non_avoid = [c for c in all_candidates if c.get("signal") != "AVOID"]
+    if len(non_avoid) >= 2:
+        changes = sorted([c.get("change_pct", 0) for c in non_avoid])
+        n = len(changes)
+        for c in non_avoid:
+            change = c.get("change_pct", 0)
+            # Percentile rank within the candidate universe
+            rank_pos = sum(1 for ch in changes if ch <= change)
+            rs_percentile = rank_pos / n  # 0.0 = weakest, 1.0 = strongest
+
+            # In bearish markets, RS matters MORE (outperformance is rarer)
+            rs_weight = 0.3 if nifty_regime == "bearish" else 0.15
+            c["_rs_boost"] = round(c.get("score", 0) * (1 + rs_weight * rs_percentile), 3)
+            c["rs_percentile"] = round(rs_percentile, 2)
+    else:
+        for c in non_avoid:
+            c["_rs_boost"] = c.get("score", 0)
+            c["rs_percentile"] = 0.5
+
+    for c in all_candidates:
+        if c.get("signal") == "AVOID":
+            c["_rs_boost"] = 0
+            c["rs_percentile"] = 0
 
     return sorted(
         all_candidates,
         key=lambda c: (
             signal_order.get(c.get("signal", "AVOID"), 4),
-            -(c.get("score", 0) * c.get("rr_ratio", 0)),
+            -(c.get("_rs_boost", 0) * c.get("rr_ratio", 0)),
         ),
     )
 

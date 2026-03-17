@@ -14,43 +14,64 @@ You are a Senior Quantitative Strategist running a systematic Indian equities de
 Read these files to understand the system architecture:
 - `CLAUDE.md` — project overview, all runnable commands
 - `intraday/HOW_IT_WORKS.md` — strategy logic, regime classification, risk rules, signal tiers
-- `intraday/mlr_config.yaml` — current MLR per-ticker configs (check `generated` timestamp for staleness)
 - `intraday/mlr_config_guide.md` — enabled/disabled tickers, EVs, win rates, phase windows
-- `scalp/scalp_config.yaml` — scalp scanner configs (edge strengths, gap rules, active phases)
 
-If `mlr_config.yaml` was generated more than 3 days ago, flag it as STALE and recommend regeneration with `python -m intraday.mlr_config -v`.
+### 1B. Config Staleness Check (automated)
+```bash
+python -m intraday.config_check
+```
+This checks both `mlr_config.yaml` and `scalp_config.yaml` for staleness (age, ticker count mismatches vs `common/data.py`) and outputs recommended actions. If any configs are stale, run the suggested regeneration commands before proceeding.
 
 ## Phase 2: Live Market Data Collection
 
-Fetch the following via yfinance (Python script):
+```bash
+python -m intraday.market_data
+```
 
-**Global indices** (5-day history with daily OHLCV):
-S&P 500 (^GSPC), NASDAQ (^IXIC), Dow Jones (^DJI), Nikkei 225 (^N225), Hang Seng (^HSI), FTSE 100 (^FTSE), DAX (^GDAXI)
+This script fetches ALL required market data and outputs a structured markdown report:
+- **Global indices**: S&P 500, NASDAQ, Dow Jones, Nikkei, Hang Seng, FTSE, DAX (5-day OHLCV, 1D/5D % change)
+- **India markets**: Nifty 50, Sensex, India VIX, Bank Nifty
+- **Sector indices**: IT, FIN, ENERGY, METAL, PHARMA, AUTO, FMCG, PSE, REALTY, INFRA
+- **Commodities & FX**: Brent, WTI, Gold, USD/INR
+- **FII flow proxy**: Nifty BeES volume + institutional flow estimate
+- **Universe movers**: All 34 stocks sorted by 1D change (top 5 gainers, top 5 losers)
+- **Conditional search triggers**: Pre-computed boolean flags for Phase 3B (VIX elevated, Brent move, USD/INR move, etc.)
+- **Stocks requiring news verification**: Any stock that moved >5%
+- **Backtest date range**: Pre-computed `--start` and `--end` dates for Phase 4C
 
-**India markets:**
-Nifty 50 (^NSEI), Sensex (^BSESN), India VIX (^INDIAVIX), Bank Nifty (^NSEBANK)
+Read the full output — it's the data foundation for all subsequent phases. The report is also saved to `intraday/reports/market_data_YYYY-MM-DD_HHMM.md`.
 
-**All NSE sector indices:**
-^CNXIT, ^CNXFIN, ^CNXENERGY, ^CNXMETAL, ^CNXPHARMA, ^CNXAUTO, ^CNXFMCG, ^CNXPSE, ^CNXREALTY, ^CNXINFRA
+## Phase 3: Web Research (Data-Driven)
 
-**Commodities & FX:**
-Brent (BZ=F), WTI (CL=F), Gold (GC=F), USD/INR (INR=X)
+Run Phase 2 FIRST, then use its output to decide WHAT to search. Use WebSearch — never fabricate.
 
-**FII flow proxy:**
-Nifty BeES (0P0000XVSO.BO) — 5-day volume + price for institutional flow estimate
+### 3A. Always-Run Searches (every session)
+1. `"India stock market [today's date] Nifty outlook"` — broad sentiment, key events, FII/DII flows
+2. `"[STOCK] share price [date] news"` — for EVERY stock in the universe that moved **>5%** in either direction yesterday (from Phase 2 universe movers). These are potential fundamental resets that override any technical setup.
 
-**Universe movers:**
-All 34 tickers from `common/data.py TICKERS` dict — compute 1-day and 5-day % change, sort by 1-day change to identify top 5 gainers and top 5 losers.
+### 3B. Conditional Searches (triggered by Phase 2 data)
 
-## Phase 3: Web Research (Parallel)
+The market data report (Phase 2) includes a **"Conditional Search Triggers"** section with pre-computed boolean flags and suggested search queries. For each trigger marked `[x]`, run the suggested search. For triggers marked `[ ]`, skip.
 
-Search for the following (use WebSearch, not fabrication):
+Triggers checked automatically:
+| Trigger | Condition | Why |
+|---------|-----------|-----|
+| VIX elevated | India VIX > 18 | Elevated fear — find what's driving it |
+| VIX spike | India VIX changed >15% in one day | Regime shift — need the catalyst |
+| Brent crude move | Brent moved >3% in 5 days | Oil is India's largest import — big moves matter |
+| USD/INR move | USD/INR moved >1% in 5 days | Currency stress affects FII flows |
+| Gold move | Gold moved >3% in 5 days | Risk-off signal when gold surges |
+| Nifty drawdown | Nifty >5% below 52-week high | Market in stress — find the narrative |
+| Sector spike | Any sector index moved >3% in 1 day | Sector-specific catalyst |
+| Big movers | Any stock moved >5% in 1 day | Potential fundamental reset |
 
-1. "India stock market [today's date] Nifty outlook FII DII flows" — market-specific sentiment
-2. "US Fed FOMC [current month year] interest rate" — monetary policy
-3. "RBI monetary policy [current month year] repo rate" — India rates
-4. "[any geopolitical crisis keywords from news]" — if oil >$85 or VIX >20, search for the specific driver
-5. Any stock in the universe that moved >5% in either direction yesterday — search "[STOCK] share price [date] news" to find the catalyst
+Additionally, check Phase 4A outlook: if Nifty RSI < 30, search `"India stock market oversold [month year] bottom"`.
+
+### 3C. Macro Calendar Check (always run)
+Search: `"India market events this week [date range]"` — catches earnings, RBI policy, FOMC, expiry week, GDP data, PMI releases, or any scheduled event regardless of what's dominating headlines this month.
+
+### Design Principle
+This section is intentionally NOT a fixed list of "search for FOMC" or "search for oil crisis." The searches are DERIVED from what the data shows. If VIX is 11 and oil is $55, none of the conditional searches fire and you only run the 2 always-run queries + the calendar check. If VIX is 28 and oil spiked 10%, you'll run 5-6 targeted searches. The prompt adapts to any market regime.
 
 ## Phase 4: Run System Scripts (In Order)
 
@@ -70,8 +91,12 @@ Captures: Conditional gap-scenario setups (IF gap-up/gap-down/flat → strategy 
 
 ### 4C. Recent Backtest Validation (Last 5 Trading Days)
 ```bash
-python -m intraday.backtest --start [5 trading days ago] --end [last trading day]
+python -m intraday.backtest --last-week
 ```
+The `--last-week` flag auto-computes the date range (end = last completed trading day, start = 7 calendar days before). No manual date calculation needed.
+
+Alternatively, the market data report (Phase 2) includes the exact backtest command with pre-computed dates if you prefer explicit control.
+
 Captures: Which strategies actually worked in the last week, win rates by strategy, avg MFE/MAE. This grounds today's plan in recent ACTUAL performance, not just theory.
 
 ### 4D. Scalp Scanner (if during market hours 9:15-15:15)
@@ -92,7 +117,7 @@ Before writing the plan, explicitly reason through:
 
 1. **Regime alignment:** Does the system's regime classification (from outlook) match the macro picture (from web research)? If they disagree, which should you trust and why?
 
-2. **Strategy selection:** Given the regime + day-type forecast + VIX level, which of the 6 strategies have edge today? Cross-reference with the backtest validation — if ORB has been losing all week, discount it even if the system recommends it.
+2. **Strategy selection:** Given the regime + day-type forecast + VIX level, which strategies (as listed in `intraday/HOW_IT_WORKS.md`) have edge today? Cross-reference with the backtest validation — if a strategy has been losing all week, discount it even if the system recommends it.
 
 3. **Sector rotation:** Which sectors showed relative strength yesterday? Do web research catalysts support continuation? Map to specific tickers in the universe.
 
@@ -194,7 +219,7 @@ Write to `intraday/reports/trade_plan_YYYY-MM-DD.md` with these sections:
     - Current drawdown % from peak
     - Days elapsed in the current phase
     - What needs to happen to transition to the NEXT phase
-    - Historical average duration for the current phase (from `intraday/reports/cycle_analysis_2026-03-17.md` if available)
+    - Historical average duration for the current phase (from the most recent `intraday/reports/cycle_analysis_*.md` if one exists, otherwise compute from 10-year Nifty drawdown history)
 
     **Trading implication by phase:**
     - Markdown: sell rallies, reduce size, MLR/mean-reversion only
@@ -218,7 +243,6 @@ Write to `intraday/reports/trade_plan_YYYY-MM-DD.md` with these sections:
 - Include sources (URLs) for all web research findings.
 - Do not recommend more than 5 trade ideas — quality over quantity.
 - For MLR trades, always specify the low phase window, post-low high phase, and trade window duration from the config.
-- 
 
 ---
 

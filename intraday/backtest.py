@@ -16,6 +16,7 @@ Usage:
     python -m intraday.backtest --date 2026-02-20 --scan-interval 15
     python -m intraday.backtest --date 2026-02-20 --interval 1m   # 1-min candles
     python -m intraday.backtest --start 2026-02-10 --end 2026-02-20
+    python -m intraday.backtest --last-week                         # auto last 5 trading days
     python -m intraday.backtest --date 2026-02-20 --capital 500000
     python -m intraday.backtest --date 2026-02-20 --llm
 """
@@ -985,6 +986,8 @@ def main():
     parser.add_argument("--date", type=str, help="Single date (YYYY-MM-DD)")
     parser.add_argument("--start", type=str, help="Start date for range")
     parser.add_argument("--end", type=str, help="End date for range")
+    parser.add_argument("--last-week", action="store_true",
+                        help="Auto-compute last 5 trading days (end=last completed weekday, start=7 days before)")
     parser.add_argument("--capital", type=int, default=1000000,
                         help="Starting capital (default: 1000000)")
     parser.add_argument("--llm", action="store_true",
@@ -1005,7 +1008,26 @@ def main():
             config = yaml.safe_load(f) or {}
     config.setdefault("global", {})["capital"] = args.capital
 
-    if args.date:
+    if args.last_week:
+        # Auto-compute last 5 trading days
+        today = date.today()
+        now_hour = datetime.now(ZoneInfo("Asia/Kolkata")).hour
+        # End = last completed trading day
+        if today.weekday() < 5 and now_hour >= 16:
+            end = today
+        else:
+            d = today - timedelta(days=1)
+            while d.weekday() >= 5:
+                d -= timedelta(days=1)
+            end = d
+        start = end - timedelta(days=7)
+        print(f"  --last-week: backtesting {start} to {end}")
+        run_multi_day(start, end, capital=args.capital, config=config,
+                      use_llm=args.llm, fast=args.fast,
+                      scan_interval=args.scan_interval,
+                      interval=args.interval)
+
+    elif args.date:
         target = date.fromisoformat(args.date)
         engine = IntradayBacktestEngine(target, capital=args.capital,
                                         config=config, use_llm=args.llm,
@@ -1028,7 +1050,7 @@ def main():
                       scan_interval=args.scan_interval,
                       interval=args.interval)
     else:
-        parser.error("Provide --date or both --start and --end")
+        parser.error("Provide --date, both --start and --end, or --last-week")
 
 
 if __name__ == "__main__":

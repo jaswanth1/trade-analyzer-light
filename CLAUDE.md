@@ -26,6 +26,9 @@ Trading system for Indian equity markets (NSE) with intraday scalp scanner and o
 
 - **Intraday scanner**: `python -m intraday.scanner` (auto-detects phase: pre_market/pre_live/live/post_market)
 - **Intraday scanner (force live)**: `python -m intraday.scanner --force`
+- **Market data report**: `python -m intraday.market_data` (fetches global/India/sector/commodity data, universe movers, conditional triggers)
+- **Config staleness check**: `python -m intraday.config_check` (checks MLR + scalp config freshness and ticker mismatches)
+- **Intraday backtest (last week)**: `python -m intraday.backtest --last-week` (auto-computes last 5 trading days)
 - **Scalp reports**: `python -m scalp.report`
 - **Scalp config**: `python -m scalp.config`
 - **Scalp scanner**: `python -m scalp.scanner`

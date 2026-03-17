@@ -219,7 +219,13 @@ def evaluate_mlr(symbol, intra_ist, daily_df, opening_range, symbol_regime,
     # Override with mlr_config values if available for this ticker
     if ticker_cfg:
         if ticker_cfg.get("optimal_stop_pct"):
-            stop = entry * (1 - ticker_cfg["optimal_stop_pct"] / 100)
+            cfg_stop_pct = ticker_cfg["optimal_stop_pct"]
+            # Floor: stop must be at least 0.5× ATR to survive intraday noise.
+            # The config generator's grid search often converges on 0.2% which is
+            # tighter than a single 5-min bar's range, causing noise stop-outs.
+            atr_pct = (atr / entry * 100) if entry > 0 else 2.0
+            min_stop_pct = max(cfg_stop_pct, 0.5 * atr_pct)
+            stop = entry * (1 - min_stop_pct / 100)
         if ticker_cfg.get("optimal_target_pct"):
             target = entry * (1 + ticker_cfg["optimal_target_pct"] / 100)
 

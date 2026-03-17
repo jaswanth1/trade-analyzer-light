@@ -619,9 +619,18 @@ class IntradayBacktestEngine:
                 continue
 
             # Gap scenario validation (pre/post-market signals)
+            # T-1 and pre-market signals are CONDITIONAL: "IF gap-up → ORB BUY".
+            # If the predicted gap didn't materialize, the signal should NOT execute.
             if sig.predicted_scenario:
                 sig.actual_scenario = self._determine_actual_gap(sig.symbol)
                 sig.scenario_correct = (sig.predicted_scenario == sig.actual_scenario)
+                if not sig.scenario_correct:
+                    sig.outcome = "NO_ENTRY"
+                    sig.exit_reason = (
+                        f"gap_mismatch: predicted {sig.predicted_scenario}, "
+                        f"actual {sig.actual_scenario}"
+                    )
+                    continue
 
             # Determine which bars to use for walk-forward
             if sig.phase.startswith("live_"):

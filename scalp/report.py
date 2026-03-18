@@ -17,9 +17,11 @@ import numpy as np
 import pandas as pd
 
 from common.data import (
-    TICKERS, BENCHMARK, GAP_THRESHOLDS, TARGET_PCTS, STOP_PCTS, SCALP_OUTPUT_DIR,
-    fetch_yf, fetch_ticker_info,
+    BENCHMARK, GAP_THRESHOLDS, TARGET_PCTS, STOP_PCTS, SCALP_OUTPUT_DIR,
+    fetch_yf, fetch_ticker_info, load_universe_for_tier,
 )
+
+TICKERS = load_universe_for_tier("scalp")
 
 OUTPUT_DIR = SCALP_OUTPUT_DIR
 from common.indicators import (

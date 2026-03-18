@@ -92,6 +92,12 @@ def classify_gaps(daily_df):
 def _to_ist(intraday_df):
     """Convert index to IST timezone."""
     df = intraday_df.copy()
+    if not isinstance(df.index, pd.DatetimeIndex):
+        # Non-datetime index (e.g. RangeIndex) — try to convert
+        try:
+            df.index = pd.to_datetime(df.index)
+        except Exception:
+            return df
     if df.index.tz is None:
         df.index = df.index.tz_localize("UTC")
     df.index = df.index.tz_convert("Asia/Kolkata")

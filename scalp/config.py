@@ -23,8 +23,11 @@ from sklearn.preprocessing import StandardScaler
 
 from common.data import (
     PROJECT_ROOT, SCALP_CONFIG_PATH, SCALP_DIR,
-    TICKERS, BENCHMARK, fetch_yf, fetch_ticker_info,
+    BENCHMARK, fetch_yf, fetch_ticker_info,
+    load_universe_for_tier,
 )
+
+TICKERS = load_universe_for_tier("scalp")
 from common.analysis_cache import get_cached, set_cached, TTL_DAILY
 from common.indicators import (
     compute_atr, compute_beta, classify_gaps,

@@ -32,7 +32,9 @@ import pandas as pd
 import yaml
 from zoneinfo import ZoneInfo
 
-from common.data import fetch_yf, TICKERS, BENCHMARK, PROJECT_ROOT, CONFIG_PATH
+from common.data import fetch_yf, BENCHMARK, PROJECT_ROOT, CONFIG_PATH, load_universe_for_tier
+
+TICKERS = load_universe_for_tier("intraday")
 from common.indicators import compute_atr, compute_vwap, _to_ist, classify_gaps
 from common.market import fetch_india_vix, detect_nifty_regime
 from intraday.regime import (

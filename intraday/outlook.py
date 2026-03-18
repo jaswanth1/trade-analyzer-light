@@ -23,7 +23,9 @@ import numpy as np
 import pandas as pd
 from zoneinfo import ZoneInfo
 
-from common.data import fetch_yf, TICKERS, BENCHMARK, INTRADAY_REPORT_DIR
+from common.data import fetch_yf, BENCHMARK, INTRADAY_REPORT_DIR, load_universe_for_tier
+
+TICKERS = load_universe_for_tier("intraday")
 from common.display import box_top, box_mid, box_bot, box_line, W, fmt
 from common.indicators import compute_atr, classify_gaps
 from common.llm import call_llm

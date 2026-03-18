@@ -21,7 +21,9 @@ import numpy as np
 import pandas as pd
 import yfinance as yf
 
-from common.data import fetch_yf, TICKERS, INTRADAY_REPORT_DIR
+from common.data import fetch_yf, INTRADAY_REPORT_DIR, load_universe_for_tier
+
+TICKERS = load_universe_for_tier("intraday")
 from common.market import fetch_india_vix, estimate_institutional_flow
 
 warnings.filterwarnings("ignore")

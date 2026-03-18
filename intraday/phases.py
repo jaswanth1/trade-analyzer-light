@@ -14,7 +14,9 @@ import yaml
 import yfinance as yf
 from zoneinfo import ZoneInfo
 
-from common.data import fetch_yf, TICKERS, BENCHMARK, PROJECT_ROOT, CONFIG_PATH
+from common.data import fetch_yf, BENCHMARK, PROJECT_ROOT, CONFIG_PATH, load_universe_for_tier
+
+TICKERS = load_universe_for_tier("intraday")
 from common.indicators import compute_atr, compute_beta, compute_vwap, _to_ist, classify_gaps
 from common.market import (
     fetch_india_vix, vix_position_scale, detect_nifty_regime,
@@ -1690,6 +1692,8 @@ def _run_live_scan(config, symbols, now_ist=None, data_override=None,
 
     # Evaluate signals (skip if drawdown or velocity breached)
     print("  Evaluating intraday signals...")
+    print(f"  [DEBUG] Circuit breakers: drawdown_breached={drawdown_breached}, "
+          f"loss_velocity_pause={loss_velocity_pause}")
     all_candidates = []
 
     if not drawdown_breached and not loss_velocity_pause:
@@ -1716,6 +1720,8 @@ def _run_live_scan(config, symbols, now_ist=None, data_override=None,
                     c["signal_reason"] = f"Already stopped out on {strat} today"
                 filtered.append(c)
             all_candidates.extend(filtered)
+    else:
+        print(f"  [DEBUG] SKIPPING all symbol evaluation — circuit breaker active")
 
     if not data_override:
         print(f"  Total candidates: {len(all_candidates)}")

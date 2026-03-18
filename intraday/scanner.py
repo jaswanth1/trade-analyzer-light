@@ -25,7 +25,9 @@ from pathlib import Path
 import yaml
 from zoneinfo import ZoneInfo
 
-from common.data import TICKERS, PROJECT_ROOT, CONFIG_PATH
+from common.data import PROJECT_ROOT, CONFIG_PATH, load_universe_for_tier
+
+TICKERS = load_universe_for_tier("intraday")
 from intraday.strategies import (
     evaluate_orb, evaluate_pullback, evaluate_compression,
     evaluate_mean_revert, evaluate_swing, evaluate_mlr,

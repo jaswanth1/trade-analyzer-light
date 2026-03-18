@@ -89,23 +89,13 @@ python -m intraday.scanner --force
 ```
 Captures: Conditional gap-scenario setups (IF gap-up/gap-down/flat → strategy + entry/target/stop), convergence scores, watchlist. The scanner auto-detects the current phase.
 
-### 4C. Recent Backtest Validation (Last 5 Trading Days)
-```bash
-python -m intraday.backtest --last-week
-```
-The `--last-week` flag auto-computes the date range (end = last completed trading day, start = 7 calendar days before). No manual date calculation needed.
-
-Alternatively, the market data report (Phase 2) includes the exact backtest command with pre-computed dates if you prefer explicit control.
-
-Captures: Which strategies actually worked in the last week, win rates by strategy, avg MFE/MAE. This grounds today's plan in recent ACTUAL performance, not just theory.
-
-### 4D. Scalp Scanner (if during market hours 9:15-15:15)
+### 4C. Scalp Scanner (if during market hours 9:15-15:15)
 ```bash
 python -m scalp.scanner
 ```
 Captures: Scalp-specific signals with gap-type rules, phase-active flags, position sizing.
 
-### 4E. BTST Scanner (if after 14:30 or use --force for reference)
+### 4D. BTST Scanner (if after 14:30 or use --force for reference)
 ```bash
 python -m btst.scanner --force
 ```
@@ -159,16 +149,11 @@ Write to `intraday/reports/trade_plan_YYYY-MM-DD.md` with these sections:
    - Upcoming events (FOMC, RBI, earnings, expiry) with dates and expected impact
    - For each risk: base case, bull case, bear case
 
-5. **Backtest Validation (Last 5 Days)**
-   - Strategy-level win rates from the backtest
-   - Which strategies are HOT (>60% win rate) vs COLD (<40%)
-   - Any strategy that should be overweighted or underweighted based on recent performance
-
-6. **Script Execution Log**
+5. **Script Execution Log**
    - Every command run, timestamp, key output summary
    - Flag any script that failed or returned unexpected results
 
-7. **Trade Ideas (Ranked by Conviction)**
+6. **Trade Ideas (Ranked by Conviction)**
    For each idea (max 5):
    - Stock, strategy, direction
    - Entry price/zone, stop loss, target
@@ -178,19 +163,19 @@ Write to `intraday/reports/trade_plan_YYYY-MM-DD.md` with these sections:
    - Per-₹1L capital: shares, risk amount, reward amount
    - Confidence level and what could go wrong
 
-8. **Conditional Action Plan**
+7. **Conditional Action Plan**
    - IF market gaps up >0.5%: which setups activate, which cancel
    - IF market opens flat: primary strategy rotation
    - IF market gaps down >0.5%: defensive plays, MLR candidates
    - IF VIX spikes >25 intraday: emergency protocol
 
-9. **Risk Management Rules (Today-Specific)**
+8. **Risk Management Rules (Today-Specific)**
    - Effective capital (base × VIX multiplier × event haircut)
    - Max positions, max per-sector, max same-direction
    - Daily drawdown limit in ₹ terms
    - Time-based rules (lunch exit, hard exit, FOMC hold rules if applicable)
 
-10. **Market Cycle Position**
+9. **Market Cycle Position**
     Determine where we are in the Wyckoff cycle using data from Phase 2 + Phase 4A:
 
     ```
@@ -245,6 +230,7 @@ Write to `intraday/reports/trade_plan_YYYY-MM-DD.md` with these sections:
 - For MLR trades, always specify the low phase window, post-low high phase, and trade window duration from the config.
 
 ---
+
 
 ## Quick Reference: When to Run
 

@@ -34,6 +34,8 @@ Trading system for Indian equity markets (NSE) with intraday scalp scanner and o
 - **Scalp scanner**: `python -m scalp.scanner`
 - **Scalp backtest**: `python -m scalp.backtest`
 - **BTST scanner**: `python -m btst.scanner [--force]`
+- **Trade universe builder**: `python -m common.universe` (weekly — screens MTF instruments, outputs `common/universe.yaml`)
+- **Trade universe (force refresh)**: `python -m common.universe --force` (re-downloads MTF + re-fetches all data)
 - **FastAPI app**: `uvicorn main:app --reload`
 
 ## Key Dependencies

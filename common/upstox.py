@@ -223,17 +223,17 @@ def fetch_upstox_historical(
     instrument_key: str,
     from_date: str,
     to_date: str,
-    unit: str = "day",
+    unit: str = "days",
     interval: int = 1,
 ) -> pd.DataFrame:
-    """Fetch historical candles from Upstox REST API.
+    """Fetch historical candles from Upstox REST API (V3).
 
     Args:
         instrument_key: Upstox instrument key (e.g. "NSE_EQ|INE002A01018")
         from_date: Start date "YYYY-MM-DD"
         to_date: End date "YYYY-MM-DD"
-        unit: "day" or "minutes"
-        interval: 1 for daily, or minute interval (1, 5, 15, 30)
+        unit: V3 units — "days", "weeks", "months", "hours", or "minutes"
+        interval: 1 for daily/weekly/monthly, or minute/hour interval
     """
     import upstox_client
 

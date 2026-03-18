@@ -29,7 +29,9 @@ import pandas as pd
 import yaml
 from zoneinfo import ZoneInfo
 
-from common.data import fetch_yf, TICKERS, BENCHMARK, CONFIG_PATH, PROJECT_ROOT
+from common.data import fetch_yf, BENCHMARK, CONFIG_PATH, PROJECT_ROOT, load_universe_for_tier
+
+TICKERS = load_universe_for_tier("btst")
 from common.indicators import compute_atr, compute_vwap, _to_ist, classify_gaps
 from common.market import fetch_india_vix, detect_nifty_regime, estimate_institutional_flow
 from intraday.regime import classify_symbol_regime, classify_month_period, DOW_NAMES

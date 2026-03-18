@@ -1,0 +1,2154 @@
+# Trade Universe Guide — 2026-03-18 17:07 IST
+
+**Source:** Upstox MTF list (1418 instruments)
+**Total qualifying stocks:** 918
+**Generated:** 2026-03-18 17:07 IST
+
+## Tier Summary
+
+| Tier | Stocks | ADTV Min | Price Range | ATR% Range |
+|------|--------|----------|-------------|------------|
+| SCALP | 430 | ₹15 Cr | ₹100-5000 | 1.5-5.0% |
+| INTRADAY | 758 | ₹8 Cr | ₹50-10000 | 1.5-7.0% |
+| BTST | 887 | ₹4 Cr | ₹50-10000 | 1.0-6.0% |
+
+## SCALP Universe (430 stocks)
+
+| Sector | Count | Top Stocks (by ADTV) |
+|--------|-------|---------------------|
+| Auto | 53 | ETERNAL (₹1352Cr), M&M (₹1122Cr), VMM (₹633Cr) |
+| Energy | 27 | RELIANCE (₹2390Cr), ONGC (₹705Cr), COALINDIA (₹531Cr) |
+| FMCG/Consumer | 25 | ITC (₹621Cr), GODFRYPHLP (₹411Cr), HINDUNILVR (₹389Cr) |
+| Financials | 78 | HDFCBANK (₹3021Cr), ICICIBANK (₹2266Cr), SBIN (₹1715Cr) |
+| IT | 49 | BHARTIARTL (₹1819Cr), INFY (₹1698Cr), TCS (₹930Cr) |
+| Infrastructure | 97 | SILVERBEES (₹1755Cr), LT (₹1665Cr), BEL (₹853Cr) |
+| Metals | 54 | VEDL (₹902Cr), TATASTEEL (₹713Cr), HINDALCO (₹589Cr) |
+| Pharma | 36 | SUNPHARMA (₹463Cr), MAXHEALTH (₹308Cr), AUROPHARMA (₹215Cr) |
+| Realty | 11 | DLF (₹271Cr), GODREJPROP (₹240Cr), LODHA (₹137Cr) |
+
+<details>
+<summary>Full SCALP list</summary>
+
+| Stock | Name | Sector | Price | ADTV (₹Cr) | ATR% |
+|-------|------|--------|-------|------------|------|
+| HDFCBANK | HDFC BANK LTD | Financials | ₹843 | 3021.2 | 2.4% |
+| RELIANCE | RELIANCE INDUSTRIES LTD | Energy | ₹1,408 | 2390.2 | 2.5% |
+| ICICIBANK | ICICI BANK LTD. | Financials | ₹1,289 | 2266.3 | 2.5% |
+| BHARTIARTL | BHARTI AIRTEL LIMITED | IT | ₹1,855 | 1818.6 | 2.5% |
+| SILVERBEES | NIPPONAMC - NETFSILVER | Infrastructure | ₹237 | 1754.7 | 4.9% |
+| SBIN | STATE BANK OF INDIA | Financials | ₹1,070 | 1715.5 | 2.9% |
+| INFY | INFOSYS LIMITED | IT | ₹1,267 | 1698.0 | 2.6% |
+| LT | LARSEN & TOUBRO LTD. | Infrastructure | ₹3,608 | 1665.5 | 4.2% |
+| ETERNAL | ETERNAL LIMITED | Auto | ₹243 | 1352.0 | 4.1% |
+| BSE | BSE LIMITED | Financials | ₹2,996 | 1171.8 | 3.4% |
+| M&M | MAHINDRA & MAHINDRA LTD | Auto | ₹3,215 | 1122.2 | 3.6% |
+| TCS | TATA CONSULTANCY SERV LT | IT | ₹2,441 | 930.2 | 2.4% |
+| VEDL | VEDANTA LIMITED | Metals | ₹679 | 902.5 | 3.9% |
+| AXISBANK | AXIS BANK LIMITED | Financials | ₹1,253 | 887.5 | 2.8% |
+| BEL | BHARAT ELECTRONICS LTD | Infrastructure | ₹443 | 853.0 | 3.2% |
+| MCX | MULTI COMMODITY EXCHANGE | Financials | ₹2,603 | 785.4 | 3.6% |
+| BAJFINANCE | BAJAJ FINANCE LIMITED | Financials | ₹880 | 783.2 | 3.3% |
+| INDIGO | INTERGLOBE AVIATION LTD | Infrastructure | ₹4,361 | 766.9 | 4.3% |
+| WAAREEENER | WAAREE ENERGIES LIMITED | IT | ₹3,185 | 751.5 | 3.6% |
+| TATASTEEL | TATA STEEL LIMITED | Metals | ₹195 | 713.0 | 3.7% |
+| GOLDBEES | NIP IND ETF GOLD BEES | Infrastructure | ₹128 | 711.0 | 4.2% |
+| HAL | HINDUSTAN AERONAUTICS LTD | Infrastructure | ₹3,962 | 706.6 | 2.7% |
+| ONGC | OIL AND NATURAL GAS CORP. | Energy | ₹265 | 705.1 | 3.3% |
+| KOTAKBANK | KOTAK MAHINDRA BANK LTD | Financials | ₹375 | 683.9 | 2.4% |
+| SHRIRAMFIN | SHRIRAM FINANCE LIMITED | Financials | ₹1,022 | 648.5 | 4.3% |
+| VMM | VISHAL MEGA MART LIMITED | Auto | ₹108 | 633.4 | 4.9% |
+| ITC | ITC LTD | FMCG/Consumer | ₹304 | 621.2 | 1.8% |
+| HINDALCO | HINDALCO  INDUSTRIES  LTD | Metals | ₹933 | 588.8 | 3.7% |
+| MAZDOCK | MAZAGON DOCK SHIPBUIL LTD | Infrastructure | ₹2,457 | 580.6 | 4.7% |
+| NATIONALUM | NATIONAL ALUMINIUM CO LTD | Metals | ₹388 | 559.7 | 4.8% |
+| COALINDIA | COAL INDIA LTD | Energy | ₹455 | 531.0 | 3.0% |
+| NTPC | NTPC LTD | Energy | ₹378 | 522.9 | 2.9% |
+| POWERGRID | POWER GRID CORP. LTD. | Energy | ₹299 | 479.1 | 2.8% |
+| COFORGE | COFORGE LIMITED | IT | ₹1,132 | 468.6 | 4.5% |
+| SUNPHARMA | SUN PHARMACEUTICAL IND L | Pharma | ₹1,778 | 463.3 | 2.1% |
+| KAYNES | KAYNES TECHNOLOGY IND LTD | IT | ₹3,716 | 457.3 | 4.3% |
+| PERSISTENT | PERSISTENT SYSTEMS LTD | IT | ₹4,699 | 452.1 | 4.3% |
+| HCLTECH | HCL TECHNOLOGIES LTD | IT | ₹1,357 | 443.1 | 2.5% |
+| NEWGEN | NEWGEN SOFTWARE TECH LTD | IT | ₹460 | 433.4 | 4.8% |
+| GODFRYPHLP | GODFREY PHILLIPS INDIA LT | FMCG/Consumer | ₹2,041 | 411.0 | 3.5% |
+| BPCL | BHARAT PETROLEUM CORP  LT | Energy | ₹304 | 402.3 | 4.5% |
+| HINDUNILVR | HINDUSTAN UNILEVER LTD. | FMCG/Consumer | ₹2,135 | 388.8 | 2.3% |
+| CUMMINSIND | CUMMINS INDIA LTD | Infrastructure | ₹4,718 | 378.8 | 3.7% |
+| CANBK | CANARA BANK | Financials | ₹138 | 377.6 | 3.7% |
+| TMPV | TATA MOTORS PASS VEH LTD | Auto | ₹325 | 375.6 | 4.3% |
+| IOC | INDIAN OIL CORP LTD | Energy | ₹148 | 369.1 | 4.4% |
+| TVSMOTOR | TVS MOTOR COMPANY  LTD | Auto | ₹3,573 | 364.1 | 3.8% |
+| ASHOKLEY | ASHOK LEYLAND LTD | Infrastructure | ₹179 | 363.7 | 4.5% |
+| ADANIPORTS | ADANI PORT & SEZ LTD | Infrastructure | ₹1,402 | 362.8 | 3.5% |
+| OIL | OIL INDIA LTD | Energy | ₹470 | 357.8 | 4.1% |
+| WIPRO | WIPRO LTD | IT | ₹194 | 354.0 | 2.7% |
+| SAIL | STEEL AUTHORITY OF INDIA | Metals | ₹154 | 350.8 | 4.4% |
+| ADANIPOWER | ADANI POWER LTD | Energy | ₹154 | 350.1 | 3.5% |
+| ABCAPITAL | ADITYA BIRLA CAPITAL LTD. | Financials | ₹328 | 349.9 | 3.7% |
+| HINDZINC | HINDUSTAN ZINC LIMITED | Metals | ₹538 | 347.0 | 3.6% |
+| INDUSINDBK | INDUSIND BANK LIMITED | Financials | ₹842 | 343.7 | 3.4% |
+| UNIONBANK | UNION BANK OF INDIA | Financials | ₹178 | 341.9 | 3.9% |
+| JIOFIN | JIO FIN SERVICES LTD | Financials | ₹248 | 340.2 | 3.2% |
+| PFC | POWER FIN CORP LTD. | Financials | ₹432 | 338.6 | 3.8% |
+| NIFTYBEES | NIP IND ETF NIFTY BEES | Infrastructure | ₹269 | 325.0 | 2.1% |
+| BANKBARODA | BANK OF BARODA | Financials | ₹283 | 308.6 | 3.4% |
+| MAXHEALTH | MAX HEALTHCARE INS LTD | Pharma | ₹980 | 308.5 | 2.9% |
+| MUTHOOTFIN | MUTHOOT FINANCE LIMITED | Financials | ₹3,433 | 306.8 | 3.5% |
+| CHOLAFIN | CHOLAMANDALAM IN & FIN CO | Financials | ₹1,524 | 305.8 | 4.3% |
+| TITAN | TITAN COMPANY LIMITED | Auto | ₹4,146 | 301.4 | 2.5% |
+| GROWW | BILLIONBRAINS GARAGE VN L | Financials | ₹163 | 297.5 | 3.6% |
+| BHARATFORG | BHARAT FORGE LTD | Auto | ₹1,804 | 295.9 | 3.8% |
+| PAYTM | ONE 97 COMMUNICATIONS LTD | IT | ₹1,076 | 294.2 | 3.7% |
+| TRENT | TRENT LTD | Auto | ₹3,641 | 287.2 | 3.2% |
+| TECHM | TECH MAHINDRA LIMITED | IT | ₹1,385 | 286.5 | 2.8% |
+| ADANIENT | ADANI ENTERPRISES LIMITED | Energy | ₹2,007 | 273.8 | 3.1% |
+| DLF | DLF LIMITED | Realty | ₹563 | 270.6 | 3.4% |
+| SWIGGY | SWIGGY LIMITED | Auto | ₹299 | 266.3 | 3.9% |
+| LTF | L&T FINANCE LIMITED | Financials | ₹269 | 259.9 | 3.7% |
+| ASIANPAINT | ASIAN PAINTS LIMITED | Metals | ₹2,262 | 259.2 | 2.8% |
+| UPL | UPL LIMITED | Metals | ₹632 | 256.2 | 2.7% |
+| GRSE | GARDEN REACH SHIP&ENG LTD | Infrastructure | ₹2,393 | 253.8 | 4.4% |
+| ADANIGREEN | ADANI GREEN ENERGY LTD | Energy | ₹891 | 252.9 | 3.8% |
+| BHEL | BHEL | Infrastructure | ₹260 | 252.4 | 3.9% |
+| PNB | PUNJAB NATIONAL BANK | Financials | ₹113 | 251.9 | 3.5% |
+| GRASIM | GRASIM INDUSTRIES LTD | Metals | ₹2,723 | 251.6 | 2.9% |
+| POLICYBZR | PB FINTECH LIMITED | Financials | ₹1,539 | 248.6 | 3.2% |
+| TATAPOWER | TATA POWER CO LTD | Energy | ₹400 | 246.4 | 3.0% |
+| HDFCAMC | HDFC AMC LIMITED | Financials | ₹2,469 | 244.7 | 3.2% |
+| RECLTD | REC LIMITED | Financials | ₹348 | 244.2 | 3.6% |
+| GAIL | GAIL (INDIA) LTD | Energy | ₹151 | 243.1 | 3.8% |
+| GODREJPROP | GODREJ PROPERTIES LTD | Realty | ₹1,643 | 240.2 | 3.8% |
+| BAJAJFINSV | BAJAJ FINSERV LTD. | Financials | ₹1,792 | 232.3 | 2.8% |
+| KEI | KEI INDUSTRIES LTD. | Infrastructure | ₹4,390 | 231.8 | 4.8% |
+| IRCTC | INDIAN RAIL TOUR CORP LTD | Auto | ₹540 | 228.9 | 3.3% |
+| FEDERALBNK | FEDERAL BANK LTD | Financials | ₹272 | 226.8 | 3.2% |
+| RVNL | RAIL VIKAS NIGAM LIMITED | Infrastructure | ₹275 | 223.3 | 4.7% |
+| VBL | VARUN BEVERAGES LIMITED | FMCG/Consumer | ₹415 | 222.8 | 3.5% |
+| CDSL | CENTRAL DEPO SER (I) LTD | Financials | ₹1,234 | 220.9 | 3.2% |
+| MOTHERSON | SAMVRDHNA MTHRSN INTL LTD | Auto | ₹118 | 218.5 | 4.4% |
+| HDFCLIFE | HDFC LIFE INS CO LTD | Financials | ₹643 | 217.7 | 2.7% |
+| AUROPHARMA | AUROBINDO PHARMA LTD | Pharma | ₹1,269 | 215.0 | 2.8% |
+| BDL | BHARAT DYNAMICS LIMITED | Infrastructure | ₹1,320 | 213.4 | 4.0% |
+| DRREDDY | DR. REDDY S LABORATORIES | Pharma | ₹1,295 | 212.8 | 2.6% |
+| CIPLA | CIPLA LTD | Pharma | ₹1,268 | 209.9 | 2.1% |
+| LUPIN | LUPIN LIMITED | Pharma | ₹2,302 | 208.8 | 2.1% |
+| PREMIERENE | PREMIER ENERGIES LIMITED | IT | ₹870 | 208.2 | 3.7% |
+| CGPOWER | CG POWER AND IND SOL LTD | Infrastructure | ₹707 | 207.6 | 3.8% |
+| GVT&D | GE VERNOVA T&D INDIA LTD | Infrastructure | ₹3,808 | 202.3 | 4.6% |
+| BANDHANBNK | BANDHAN BANK LIMITED | Financials | ₹164 | 200.2 | 4.8% |
+| ANGELONE | ANGEL ONE LIMITED | Financials | ₹236 | 200.1 | 4.5% |
+| NAUKRI | INFO EDGE (I) LTD | IT | ₹995 | 197.8 | 3.2% |
+| NATCOPHARM | NATCO PHARMA LTD. | Pharma | ₹958 | 190.3 | 4.4% |
+| JSWSTEEL | JSW STEEL LIMITED | Metals | ₹1,180 | 187.3 | 3.0% |
+| PETRONET | PETRONET LNG LIMITED | Energy | ₹292 | 185.1 | 4.5% |
+| SBILIFE | SBI LIFE INSURANCE CO LTD | Financials | ₹1,962 | 183.1 | 2.6% |
+| INDHOTEL | THE INDIAN HOTELS CO. LTD | Auto | ₹637 | 182.9 | 3.1% |
+| INDUSTOWER | INDUS TOWERS LIMITED | IT | ₹441 | 182.9 | 3.0% |
+| RBLBANK | RBL BANK LIMITED | Financials | ₹301 | 180.3 | 3.1% |
+| INDIANB | INDIAN BANK | Financials | ₹889 | 177.3 | 3.7% |
+| TATAINVEST | TATA INVESTMENT CORP LTD | Financials | ₹626 | 173.2 | 3.7% |
+| TORNTPHARM | TORRENT PHARMACEUTICALS L | Pharma | ₹4,289 | 171.2 | 2.5% |
+| KPITTECH | KPIT TECHNOLOGIES LIMITED | IT | ₹688 | 170.3 | 4.5% |
+| LAURUSLABS | LAURUS LABS LIMITED | Pharma | ₹983 | 166.5 | 4.0% |
+| TIINDIA | TUBE INVEST OF INDIA LTD | Infrastructure | ₹2,560 | 166.0 | 4.5% |
+| JSWENERGY | JSW ENERGY LIMITED | Energy | ₹509 | 160.7 | 3.7% |
+| DMART | AVENUE SUPERMARTS LIMITED | FMCG/Consumer | ₹3,844 | 160.4 | 2.9% |
+| BANKINDIA | BANK OF INDIA | Financials | ₹152 | 157.5 | 3.7% |
+| GODREJCP | GODREJ CONSUMER PRODUCTS | FMCG/Consumer | ₹1,054 | 155.9 | 3.2% |
+| ENGINERSIN | ENGINEERS INDIA LTD | Infrastructure | ₹195 | 155.5 | 4.4% |
+| MANAPPURAM | MANAPPURAM FINANCE LTD | Financials | ₹270 | 154.9 | 4.1% |
+| ZYDUSWELL | ZYDUS WELLNESS LIMITED | FMCG/Consumer | ₹429 | 154.4 | 4.4% |
+| JINDALSTEL | JINDAL STEEL LIMITED | Metals | ₹1,179 | 153.2 | 3.6% |
+| COCHINSHIP | COCHIN SHIPYARD LIMITED | Infrastructure | ₹1,412 | 149.6 | 4.2% |
+| APLAPOLLO | APL APOLLO TUBES LTD | Metals | ₹2,013 | 145.2 | 3.9% |
+| SIEMENS | SIEMENS LTD | Infrastructure | ₹3,221 | 143.6 | 3.7% |
+| SAMMAANCAP | SAMMAAN CAPITAL LIMITED | Financials | ₹141 | 142.8 | 3.3% |
+| SRF | SRF LTD | Infrastructure | ₹2,569 | 142.1 | 3.5% |
+| FORTIS | FORTIS HEALTHCARE LTD | Pharma | ₹846 | 141.9 | 3.6% |
+| TATAELXSI | TATA ELXSI LIMITED | IT | ₹4,207 | 141.3 | 3.4% |
+| NESTLEIND | NESTLE INDIA LIMITED | FMCG/Consumer | ₹1,205 | 140.2 | 2.3% |
+| ADANIENSOL | ADANI ENERGY SOLUTION LTD | Energy | ₹1,037 | 140.1 | 3.7% |
+| VOLTAS | VOLTAS LTD | Auto | ₹1,423 | 138.3 | 3.7% |
+| LODHA | LODHA DEVELOPERS LIMITED | Realty | ₹854 | 136.8 | 3.9% |
+| MFSL | MAX FINANCIAL SERV LTD | Financials | ₹1,669 | 136.5 | 3.2% |
+| UNITDSPR | UNITED SPIRITS LIMITED | FMCG/Consumer | ₹1,320 | 136.2 | 3.5% |
+| GMDCLTD | GUJARAT MINERAL DEV CORP | Energy | ₹559 | 135.2 | 4.1% |
+| GOLDIETF | ICICI PRUDENTIAL GOLD ETF | Infrastructure | ₹132 | 133.0 | 3.2% |
+| MANKIND | MANKIND PHARMA LIMITED | Pharma | ₹2,103 | 133.0 | 3.2% |
+| MARICO | MARICO LIMITED | FMCG/Consumer | ₹756 | 132.5 | 2.2% |
+| MPHASIS | MPHASIS LIMITED | IT | ₹2,124 | 132.2 | 3.8% |
+| JBMA | JBM AUTO LIMITED | Auto | ₹585 | 131.2 | 4.5% |
+| TATACONSUM | TATA CONSUMER PRODUCT LTD | FMCG/Consumer | ₹1,075 | 129.9 | 2.5% |
+| AMBUJACEM | AMBUJA CEMENTS LTD | Metals | ₹441 | 127.5 | 3.3% |
+| ASTRAL | ASTRAL LIMITED | Infrastructure | ₹1,668 | 126.8 | 3.7% |
+| KALYANKJIL | KALYAN JEWELLERS IND LTD | Auto | ₹390 | 126.2 | 3.2% |
+| SUPREMEIND | SUPREME INDUSTRIES LTD | Infrastructure | ₹4,011 | 123.9 | 3.3% |
+| LTM | LTIMINDTREE LIMITED | IT | ₹4,299 | 122.1 | 3.3% |
+| SETFGOLD | SBI-ETF GOLD | Infrastructure | ₹132 | 121.6 | 3.1% |
+| GLENMARK | GLENMARK PHARMACEUTICALS | Pharma | ₹2,186 | 121.5 | 3.3% |
+| BIOCON | BIOCON LIMITED. | Pharma | ₹383 | 121.0 | 2.8% |
+| HDFCGOLD | HDFC GOLD ETF | Infrastructure | ₹132 | 120.0 | 2.8% |
+| HYUNDAI | HYUNDAI MOTOR INDIA LTD | Auto | ₹1,990 | 118.9 | 3.1% |
+| ATHERENERG | ATHER ENERGY LIMITED | Auto | ₹750 | 117.8 | 4.0% |
+| JUBLFOOD | JUBILANT FOODWORKS LTD | Auto | ₹478 | 116.9 | 3.5% |
+| ICICIAMC | ICICI PRUDENTIAL AMC LTD | Financials | ₹3,020 | 116.9 | 3.8% |
+| CONCORDBIO | CONCORD BIOTECH LIMITED | Pharma | ₹1,143 | 112.8 | 4.9% |
+| ICICIGI | ICICI LOMBARD GIC LIMITED | Financials | ₹1,831 | 112.4 | 2.4% |
+| UNOMINDA | UNO MINDA LIMITED | Auto | ₹1,073 | 112.3 | 4.5% |
+| LENSKART | LENSKART SOLUTIONS LTD | Pharma | ₹511 | 112.2 | 4.5% |
+| RADICO | RADICO KHAITAN LTD | FMCG/Consumer | ₹2,710 | 111.8 | 4.3% |
+| GRAPHITE | GRAPHITE INDIA LTD | Infrastructure | ₹624 | 110.7 | 4.9% |
+| CAMS | COMPUTER AGE MNGT SER LTD | IT | ₹658 | 109.0 | 3.6% |
+| ANANTRAJ | ANANT RAJ LIMITED | Realty | ₹471 | 107.8 | 4.2% |
+| HAVELLS | HAVELLS INDIA LIMITED | Infrastructure | ₹1,344 | 106.6 | 3.0% |
+| FIRSTCRY | BRAINBEES SOLUTIONS LTD | Auto | ₹214 | 106.6 | 4.0% |
+| BELRISE | BELRISE INDUSTRIES LTD | Auto | ₹184 | 106.1 | 4.2% |
+| NYKAA | FSN E COMMERCE VENTURES | Auto | ₹244 | 106.0 | 3.5% |
+| PRESTIGE | PRESTIGE ESTATE LTD | Realty | ₹1,321 | 106.0 | 3.8% |
+| ENRIN | SIEMENS ENERGY INDIA LTD | Energy | ₹2,841 | 104.8 | 4.0% |
+| KTKBANK | KARNATAKA BANK LIMITED | Financials | ₹232 | 104.2 | 4.7% |
+| PIDILITIND | PIDILITE INDUSTRIES LTD | Metals | ₹1,384 | 103.5 | 3.0% |
+| TORNTPOWER | TORRENT POWER LTD | Energy | ₹1,454 | 101.3 | 4.0% |
+| COLPAL | COLGATE PALMOLIVE LTD. | FMCG/Consumer | ₹1,942 | 99.5 | 2.9% |
+| SBICARD | SBI CARDS & PAY SER LTD | Financials | ₹716 | 98.9 | 3.3% |
+| BLUESTARCO | BLUE STAR LIMITED | Infrastructure | ₹1,820 | 93.6 | 4.2% |
+| DOMS | DOMS INDUSTRIES LIMITED | Infrastructure | ₹2,244 | 93.2 | 4.7% |
+| IREDA | INDIAN RENEWABLE ENERGY | Financials | ₹118 | 91.3 | 3.7% |
+| GESHIP | THE GE SHPG.LTD | Infrastructure | ₹1,441 | 91.1 | 4.4% |
+| PATANJALI | PATANJALI FOODS LIMITED | FMCG/Consumer | ₹490 | 90.1 | 2.5% |
+| KSB | KSB LIMITED | Infrastructure | ₹811 | 86.9 | 4.3% |
+| HEG | HEG LTD | Infrastructure | ₹511 | 85.9 | 4.2% |
+| KARURVYSYA | KARUR VYSYA BANK LTD | Financials | ₹285 | 85.5 | 3.9% |
+| AEROFLEX | AEROFLEX INDUSTRIES LTD | Infrastructure | ₹248 | 85.2 | 5.0% |
+| SYRMA | SYRMA SGS TECHNOLOGY LTD | IT | ₹784 | 85.2 | 4.9% |
+| ZENTEC | ZEN TECHNOLOGIES LIMITED | Infrastructure | ₹1,447 | 84.7 | 4.1% |
+| LGEINDIA | LG ELECTRONICS INDIA LTD | IT | ₹1,581 | 83.7 | 3.2% |
+| AWL | AWL AGRI BUSINESS LIMITED | FMCG/Consumer | ₹177 | 83.3 | 3.8% |
+| DABUR | DABUR INDIA LTD | FMCG/Consumer | ₹452 | 82.9 | 2.9% |
+| OLECTRA | OLECTRA GREENTECH LIMITED | Infrastructure | ₹1,056 | 82.9 | 4.3% |
+| LICI | LIFE INSURA CORP OF INDIA | Financials | ₹786 | 82.9 | 2.6% |
+| OBEROIRLTY | OBEROI REALTY LIMITED | Realty | ₹1,473 | 82.4 | 3.1% |
+| SHAILY | SHAILY ENG PLASTICS LTD | Metals | ₹2,351 | 82.4 | 4.8% |
+| TDPOWERSYS | TD POWER SYSTEMS LTD. | Infrastructure | ₹836 | 82.2 | 5.0% |
+| LICHSGFIN | LIC HOUSING FINANCE LTD | Financials | ₹503 | 81.8 | 2.9% |
+| HSCL | HIMADRI SPECIALITY CHEM L | Metals | ₹454 | 81.4 | 4.3% |
+| JSL | JINDAL STAINLESS LIMITED | Metals | ₹735 | 80.9 | 4.7% |
+| ITCHOTELS | ITC HOTELS LIMITED | Auto | ₹158 | 80.2 | 3.6% |
+| ACUTAAS | ACUTAAS CHEMICALS LIMITED | Metals | ₹2,258 | 79.5 | 4.7% |
+| JBCHEPHARM | J B CHEMICALS AND PHARMA | Pharma | ₹2,118 | 78.7 | 2.6% |
+| LLOYDSME | LLOYDS METALS N ENERGY L | Metals | ₹1,247 | 77.7 | 4.5% |
+| HBLENGINE | HBL ENGINEERING LTD | Infrastructure | ₹680 | 77.4 | 4.4% |
+| 360ONE | 360 ONE WAM LIMITED | Financials | ₹1,070 | 76.2 | 3.0% |
+| ICICIPRULI | ICICI PRU LIFE INS CO LTD | Financials | ₹589 | 76.2 | 3.3% |
+| JYOTICNC | JYOTI CNC AUTOMATION LTD | Infrastructure | ₹764 | 75.7 | 4.5% |
+| COROMANDEL | COROMANDEL INTERNTL. LTD | Metals | ₹2,025 | 75.5 | 4.2% |
+| CONCOR | CONTAINER CORP OF IND LTD | Infrastructure | ₹459 | 74.6 | 3.1% |
+| EDELWEISS | EDELWEISS FIN SERV LTD | Financials | ₹111 | 73.7 | 4.2% |
+| NITINSPIN | NITIN SPINNERS LIMITED | Auto | ₹372 | 73.3 | 3.5% |
+| SONACOMS | SONA BLW PRECISION FRGS L | Auto | ₹512 | 73.1 | 3.8% |
+| PHOENIXLTD | THE PHOENIX MILLS LTD | Realty | ₹1,627 | 71.1 | 3.1% |
+| KFINTECH | KFIN TECHNOLOGIES LIMITED | IT | ₹944 | 70.6 | 3.4% |
+| SAILIFE | SAI LIFE SCIENCES LIMITED | Pharma | ₹1,014 | 70.2 | 4.4% |
+| SCHAEFFLER | SCHAEFFLER INDIA LIMITED | Auto | ₹4,054 | 69.0 | 4.2% |
+| DELHIVERY | DELHIVERY LIMITED | Infrastructure | ₹423 | 68.8 | 3.5% |
+| IEX | INDIAN ENERGY EXC LTD | Financials | ₹123 | 68.5 | 3.0% |
+| PIIND | PI INDUSTRIES LTD | Metals | ₹2,928 | 65.5 | 2.7% |
+| PNBHOUSING | PNB HOUSING FIN LTD. | Financials | ₹808 | 64.7 | 3.8% |
+| CUB | CITY UNION BANK LTD | Financials | ₹251 | 64.7 | 4.8% |
+| HUDCO | HSG & URBAN DEV CORPN LTD | Financials | ₹179 | 63.2 | 3.5% |
+| SYNGENE | SYNGENE INTERNATIONAL LTD | Pharma | ₹420 | 63.1 | 3.2% |
+| BLS | BLS INTL SERVS LTD | Infrastructure | ₹246 | 62.9 | 4.3% |
+| BANKBEES | NIP IND ETF BANK BEES | Infrastructure | ₹569 | 62.3 | 2.2% |
+| BSOFT | BIRLASOFT LIMITED | IT | ₹364 | 62.0 | 4.5% |
+| GOLD1 | KOTAK GOLD ETF | Infrastructure | ₹129 | 61.9 | 4.3% |
+| MOIL | MOIL LIMITED | Metals | ₹294 | 61.5 | 4.8% |
+| NCC | NCC LIMITED | Infrastructure | ₹147 | 61.3 | 3.9% |
+| IIFL | IIFL FINANCE LIMITED | Financials | ₹489 | 60.9 | 3.6% |
+| NLCINDIA | NLC INDIA LIMITED | Energy | ₹262 | 60.2 | 4.4% |
+| POONAWALLA | POONAWALLA FINCORP LTD | Financials | ₹412 | 59.0 | 3.8% |
+| M&MFIN | M&M FIN. SERVICES LTD | Financials | ₹321 | 58.8 | 4.0% |
+| ZYDUSLIFE | ZYDUS LIFESCIENCES LTD | Pharma | ₹900 | 58.5 | 2.4% |
+| KIRLOSENG | KIRLOSKAR OIL ENG LTD | Infrastructure | ₹1,436 | 56.6 | 4.7% |
+| APOLLOTYRE | APOLLO TYRES LTD | Auto | ₹420 | 56.3 | 3.7% |
+| TATATECH | TATA TECHNOLOGIES LIMITED | IT | ₹549 | 56.1 | 2.9% |
+| ASTERDM | ASTER DM HEALTHCARE LTD. | Pharma | ₹662 | 55.3 | 4.4% |
+| NAM-INDIA | NIPPON L I A M LTD | Financials | ₹885 | 54.8 | 4.0% |
+| LEMONTREE | LEMON TREE HOTELS LTD | Auto | ₹108 | 54.4 | 4.1% |
+| MOTILALOFS | MOTILAL OSWAL FIN LTD | Financials | ₹698 | 54.1 | 3.8% |
+| ANANDRATHI | ANAND RATHI WEALTH LTD | Financials | ₹3,064 | 53.5 | 2.6% |
+| TATACAP | TATA CAPITAL LIMITED | Financials | ₹324 | 53.5 | 2.8% |
+| THERMAX | THERMAX LTD | Infrastructure | ₹3,279 | 53.4 | 3.6% |
+| WOCKPHARMA | WOCKHARDT LIMITED | Pharma | ₹1,216 | 52.3 | 4.0% |
+| MOBIKWIK | ONE MOBIKWIK SYSTEMS LTD | IT | ₹185 | 51.7 | 4.2% |
+| NH | NARAYANA HRUDAYALAYA LTD. | Pharma | ₹1,690 | 51.2 | 2.9% |
+| MGL | MAHANAGAR GAS LTD. | Energy | ₹1,000 | 50.6 | 4.4% |
+| KEC | KEC INTL. LIMITED | Infrastructure | ₹562 | 49.8 | 4.1% |
+| CPPLUS | ADITYA INFOTECH LIMITED | Infrastructure | ₹1,684 | 49.8 | 4.9% |
+| TATACOMM | TATA COMMUNICATIONS LTD | IT | ₹1,497 | 49.5 | 3.8% |
+| EMCURE | EMCURE PHARMACEUTICALS L | Pharma | ₹1,532 | 49.0 | 4.5% |
+| SANSERA | SANSERA ENGINEERING LTD | Auto | ₹2,199 | 48.7 | 4.9% |
+| COHANCE | COHANCE LIFESCIENCES LTD | Pharma | ₹306 | 48.5 | 4.8% |
+| JAINREC | JAIN RESOURCE RECYCLING L | Metals | ₹439 | 48.2 | 4.4% |
+| BALRAMCHIN | BALRAMPUR CHINI MILLS LTD | FMCG/Consumer | ₹476 | 48.0 | 5.0% |
+| PIRAMALFIN | PIRAMAL FINANCE LIMITED | Financials | ₹1,809 | 48.0 | 4.3% |
+| FSL | FIRSTSOURCE SOLU. LTD. | IT | ₹228 | 47.9 | 5.0% |
+| CROMPTON | CROMPT GREA CON ELEC LTD | Auto | ₹250 | 47.7 | 3.1% |
+| HDBFS | HDB FINANCIAL SERVICES L | Financials | ₹655 | 47.5 | 2.5% |
+| WABAG | VA TECH WABAG LTD | Infrastructure | ₹1,230 | 47.3 | 4.7% |
+| RRKABEL | R R KABEL LIMITED | Infrastructure | ₹1,438 | 47.3 | 4.5% |
+| IGL | INDRAPRASTHA GAS LTD | Energy | ₹157 | 46.9 | 3.8% |
+| DALBHARAT | DALMIA BHARAT LIMITED | Metals | ₹1,916 | 46.9 | 3.4% |
+| GPIL | GODAWARI POW & ISP LTD | Metals | ₹260 | 46.5 | 4.4% |
+| DATAMATICS | DATAMATICS GLOBAL SER LTD | IT | ₹711 | 46.2 | 4.8% |
+| JUNIORBEES | NIP IND ETF JUNIOR BEES | Infrastructure | ₹706 | 45.8 | 2.9% |
+| AFFLE | AFFLE 3I LIMITED | IT | ₹1,346 | 45.2 | 4.4% |
+| EXIDEIND | EXIDE INDUSTRIES LTD | Auto | ₹309 | 43.9 | 3.2% |
+| CHOICEIN | CHOICE INTERNATIONAL LTD | Financials | ₹645 | 43.7 | 4.2% |
+| SANDUMA | SANDUR MANG & IRON ORES L | Metals | ₹188 | 43.4 | 4.8% |
+| ASTRAMICRO | ASTRA MICROWAVE LTD | IT | ₹946 | 43.0 | 4.3% |
+| RELIGARE | RELIGARE ENTER. LTD. | Financials | ₹227 | 42.8 | 4.1% |
+| CESC | CESC LTD | Energy | ₹156 | 42.5 | 3.9% |
+| SETFNIF50 | SBI-ETF NIFTY 50 | Infrastructure | ₹254 | 42.4 | 2.5% |
+| VESUVIUS | VESUVIUS INDIA LTD | Infrastructure | ₹490 | 42.3 | 4.2% |
+| PCBL | PCBL CHEMICAL LIMITED | Metals | ₹256 | 42.2 | 4.9% |
+| NUVAMA | NUVAMA WEALTH MANAGE LTD | Financials | ₹1,179 | 41.6 | 3.4% |
+| SARDAEN | SARDA ENERGY & MIN LTD | Metals | ₹527 | 41.0 | 4.7% |
+| PPLPHARMA | PIRAMAL PHARMA LIMITED | Pharma | ₹143 | 41.0 | 3.8% |
+| AXISGOLD | AXIS MF - AXIS GOLD ETF | Infrastructure | ₹129 | 40.2 | 3.4% |
+| TITAGARH | TITAGARH RAIL SYSTEMS LTD | Infrastructure | ₹649 | 40.2 | 4.0% |
+| CCL | CCL PRODUCTS (I) LTD | FMCG/Consumer | ₹1,046 | 40.1 | 3.3% |
+| AJANTPHARM | AJANTA PHARMA LIMITED | Pharma | ₹3,057 | 39.6 | 3.7% |
+| GRANULES | GRANULES INDIA LIMITED | Pharma | ₹587 | 39.3 | 3.4% |
+| INTELLECT | INTELLECT DESIGN ARENA | IT | ₹677 | 39.2 | 3.7% |
+| JSWINFRA | JSW INFRASTRUCTURE LTD | Infrastructure | ₹260 | 38.7 | 3.9% |
+| LALPATHLAB | DR. LAL PATH LABS LTD. | Pharma | ₹1,347 | 38.2 | 3.1% |
+| IKS | INVENTURUS KNOWLEDGE SO L | Pharma | ₹1,350 | 38.1 | 4.0% |
+| SILVERBETA | UTIAMC-SILVERBETA | Infrastructure | ₹239 | 38.0 | 4.9% |
+| WELCORP | WELSPUN CORP LIMITED | Metals | ₹822 | 37.7 | 4.2% |
+| ANURAS | ANUPAM RASAYAN INDIA LTD | Metals | ₹1,240 | 37.3 | 3.7% |
+| CHAMBLFERT | CHAMBAL FERTILIZERS LTD | Metals | ₹439 | 37.3 | 3.8% |
+| AARTIIND | AARTI INDUSTRIES LTD | Metals | ₹433 | 37.3 | 4.5% |
+| CREDITACC | CREDITACCESS GRAMEEN LTD | Financials | ₹1,188 | 37.2 | 4.6% |
+| BALKRISIND | BALKRISHNA IND. LTD | Auto | ₹2,172 | 37.1 | 4.1% |
+| ASHAPURMIN | ASHAPURA MINECHEM LTD | Metals | ₹507 | 37.0 | 4.6% |
+| BEML | BEML LIMITED | Infrastructure | ₹1,560 | 36.9 | 4.0% |
+| POLYMED | POLY MEDICURE LIMITED | Pharma | ₹1,279 | 36.5 | 5.0% |
+| RAILTEL | RAILTEL CORP OF IND LTD | IT | ₹282 | 36.5 | 4.4% |
+| APTUS | APTUS VALUE HSG FIN I LTD | Financials | ₹219 | 35.8 | 3.5% |
+| TECHNOE | TECHNO ELEC & ENG CO. LTD | Infrastructure | ₹1,125 | 35.7 | 4.0% |
+| NIFTYIETF | ICICI PRUD NIFTY ETF | Infrastructure | ₹268 | 35.7 | 2.3% |
+| TIMETECHNO | TIME TECHNOPLAST LTD. | Auto | ₹166 | 35.6 | 4.8% |
+| MOSCHIP | MOSCHIP TECHNOLOGIES LTD | IT | ₹171 | 35.5 | 4.4% |
+| KAJARIACER | KAJARIA CERAMICS LTD | Infrastructure | ₹955 | 35.3 | 4.0% |
+| IXIGO | LE TRAVENUES TECHNOLOGY L | Auto | ₹167 | 35.1 | 3.6% |
+| KIRLOSBROS | KIRLOSKAR BROTHERS LTD | Infrastructure | ₹1,577 | 34.6 | 4.6% |
+| NAZARA | NAZARA TECHNOLOGIES LTD | IT | ₹255 | 34.5 | 4.7% |
+| AZAD | AZAD ENGINEERING LIMITED | Infrastructure | ₹1,515 | 34.3 | 3.8% |
+| HDFCSML250 | HDFCAMC - HDFCSML250 | Infrastructure | ₹152 | 34.3 | 2.7% |
+| SIGNATURE | SIGNATUREGLOBAL INDIA LTD | Realty | ₹802 | 34.2 | 5.0% |
+| GOLDETF | MIRAEAMC - MAGOLDETF | Infrastructure | ₹150 | 33.6 | 2.6% |
+| JSWCEMENT | JSW CEMENT LIMITED | Metals | ₹119 | 33.2 | 3.6% |
+| USHAMART | USHA MARTIN LTD. | Metals | ₹412 | 33.1 | 3.6% |
+| ROUTE | ROUTE MOBILE LIMITED | IT | ₹481 | 33.0 | 4.2% |
+| CGCL | CAPRI GLOBAL CAPITAL LTD | Financials | ₹170 | 32.9 | 4.0% |
+| TATACHEM | TATA CHEMICALS LTD | Metals | ₹650 | 32.6 | 2.6% |
+| PVRINOX | PVR INOX LIMITED | IT | ₹1,019 | 32.5 | 3.0% |
+| BLACKBUCK | BLACKBUCK LIMITED | IT | ₹596 | 31.9 | 4.1% |
+| CIEINDIA | CIE AUTOMOTIVE INDIA LTD | Auto | ₹481 | 31.6 | 4.3% |
+| IPCALAB | IPCA LABORATORIES LTD | Pharma | ₹1,544 | 31.1 | 3.1% |
+| VTL | VARDHMAN TEXTILES LIMITED | Auto | ₹549 | 31.0 | 3.5% |
+| ACMESOLAR | ACME SOLAR HOLDINGS LTD | Energy | ₹249 | 30.1 | 4.7% |
+| ESCORTS | ESCORTS KUBOTA LIMITED | Infrastructure | ₹3,091 | 30.1 | 3.8% |
+| AAVAS | AAVAS FINANCIERS LIMITED | Financials | ₹1,124 | 30.0 | 3.7% |
+| OSWALPUMPS | OSWAL PUMPS LIMITED | Infrastructure | ₹319 | 29.9 | 4.9% |
+| INDIAMART | INDIAMART INTERMESH LTD | IT | ₹2,098 | 29.8 | 3.2% |
+| SWSOLAR | STRLNG & WIL REN ENE LTD | IT | ₹175 | 29.0 | 4.8% |
+| AIAENG | AIA ENGINEERING LIMITED | Infrastructure | ₹3,720 | 28.8 | 3.7% |
+| DCBBANK | DCB BANK LIMITED | Financials | ₹180 | 28.7 | 4.2% |
+| CPSEETF | CPSE ETF | Infrastructure | ₹102 | 28.7 | 3.1% |
+| ACC | ACC LIMITED | Metals | ₹1,405 | 28.6 | 2.7% |
+| ZENSARTECH | ZENSAR TECHNOLOGIES  LTD | IT | ₹579 | 28.2 | 3.6% |
+| GRAVITA | GRAVITA INDIA LIMITED | Infrastructure | ₹1,446 | 28.1 | 3.9% |
+| ABREL | ADITYA BIRLA REAL EST LTD | Realty | ₹1,217 | 28.1 | 4.8% |
+| ELGIEQUIP | ELGI EQUIPMENTS LTD | Infrastructure | ₹482 | 27.9 | 4.1% |
+| WELSPUNLIV | WELSPUN LIVING LIMITED | Auto | ₹115 | 27.6 | 4.2% |
+| MID150BEES | NIP IND ETF MIDCAP 150 | Infrastructure | ₹214 | 27.6 | 2.7% |
+| YATHARTH | YATHARTH HOSP & TRA C S L | Pharma | ₹673 | 27.6 | 4.0% |
+| GABRIEL | GABRIEL INDIA LTD | Auto | ₹872 | 27.4 | 4.7% |
+| CHOLAHLDNG | CHOLAMANDALAM FIN HOL LTD | Financials | ₹1,496 | 27.3 | 4.6% |
+| PRIVISCL | PRIVI SPECIALITY CHE LTD | Metals | ₹2,997 | 26.9 | 3.2% |
+| AADHARHFC | AADHAR HOUSING FINANCE L | Financials | ₹478 | 26.9 | 4.5% |
+| RATNAMANI | RATNAMANI MET & TUB LTD. | Metals | ₹2,402 | 26.7 | 4.2% |
+| NIFTYETF | MIRAEAMC - MAN50ETF | Infrastructure | ₹257 | 26.4 | 2.4% |
+| DEEPAKFERT | DEEPAK FERTILIZERS & PETR | Metals | ₹943 | 26.1 | 4.6% |
+| SONATSOFTW | SONATA SOFTWARE LTD | IT | ₹241 | 26.1 | 4.4% |
+| IGIL | INTERNATIO GEMM INS (I) L | Metals | ₹339 | 26.0 | 4.0% |
+| TRANSRAILL | TRANSRAIL LIGHTING LTD | Infrastructure | ₹515 | 25.8 | 4.3% |
+| TENNIND | TENNECO CLEAN AIR INDIA L | Auto | ₹554 | 25.5 | 4.6% |
+| VINCOFE | VINTAGE COFFEE N BVRGS L | FMCG/Consumer | ₹131 | 25.4 | 4.7% |
+| MAPMYINDIA | C.E. INFO SYSTEMS LIMITED | IT | ₹880 | 25.2 | 4.1% |
+| KPIL | KALPATARU PROJECT INT LTD | Infrastructure | ₹1,068 | 25.2 | 4.9% |
+| KIMS | KRISHNA INST OF MED SCI L | Pharma | ₹672 | 24.8 | 4.3% |
+| CSBBANK | CSB BANK LIMITED | Financials | ₹390 | 24.6 | 4.9% |
+| ARE&M | AMARA RAJA ENERGY MOB LTD | Infrastructure | ₹785 | 24.5 | 2.6% |
+| MON100 | MOTILAL OS NASDAQ100 ETF | Infrastructure | ₹225 | 24.5 | 3.1% |
+| EMAMILTD | EMAMI LIMITED | FMCG/Consumer | ₹417 | 24.5 | 3.5% |
+| WAAREERTL | WAAREE RENEWABLE TECH LTD | Energy | ₹864 | 24.3 | 3.8% |
+| TI | TILAKNAGAR INDUSTRIES LTD | FMCG/Consumer | ₹451 | 24.3 | 4.0% |
+| TIMKEN | TIMKEN INDIA LTD. | Infrastructure | ₹3,379 | 24.2 | 4.1% |
+| CYIENT | CYIENT LIMITED | Infrastructure | ₹858 | 24.1 | 4.0% |
+| BRIGADE | BRIGADE ENTER. LTD | Realty | ₹686 | 23.9 | 3.8% |
+| WHIRLPOOL | WHIRLPOOL OF INDIA LTD | Auto | ₹840 | 23.6 | 3.6% |
+| BBOX | BLACK BOX LIMITED | IT | ₹508 | 23.4 | 4.6% |
+| LATENTVIEW | LATENT VIEW ANALYTICS LTD | Infrastructure | ₹286 | 22.7 | 4.8% |
+| POWERMECH | POWER MECH PROJECTS LTD. | Infrastructure | ₹2,034 | 22.4 | 4.5% |
+| SHRIPISTON | SHRIRAM PIST. & RING LTD | Auto | ₹3,048 | 21.9 | 4.2% |
+| STARHEALTH | STAR HEALTH & AL INS CO L | Financials | ₹462 | 21.9 | 3.2% |
+| SHREEJISPG | SHREEJI SHIPPING GLOBAL L | Infrastructure | ₹371 | 21.4 | 3.9% |
+| AETHER | AETHER INDUSTRIES LIMITED | Metals | ₹1,069 | 21.4 | 4.9% |
+| EIDPARRY | EID PARRY INDIA LTD | Metals | ₹821 | 21.3 | 4.0% |
+| ENDURANCE | ENDURANCE TECHNO. LTD. | Auto | ₹2,363 | 21.2 | 3.9% |
+| EIHOTEL | EIH LIMITED | Auto | ₹323 | 21.1 | 4.9% |
+| GMRP&UI | GMR POW AND URBAN INFRA L | Energy | ₹104 | 21.0 | 4.8% |
+| PRICOLLTD | PRICOL LIMITED | Auto | ₹546 | 20.9 | 4.1% |
+| PROTEAN | PROTEAN EGOV TECHNO LTD | IT | ₹531 | 20.8 | 4.5% |
+| GSFC | GUJ STATE FERT & CHEM LTD | Metals | ₹161 | 20.6 | 4.1% |
+| PARAGMILK | PARAG MILK FOODS LTD. | FMCG/Consumer | ₹202 | 20.4 | 4.8% |
+| HONASA | HONASA CONSUMER LIMITED | FMCG/Consumer | ₹281 | 20.2 | 4.2% |
+| MANYAVAR | VEDANT FASHIONS LIMITED | Auto | ₹364 | 20.2 | 4.6% |
+| CLEAN | CLEAN SCIENCE & TECH LTD | Metals | ₹716 | 20.1 | 4.2% |
+| TANLA | TANLA PLATFORMS LIMITED | IT | ₹431 | 19.7 | 4.0% |
+| TMB | TAMILNAD MERCA BANK LTD | Financials | ₹632 | 19.7 | 4.6% |
+| STAR | STRIDES PHARMA SCI LTD | Pharma | ₹907 | 19.6 | 3.5% |
+| GOLDIAM | GOLDIAM INTERNATIONAL LTD | Auto | ₹306 | 19.6 | 5.0% |
+| CMSINFO | CMS INFO SYSTEMS LIMITED | Infrastructure | ₹291 | 19.5 | 3.2% |
+| SKYGOLD | SKY GOLD AND DIAMONDS LTD | Auto | ₹354 | 19.3 | 4.5% |
+| ASHOKA | ASHOKA BUILDCON LTD | Infrastructure | ₹117 | 19.3 | 4.9% |
+| SUNDRMFAST | SUNDRAM FASTENERS LTD | Auto | ₹811 | 19.3 | 3.6% |
+| POCL | PONDY OXIDES & CHEM LTD | Metals | ₹1,074 | 19.2 | 4.3% |
+| INDGN | INDEGENE LIMITED | Pharma | ₹453 | 19.1 | 3.6% |
+| UBL | UNITED BREWERIES LTD | FMCG/Consumer | ₹1,618 | 19.1 | 3.8% |
+| BERGEPAINT | BERGER PAINTS (I) LTD | Metals | ₹415 | 18.7 | 3.4% |
+| RKFORGE | RAMKRISHNA FORGINGS LTD | Infrastructure | ₹534 | 18.6 | 3.5% |
+| DBL | DILIP BUILDCON LIMITED | Infrastructure | ₹437 | 18.3 | 4.0% |
+| ANTHEM | ANTHEM BIOSCIENCES LTD | Pharma | ₹648 | 18.2 | 3.7% |
+| INDOTHAI | INDO THAI SEC LTD | Financials | ₹257 | 18.2 | 4.3% |
+| FLUOROCHEM | GUJARAT FLUOROCHEM LTD | Metals | ₹3,143 | 18.1 | 4.1% |
+| TEGA | TEGA INDUSTRIES LIMITED | Infrastructure | ₹1,695 | 18.1 | 4.3% |
+| AMAGI | AMAGI MEDIA LABS LIMITED | IT | ₹351 | 18.0 | 4.6% |
+| RATEGAIN | RATEGAIN TRAVEL TECHN LTD | IT | ₹509 | 17.9 | 4.4% |
+| PTC | PTC INDIA LIMITED | Energy | ₹164 | 17.8 | 3.1% |
+| SJS | SJS ENTERPRISES LIMITED | Auto | ₹1,658 | 17.7 | 4.4% |
+| ARVIND | ARVIND LIMITED | Auto | ₹365 | 17.6 | 3.9% |
+| MIDHANI | MISHRA DHATU NIGAM LTD | Metals | ₹322 | 17.2 | 4.7% |
+| RAMCOCEM | THE RAMCO CEMENTS LIMITED | Metals | ₹982 | 17.1 | 4.2% |
+| KNRCON | KNR CONSTRU LTD. | Infrastructure | ₹123 | 17.0 | 4.4% |
+| SAMHI | SAMHI HOTELS LIMITED | Auto | ₹153 | 16.9 | 4.5% |
+| SYMPHONY | SYMPHONY LIMITED | Auto | ₹816 | 16.9 | 4.0% |
+| JSFB | JANA SMALL FIN BANK LTD | Financials | ₹359 | 16.7 | 4.3% |
+| ACE | ACTION CONST EQUIP LTD | Infrastructure | ₹845 | 16.7 | 3.8% |
+| AFCONS | AFCONS INFRASTRUCTURE LTD | Infrastructure | ₹288 | 16.6 | 3.8% |
+| POLYPLEX | POLYPLEX CORPORATION LTD | Metals | ₹885 | 16.6 | 5.0% |
+| SENCO | SENCO GOLD LIMITED | Auto | ₹304 | 16.5 | 3.5% |
+| SKFINDIA | SKF INDIA LTD | Infrastructure | ₹1,599 | 16.4 | 3.3% |
+| NAVA | NAVA LIMITED | Infrastructure | ₹566 | 16.4 | 4.3% |
+| KIRIINDUS | KIRI INDUSTRIES LIMITED | Metals | ₹395 | 16.4 | 4.5% |
+| DEEPAKNTR | DEEPAK NITRITE LTD | Metals | ₹1,413 | 15.8 | 3.4% |
+| CRISIL | CRISIL LTD | Financials | ₹4,034 | 15.7 | 2.8% |
+| SOBHA | SOBHA LIMITED | Realty | ₹1,294 | 15.7 | 4.2% |
+| ABDL | ALLIED BLEND N DISTILS L | FMCG/Consumer | ₹423 | 15.5 | 4.9% |
+| CEMPRO | CEMINDIA PROJECTS LIMITED | Infrastructure | ₹550 | 15.3 | 4.3% |
+| BHARTIHEXA | BHARTI HEXACOM LIMITED | IT | ₹1,594 | 15.2 | 3.3% |
+| GPPL | GUJARAT PIPAVAV PORT LTD | Infrastructure | ₹154 | 15.2 | 3.6% |
+| KANSAINER | KANSAI NEROLAC PAINTS LTD | Metals | ₹175 | 15.0 | 3.9% |
+
+</details>
+
+## INTRADAY Universe (758 stocks)
+
+| Sector | Count | Top Stocks (by ADTV) |
+|--------|-------|---------------------|
+| Auto | 109 | ETERNAL (₹1352Cr), M&M (₹1122Cr), VMM (₹633Cr) |
+| Energy | 40 | RELIANCE (₹2390Cr), ONGC (₹705Cr), COALINDIA (₹531Cr) |
+| FMCG/Consumer | 44 | ITC (₹621Cr), GODFRYPHLP (₹411Cr), HINDUNILVR (₹389Cr) |
+| Financials | 109 | HDFCBANK (₹3021Cr), ICICIBANK (₹2266Cr), SBIN (₹1715Cr) |
+| IT | 82 | BHARTIARTL (₹1819Cr), INFY (₹1698Cr), NETWEB (₹1230Cr) |
+| Infrastructure | 187 | SILVERBEES (₹1755Cr), LT (₹1665Cr), BEL (₹853Cr) |
+| Metals | 100 | VEDL (₹902Cr), TATASTEEL (₹713Cr), HINDALCO (₹589Cr) |
+| Pharma | 69 | SUNPHARMA (₹463Cr), APOLLOHOSP (₹315Cr), MAXHEALTH (₹308Cr) |
+| Realty | 18 | DLF (₹271Cr), GODREJPROP (₹240Cr), LODHA (₹137Cr) |
+
+<details>
+<summary>Full INTRADAY list</summary>
+
+| Stock | Name | Sector | Price | ADTV (₹Cr) | ATR% |
+|-------|------|--------|-------|------------|------|
+| HDFCBANK | HDFC BANK LTD | Financials | ₹843 | 3021.2 | 2.4% |
+| RELIANCE | RELIANCE INDUSTRIES LTD | Energy | ₹1,408 | 2390.2 | 2.5% |
+| ICICIBANK | ICICI BANK LTD. | Financials | ₹1,289 | 2266.3 | 2.5% |
+| BHARTIARTL | BHARTI AIRTEL LIMITED | IT | ₹1,855 | 1818.6 | 2.5% |
+| SILVERBEES | NIPPONAMC - NETFSILVER | Infrastructure | ₹237 | 1754.7 | 4.9% |
+| SBIN | STATE BANK OF INDIA | Financials | ₹1,070 | 1715.5 | 2.9% |
+| INFY | INFOSYS LIMITED | IT | ₹1,267 | 1698.0 | 2.6% |
+| LT | LARSEN & TOUBRO LTD. | Infrastructure | ₹3,608 | 1665.5 | 4.2% |
+| ETERNAL | ETERNAL LIMITED | Auto | ₹243 | 1352.0 | 4.1% |
+| NETWEB | NETWEB TECH INDIA LTD | IT | ₹3,296 | 1230.2 | 5.8% |
+| BSE | BSE LIMITED | Financials | ₹2,996 | 1171.8 | 3.4% |
+| M&M | MAHINDRA & MAHINDRA LTD | Auto | ₹3,215 | 1122.2 | 3.6% |
+| TCS | TATA CONSULTANCY SERV LT | IT | ₹2,441 | 930.2 | 2.4% |
+| VEDL | VEDANTA LIMITED | Metals | ₹679 | 902.5 | 3.9% |
+| AXISBANK | AXIS BANK LIMITED | Financials | ₹1,253 | 887.5 | 2.8% |
+| BEL | BHARAT ELECTRONICS LTD | Infrastructure | ₹443 | 853.0 | 3.2% |
+| MCX | MULTI COMMODITY EXCHANGE | Financials | ₹2,603 | 785.4 | 3.6% |
+| BAJFINANCE | BAJAJ FINANCE LIMITED | Financials | ₹880 | 783.2 | 3.3% |
+| INDIGO | INTERGLOBE AVIATION LTD | Infrastructure | ₹4,361 | 766.9 | 4.3% |
+| WAAREEENER | WAAREE ENERGIES LIMITED | IT | ₹3,185 | 751.5 | 3.6% |
+| TATASTEEL | TATA STEEL LIMITED | Metals | ₹195 | 713.0 | 3.7% |
+| GOLDBEES | NIP IND ETF GOLD BEES | Infrastructure | ₹128 | 711.0 | 4.2% |
+| HAL | HINDUSTAN AERONAUTICS LTD | Infrastructure | ₹3,962 | 706.6 | 2.7% |
+| ONGC | OIL AND NATURAL GAS CORP. | Energy | ₹265 | 705.1 | 3.3% |
+| KOTAKBANK | KOTAK MAHINDRA BANK LTD | Financials | ₹375 | 683.9 | 2.4% |
+| SHRIRAMFIN | SHRIRAM FINANCE LIMITED | Financials | ₹1,022 | 648.5 | 4.3% |
+| IDFCFIRSTB | IDFC FIRST BANK LIMITED | Financials | ₹65 | 633.5 | 3.4% |
+| VMM | VISHAL MEGA MART LIMITED | Auto | ₹108 | 633.4 | 4.9% |
+| ITC | ITC LTD | FMCG/Consumer | ₹304 | 621.2 | 1.8% |
+| HINDALCO | HINDALCO  INDUSTRIES  LTD | Metals | ₹933 | 588.8 | 3.7% |
+| MAZDOCK | MAZAGON DOCK SHIPBUIL LTD | Infrastructure | ₹2,457 | 580.6 | 4.7% |
+| NATIONALUM | NATIONAL ALUMINIUM CO LTD | Metals | ₹388 | 559.7 | 4.8% |
+| COALINDIA | COAL INDIA LTD | Energy | ₹455 | 531.0 | 3.0% |
+| NTPC | NTPC LTD | Energy | ₹378 | 522.9 | 2.9% |
+| POWERGRID | POWER GRID CORP. LTD. | Energy | ₹299 | 479.1 | 2.8% |
+| TMCV | TATA MOTORS LIMITED | Auto | ₹448 | 473.0 | 5.2% |
+| COFORGE | COFORGE LIMITED | IT | ₹1,132 | 468.6 | 4.5% |
+| SUNPHARMA | SUN PHARMACEUTICAL IND L | Pharma | ₹1,778 | 463.3 | 2.1% |
+| POLYCAB | POLYCAB INDIA LIMITED | Infrastructure | ₹7,374 | 462.4 | 4.0% |
+| KAYNES | KAYNES TECHNOLOGY IND LTD | IT | ₹3,716 | 457.3 | 4.3% |
+| PERSISTENT | PERSISTENT SYSTEMS LTD | IT | ₹4,699 | 452.1 | 4.3% |
+| HCLTECH | HCL TECHNOLOGIES LTD | IT | ₹1,357 | 443.1 | 2.5% |
+| NEWGEN | NEWGEN SOFTWARE TECH LTD | IT | ₹460 | 433.4 | 4.8% |
+| DATAPATTNS | DATA PATTERNS INDIA LTD | Infrastructure | ₹3,302 | 428.8 | 6.0% |
+| EICHERMOT | EICHER MOTORS LTD | Auto | ₹7,028 | 422.5 | 3.6% |
+| GODFRYPHLP | GODFREY PHILLIPS INDIA LT | FMCG/Consumer | ₹2,041 | 411.0 | 3.5% |
+| BPCL | BHARAT PETROLEUM CORP  LT | Energy | ₹304 | 402.3 | 4.5% |
+| HINDUNILVR | HINDUSTAN UNILEVER LTD. | FMCG/Consumer | ₹2,135 | 388.8 | 2.3% |
+| CUMMINSIND | CUMMINS INDIA LTD | Infrastructure | ₹4,718 | 378.8 | 3.7% |
+| CANBK | CANARA BANK | Financials | ₹138 | 377.6 | 3.7% |
+| ABB | ABB INDIA LIMITED | Infrastructure | ₹6,338 | 376.3 | 3.0% |
+| TMPV | TATA MOTORS PASS VEH LTD | Auto | ₹325 | 375.6 | 4.3% |
+| IOC | INDIAN OIL CORP LTD | Energy | ₹148 | 369.1 | 4.4% |
+| TVSMOTOR | TVS MOTOR COMPANY  LTD | Auto | ₹3,573 | 364.1 | 3.8% |
+| ASHOKLEY | ASHOK LEYLAND LTD | Infrastructure | ₹179 | 363.7 | 4.5% |
+| ADANIPORTS | ADANI PORT & SEZ LTD | Infrastructure | ₹1,402 | 362.8 | 3.5% |
+| OIL | OIL INDIA LTD | Energy | ₹470 | 357.8 | 4.1% |
+| WIPRO | WIPRO LTD | IT | ₹194 | 354.0 | 2.7% |
+| SAIL | STEEL AUTHORITY OF INDIA | Metals | ₹154 | 350.8 | 4.4% |
+| ADANIPOWER | ADANI POWER LTD | Energy | ₹154 | 350.1 | 3.5% |
+| ABCAPITAL | ADITYA BIRLA CAPITAL LTD. | Financials | ₹328 | 349.9 | 3.7% |
+| HINDZINC | HINDUSTAN ZINC LIMITED | Metals | ₹538 | 347.0 | 3.6% |
+| KRN | KRN HEAT EXCHANGE N REF L | IT | ₹885 | 344.3 | 6.0% |
+| INDUSINDBK | INDUSIND BANK LIMITED | Financials | ₹842 | 343.7 | 3.4% |
+| UNIONBANK | UNION BANK OF INDIA | Financials | ₹178 | 341.9 | 3.9% |
+| JIOFIN | JIO FIN SERVICES LTD | Financials | ₹248 | 340.2 | 3.2% |
+| PFC | POWER FIN CORP LTD. | Financials | ₹432 | 338.6 | 3.8% |
+| HINDPETRO | HINDUSTAN PETROLEUM CORP | Energy | ₹349 | 337.8 | 5.4% |
+| NIFTYBEES | NIP IND ETF NIFTY BEES | Infrastructure | ₹269 | 325.0 | 2.1% |
+| BAJAJ-AUTO | BAJAJ AUTO LIMITED | Auto | ₹9,271 | 317.7 | 3.0% |
+| APOLLOHOSP | APOLLO HOSPITALS ENTER. L | Pharma | ₹7,471 | 315.3 | 2.3% |
+| BANKBARODA | BANK OF BARODA | Financials | ₹283 | 308.6 | 3.4% |
+| MAXHEALTH | MAX HEALTHCARE INS LTD | Pharma | ₹980 | 308.5 | 2.9% |
+| MUTHOOTFIN | MUTHOOT FINANCE LIMITED | Financials | ₹3,433 | 306.8 | 3.5% |
+| CHOLAFIN | CHOLAMANDALAM IN & FIN CO | Financials | ₹1,524 | 305.8 | 4.3% |
+| TITAN | TITAN COMPANY LIMITED | Auto | ₹4,146 | 301.4 | 2.5% |
+| GROWW | BILLIONBRAINS GARAGE VN L | Financials | ₹163 | 297.5 | 3.6% |
+| BHARATFORG | BHARAT FORGE LTD | Auto | ₹1,804 | 295.9 | 3.8% |
+| PAYTM | ONE 97 COMMUNICATIONS LTD | IT | ₹1,076 | 294.2 | 3.7% |
+| TRENT | TRENT LTD | Auto | ₹3,641 | 287.2 | 3.2% |
+| TECHM | TECH MAHINDRA LIMITED | IT | ₹1,385 | 286.5 | 2.8% |
+| ADANIENT | ADANI ENTERPRISES LIMITED | Energy | ₹2,007 | 273.8 | 3.1% |
+| DLF | DLF LIMITED | Realty | ₹563 | 270.6 | 3.4% |
+| SWIGGY | SWIGGY LIMITED | Auto | ₹299 | 266.3 | 3.9% |
+| LTFOODS | LT FOODS LIMITED | FMCG/Consumer | ₹395 | 264.3 | 6.8% |
+| LTF | L&T FINANCE LIMITED | Financials | ₹269 | 259.9 | 3.7% |
+| ASIANPAINT | ASIAN PAINTS LIMITED | Metals | ₹2,262 | 259.2 | 2.8% |
+| JINDALSAW | JINDAL SAW LIMITED | Metals | ₹198 | 259.2 | 5.4% |
+| UPL | UPL LIMITED | Metals | ₹632 | 256.2 | 2.7% |
+| GRSE | GARDEN REACH SHIP&ENG LTD | Infrastructure | ₹2,393 | 253.8 | 4.4% |
+| ADANIGREEN | ADANI GREEN ENERGY LTD | Energy | ₹891 | 252.9 | 3.8% |
+| HEROMOTOCO | HERO MOTOCORP LIMITED | Auto | ₹5,426 | 252.5 | 3.2% |
+| BHEL | BHEL | Infrastructure | ₹260 | 252.4 | 3.9% |
+| PNB | PUNJAB NATIONAL BANK | Financials | ₹113 | 251.9 | 3.5% |
+| GRASIM | GRASIM INDUSTRIES LTD | Metals | ₹2,723 | 251.6 | 2.9% |
+| POLICYBZR | PB FINTECH LIMITED | Financials | ₹1,539 | 248.6 | 3.2% |
+| TATAPOWER | TATA POWER CO LTD | Energy | ₹400 | 246.4 | 3.0% |
+| AMBER | AMBER ENTERPRISES (I) LTD | Auto | ₹6,850 | 245.6 | 4.8% |
+| HDFCAMC | HDFC AMC LIMITED | Financials | ₹2,469 | 244.7 | 3.2% |
+| RECLTD | REC LIMITED | Financials | ₹348 | 244.2 | 3.6% |
+| GAIL | GAIL (INDIA) LTD | Energy | ₹151 | 243.1 | 3.8% |
+| GODREJPROP | GODREJ PROPERTIES LTD | Realty | ₹1,643 | 240.2 | 3.8% |
+| PARAS | PARAS DEF AND SPCE TECH L | Infrastructure | ₹654 | 233.2 | 6.3% |
+| BAJAJFINSV | BAJAJ FINSERV LTD. | Financials | ₹1,792 | 232.3 | 2.8% |
+| KEI | KEI INDUSTRIES LTD. | Infrastructure | ₹4,390 | 231.8 | 4.8% |
+| SILVERIETF | ICICIPRAMC - ICICISILVE | Infrastructure | ₹247 | 231.6 | 5.6% |
+| HAPPSTMNDS | HAPPIEST MINDS TECHNO LTD | IT | ₹384 | 229.5 | 6.5% |
+| IRCTC | INDIAN RAIL TOUR CORP LTD | Auto | ₹540 | 228.9 | 3.3% |
+| FEDERALBNK | FEDERAL BANK LTD | Financials | ₹272 | 226.8 | 3.2% |
+| HDFCSILVER | HDFCAMC - HDFCSILVER | Infrastructure | ₹237 | 224.4 | 5.3% |
+| RVNL | RAIL VIKAS NIGAM LIMITED | Infrastructure | ₹275 | 223.3 | 4.7% |
+| VBL | VARUN BEVERAGES LIMITED | FMCG/Consumer | ₹415 | 222.8 | 3.5% |
+| CDSL | CENTRAL DEPO SER (I) LTD | Financials | ₹1,234 | 220.9 | 3.2% |
+| JWL | JUPITER WAGONS LIMITED | Infrastructure | ₹271 | 220.8 | 6.7% |
+| MOTHERSON | SAMVRDHNA MTHRSN INTL LTD | Auto | ₹118 | 218.5 | 4.4% |
+| TARIL | TRANS & RECTI. LTD | Infrastructure | ₹289 | 217.8 | 5.7% |
+| HDFCLIFE | HDFC LIFE INS CO LTD | Financials | ₹643 | 217.7 | 2.7% |
+| AUROPHARMA | AUROBINDO PHARMA LTD | Pharma | ₹1,269 | 215.0 | 2.8% |
+| BDL | BHARAT DYNAMICS LIMITED | Infrastructure | ₹1,320 | 213.4 | 4.0% |
+| DRREDDY | DR. REDDY S LABORATORIES | Pharma | ₹1,295 | 212.8 | 2.6% |
+| CIPLA | CIPLA LTD | Pharma | ₹1,268 | 209.9 | 2.1% |
+| LUPIN | LUPIN LIMITED | Pharma | ₹2,302 | 208.8 | 2.1% |
+| PGEL | PG ELECTROPLAST LTD | IT | ₹537 | 208.8 | 5.8% |
+| NTPCGREEN | NTPC GREEN ENERGY LIMITED | Energy | ₹98 | 208.3 | 4.8% |
+| PREMIERENE | PREMIER ENERGIES LIMITED | IT | ₹870 | 208.2 | 3.7% |
+| CGPOWER | CG POWER AND IND SOL LTD | Infrastructure | ₹707 | 207.6 | 3.8% |
+| GVT&D | GE VERNOVA T&D INDIA LTD | Infrastructure | ₹3,808 | 202.3 | 4.6% |
+| BANDHANBNK | BANDHAN BANK LIMITED | Financials | ₹164 | 200.2 | 4.8% |
+| ANGELONE | ANGEL ONE LIMITED | Financials | ₹236 | 200.1 | 4.5% |
+| NAUKRI | INFO EDGE (I) LTD | IT | ₹995 | 197.8 | 3.2% |
+| BRITANNIA | BRITANNIA INDUSTRIES LTD | FMCG/Consumer | ₹5,885 | 194.3 | 2.1% |
+| NATCOPHARM | NATCO PHARMA LTD. | Pharma | ₹958 | 190.3 | 4.4% |
+| IRFC | INDIAN RAILWAY FIN CORP L | Financials | ₹98 | 189.1 | 3.2% |
+| JSWSTEEL | JSW STEEL LIMITED | Metals | ₹1,180 | 187.3 | 3.0% |
+| ITI | ITI LTD | IT | ₹264 | 185.8 | 6.1% |
+| PETRONET | PETRONET LNG LIMITED | Energy | ₹292 | 185.1 | 4.5% |
+| MAHABANK | BANK OF MAHARASHTRA | Financials | ₹64 | 183.5 | 5.0% |
+| SBILIFE | SBI LIFE INSURANCE CO LTD | Financials | ₹1,962 | 183.1 | 2.6% |
+| INDHOTEL | THE INDIAN HOTELS CO. LTD | Auto | ₹637 | 182.9 | 3.1% |
+| INDUSTOWER | INDUS TOWERS LIMITED | IT | ₹441 | 182.9 | 3.0% |
+| RBLBANK | RBL BANK LIMITED | Financials | ₹301 | 180.3 | 3.1% |
+| NMDC | NMDC LTD. | Metals | ₹79 | 177.8 | 3.6% |
+| INDIANB | INDIAN BANK | Financials | ₹889 | 177.3 | 3.7% |
+| TATAINVEST | TATA INVESTMENT CORP LTD | Financials | ₹626 | 173.2 | 3.7% |
+| TORNTPHARM | TORRENT PHARMACEUTICALS L | Pharma | ₹4,289 | 171.2 | 2.5% |
+| KPITTECH | KPIT TECHNOLOGIES LIMITED | IT | ₹688 | 170.3 | 4.5% |
+| DIVISLAB | DIVI S LABORATORIES LTD | Pharma | ₹6,140 | 170.0 | 2.4% |
+| LAURUSLABS | LAURUS LABS LIMITED | Pharma | ₹983 | 166.5 | 4.0% |
+| TIINDIA | TUBE INVEST OF INDIA LTD | Infrastructure | ₹2,560 | 166.0 | 4.5% |
+| APARINDS | APAR INDUSTRIES LTD. | Infrastructure | ₹9,609 | 163.3 | 6.1% |
+| JSWENERGY | JSW ENERGY LIMITED | Energy | ₹509 | 160.7 | 3.7% |
+| DMART | AVENUE SUPERMARTS LIMITED | FMCG/Consumer | ₹3,844 | 160.4 | 2.9% |
+| BANKINDIA | BANK OF INDIA | Financials | ₹152 | 157.5 | 3.7% |
+| GODREJCP | GODREJ CONSUMER PRODUCTS | FMCG/Consumer | ₹1,054 | 155.9 | 3.2% |
+| ENGINERSIN | ENGINEERS INDIA LTD | Infrastructure | ₹195 | 155.5 | 4.4% |
+| MANAPPURAM | MANAPPURAM FINANCE LTD | Financials | ₹270 | 154.9 | 4.1% |
+| ZYDUSWELL | ZYDUS WELLNESS LIMITED | FMCG/Consumer | ₹429 | 154.4 | 4.4% |
+| JINDALSTEL | JINDAL STEEL LIMITED | Metals | ₹1,179 | 153.2 | 3.6% |
+| HFCL | HFCL LIMITED | IT | ₹73 | 151.1 | 4.6% |
+| COCHINSHIP | COCHIN SHIPYARD LIMITED | Infrastructure | ₹1,412 | 149.6 | 4.2% |
+| APLAPOLLO | APL APOLLO TUBES LTD | Metals | ₹2,013 | 145.2 | 3.9% |
+| SIEMENS | SIEMENS LTD | Infrastructure | ₹3,221 | 143.6 | 3.7% |
+| SAMMAANCAP | SAMMAAN CAPITAL LIMITED | Financials | ₹141 | 142.8 | 3.3% |
+| SRF | SRF LTD | Infrastructure | ₹2,569 | 142.1 | 3.5% |
+| FORTIS | FORTIS HEALTHCARE LTD | Pharma | ₹846 | 141.9 | 3.6% |
+| TATAELXSI | TATA ELXSI LIMITED | IT | ₹4,207 | 141.3 | 3.4% |
+| IFCI | IFCI LTD | Financials | ₹56 | 140.2 | 4.8% |
+| NESTLEIND | NESTLE INDIA LIMITED | FMCG/Consumer | ₹1,205 | 140.2 | 2.3% |
+| ADANIENSOL | ADANI ENERGY SOLUTION LTD | Energy | ₹1,037 | 140.1 | 3.7% |
+| VOLTAS | VOLTAS LTD | Auto | ₹1,423 | 138.3 | 3.7% |
+| LODHA | LODHA DEVELOPERS LIMITED | Realty | ₹854 | 136.8 | 3.9% |
+| MFSL | MAX FINANCIAL SERV LTD | Financials | ₹1,669 | 136.5 | 3.2% |
+| UNITDSPR | UNITED SPIRITS LIMITED | FMCG/Consumer | ₹1,320 | 136.2 | 3.5% |
+| GMDCLTD | GUJARAT MINERAL DEV CORP | Energy | ₹559 | 135.2 | 4.1% |
+| NHPC | NHPC LTD | Energy | ₹77 | 133.4 | 2.5% |
+| GOLDIETF | ICICI PRUDENTIAL GOLD ETF | Infrastructure | ₹132 | 133.0 | 3.2% |
+| MANKIND | MANKIND PHARMA LIMITED | Pharma | ₹2,103 | 133.0 | 3.2% |
+| MARICO | MARICO LIMITED | FMCG/Consumer | ₹756 | 132.5 | 2.2% |
+| MPHASIS | MPHASIS LIMITED | IT | ₹2,124 | 132.2 | 3.8% |
+| JBMA | JBM AUTO LIMITED | Auto | ₹585 | 131.2 | 4.5% |
+| J&KBANK | J & K BANK LTD. | Financials | ₹124 | 131.0 | 5.5% |
+| TATACONSUM | TATA CONSUMER PRODUCT LTD | FMCG/Consumer | ₹1,075 | 129.9 | 2.5% |
+| AMBUJACEM | AMBUJA CEMENTS LTD | Metals | ₹441 | 127.5 | 3.3% |
+| ASTRAL | ASTRAL LIMITED | Infrastructure | ₹1,668 | 126.8 | 3.7% |
+| KALYANKJIL | KALYAN JEWELLERS IND LTD | Auto | ₹390 | 126.2 | 3.2% |
+| URBANCO | URBAN COMPANY LIMITED | IT | ₹121 | 125.1 | 5.1% |
+| PRAJIND | PRAJ INDUSTRIES LTD | Infrastructure | ₹306 | 124.9 | 5.7% |
+| SUPREMEIND | SUPREME INDUSTRIES LTD | Infrastructure | ₹4,011 | 123.9 | 3.3% |
+| LTM | LTIMINDTREE LIMITED | IT | ₹4,299 | 122.1 | 3.3% |
+| SETFGOLD | SBI-ETF GOLD | Infrastructure | ₹132 | 121.6 | 3.1% |
+| GLENMARK | GLENMARK PHARMACEUTICALS | Pharma | ₹2,186 | 121.5 | 3.3% |
+| BIOCON | BIOCON LIMITED. | Pharma | ₹383 | 121.0 | 2.8% |
+| HDFCGOLD | HDFC GOLD ETF | Infrastructure | ₹132 | 120.0 | 2.8% |
+| NAVINFLUOR | NAVIN FLUORINE INT. LTD | Metals | ₹6,338 | 119.8 | 3.8% |
+| HYUNDAI | HYUNDAI MOTOR INDIA LTD | Auto | ₹1,990 | 118.9 | 3.1% |
+| APOLLO | APOLLO MICRO SYSTEMS LTD | Infrastructure | ₹206 | 118.5 | 6.0% |
+| ATHERENERG | ATHER ENERGY LIMITED | Auto | ₹750 | 117.8 | 4.0% |
+| JUBLFOOD | JUBILANT FOODWORKS LTD | Auto | ₹478 | 116.9 | 3.5% |
+| ICICIAMC | ICICI PRUDENTIAL AMC LTD | Financials | ₹3,020 | 116.9 | 3.8% |
+| LTTS | L&T TECHNOLOGY SER. LTD. | IT | ₹3,367 | 116.4 | 5.1% |
+| GMRAIRPORT | GMR AIRPORTS LIMITED | Infrastructure | ₹92 | 114.4 | 3.9% |
+| CONCORDBIO | CONCORD BIOTECH LIMITED | Pharma | ₹1,143 | 112.8 | 4.9% |
+| ICICIGI | ICICI LOMBARD GIC LIMITED | Financials | ₹1,831 | 112.4 | 2.4% |
+| UNOMINDA | UNO MINDA LIMITED | Auto | ₹1,073 | 112.3 | 4.5% |
+| LENSKART | LENSKART SOLUTIONS LTD | Pharma | ₹511 | 112.2 | 4.5% |
+| RADICO | RADICO KHAITAN LTD | FMCG/Consumer | ₹2,710 | 111.8 | 4.3% |
+| GRAPHITE | GRAPHITE INDIA LTD | Infrastructure | ₹624 | 110.7 | 4.9% |
+| CAMS | COMPUTER AGE MNGT SER LTD | IT | ₹658 | 109.0 | 3.6% |
+| SCI | SHIPPING CORP OF INDIA LT | Infrastructure | ₹240 | 108.8 | 5.2% |
+| ANANTRAJ | ANANT RAJ LIMITED | Realty | ₹471 | 107.8 | 4.2% |
+| HAVELLS | HAVELLS INDIA LIMITED | Infrastructure | ₹1,344 | 106.6 | 3.0% |
+| FIRSTCRY | BRAINBEES SOLUTIONS LTD | Auto | ₹214 | 106.6 | 4.0% |
+| BELRISE | BELRISE INDUSTRIES LTD | Auto | ₹184 | 106.1 | 4.2% |
+| NYKAA | FSN E COMMERCE VENTURES | Auto | ₹244 | 106.0 | 3.5% |
+| PRESTIGE | PRESTIGE ESTATE LTD | Realty | ₹1,321 | 106.0 | 3.8% |
+| ENRIN | SIEMENS ENERGY INDIA LTD | Energy | ₹2,841 | 104.8 | 4.0% |
+| KTKBANK | KARNATAKA BANK LIMITED | Financials | ₹232 | 104.2 | 4.7% |
+| PIDILITIND | PIDILITE INDUSTRIES LTD | Metals | ₹1,384 | 103.5 | 3.0% |
+| TORNTPOWER | TORRENT POWER LTD | Energy | ₹1,454 | 101.3 | 4.0% |
+| AVANTIFEED | AVANTI FEEDS LIMITED | FMCG/Consumer | ₹1,230 | 100.7 | 5.9% |
+| INOXWIND | INOX WIND LIMITED | Infrastructure | ₹82 | 99.8 | 4.8% |
+| COLPAL | COLGATE PALMOLIVE LTD. | FMCG/Consumer | ₹1,942 | 99.5 | 2.9% |
+| OFSS | ORACLE FIN SERV SOFT LTD. | IT | ₹6,594 | 99.2 | 3.0% |
+| SBICARD | SBI CARDS & PAY SER LTD | Financials | ₹716 | 98.9 | 3.3% |
+| PWL | PHYSICSWALLAH LIMITED | FMCG/Consumer | ₹87 | 95.9 | 5.4% |
+| BLUESTARCO | BLUE STAR LIMITED | Infrastructure | ₹1,820 | 93.6 | 4.2% |
+| DOMS | DOMS INDUSTRIES LIMITED | Infrastructure | ₹2,244 | 93.2 | 4.7% |
+| DCXINDIA | DCX SYSTEMS LIMITED | Infrastructure | ₹173 | 92.7 | 6.8% |
+| NBCC | NBCC (INDIA) LIMITED | Infrastructure | ₹88 | 92.5 | 4.0% |
+| MEESHO | MEESHO LIMITED | Auto | ₹148 | 92.2 | 5.8% |
+| IREDA | INDIAN RENEWABLE ENERGY | Financials | ₹118 | 91.3 | 3.7% |
+| GESHIP | THE GE SHPG.LTD | Infrastructure | ₹1,441 | 91.1 | 4.4% |
+| SILVER | BIRLASLAMC - SILVER | Infrastructure | ₹247 | 90.2 | 5.1% |
+| PATANJALI | PATANJALI FOODS LIMITED | FMCG/Consumer | ₹490 | 90.1 | 2.5% |
+| SBISILVER | SBIAMC - SBISILVER | Infrastructure | ₹243 | 88.9 | 5.0% |
+| SHAKTIPUMP | SHAKTI PUMPS (I) LTD | Infrastructure | ₹511 | 88.5 | 5.4% |
+| KSB | KSB LIMITED | Infrastructure | ₹811 | 86.9 | 4.3% |
+| GUJGASLTD | GUJARAT GAS LIMITED | Energy | ₹359 | 86.8 | 6.3% |
+| AGIIL | AGI INFRA LIMITED | Realty | ₹301 | 86.8 | 5.2% |
+| HOMEFIRST | HOME FIRST FIN CO IND LTD | Financials | ₹984 | 86.3 | 5.2% |
+| JKTYRE | JK TYRE & INDUSTRIES LTD | Auto | ₹437 | 86.0 | 5.8% |
+| HEG | HEG LTD | Infrastructure | ₹511 | 85.9 | 4.2% |
+| KARURVYSYA | KARUR VYSYA BANK LTD | Financials | ₹285 | 85.5 | 3.9% |
+| AEROFLEX | AEROFLEX INDUSTRIES LTD | Infrastructure | ₹248 | 85.2 | 5.0% |
+| SYRMA | SYRMA SGS TECHNOLOGY LTD | IT | ₹784 | 85.2 | 4.9% |
+| ZENTEC | ZEN TECHNOLOGIES LIMITED | Infrastructure | ₹1,447 | 84.7 | 4.1% |
+| VIKRAMSOLR | VIKRAM SOLAR LIMITED | IT | ₹194 | 84.4 | 5.5% |
+| LGEINDIA | LG ELECTRONICS INDIA LTD | IT | ₹1,581 | 83.7 | 3.2% |
+| CYIENTDLM | CYIENT DLM LIMITED | IT | ₹314 | 83.7 | 5.9% |
+| IRCON | IRCON INTERNATIONAL LTD | Infrastructure | ₹130 | 83.5 | 5.1% |
+| AWL | AWL AGRI BUSINESS LIMITED | FMCG/Consumer | ₹177 | 83.3 | 3.8% |
+| KPIGREEN | KPI GREEN ENERGY LIMITED | Energy | ₹385 | 83.0 | 5.9% |
+| DABUR | DABUR INDIA LTD | FMCG/Consumer | ₹452 | 82.9 | 2.9% |
+| OLECTRA | OLECTRA GREENTECH LIMITED | Infrastructure | ₹1,056 | 82.9 | 4.3% |
+| LICI | LIFE INSURA CORP OF INDIA | Financials | ₹786 | 82.9 | 2.6% |
+| OBEROIRLTY | OBEROI REALTY LIMITED | Realty | ₹1,473 | 82.4 | 3.1% |
+| SHAILY | SHAILY ENG PLASTICS LTD | Metals | ₹2,351 | 82.4 | 4.8% |
+| TDPOWERSYS | TD POWER SYSTEMS LTD. | Infrastructure | ₹836 | 82.2 | 5.0% |
+| ABSLAMC | ADIT BIRL SUN LIF AMC LTD | Financials | ₹969 | 82.1 | 5.7% |
+| LICHSGFIN | LIC HOUSING FINANCE LTD | Financials | ₹503 | 81.8 | 2.9% |
+| AEGISLOG | AEGIS LOGISTICS LIMITED | Energy | ₹610 | 81.6 | 5.0% |
+| HSCL | HIMADRI SPECIALITY CHEM L | Metals | ₹454 | 81.4 | 4.3% |
+| JSL | JINDAL STAINLESS LIMITED | Metals | ₹735 | 80.9 | 4.7% |
+| RCF | RASHTRIYA CHEMICALS & FER | Metals | ₹121 | 80.6 | 5.6% |
+| ITCHOTELS | ITC HOTELS LIMITED | Auto | ₹158 | 80.2 | 3.6% |
+| ACUTAAS | ACUTAAS CHEMICALS LIMITED | Metals | ₹2,258 | 79.5 | 4.7% |
+| JBCHEPHARM | J B CHEMICALS AND PHARMA | Pharma | ₹2,118 | 78.7 | 2.6% |
+| LLOYDSME | LLOYDS METALS N ENERGY L | Metals | ₹1,247 | 77.7 | 4.5% |
+| FINCABLES | FINOLEX CABLES LTD | Infrastructure | ₹877 | 77.6 | 6.0% |
+| HBLENGINE | HBL ENGINEERING LTD | Infrastructure | ₹680 | 77.4 | 4.4% |
+| 360ONE | 360 ONE WAM LIMITED | Financials | ₹1,070 | 76.2 | 3.0% |
+| ICICIPRULI | ICICI PRU LIFE INS CO LTD | Financials | ₹589 | 76.2 | 3.3% |
+| UJJIVANSFB | UJJIVAN SMALL FINANC BANK | Financials | ₹56 | 75.9 | 5.3% |
+| JYOTICNC | JYOTI CNC AUTOMATION LTD | Infrastructure | ₹764 | 75.7 | 4.5% |
+| QPOWER | QUALITY POWER ELEC EQUP L | Infrastructure | ₹826 | 75.6 | 5.3% |
+| COROMANDEL | COROMANDEL INTERNTL. LTD | Metals | ₹2,025 | 75.5 | 4.2% |
+| CONCOR | CONTAINER CORP OF IND LTD | Infrastructure | ₹459 | 74.6 | 3.1% |
+| GOKULAGRO | GOKUL AGRO RESOURCES LTD | FMCG/Consumer | ₹186 | 74.0 | 5.1% |
+| EDELWEISS | EDELWEISS FIN SERV LTD | Financials | ₹111 | 73.7 | 4.2% |
+| NITINSPIN | NITIN SPINNERS LIMITED | Auto | ₹372 | 73.3 | 3.5% |
+| SONACOMS | SONA BLW PRECISION FRGS L | Auto | ₹512 | 73.1 | 3.8% |
+| CARTRADE | CARTRADE TECH LIMITED | Auto | ₹1,698 | 73.1 | 5.2% |
+| PHOENIXLTD | THE PHOENIX MILLS LTD | Realty | ₹1,627 | 71.1 | 3.1% |
+| KFINTECH | KFIN TECHNOLOGIES LIMITED | IT | ₹944 | 70.6 | 3.4% |
+| SAILIFE | SAI LIFE SCIENCES LIMITED | Pharma | ₹1,014 | 70.2 | 4.4% |
+| SCHAEFFLER | SCHAEFFLER INDIA LIMITED | Auto | ₹4,054 | 69.0 | 4.2% |
+| DELHIVERY | DELHIVERY LIMITED | Infrastructure | ₹423 | 68.8 | 3.5% |
+| IEX | INDIAN ENERGY EXC LTD | Financials | ₹123 | 68.5 | 3.0% |
+| BAJAJHLDNG | BAJAJ HOLDINGS & INVS LTD | Financials | ₹9,859 | 68.0 | 3.0% |
+| PIIND | PI INDUSTRIES LTD | Metals | ₹2,928 | 65.5 | 2.7% |
+| BAJEL | BAJEL PROJECTS LIMITED | Energy | ₹168 | 65.0 | 5.7% |
+| PNBHOUSING | PNB HOUSING FIN LTD. | Financials | ₹808 | 64.7 | 3.8% |
+| CUB | CITY UNION BANK LTD | Financials | ₹251 | 64.7 | 4.8% |
+| PARADEEP | PARADEEP PHOSPHATES LTD | Metals | ₹116 | 63.9 | 5.0% |
+| RAMKY | RAMKY INFRA LTD | Infrastructure | ₹484 | 63.8 | 6.1% |
+| HEXT | HEXAWARE TECHNOLOGIES LTD | IT | ₹437 | 63.7 | 5.0% |
+| HUDCO | HSG & URBAN DEV CORPN LTD | Financials | ₹179 | 63.2 | 3.5% |
+| SYNGENE | SYNGENE INTERNATIONAL LTD | Pharma | ₹420 | 63.1 | 3.2% |
+| BLS | BLS INTL SERVS LTD | Infrastructure | ₹246 | 62.9 | 4.3% |
+| BANKBEES | NIP IND ETF BANK BEES | Infrastructure | ₹569 | 62.3 | 2.2% |
+| ALKEM | ALKEM LABORATORIES LTD. | Pharma | ₹5,352 | 62.1 | 2.6% |
+| BSOFT | BIRLASOFT LIMITED | IT | ₹364 | 62.0 | 4.5% |
+| GOLD1 | KOTAK GOLD ETF | Infrastructure | ₹129 | 61.9 | 4.3% |
+| MOIL | MOIL LIMITED | Metals | ₹294 | 61.5 | 4.8% |
+| NCC | NCC LIMITED | Infrastructure | ₹147 | 61.3 | 3.9% |
+| IIFL | IIFL FINANCE LIMITED | Financials | ₹489 | 60.9 | 3.6% |
+| NLCINDIA | NLC INDIA LIMITED | Energy | ₹262 | 60.2 | 4.4% |
+| POONAWALLA | POONAWALLA FINCORP LTD | Financials | ₹412 | 59.0 | 3.8% |
+| KPRMILL | KPR MILL LTD. | Auto | ₹839 | 58.9 | 5.1% |
+| M&MFIN | M&M FIN. SERVICES LTD | Financials | ₹321 | 58.8 | 4.0% |
+| ZYDUSLIFE | ZYDUS LIFESCIENCES LTD | Pharma | ₹900 | 58.5 | 2.4% |
+| ZEEL | ZEE ENTERTAINMENT ENT LTD | IT | ₹77 | 58.3 | 3.7% |
+| KIRLOSENG | KIRLOSKAR OIL ENG LTD | Infrastructure | ₹1,436 | 56.6 | 4.7% |
+| APOLLOTYRE | APOLLO TYRES LTD | Auto | ₹420 | 56.3 | 3.7% |
+| ASAHIINDIA | ASAHI INDIA GLASS LIMITED | Auto | ₹864 | 56.2 | 5.2% |
+| TATATECH | TATA TECHNOLOGIES LIMITED | IT | ₹549 | 56.1 | 2.9% |
+| GOKEX | GOKALDAS EXPORTS LTD. | Auto | ₹596 | 55.4 | 5.5% |
+| ASTERDM | ASTER DM HEALTHCARE LTD. | Pharma | ₹662 | 55.3 | 4.4% |
+| NAM-INDIA | NIPPON L I A M LTD | Financials | ₹885 | 54.8 | 4.0% |
+| CEATLTD | CEAT LIMITED | Auto | ₹3,555 | 54.6 | 5.9% |
+| LEMONTREE | LEMON TREE HOTELS LTD | Auto | ₹108 | 54.4 | 4.1% |
+| MOTILALOFS | MOTILAL OSWAL FIN LTD | Financials | ₹698 | 54.1 | 3.8% |
+| ANANDRATHI | ANAND RATHI WEALTH LTD | Financials | ₹3,064 | 53.5 | 2.6% |
+| TATACAP | TATA CAPITAL LIMITED | Financials | ₹324 | 53.5 | 2.8% |
+| THERMAX | THERMAX LTD | Infrastructure | ₹3,279 | 53.4 | 3.6% |
+| WOCKPHARMA | WOCKHARDT LIMITED | Pharma | ₹1,216 | 52.3 | 4.0% |
+| MOBIKWIK | ONE MOBIKWIK SYSTEMS LTD | IT | ₹185 | 51.7 | 4.2% |
+| JAMNAAUTO | JAMNA AUTO IND LTD | Auto | ₹124 | 51.5 | 5.1% |
+| NH | NARAYANA HRUDAYALAYA LTD. | Pharma | ₹1,690 | 51.2 | 2.9% |
+| MGL | MAHANAGAR GAS LTD. | Energy | ₹1,000 | 50.6 | 4.4% |
+| KEC | KEC INTL. LIMITED | Infrastructure | ₹562 | 49.8 | 4.1% |
+| CPPLUS | ADITYA INFOTECH LIMITED | Infrastructure | ₹1,684 | 49.8 | 4.9% |
+| TATACOMM | TATA COMMUNICATIONS LTD | IT | ₹1,497 | 49.5 | 3.8% |
+| LUMAXTECH | LUMAX AUTO TECH LTD | Auto | ₹1,649 | 49.5 | 5.6% |
+| EMCURE | EMCURE PHARMACEUTICALS L | Pharma | ₹1,532 | 49.0 | 4.5% |
+| AIIL | AUTHUM INVEST & INFRA LTD | Financials | ₹486 | 48.8 | 6.2% |
+| SANSERA | SANSERA ENGINEERING LTD | Auto | ₹2,199 | 48.7 | 4.9% |
+| COHANCE | COHANCE LIFESCIENCES LTD | Pharma | ₹306 | 48.5 | 4.8% |
+| JAINREC | JAIN RESOURCE RECYCLING L | Metals | ₹439 | 48.2 | 4.4% |
+| BALRAMCHIN | BALRAMPUR CHINI MILLS LTD | FMCG/Consumer | ₹476 | 48.0 | 5.0% |
+| PIRAMALFIN | PIRAMAL FINANCE LIMITED | Financials | ₹1,809 | 48.0 | 4.3% |
+| FSL | FIRSTSOURCE SOLU. LTD. | IT | ₹228 | 47.9 | 5.0% |
+| CROMPTON | CROMPT GREA CON ELEC LTD | Auto | ₹250 | 47.7 | 3.1% |
+| HDBFS | HDB FINANCIAL SERVICES L | Financials | ₹655 | 47.5 | 2.5% |
+| WABAG | VA TECH WABAG LTD | Infrastructure | ₹1,230 | 47.3 | 4.7% |
+| RRKABEL | R R KABEL LIMITED | Infrastructure | ₹1,438 | 47.3 | 4.5% |
+| IGL | INDRAPRASTHA GAS LTD | Energy | ₹157 | 46.9 | 3.8% |
+| DALBHARAT | DALMIA BHARAT LIMITED | Metals | ₹1,916 | 46.9 | 3.4% |
+| SMLMAH | SML MAHINDRA LIMITED | Auto | ₹4,145 | 46.8 | 5.6% |
+| GPIL | GODAWARI POW & ISP LTD | Metals | ₹260 | 46.5 | 4.4% |
+| DATAMATICS | DATAMATICS GLOBAL SER LTD | IT | ₹711 | 46.2 | 4.8% |
+| JUNIORBEES | NIP IND ETF JUNIOR BEES | Infrastructure | ₹706 | 45.8 | 2.9% |
+| AFFLE | AFFLE 3I LIMITED | IT | ₹1,346 | 45.2 | 4.4% |
+| MMTC | MMTC LIMITED | Infrastructure | ₹63 | 44.4 | 4.7% |
+| EXIDEIND | EXIDE INDUSTRIES LTD | Auto | ₹309 | 43.9 | 3.2% |
+| CENTUM | CENTUM ELECTRONICS LTD | IT | ₹2,836 | 43.8 | 5.7% |
+| CHOICEIN | CHOICE INTERNATIONAL LTD | Financials | ₹645 | 43.7 | 4.2% |
+| JAIBALAJI | JAI BALAJI INDUSTRIES LTD | Metals | ₹64 | 43.4 | 6.7% |
+| SANDUMA | SANDUR MANG & IRON ORES L | Metals | ₹188 | 43.4 | 4.8% |
+| ASTRAMICRO | ASTRA MICROWAVE LTD | IT | ₹946 | 43.0 | 4.3% |
+| RELIGARE | RELIGARE ENTER. LTD. | Financials | ₹227 | 42.8 | 4.1% |
+| VOLTAMP | VOLTAMP TRANSFORMERS LTD | Infrastructure | ₹8,725 | 42.5 | 3.9% |
+| CESC | CESC LTD | Energy | ₹156 | 42.5 | 3.9% |
+| SETFNIF50 | SBI-ETF NIFTY 50 | Infrastructure | ₹254 | 42.4 | 2.5% |
+| VESUVIUS | VESUVIUS INDIA LTD | Infrastructure | ₹490 | 42.3 | 4.2% |
+| PCBL | PCBL CHEMICAL LIMITED | Metals | ₹256 | 42.2 | 4.9% |
+| SUNDARMFIN | SUNDARAM FINANCE LTD | Financials | ₹5,000 | 42.0 | 5.2% |
+| ECLERX | ECLERX SERVICES LTD | IT | ₹1,486 | 42.0 | 6.2% |
+| SWANCORP | SWAN CORP LIMITED | Infrastructure | ₹347 | 41.9 | 5.1% |
+| BAJAJHFL | BAJAJ HOUSING FINANCE LTD | Financials | ₹83 | 41.9 | 2.5% |
+| NUVAMA | NUVAMA WEALTH MANAGE LTD | Financials | ₹1,179 | 41.6 | 3.4% |
+| JMFINANCIL | JM FINANCIAL LIMITED | Financials | ₹127 | 41.4 | 5.3% |
+| SARDAEN | SARDA ENERGY & MIN LTD | Metals | ₹527 | 41.0 | 4.7% |
+| PPLPHARMA | PIRAMAL PHARMA LIMITED | Pharma | ₹143 | 41.0 | 3.8% |
+| THANGAMAYL | THANGAMAYIL JEWELLERY LTD | Auto | ₹3,502 | 40.6 | 5.5% |
+| WEBELSOLAR | WEBSOL ENERGY SYSTEM LTD | IT | ₹62 | 40.6 | 5.8% |
+| ZAGGLE | ZAGGLE PREPA OCEAN SER L | IT | ₹220 | 40.5 | 5.1% |
+| AXISGOLD | AXIS MF - AXIS GOLD ETF | Infrastructure | ₹129 | 40.2 | 3.4% |
+| TITAGARH | TITAGARH RAIL SYSTEMS LTD | Infrastructure | ₹649 | 40.2 | 4.0% |
+| CCL | CCL PRODUCTS (I) LTD | FMCG/Consumer | ₹1,046 | 40.1 | 3.3% |
+| EIEL | ENVIRO INFRA ENGINEERS L | Infrastructure | ₹153 | 40.1 | 5.7% |
+| PSUBNKBEES | NIP IND ETF PSU BANK BEES | Infrastructure | ₹96 | 40.1 | 3.2% |
+| AJANTPHARM | AJANTA PHARMA LIMITED | Pharma | ₹3,057 | 39.6 | 3.7% |
+| EMMVEE | EMMVEE PHOTOVOLTAIC PWR L | IT | ₹239 | 39.6 | 5.4% |
+| GRANULES | GRANULES INDIA LIMITED | Pharma | ₹587 | 39.3 | 3.4% |
+| INTELLECT | INTELLECT DESIGN ARENA | IT | ₹677 | 39.2 | 3.7% |
+| BALUFORGE | BALU FORGE INDUSTRIES LTD | Infrastructure | ₹459 | 39.0 | 5.3% |
+| JSWINFRA | JSW INFRASTRUCTURE LTD | Infrastructure | ₹260 | 38.7 | 3.9% |
+| LALPATHLAB | DR. LAL PATH LABS LTD. | Pharma | ₹1,347 | 38.2 | 3.1% |
+| IKS | INVENTURUS KNOWLEDGE SO L | Pharma | ₹1,350 | 38.1 | 4.0% |
+| SILVERBETA | UTIAMC-SILVERBETA | Infrastructure | ₹239 | 38.0 | 4.9% |
+| WELCORP | WELSPUN CORP LIMITED | Metals | ₹822 | 37.7 | 4.2% |
+| LINDEINDIA | LINDE INDIA LIMITED | Metals | ₹7,222 | 37.5 | 3.8% |
+| ANURAS | ANUPAM RASAYAN INDIA LTD | Metals | ₹1,240 | 37.3 | 3.7% |
+| CHAMBLFERT | CHAMBAL FERTILIZERS LTD | Metals | ₹439 | 37.3 | 3.8% |
+| AARTIIND | AARTI INDUSTRIES LTD | Metals | ₹433 | 37.3 | 4.5% |
+| ONESOURCE | ONESOURCE SPECL PHARMA L | Pharma | ₹1,472 | 37.2 | 5.4% |
+| CREDITACC | CREDITACCESS GRAMEEN LTD | Financials | ₹1,188 | 37.2 | 4.6% |
+| RICOAUTO | RICO AUTO INDUSTRIES LTD | Auto | ₹113 | 37.1 | 5.6% |
+| BALKRISIND | BALKRISHNA IND. LTD | Auto | ₹2,172 | 37.1 | 4.1% |
+| ASHAPURMIN | ASHAPURA MINECHEM LTD | Metals | ₹507 | 37.0 | 4.6% |
+| BEML | BEML LIMITED | Infrastructure | ₹1,560 | 36.9 | 4.0% |
+| POLYMED | POLY MEDICURE LIMITED | Pharma | ₹1,279 | 36.5 | 5.0% |
+| RAILTEL | RAILTEL CORP OF IND LTD | IT | ₹282 | 36.5 | 4.4% |
+| MODEFENCE | MOTILALAMC - MODEFENCE | Infrastructure | ₹89 | 36.4 | 3.5% |
+| APTUS | APTUS VALUE HSG FIN I LTD | Financials | ₹219 | 35.8 | 3.5% |
+| TECHNOE | TECHNO ELEC & ENG CO. LTD | Infrastructure | ₹1,125 | 35.7 | 4.0% |
+| NIFTYIETF | ICICI PRUD NIFTY ETF | Infrastructure | ₹268 | 35.7 | 2.3% |
+| CRAFTSMAN | CRAFTSMAN AUTOMATION LTD | Auto | ₹6,888 | 35.6 | 4.5% |
+| TIMETECHNO | TIME TECHNOPLAST LTD. | Auto | ₹166 | 35.6 | 4.8% |
+| MOSCHIP | MOSCHIP TECHNOLOGIES LTD | IT | ₹171 | 35.5 | 4.4% |
+| KAJARIACER | KAJARIA CERAMICS LTD | Infrastructure | ₹955 | 35.3 | 4.0% |
+| IXIGO | LE TRAVENUES TECHNOLOGY L | Auto | ₹167 | 35.1 | 3.6% |
+| JKCEMENT | JK CEMENT LIMITED | Metals | ₹5,106 | 34.9 | 3.6% |
+| SANOFICONR | SANOFI CONS HEALTHC IND L | Pharma | ₹4,279 | 34.9 | 5.7% |
+| SJVN | SJVN LTD | Energy | ₹70 | 34.7 | 3.9% |
+| KIRLOSBROS | KIRLOSKAR BROTHERS LTD | Infrastructure | ₹1,577 | 34.6 | 4.6% |
+| NAZARA | NAZARA TECHNOLOGIES LTD | IT | ₹255 | 34.5 | 4.7% |
+| AZAD | AZAD ENGINEERING LIMITED | Infrastructure | ₹1,515 | 34.3 | 3.8% |
+| HDFCSML250 | HDFCAMC - HDFCSML250 | Infrastructure | ₹152 | 34.3 | 2.7% |
+| SIGNATURE | SIGNATUREGLOBAL INDIA LTD | Realty | ₹802 | 34.2 | 5.0% |
+| BLISSGVS | BLISS GVS PHARMA LTD | Pharma | ₹215 | 34.2 | 5.1% |
+| GOLDETF | MIRAEAMC - MAGOLDETF | Infrastructure | ₹150 | 33.6 | 2.6% |
+| ABLBL | ADITYA BIRLA LIFES BRAN L | Auto | ₹99 | 33.4 | 4.3% |
+| CAPACITE | CAPACITE INFRAPROJECT LTD | Infrastructure | ₹220 | 33.4 | 6.6% |
+| JSWCEMENT | JSW CEMENT LIMITED | Metals | ₹119 | 33.2 | 3.6% |
+| USHAMART | USHA MARTIN LTD. | Metals | ₹412 | 33.1 | 3.6% |
+| ROUTE | ROUTE MOBILE LIMITED | IT | ₹481 | 33.0 | 4.2% |
+| CGCL | CAPRI GLOBAL CAPITAL LTD | Financials | ₹170 | 32.9 | 4.0% |
+| DYNAMATECH | DYNAMATIC TECHNOLOGIES | Auto | ₹9,859 | 32.8 | 5.9% |
+| TATACHEM | TATA CHEMICALS LTD | Metals | ₹650 | 32.6 | 2.6% |
+| DREDGECORP | DREDGING CORP OF INDIA | Infrastructure | ₹910 | 32.5 | 5.8% |
+| PVRINOX | PVR INOX LIMITED | IT | ₹1,019 | 32.5 | 3.0% |
+| HGINFRA | H.G.INFRA ENGINEERING LTD | Infrastructure | ₹505 | 32.5 | 5.7% |
+| BLACKBUCK | BLACKBUCK LIMITED | IT | ₹596 | 31.9 | 4.1% |
+| MANINDS | MAN INDUSTRIES (I) LTD. | Metals | ₹385 | 31.7 | 6.4% |
+| CIEINDIA | CIE AUTOMOTIVE INDIA LTD | Auto | ₹481 | 31.6 | 4.3% |
+| IPCALAB | IPCA LABORATORIES LTD | Pharma | ₹1,544 | 31.1 | 3.1% |
+| VTL | VARDHMAN TEXTILES LIMITED | Auto | ₹549 | 31.0 | 3.5% |
+| GANECOS | GANESHA ECOSPHERE LIMITED | Auto | ₹837 | 30.9 | 5.5% |
+| NFL | NATIONAL FERT. LTD | Metals | ₹71 | 30.3 | 5.3% |
+| LOTUSDEV | SRI LOTUS DEVLPRS N RTY L | Infrastructure | ₹123 | 30.3 | 6.2% |
+| ACMESOLAR | ACME SOLAR HOLDINGS LTD | Energy | ₹249 | 30.1 | 4.7% |
+| ESCORTS | ESCORTS KUBOTA LIMITED | Infrastructure | ₹3,091 | 30.1 | 3.8% |
+| AAVAS | AAVAS FINANCIERS LIMITED | Financials | ₹1,124 | 30.0 | 3.7% |
+| OSWALPUMPS | OSWAL PUMPS LIMITED | Infrastructure | ₹319 | 29.9 | 4.9% |
+| INDIAMART | INDIAMART INTERMESH LTD | IT | ₹2,098 | 29.8 | 3.2% |
+| SWSOLAR | STRLNG & WIL REN ENE LTD | IT | ₹175 | 29.0 | 4.8% |
+| AIAENG | AIA ENGINEERING LIMITED | Infrastructure | ₹3,720 | 28.8 | 3.7% |
+| DCBBANK | DCB BANK LIMITED | Financials | ₹180 | 28.7 | 4.2% |
+| CPSEETF | CPSE ETF | Infrastructure | ₹102 | 28.7 | 3.1% |
+| GSPL | GUJARAT STATE PETRO LTD | Energy | ₹258 | 28.6 | 5.7% |
+| ACC | ACC LIMITED | Metals | ₹1,405 | 28.6 | 2.7% |
+| AXISILVER | AXISAMC - AXISILVER | Infrastructure | ₹246 | 28.4 | 5.1% |
+| DEVYANI | DEVYANI INTERNATIONAL LTD | Auto | ₹109 | 28.4 | 5.4% |
+| ZENSARTECH | ZENSAR TECHNOLOGIES  LTD | IT | ₹579 | 28.2 | 3.6% |
+| GRAVITA | GRAVITA INDIA LIMITED | Infrastructure | ₹1,446 | 28.1 | 3.9% |
+| ABREL | ADITYA BIRLA REAL EST LTD | Realty | ₹1,217 | 28.1 | 4.8% |
+| ELGIEQUIP | ELGI EQUIPMENTS LTD | Infrastructure | ₹482 | 27.9 | 4.1% |
+| AURIONPRO | AURIONPRO SOLN LTD | IT | ₹837 | 27.6 | 5.3% |
+| WELSPUNLIV | WELSPUN LIVING LIMITED | Auto | ₹115 | 27.6 | 4.2% |
+| MID150BEES | NIP IND ETF MIDCAP 150 | Infrastructure | ₹214 | 27.6 | 2.7% |
+| YATHARTH | YATHARTH HOSP & TRA C S L | Pharma | ₹673 | 27.6 | 4.0% |
+| GABRIEL | GABRIEL INDIA LTD | Auto | ₹872 | 27.4 | 4.7% |
+| CHOLAHLDNG | CHOLAMANDALAM FIN HOL LTD | Financials | ₹1,496 | 27.3 | 4.6% |
+| PRIVISCL | PRIVI SPECIALITY CHE LTD | Metals | ₹2,997 | 26.9 | 3.2% |
+| AADHARHFC | AADHAR HOUSING FINANCE L | Financials | ₹478 | 26.9 | 4.5% |
+| IIFLCAPS | IIFL CAPITAL SERVICES LTD | Financials | ₹285 | 26.7 | 5.4% |
+| RATNAMANI | RATNAMANI MET & TUB LTD. | Metals | ₹2,402 | 26.7 | 4.2% |
+| NIFTYETF | MIRAEAMC - MAN50ETF | Infrastructure | ₹257 | 26.4 | 2.4% |
+| DEEPAKFERT | DEEPAK FERTILIZERS & PETR | Metals | ₹943 | 26.1 | 4.6% |
+| SONATSOFTW | SONATA SOFTWARE LTD | IT | ₹241 | 26.1 | 4.4% |
+| IGIL | INTERNATIO GEMM INS (I) L | Metals | ₹339 | 26.0 | 4.0% |
+| TRANSRAILL | TRANSRAIL LIGHTING LTD | Infrastructure | ₹515 | 25.8 | 4.3% |
+| BAJAJCON | BAJAJ CONSUMER CARE LTD | FMCG/Consumer | ₹353 | 25.5 | 5.1% |
+| TENNIND | TENNECO CLEAN AIR INDIA L | Auto | ₹554 | 25.5 | 4.6% |
+| VINCOFE | VINTAGE COFFEE N BVRGS L | FMCG/Consumer | ₹131 | 25.4 | 4.7% |
+| MAPMYINDIA | C.E. INFO SYSTEMS LIMITED | IT | ₹880 | 25.2 | 4.1% |
+| KPIL | KALPATARU PROJECT INT LTD | Infrastructure | ₹1,068 | 25.2 | 4.9% |
+| KIMS | KRISHNA INST OF MED SCI L | Pharma | ₹672 | 24.8 | 4.3% |
+| SHRINGARMS | SHRINGAR HOU OF MANGALS L | Auto | ₹202 | 24.7 | 5.8% |
+| CSBBANK | CSB BANK LIMITED | Financials | ₹390 | 24.6 | 4.9% |
+| KITEX | KITEX GARMENTS LTD | Auto | ₹165 | 24.5 | 5.4% |
+| ARE&M | AMARA RAJA ENERGY MOB LTD | Infrastructure | ₹785 | 24.5 | 2.6% |
+| MON100 | MOTILAL OS NASDAQ100 ETF | Infrastructure | ₹225 | 24.5 | 3.1% |
+| EMAMILTD | EMAMI LIMITED | FMCG/Consumer | ₹417 | 24.5 | 3.5% |
+| WAAREERTL | WAAREE RENEWABLE TECH LTD | Energy | ₹864 | 24.3 | 3.8% |
+| TI | TILAKNAGAR INDUSTRIES LTD | FMCG/Consumer | ₹451 | 24.3 | 4.0% |
+| TIMKEN | TIMKEN INDIA LTD. | Infrastructure | ₹3,379 | 24.2 | 4.1% |
+| CYIENT | CYIENT LIMITED | Infrastructure | ₹858 | 24.1 | 4.0% |
+| SHARDACROP | SHARDA CROPCHEM LTD. | Metals | ₹1,012 | 24.1 | 5.5% |
+| BRIGADE | BRIGADE ENTER. LTD | Realty | ₹686 | 23.9 | 3.8% |
+| ASIANTILES | ASIAN GRANITO IND. LTD. | Infrastructure | ₹61 | 23.9 | 5.9% |
+| WHIRLPOOL | WHIRLPOOL OF INDIA LTD | Auto | ₹840 | 23.6 | 3.6% |
+| BBOX | BLACK BOX LIMITED | IT | ₹508 | 23.4 | 4.6% |
+| AEGISVOPAK | AEGIS VOPAK TERMINALS LTD | Energy | ₹189 | 23.4 | 5.5% |
+| ELECTCAST | ELECTROSTEEL CASTINGS LTD | Infrastructure | ₹73 | 23.2 | 6.4% |
+| LATENTVIEW | LATENT VIEW ANALYTICS LTD | Infrastructure | ₹286 | 22.7 | 4.8% |
+| POWERMECH | POWER MECH PROJECTS LTD. | Infrastructure | ₹2,034 | 22.4 | 4.5% |
+| DIACABS | DIAMOND POWER INFRA LTD | Infrastructure | ₹130 | 22.1 | 5.1% |
+| SHRIPISTON | SHRIRAM PIST. & RING LTD | Auto | ₹3,048 | 21.9 | 4.2% |
+| STARHEALTH | STAR HEALTH & AL INS CO L | Financials | ₹462 | 21.9 | 3.2% |
+| BORORENEW | BOROSIL RENEWABLES LTD | IT | ₹437 | 21.8 | 5.0% |
+| SHREEJISPG | SHREEJI SHIPPING GLOBAL L | Infrastructure | ₹371 | 21.4 | 3.9% |
+| TEXRAIL | TEXMACO RAIL & ENG. LTD. | Infrastructure | ₹93 | 21.4 | 4.5% |
+| AETHER | AETHER INDUSTRIES LIMITED | Metals | ₹1,069 | 21.4 | 4.9% |
+| EIDPARRY | EID PARRY INDIA LTD | Metals | ₹821 | 21.3 | 4.0% |
+| ABFRL | ADITYA BIRLA FASHION & RT | Auto | ₹59 | 21.2 | 3.9% |
+| ENDURANCE | ENDURANCE TECHNO. LTD. | Auto | ₹2,363 | 21.2 | 3.9% |
+| EIHOTEL | EIH LIMITED | Auto | ₹323 | 21.1 | 4.9% |
+| AXISCADES | AXISCADES TECH LTD | Infrastructure | ₹1,454 | 21.1 | 5.2% |
+| GMRP&UI | GMR POW AND URBAN INFRA L | Energy | ₹104 | 21.0 | 4.8% |
+| PARKHOSPS | PARK MEDI WORLD LIMITED | Pharma | ₹201 | 20.9 | 5.0% |
+| PRICOLLTD | PRICOL LIMITED | Auto | ₹546 | 20.9 | 4.1% |
+| PROTEAN | PROTEAN EGOV TECHNO LTD | IT | ₹531 | 20.8 | 4.5% |
+| GSFC | GUJ STATE FERT & CHEM LTD | Metals | ₹161 | 20.6 | 4.1% |
+| PARAGMILK | PARAG MILK FOODS LTD. | FMCG/Consumer | ₹202 | 20.4 | 4.8% |
+| INOXGREEN | INOX GREEN ENERGY SER LTD | Energy | ₹145 | 20.3 | 5.2% |
+| HONASA | HONASA CONSUMER LIMITED | FMCG/Consumer | ₹281 | 20.2 | 4.2% |
+| MANYAVAR | VEDANT FASHIONS LIMITED | Auto | ₹364 | 20.2 | 4.6% |
+| CLEAN | CLEAN SCIENCE & TECH LTD | Metals | ₹716 | 20.1 | 4.2% |
+| BLUESTONE | BLUESTONE JEWEL LFSTL LTD | Auto | ₹543 | 19.9 | 5.8% |
+| PINELABS | PINE LABS LIMITED | IT | ₹171 | 19.9 | 5.0% |
+| TANLA | TANLA PLATFORMS LIMITED | IT | ₹431 | 19.7 | 4.0% |
+| TMB | TAMILNAD MERCA BANK LTD | Financials | ₹632 | 19.7 | 4.6% |
+| STAR | STRIDES PHARMA SCI LTD | Pharma | ₹907 | 19.6 | 3.5% |
+| GOLDIAM | GOLDIAM INTERNATIONAL LTD | Auto | ₹306 | 19.6 | 5.0% |
+| CMSINFO | CMS INFO SYSTEMS LIMITED | Infrastructure | ₹291 | 19.5 | 3.2% |
+| SKYGOLD | SKY GOLD AND DIAMONDS LTD | Auto | ₹354 | 19.3 | 4.5% |
+| ASHOKA | ASHOKA BUILDCON LTD | Infrastructure | ₹117 | 19.3 | 4.9% |
+| SUNDRMFAST | SUNDRAM FASTENERS LTD | Auto | ₹811 | 19.3 | 3.6% |
+| POCL | PONDY OXIDES & CHEM LTD | Metals | ₹1,074 | 19.2 | 4.3% |
+| INDGN | INDEGENE LIMITED | Pharma | ₹453 | 19.1 | 3.6% |
+| UBL | UNITED BREWERIES LTD | FMCG/Consumer | ₹1,618 | 19.1 | 3.8% |
+| BERGEPAINT | BERGER PAINTS (I) LTD | Metals | ₹415 | 18.7 | 3.4% |
+| RKFORGE | RAMKRISHNA FORGINGS LTD | Infrastructure | ₹534 | 18.6 | 3.5% |
+| SMSPHARMA | SMS PHARMACEUTICALS LTD. | Pharma | ₹382 | 18.6 | 5.8% |
+| REFEX | REFEX INDUSTRIES LIMITED | Energy | ₹207 | 18.5 | 5.5% |
+| GODAVARIB | GODAVARI BIOREFINERIES L | Metals | ₹325 | 18.5 | 6.2% |
+| BAJAJELEC | BAJAJ ELECT.LTD | Auto | ₹348 | 18.5 | 5.7% |
+| EQUITASBNK | EQUITAS SMALL FIN BNK LTD | Financials | ₹58 | 18.4 | 4.5% |
+| DBL | DILIP BUILDCON LIMITED | Infrastructure | ₹437 | 18.3 | 4.0% |
+| ANTHEM | ANTHEM BIOSCIENCES LTD | Pharma | ₹648 | 18.2 | 3.7% |
+| INDOTHAI | INDO THAI SEC LTD | Financials | ₹257 | 18.2 | 4.3% |
+| FLUOROCHEM | GUJARAT FLUOROCHEM LTD | Metals | ₹3,143 | 18.1 | 4.1% |
+| KRBL | KRBL LIMITED | FMCG/Consumer | ₹292 | 18.1 | 5.2% |
+| TEGA | TEGA INDUSTRIES LIMITED | Infrastructure | ₹1,695 | 18.1 | 4.3% |
+| AMAGI | AMAGI MEDIA LABS LIMITED | IT | ₹351 | 18.0 | 4.6% |
+| RATEGAIN | RATEGAIN TRAVEL TECHN LTD | IT | ₹509 | 17.9 | 4.4% |
+| ATUL | ATUL LTD | Metals | ₹6,351 | 17.8 | 4.3% |
+| PTC | PTC INDIA LIMITED | Energy | ₹164 | 17.8 | 3.1% |
+| SILVERADD | DSPAMC - DSPSILVETF | Infrastructure | ₹239 | 17.8 | 5.2% |
+| SJS | SJS ENTERPRISES LIMITED | Auto | ₹1,658 | 17.7 | 4.4% |
+| ARVIND | ARVIND LIMITED | Auto | ₹365 | 17.6 | 3.9% |
+| SHAREINDIA | SHARE IND. SECURITIES LTD | Financials | ₹129 | 17.5 | 5.2% |
+| DBREALTY | VALOR ESTATE LIMITED | Realty | ₹102 | 17.5 | 5.5% |
+| ARVSMART | ARVIND SMARTSPACES LTD | Realty | ₹548 | 17.4 | 5.1% |
+| KSCL | KAVERI SEED CO. LTD. | Metals | ₹766 | 17.3 | 5.1% |
+| MIDHANI | MISHRA DHATU NIGAM LTD | Metals | ₹322 | 17.2 | 4.7% |
+| RAMCOCEM | THE RAMCO CEMENTS LIMITED | Metals | ₹982 | 17.1 | 4.2% |
+| KNRCON | KNR CONSTRU LTD. | Infrastructure | ₹123 | 17.0 | 4.4% |
+| SAMHI | SAMHI HOTELS LIMITED | Auto | ₹153 | 16.9 | 4.5% |
+| GREAVESCOT | GREAVES COTTON LTD. | Infrastructure | ₹139 | 16.9 | 5.1% |
+| KMEW | KNOWLEDGE MARINE & EN W L | Infrastructure | ₹1,562 | 16.9 | 5.2% |
+| SYMPHONY | SYMPHONY LIMITED | Auto | ₹816 | 16.9 | 4.0% |
+| JSFB | JANA SMALL FIN BANK LTD | Financials | ₹359 | 16.7 | 4.3% |
+| GRWRHITECH | GARWARE HI-TECH FILMS LTD | Metals | ₹3,879 | 16.7 | 5.2% |
+| ACE | ACTION CONST EQUIP LTD | Infrastructure | ₹845 | 16.7 | 3.8% |
+| AFCONS | AFCONS INFRASTRUCTURE LTD | Infrastructure | ₹288 | 16.6 | 3.8% |
+| POLYPLEX | POLYPLEX CORPORATION LTD | Metals | ₹885 | 16.6 | 5.0% |
+| SENCO | SENCO GOLD LIMITED | Auto | ₹304 | 16.5 | 3.5% |
+| SKFINDIA | SKF INDIA LTD | Infrastructure | ₹1,599 | 16.4 | 3.3% |
+| NAVA | NAVA LIMITED | Infrastructure | ₹566 | 16.4 | 4.3% |
+| KIRIINDUS | KIRI INDUSTRIES LIMITED | Metals | ₹395 | 16.4 | 4.5% |
+| VIKRAN | VIKRAN ENGINEERING LTD | Infrastructure | ₹63 | 16.3 | 5.0% |
+| PREMEXPLN | PREMIER EXPLOSIVES LTD | Metals | ₹450 | 16.3 | 5.5% |
+| EPACK | EPACK DURABLE LIMITED | Auto | ₹246 | 16.2 | 5.1% |
+| AWFIS | AWFIS SPACE SOLUTIONS LTD | Infrastructure | ₹276 | 16.0 | 6.3% |
+| AEQUS | AEQUS LIMITED | Infrastructure | ₹126 | 16.0 | 5.1% |
+| PENIND | PENNAR INDUSTRIES LTD | Infrastructure | ₹144 | 15.9 | 5.3% |
+| DEEPAKNTR | DEEPAK NITRITE LTD | Metals | ₹1,413 | 15.8 | 3.4% |
+| EFCIL | EFC (I) LIMITED | Realty | ₹204 | 15.8 | 6.6% |
+| CRISIL | CRISIL LTD | Financials | ₹4,034 | 15.7 | 2.8% |
+| SOBHA | SOBHA LIMITED | Realty | ₹1,294 | 15.7 | 4.2% |
+| SILVERAG | MIRAEAMC - MASILVER | Infrastructure | ₹241 | 15.6 | 5.4% |
+| VIYASH | VIYASH SCIENTIFIC LIMITED | Pharma | ₹195 | 15.5 | 5.3% |
+| ABDL | ALLIED BLEND N DISTILS L | FMCG/Consumer | ₹423 | 15.5 | 4.9% |
+| TBOTEK | TBO TEK LIMITED | Auto | ₹1,170 | 15.5 | 5.3% |
+| CEMPRO | CEMINDIA PROJECTS LIMITED | Infrastructure | ₹550 | 15.3 | 4.3% |
+| BHARTIHEXA | BHARTI HEXACOM LIMITED | IT | ₹1,594 | 15.2 | 3.3% |
+| GPPL | GUJARAT PIPAVAV PORT LTD | Infrastructure | ₹154 | 15.2 | 3.6% |
+| KANSAINER | KANSAI NEROLAC PAINTS LTD | Metals | ₹175 | 15.0 | 3.9% |
+| UGROCAP | UGRO CAPITAL LIMITED | Financials | ₹99 | 14.9 | 6.7% |
+| NIVABUPA | NIVA BUPA HEALTH INS CO L | Financials | ₹72 | 14.9 | 3.4% |
+| FIEMIND | FIEM INDUSTRIES LIMITED | Auto | ₹2,074 | 14.9 | 4.5% |
+| ELECON | ELECON ENG. CO. LTD | Infrastructure | ₹398 | 14.9 | 5.0% |
+| GLAND | GLAND PHARMA LIMITED | Pharma | ₹1,665 | 14.8 | 3.5% |
+| CANHLIFE | CANARA HSBC LIFE INS CO L | Financials | ₹147 | 14.8 | 4.0% |
+| JUSTDIAL | JUSTDIAL LTD. | IT | ₹529 | 14.8 | 3.9% |
+| TOP10ADD | DSPAMC - TOP10ADD | Infrastructure | ₹88 | 14.8 | 2.4% |
+| TRIVENI | TRIVENI ENGG. & INDS. LTD | FMCG/Consumer | ₹335 | 14.8 | 5.0% |
+| AVANTEL | AVANTEL LIMITED | IT | ₹133 | 14.8 | 5.2% |
+| JSLL | JEENA SIKHO LIFECARE LTD | Pharma | ₹628 | 14.7 | 4.4% |
+| PACEDIGITK | PACE DIGITEK LIMITED | IT | ₹171 | 14.6 | 4.3% |
+| SAPPHIRE | SAPPHIRE FOODS INDIA LTD | Auto | ₹172 | 14.6 | 5.8% |
+| THYROCARE | THYROCARE TECH LTD | Pharma | ₹373 | 14.5 | 4.3% |
+| MASTEK | MASTEK LTD | IT | ₹1,536 | 14.4 | 4.0% |
+| GOLDBETA | UTIAMC-UTIGOLDBETA | Infrastructure | ₹130 | 14.4 | 3.2% |
+| ORKLAINDIA | ORKLA INDIA LIMITED | FMCG/Consumer | ₹566 | 14.4 | 3.6% |
+| MBAPL | MADHYA BHARAT AGRO P. LTD | Metals | ₹449 | 14.3 | 3.3% |
+| SUNTV | SUN TV NETWORK LIMITED | IT | ₹598 | 14.3 | 4.6% |
+| TRITURBINE | TRIVENI TURBINE LIMITED | Infrastructure | ₹476 | 14.3 | 3.2% |
+| SHYAMMETL | SHYAM METALICS AND ENGY L | Metals | ₹787 | 14.3 | 3.7% |
+| INDIGOPNTS | INDIGO PAINTS LIMITED | Metals | ₹768 | 14.3 | 4.1% |
+| SAREGAMA | SAREGAMA INDIA LIMITED | IT | ₹352 | 13.8 | 4.2% |
+| IMFA | INDIAN METALS & FERRO | Metals | ₹1,258 | 13.7 | 4.8% |
+| V2RETAIL | V2 RETAIL LIMITED | Auto | ₹1,923 | 13.7 | 3.7% |
+| JYOTHYLAB | JYOTHY LABS LIMITED | FMCG/Consumer | ₹214 | 13.7 | 4.0% |
+| JUBLINGREA | JUBILANT INGREVIA LIMITED | Metals | ₹576 | 13.6 | 4.0% |
+| MEDANTA | GLOBAL HEALTH LIMITED | Pharma | ₹1,044 | 13.6 | 3.1% |
+| GILLETTE | GILLETTE INDIA LTD | FMCG/Consumer | ₹7,930 | 13.5 | 2.5% |
+| STYLEBAAZA | BAAZAR STYLE RETAIL LTD | Auto | ₹254 | 13.4 | 6.4% |
+| AVALON | AVALON TECHNOLOGIES LTD | IT | ₹940 | 13.4 | 4.9% |
+| MUFIN | MUFIN GREEN FINANCE LTD | Financials | ₹106 | 13.3 | 4.4% |
+| AGI | AGI GREENPAC LIMITED | Auto | ₹520 | 13.3 | 4.6% |
+| BANCOINDIA | BANCO PRODUCTS (I) LTD | Auto | ₹574 | 13.3 | 3.9% |
+| BATAINDIA | BATA INDIA LTD | Auto | ₹673 | 13.2 | 3.1% |
+| JUBLPHARMA | JUBILANT PHARMOVA LTD | Pharma | ₹857 | 13.2 | 3.8% |
+| SHADOWFAX | SHADOWFAX TECHNOLOGIES L | Infrastructure | ₹112 | 13.2 | 4.9% |
+| HERITGFOOD | HERITAGE FOODS LTD | FMCG/Consumer | ₹320 | 13.2 | 4.3% |
+| CANFINHOME | CAN FIN HOMES LTD | Financials | ₹842 | 13.1 | 4.7% |
+| ARSSBL | ANAND RATHI SH N STK BR L | Financials | ₹486 | 13.1 | 4.1% |
+| INTERARCH | INTERARCH BLDNG SOLTN LTD | Infrastructure | ₹1,800 | 13.1 | 3.8% |
+| EMSLIMITED | EMS LIMITED | Infrastructure | ₹297 | 13.1 | 6.0% |
+| CRAMC | CANARA ROBECO AMC LIMITED | Financials | ₹239 | 13.0 | 4.3% |
+| 63MOONS | 63 MOONS TECHNOLOGIES LTD | IT | ₹559 | 12.8 | 5.5% |
+| THOMASCOOK | THOMAS COOK (INDIA) LTD | Auto | ₹97 | 12.8 | 5.0% |
+| NEOGEN | NEOGEN CHEMICALS LIMITED | Metals | ₹1,329 | 12.7 | 6.0% |
+| RAYMOND | RAYMOND LTD | Infrastructure | ₹377 | 12.5 | 4.6% |
+| RAYMONDREL | RAYMOND REALTY LIMITED | Realty | ₹433 | 12.5 | 5.8% |
+| BIRLACORPN | BIRLA CORPORATION LTD | Metals | ₹853 | 12.4 | 4.8% |
+| MEDPLUS | MEDPLUS HEALTH SERV LTD | Pharma | ₹845 | 12.4 | 3.2% |
+| SKIPPER | SKIPPER LIMITED | Infrastructure | ₹355 | 12.4 | 4.7% |
+| GODREJIND | GODREJ INDUSTRIES LTD | Infrastructure | ₹832 | 12.4 | 4.2% |
+| JTLIND | JTL INDUSTRIES LIMITED | Metals | ₹52 | 12.4 | 5.9% |
+| RAINBOW | RAINBOW CHILDRENS MED LTD | Pharma | ₹1,124 | 12.4 | 3.9% |
+| SBFC | SBFC FINANCE LIMITED | Financials | ₹89 | 12.4 | 3.4% |
+| SHILCTECH | SHILCHAR TECHNOLOGIES LTD | Infrastructure | ₹4,013 | 12.3 | 5.2% |
+| EUREKAFORB | EUREKA FORBES LIMITED | Auto | ₹454 | 12.3 | 4.5% |
+| ATLANTAELE | ATLANTA ELECTRICALS LTD | Infrastructure | ₹1,077 | 12.2 | 6.0% |
+| VSTTILLERS | VST TILLERS TRACTORS LTD | Infrastructure | ₹5,295 | 12.2 | 4.5% |
+| GLAXO | GLAXOSMITHKLINE PHARMA LT | Pharma | ₹2,438 | 12.2 | 2.7% |
+| MANORAMA | MANORAMA INDUSTRIES LTD | FMCG/Consumer | ₹1,331 | 12.2 | 4.2% |
+| GARUDA | GARUDA CONSTRUCT N ENG L | Infrastructure | ₹165 | 12.1 | 5.0% |
+| BECTORFOOD | MRS BECTORS FOOD SPE LTD | FMCG/Consumer | ₹190 | 12.1 | 4.3% |
+| RACLGEAR | RACL GEARTECH LIMITED | Auto | ₹1,221 | 12.0 | 6.9% |
+| PICCADIL | PICCADILY AGRO INDUSTRI L | FMCG/Consumer | ₹546 | 12.0 | 3.9% |
+| IONEXCHANG | ION EXCHANGE (INDIA) LTD | Infrastructure | ₹339 | 11.9 | 5.1% |
+| KERNEX | KERNEX MICROSYS(I) LTD | IT | ₹968 | 11.9 | 4.3% |
+| NUVOCO | NUVOCO VISTAS CORP LTD | Metals | ₹304 | 11.9 | 4.5% |
+| NIFTY1 | KOTAK NIFTY ETF | Infrastructure | ₹262 | 11.8 | 2.2% |
+| SENORES | SENORES PHARMACEUTICALS L | Pharma | ₹750 | 11.7 | 3.7% |
+| GICRE | GENERAL INS CORP OF INDIA | Financials | ₹371 | 11.7 | 3.0% |
+| SHILPAMED | SHILPA MEDICARE LTD | Pharma | ₹325 | 11.7 | 4.3% |
+| FINEORG | FINE ORGANIC IND. LTD. | Metals | ₹4,320 | 11.7 | 3.1% |
+| SGMART | SG MART LIMITED | Infrastructure | ₹440 | 11.6 | 4.7% |
+| PNCINFRA | PNC INFRATECH LTD. | Infrastructure | ₹191 | 11.6 | 4.7% |
+| CHALET | CHALET HOTELS LIMITED | Auto | ₹751 | 11.6 | 4.1% |
+| SAFARI | SAFARI IND (INDIA) LTD | Auto | ₹1,534 | 11.5 | 5.4% |
+| CELLO | CELLO WORLD LIMITED | Auto | ₹408 | 11.4 | 4.5% |
+| MAHSEAMLES | MAHARASHTRA SEAMLESS LTD | Metals | ₹564 | 11.4 | 3.5% |
+| ANUP | THE ANUP ENGINEERING LTD | Infrastructure | ₹1,658 | 11.4 | 4.6% |
+| INDIASHLTR | INDIA SHELTER FIN CORP L | Financials | ₹753 | 11.3 | 4.1% |
+| INDIACEM | THE INDIA CEMENTS LIMITED | Metals | ₹370 | 11.2 | 3.9% |
+| ICICIB22 | ICICIPRAMC - BHARATIWIN | Infrastructure | ₹119 | 11.2 | 3.1% |
+| RUBICON | RUBICON RESEARCH LIMITED | Pharma | ₹768 | 11.2 | 4.0% |
+| AKZOINDIA | AKZO NOBEL INDIA LIMITED | Metals | ₹2,921 | 11.2 | 3.7% |
+| RITES | RITES LIMITED | Infrastructure | ₹197 | 11.1 | 3.4% |
+| GAEL | GUJARAT AMBUJA EXPORTS LT | FMCG/Consumer | ₹137 | 11.1 | 4.0% |
+| SIRCA | SIRCA PAINT INDIA LIMITED | Metals | ₹434 | 11.1 | 4.0% |
+| TIRUMALCHM | THIRUMALAI CHEMICALS LTD | Metals | ₹183 | 11.0 | 6.1% |
+| LXCHEM | LAXMI ORGANIC INDUS LTD | Metals | ₹125 | 11.0 | 5.3% |
+| MINDACORP | MINDA CORPORATION LTD | Auto | ₹505 | 11.0 | 4.3% |
+| SPARC | SUN PHARMA ADV.RES.CO.LTD | Pharma | ₹120 | 11.0 | 4.0% |
+| FEDFINA | FEDBANK FINANCIAL SER L | Financials | ₹137 | 11.0 | 4.5% |
+| BOROLTD | BOROSIL LIMITED | Auto | ₹234 | 10.9 | 5.9% |
+| HEMIPROP | HEMISPHERE PROP IND LTD | Realty | ₹138 | 10.8 | 3.4% |
+| CARBORUNIV | CARBORUNDUM UNIVERSAL LTD | Infrastructure | ₹768 | 10.8 | 3.0% |
+| VIJAYA | VIJAYA DIAGNOSTIC CEN LTD | Pharma | ₹938 | 10.7 | 3.6% |
+| AARTIPHARM | AARTI PHARMALABS LIMITED | Pharma | ₹656 | 10.7 | 4.0% |
+| EPL | EPL LIMITED | Auto | ₹196 | 10.6 | 4.6% |
+| SAMBHV | SAMBHV STEEL TUBES LTD | Metals | ₹93 | 10.6 | 4.7% |
+| HIRECT | HIND RECTIFIER LIMITED | Infrastructure | ₹1,519 | 10.4 | 4.9% |
+| DEEPINDS | DEEP INDUSTRIES LIMITED | Energy | ₹368 | 10.4 | 5.3% |
+| GOODLUCK | GOODLUCK INDIA LIMITED | Metals | ₹1,057 | 10.3 | 4.1% |
+| CAPLIPOINT | CAPLIN POINT LAB LTD. | Pharma | ₹1,648 | 10.3 | 2.4% |
+| FMCGIETF | ICICIPRAMC - ICICIFMCG | Infrastructure | ₹51 | 10.3 | 2.3% |
+| HPL | HPL ELECTRIC & POWER LTD | Infrastructure | ₹296 | 10.2 | 6.2% |
+| GNFC | GUJ NAR VAL FER & CHEM L | Metals | ₹421 | 10.1 | 3.7% |
+| FINPIPE | FINOLEX INDUSTRIES LTD | Infrastructure | ₹178 | 9.9 | 3.9% |
+| PFIZER | PFIZER LTD | Pharma | ₹4,818 | 9.8 | 2.8% |
+| NORTHARC | NORTHERN ARC CAPITAL LTD | Financials | ₹229 | 9.8 | 4.8% |
+| PNGJL | P N GADGIL JEWELLERS LTD | Auto | ₹561 | 9.8 | 4.1% |
+| MEDIASSIST | MEDI ASSIST HEALTH SER L | Pharma | ₹340 | 9.8 | 5.8% |
+| RHIM | RHI MAGNESITA INDIA LTD | Infrastructure | ₹381 | 9.7 | 4.2% |
+| HCG | HEALTHCARE GLOB. ENT. LTD | Pharma | ₹570 | 9.7 | 4.0% |
+| HDFCNIFTY | HDFCAMC - HDFCNIFTY | Infrastructure | ₹266 | 9.7 | 2.5% |
+| SUMICHEM | SUMITOMO CHEM INDIA LTD | Metals | ₹389 | 9.7 | 3.3% |
+| FUSION | FUSION FINANCE LIMITED | Financials | ₹166 | 9.7 | 6.4% |
+| MAHLOG | MAHINDRA LOGISTIC LIMITED | Infrastructure | ₹382 | 9.6 | 5.1% |
+| TRAVELFOOD | TRAVEL FOOD SERVICES LTD | Auto | ₹1,133 | 9.6 | 3.5% |
+| NEXT50IETF | ICICIPRAMC - ICICINXT50 | Infrastructure | ₹69 | 9.4 | 3.8% |
+| COSMOFIRST | COSMO FIRST LIMITED | Auto | ₹643 | 9.4 | 5.2% |
+| ISGEC | ISGEC HEAVY ENG LTD | Infrastructure | ₹905 | 9.4 | 4.5% |
+| MARKSANS | MARKSANS PHARMA LIMITED | Pharma | ₹168 | 9.4 | 3.5% |
+| GODIGIT | GO DIGIT GENERAL INS LTD | Financials | ₹328 | 9.4 | 3.7% |
+| KPEL | K.P. ENERGY LIMITED | Infrastructure | ₹280 | 9.4 | 6.2% |
+| EMUDHRA | EMUDHRA LIMITED | IT | ₹412 | 9.3 | 4.7% |
+| JKPAPER | JK PAPER LIMITED | Metals | ₹334 | 9.3 | 4.1% |
+| PGIL | PEARL GLOBAL IND LIMITED | Auto | ₹1,537 | 9.3 | 4.0% |
+| AUTOBEES | NIPPONAMC - NETFAUTO | Infrastructure | ₹263 | 9.2 | 3.5% |
+| CERA | CERA SANITARYWARE LTD | Infrastructure | ₹4,982 | 9.2 | 3.1% |
+| ORIENTELEC | ORIENT ELECTRIC LIMITED | Auto | ₹169 | 9.2 | 6.6% |
+| TARC | TARC LIMITED | Realty | ₹125 | 9.1 | 5.3% |
+| GODREJAGRO | GODREJ AGROVET LIMITED | FMCG/Consumer | ₹591 | 9.0 | 4.0% |
+| GENUSPOWER | GENUS POWER INFRASTRU LTD | Infrastructure | ₹248 | 9.0 | 4.6% |
+| ESILVER | EDELAMC - ESILVER | Infrastructure | ₹249 | 8.9 | 5.5% |
+| NOCIL | NOCIL LIMITED | Metals | ₹148 | 8.9 | 4.6% |
+| EBGNG | GNG ELECTRONICS LIMITED | IT | ₹388 | 8.9 | 5.4% |
+| CIGNITITEC | CIGNITI TECHNOLOGIES LTD | IT | ₹1,110 | 8.8 | 5.1% |
+| AKUMS | AKUMS DRUGS AND PHARMA L | Pharma | ₹481 | 8.8 | 3.9% |
+| JKLAKSHMI | JK LAKSHMI CEMENT LTD | Metals | ₹616 | 8.8 | 3.7% |
+| BALAMINES | BALAJI AMINES LIMITED | Metals | ₹1,068 | 8.8 | 4.0% |
+| SUPRIYA | SUPRIYA LIFESCIENCE LTD | Pharma | ₹589 | 8.7 | 4.1% |
+| SANOFI | SANOFI INDIA LIMITED | Pharma | ₹3,461 | 8.7 | 2.7% |
+| ICIL | INDO COUNT INDUSTRIES LTD | Auto | ₹240 | 8.7 | 5.0% |
+| ENTERO | ENTERO HEALTHCARE SOLU L | Pharma | ₹1,112 | 8.7 | 4.0% |
+| STYRENIX | STYRENIX PERFORMANCE LTD | Metals | ₹1,987 | 8.6 | 4.0% |
+| THELEELA | LEELA PALACES HOTEL LTD | Auto | ₹411 | 8.6 | 4.3% |
+| INDIAGLYCO | INDIA GLYCOLS LTD | Metals | ₹877 | 8.5 | 4.5% |
+| BIKAJI | BIKAJI FOODS INTERN LTD | FMCG/Consumer | ₹618 | 8.5 | 3.0% |
+| RAYMONDLSL | RAYMOND LIFESTYLE LIMITED | Auto | ₹845 | 8.4 | 5.0% |
+| RALLIS | RALLIS INDIA LTD | Metals | ₹244 | 8.4 | 4.2% |
+| GMBREW | G M BREWERIES LTD | FMCG/Consumer | ₹1,029 | 8.4 | 4.0% |
+| SURYAROSNI | SURYA ROSHNI LTD | Metals | ₹211 | 8.4 | 4.3% |
+| GOLDADD | DSPAMC - DSPGOLD | Infrastructure | ₹150 | 8.3 | 2.3% |
+| SUDARSCHEM | SUDARSHAN CHEMICAL INDS L | Metals | ₹816 | 8.3 | 4.3% |
+| KSHINTL | KSH INTERNATIONAL LIMITED | Infrastructure | ₹418 | 8.3 | 5.3% |
+| BOMDYEING | BOMBAY DYEING & MFG. CO L | Auto | ₹108 | 8.2 | 4.4% |
+| SEAMECLTD | SEAMEC LIMITED | Infrastructure | ₹1,380 | 8.2 | 4.9% |
+| MANGLMCEM | MANGALAM CEMENT LTD | Metals | ₹825 | 8.2 | 3.9% |
+| UTIAMC | UTI ASSET MNGMT CO LTD | Financials | ₹971 | 8.2 | 3.3% |
+| ROLEXRINGS | ROLEX RINGS LIMITED | Infrastructure | ₹121 | 8.2 | 4.6% |
+| VARROC | VARROC ENGINEERING LTD. | Auto | ₹524 | 8.1 | 4.3% |
+| VAIBHAVGBL | VAIBHAV GLOBAL LIMITED | Auto | ₹214 | 8.1 | 3.8% |
+| GRINDWELL | GRINDWELL NORTON LIMITED | Infrastructure | ₹1,430 | 8.1 | 3.6% |
+| ERIS | ERIS LIFESCIENCES LIMITED | Pharma | ₹1,308 | 8.0 | 2.8% |
+| JKIL | JKUMAR INFR.LTD. | Infrastructure | ₹508 | 8.0 | 4.0% |
+
+</details>
+
+## BTST Universe (887 stocks)
+
+| Sector | Count | Top Stocks (by ADTV) |
+|--------|-------|---------------------|
+| Auto | 139 | ETERNAL (₹1352Cr), M&M (₹1122Cr), VMM (₹633Cr) |
+| Energy | 41 | RELIANCE (₹2390Cr), ONGC (₹705Cr), COALINDIA (₹531Cr) |
+| FMCG/Consumer | 51 | ITC (₹621Cr), GODFRYPHLP (₹411Cr), HINDUNILVR (₹389Cr) |
+| Financials | 114 | HDFCBANK (₹3021Cr), ICICIBANK (₹2266Cr), SBIN (₹1715Cr) |
+| IT | 86 | BHARTIARTL (₹1819Cr), INFY (₹1698Cr), NETWEB (₹1230Cr) |
+| Infrastructure | 222 | SILVERBEES (₹1755Cr), LT (₹1665Cr), BEL (₹853Cr) |
+| Metals | 122 | VEDL (₹902Cr), TATASTEEL (₹713Cr), HINDALCO (₹589Cr) |
+| Pharma | 85 | SUNPHARMA (₹463Cr), APOLLOHOSP (₹315Cr), MAXHEALTH (₹308Cr) |
+| Realty | 27 | DLF (₹271Cr), GODREJPROP (₹240Cr), LODHA (₹137Cr) |
+
+<details>
+<summary>Full BTST list</summary>
+
+| Stock | Name | Sector | Price | ADTV (₹Cr) | ATR% |
+|-------|------|--------|-------|------------|------|
+| HDFCBANK | HDFC BANK LTD | Financials | ₹843 | 3021.2 | 2.4% |
+| RELIANCE | RELIANCE INDUSTRIES LTD | Energy | ₹1,408 | 2390.2 | 2.5% |
+| ICICIBANK | ICICI BANK LTD. | Financials | ₹1,289 | 2266.3 | 2.5% |
+| BHARTIARTL | BHARTI AIRTEL LIMITED | IT | ₹1,855 | 1818.6 | 2.5% |
+| SILVERBEES | NIPPONAMC - NETFSILVER | Infrastructure | ₹237 | 1754.7 | 4.9% |
+| SBIN | STATE BANK OF INDIA | Financials | ₹1,070 | 1715.5 | 2.9% |
+| INFY | INFOSYS LIMITED | IT | ₹1,267 | 1698.0 | 2.6% |
+| LT | LARSEN & TOUBRO LTD. | Infrastructure | ₹3,608 | 1665.5 | 4.2% |
+| ETERNAL | ETERNAL LIMITED | Auto | ₹243 | 1352.0 | 4.1% |
+| NETWEB | NETWEB TECH INDIA LTD | IT | ₹3,296 | 1230.2 | 5.8% |
+| BSE | BSE LIMITED | Financials | ₹2,996 | 1171.8 | 3.4% |
+| M&M | MAHINDRA & MAHINDRA LTD | Auto | ₹3,215 | 1122.2 | 3.6% |
+| TCS | TATA CONSULTANCY SERV LT | IT | ₹2,441 | 930.2 | 2.4% |
+| VEDL | VEDANTA LIMITED | Metals | ₹679 | 902.5 | 3.9% |
+| AXISBANK | AXIS BANK LIMITED | Financials | ₹1,253 | 887.5 | 2.8% |
+| BEL | BHARAT ELECTRONICS LTD | Infrastructure | ₹443 | 853.0 | 3.2% |
+| MCX | MULTI COMMODITY EXCHANGE | Financials | ₹2,603 | 785.4 | 3.6% |
+| BAJFINANCE | BAJAJ FINANCE LIMITED | Financials | ₹880 | 783.2 | 3.3% |
+| INDIGO | INTERGLOBE AVIATION LTD | Infrastructure | ₹4,361 | 766.9 | 4.3% |
+| WAAREEENER | WAAREE ENERGIES LIMITED | IT | ₹3,185 | 751.5 | 3.6% |
+| TATASTEEL | TATA STEEL LIMITED | Metals | ₹195 | 713.0 | 3.7% |
+| GOLDBEES | NIP IND ETF GOLD BEES | Infrastructure | ₹128 | 711.0 | 4.2% |
+| HAL | HINDUSTAN AERONAUTICS LTD | Infrastructure | ₹3,962 | 706.6 | 2.7% |
+| ONGC | OIL AND NATURAL GAS CORP. | Energy | ₹265 | 705.1 | 3.3% |
+| KOTAKBANK | KOTAK MAHINDRA BANK LTD | Financials | ₹375 | 683.9 | 2.4% |
+| SHRIRAMFIN | SHRIRAM FINANCE LIMITED | Financials | ₹1,022 | 648.5 | 4.3% |
+| IDFCFIRSTB | IDFC FIRST BANK LIMITED | Financials | ₹65 | 633.5 | 3.4% |
+| VMM | VISHAL MEGA MART LIMITED | Auto | ₹108 | 633.4 | 4.9% |
+| ITC | ITC LTD | FMCG/Consumer | ₹304 | 621.2 | 1.8% |
+| HINDALCO | HINDALCO  INDUSTRIES  LTD | Metals | ₹933 | 588.8 | 3.7% |
+| MAZDOCK | MAZAGON DOCK SHIPBUIL LTD | Infrastructure | ₹2,457 | 580.6 | 4.7% |
+| NATIONALUM | NATIONAL ALUMINIUM CO LTD | Metals | ₹388 | 559.7 | 4.8% |
+| COALINDIA | COAL INDIA LTD | Energy | ₹455 | 531.0 | 3.0% |
+| NTPC | NTPC LTD | Energy | ₹378 | 522.9 | 2.9% |
+| POWERGRID | POWER GRID CORP. LTD. | Energy | ₹299 | 479.1 | 2.8% |
+| TMCV | TATA MOTORS LIMITED | Auto | ₹448 | 473.0 | 5.2% |
+| COFORGE | COFORGE LIMITED | IT | ₹1,132 | 468.6 | 4.5% |
+| SUNPHARMA | SUN PHARMACEUTICAL IND L | Pharma | ₹1,778 | 463.3 | 2.1% |
+| POLYCAB | POLYCAB INDIA LIMITED | Infrastructure | ₹7,374 | 462.4 | 4.0% |
+| KAYNES | KAYNES TECHNOLOGY IND LTD | IT | ₹3,716 | 457.3 | 4.3% |
+| PERSISTENT | PERSISTENT SYSTEMS LTD | IT | ₹4,699 | 452.1 | 4.3% |
+| HCLTECH | HCL TECHNOLOGIES LTD | IT | ₹1,357 | 443.1 | 2.5% |
+| NEWGEN | NEWGEN SOFTWARE TECH LTD | IT | ₹460 | 433.4 | 4.8% |
+| DATAPATTNS | DATA PATTERNS INDIA LTD | Infrastructure | ₹3,302 | 428.8 | 6.0% |
+| EICHERMOT | EICHER MOTORS LTD | Auto | ₹7,028 | 422.5 | 3.6% |
+| GODFRYPHLP | GODFREY PHILLIPS INDIA LT | FMCG/Consumer | ₹2,041 | 411.0 | 3.5% |
+| BPCL | BHARAT PETROLEUM CORP  LT | Energy | ₹304 | 402.3 | 4.5% |
+| HINDUNILVR | HINDUSTAN UNILEVER LTD. | FMCG/Consumer | ₹2,135 | 388.8 | 2.3% |
+| CUMMINSIND | CUMMINS INDIA LTD | Infrastructure | ₹4,718 | 378.8 | 3.7% |
+| CANBK | CANARA BANK | Financials | ₹138 | 377.6 | 3.7% |
+| ABB | ABB INDIA LIMITED | Infrastructure | ₹6,338 | 376.3 | 3.0% |
+| TMPV | TATA MOTORS PASS VEH LTD | Auto | ₹325 | 375.6 | 4.3% |
+| IOC | INDIAN OIL CORP LTD | Energy | ₹148 | 369.1 | 4.4% |
+| TVSMOTOR | TVS MOTOR COMPANY  LTD | Auto | ₹3,573 | 364.1 | 3.8% |
+| ASHOKLEY | ASHOK LEYLAND LTD | Infrastructure | ₹179 | 363.7 | 4.5% |
+| ADANIPORTS | ADANI PORT & SEZ LTD | Infrastructure | ₹1,402 | 362.8 | 3.5% |
+| OIL | OIL INDIA LTD | Energy | ₹470 | 357.8 | 4.1% |
+| WIPRO | WIPRO LTD | IT | ₹194 | 354.0 | 2.7% |
+| SAIL | STEEL AUTHORITY OF INDIA | Metals | ₹154 | 350.8 | 4.4% |
+| ADANIPOWER | ADANI POWER LTD | Energy | ₹154 | 350.1 | 3.5% |
+| ABCAPITAL | ADITYA BIRLA CAPITAL LTD. | Financials | ₹328 | 349.9 | 3.7% |
+| HINDZINC | HINDUSTAN ZINC LIMITED | Metals | ₹538 | 347.0 | 3.6% |
+| KRN | KRN HEAT EXCHANGE N REF L | IT | ₹885 | 344.3 | 6.0% |
+| INDUSINDBK | INDUSIND BANK LIMITED | Financials | ₹842 | 343.7 | 3.4% |
+| UNIONBANK | UNION BANK OF INDIA | Financials | ₹178 | 341.9 | 3.9% |
+| JIOFIN | JIO FIN SERVICES LTD | Financials | ₹248 | 340.2 | 3.2% |
+| PFC | POWER FIN CORP LTD. | Financials | ₹432 | 338.6 | 3.8% |
+| HINDPETRO | HINDUSTAN PETROLEUM CORP | Energy | ₹349 | 337.8 | 5.4% |
+| NIFTYBEES | NIP IND ETF NIFTY BEES | Infrastructure | ₹269 | 325.0 | 2.1% |
+| BAJAJ-AUTO | BAJAJ AUTO LIMITED | Auto | ₹9,271 | 317.7 | 3.0% |
+| APOLLOHOSP | APOLLO HOSPITALS ENTER. L | Pharma | ₹7,471 | 315.3 | 2.3% |
+| BANKBARODA | BANK OF BARODA | Financials | ₹283 | 308.6 | 3.4% |
+| MAXHEALTH | MAX HEALTHCARE INS LTD | Pharma | ₹980 | 308.5 | 2.9% |
+| MUTHOOTFIN | MUTHOOT FINANCE LIMITED | Financials | ₹3,433 | 306.8 | 3.5% |
+| CHOLAFIN | CHOLAMANDALAM IN & FIN CO | Financials | ₹1,524 | 305.8 | 4.3% |
+| TITAN | TITAN COMPANY LIMITED | Auto | ₹4,146 | 301.4 | 2.5% |
+| GROWW | BILLIONBRAINS GARAGE VN L | Financials | ₹163 | 297.5 | 3.6% |
+| BHARATFORG | BHARAT FORGE LTD | Auto | ₹1,804 | 295.9 | 3.8% |
+| PAYTM | ONE 97 COMMUNICATIONS LTD | IT | ₹1,076 | 294.2 | 3.7% |
+| TRENT | TRENT LTD | Auto | ₹3,641 | 287.2 | 3.2% |
+| TECHM | TECH MAHINDRA LIMITED | IT | ₹1,385 | 286.5 | 2.8% |
+| ADANIENT | ADANI ENTERPRISES LIMITED | Energy | ₹2,007 | 273.8 | 3.1% |
+| DLF | DLF LIMITED | Realty | ₹563 | 270.6 | 3.4% |
+| SWIGGY | SWIGGY LIMITED | Auto | ₹299 | 266.3 | 3.9% |
+| LTF | L&T FINANCE LIMITED | Financials | ₹269 | 259.9 | 3.7% |
+| ASIANPAINT | ASIAN PAINTS LIMITED | Metals | ₹2,262 | 259.2 | 2.8% |
+| JINDALSAW | JINDAL SAW LIMITED | Metals | ₹198 | 259.2 | 5.4% |
+| UPL | UPL LIMITED | Metals | ₹632 | 256.2 | 2.7% |
+| GRSE | GARDEN REACH SHIP&ENG LTD | Infrastructure | ₹2,393 | 253.8 | 4.4% |
+| ADANIGREEN | ADANI GREEN ENERGY LTD | Energy | ₹891 | 252.9 | 3.8% |
+| HEROMOTOCO | HERO MOTOCORP LIMITED | Auto | ₹5,426 | 252.5 | 3.2% |
+| BHEL | BHEL | Infrastructure | ₹260 | 252.4 | 3.9% |
+| PNB | PUNJAB NATIONAL BANK | Financials | ₹113 | 251.9 | 3.5% |
+| GRASIM | GRASIM INDUSTRIES LTD | Metals | ₹2,723 | 251.6 | 2.9% |
+| POLICYBZR | PB FINTECH LIMITED | Financials | ₹1,539 | 248.6 | 3.2% |
+| TATAPOWER | TATA POWER CO LTD | Energy | ₹400 | 246.4 | 3.0% |
+| AMBER | AMBER ENTERPRISES (I) LTD | Auto | ₹6,850 | 245.6 | 4.8% |
+| HDFCAMC | HDFC AMC LIMITED | Financials | ₹2,469 | 244.7 | 3.2% |
+| RECLTD | REC LIMITED | Financials | ₹348 | 244.2 | 3.6% |
+| GAIL | GAIL (INDIA) LTD | Energy | ₹151 | 243.1 | 3.8% |
+| GODREJPROP | GODREJ PROPERTIES LTD | Realty | ₹1,643 | 240.2 | 3.8% |
+| BAJAJFINSV | BAJAJ FINSERV LTD. | Financials | ₹1,792 | 232.3 | 2.8% |
+| KEI | KEI INDUSTRIES LTD. | Infrastructure | ₹4,390 | 231.8 | 4.8% |
+| SILVERIETF | ICICIPRAMC - ICICISILVE | Infrastructure | ₹247 | 231.6 | 5.6% |
+| IRCTC | INDIAN RAIL TOUR CORP LTD | Auto | ₹540 | 228.9 | 3.3% |
+| FEDERALBNK | FEDERAL BANK LTD | Financials | ₹272 | 226.8 | 3.2% |
+| HDFCSILVER | HDFCAMC - HDFCSILVER | Infrastructure | ₹237 | 224.4 | 5.3% |
+| RVNL | RAIL VIKAS NIGAM LIMITED | Infrastructure | ₹275 | 223.3 | 4.7% |
+| VBL | VARUN BEVERAGES LIMITED | FMCG/Consumer | ₹415 | 222.8 | 3.5% |
+| CDSL | CENTRAL DEPO SER (I) LTD | Financials | ₹1,234 | 220.9 | 3.2% |
+| MOTHERSON | SAMVRDHNA MTHRSN INTL LTD | Auto | ₹118 | 218.5 | 4.4% |
+| TARIL | TRANS & RECTI. LTD | Infrastructure | ₹289 | 217.8 | 5.7% |
+| HDFCLIFE | HDFC LIFE INS CO LTD | Financials | ₹643 | 217.7 | 2.7% |
+| AUROPHARMA | AUROBINDO PHARMA LTD | Pharma | ₹1,269 | 215.0 | 2.8% |
+| BDL | BHARAT DYNAMICS LIMITED | Infrastructure | ₹1,320 | 213.4 | 4.0% |
+| DRREDDY | DR. REDDY S LABORATORIES | Pharma | ₹1,295 | 212.8 | 2.6% |
+| CIPLA | CIPLA LTD | Pharma | ₹1,268 | 209.9 | 2.1% |
+| LUPIN | LUPIN LIMITED | Pharma | ₹2,302 | 208.8 | 2.1% |
+| PGEL | PG ELECTROPLAST LTD | IT | ₹537 | 208.8 | 5.8% |
+| NTPCGREEN | NTPC GREEN ENERGY LIMITED | Energy | ₹98 | 208.3 | 4.8% |
+| PREMIERENE | PREMIER ENERGIES LIMITED | IT | ₹870 | 208.2 | 3.7% |
+| CGPOWER | CG POWER AND IND SOL LTD | Infrastructure | ₹707 | 207.6 | 3.8% |
+| GVT&D | GE VERNOVA T&D INDIA LTD | Infrastructure | ₹3,808 | 202.3 | 4.6% |
+| BANDHANBNK | BANDHAN BANK LIMITED | Financials | ₹164 | 200.2 | 4.8% |
+| ANGELONE | ANGEL ONE LIMITED | Financials | ₹236 | 200.1 | 4.5% |
+| NAUKRI | INFO EDGE (I) LTD | IT | ₹995 | 197.8 | 3.2% |
+| BRITANNIA | BRITANNIA INDUSTRIES LTD | FMCG/Consumer | ₹5,885 | 194.3 | 2.1% |
+| NATCOPHARM | NATCO PHARMA LTD. | Pharma | ₹958 | 190.3 | 4.4% |
+| IRFC | INDIAN RAILWAY FIN CORP L | Financials | ₹98 | 189.1 | 3.2% |
+| JSWSTEEL | JSW STEEL LIMITED | Metals | ₹1,180 | 187.3 | 3.0% |
+| PETRONET | PETRONET LNG LIMITED | Energy | ₹292 | 185.1 | 4.5% |
+| MAHABANK | BANK OF MAHARASHTRA | Financials | ₹64 | 183.5 | 5.0% |
+| SBILIFE | SBI LIFE INSURANCE CO LTD | Financials | ₹1,962 | 183.1 | 2.6% |
+| INDHOTEL | THE INDIAN HOTELS CO. LTD | Auto | ₹637 | 182.9 | 3.1% |
+| INDUSTOWER | INDUS TOWERS LIMITED | IT | ₹441 | 182.9 | 3.0% |
+| RBLBANK | RBL BANK LIMITED | Financials | ₹301 | 180.3 | 3.1% |
+| NMDC | NMDC LTD. | Metals | ₹79 | 177.8 | 3.6% |
+| INDIANB | INDIAN BANK | Financials | ₹889 | 177.3 | 3.7% |
+| TATAINVEST | TATA INVESTMENT CORP LTD | Financials | ₹626 | 173.2 | 3.7% |
+| TORNTPHARM | TORRENT PHARMACEUTICALS L | Pharma | ₹4,289 | 171.2 | 2.5% |
+| KPITTECH | KPIT TECHNOLOGIES LIMITED | IT | ₹688 | 170.3 | 4.5% |
+| DIVISLAB | DIVI S LABORATORIES LTD | Pharma | ₹6,140 | 170.0 | 2.4% |
+| LAURUSLABS | LAURUS LABS LIMITED | Pharma | ₹983 | 166.5 | 4.0% |
+| TIINDIA | TUBE INVEST OF INDIA LTD | Infrastructure | ₹2,560 | 166.0 | 4.5% |
+| JSWENERGY | JSW ENERGY LIMITED | Energy | ₹509 | 160.7 | 3.7% |
+| DMART | AVENUE SUPERMARTS LIMITED | FMCG/Consumer | ₹3,844 | 160.4 | 2.9% |
+| BANKINDIA | BANK OF INDIA | Financials | ₹152 | 157.5 | 3.7% |
+| GODREJCP | GODREJ CONSUMER PRODUCTS | FMCG/Consumer | ₹1,054 | 155.9 | 3.2% |
+| ENGINERSIN | ENGINEERS INDIA LTD | Infrastructure | ₹195 | 155.5 | 4.4% |
+| MANAPPURAM | MANAPPURAM FINANCE LTD | Financials | ₹270 | 154.9 | 4.1% |
+| ZYDUSWELL | ZYDUS WELLNESS LIMITED | FMCG/Consumer | ₹429 | 154.4 | 4.4% |
+| JINDALSTEL | JINDAL STEEL LIMITED | Metals | ₹1,179 | 153.2 | 3.6% |
+| HFCL | HFCL LIMITED | IT | ₹73 | 151.1 | 4.6% |
+| COCHINSHIP | COCHIN SHIPYARD LIMITED | Infrastructure | ₹1,412 | 149.6 | 4.2% |
+| APLAPOLLO | APL APOLLO TUBES LTD | Metals | ₹2,013 | 145.2 | 3.9% |
+| SIEMENS | SIEMENS LTD | Infrastructure | ₹3,221 | 143.6 | 3.7% |
+| SAMMAANCAP | SAMMAAN CAPITAL LIMITED | Financials | ₹141 | 142.8 | 3.3% |
+| SRF | SRF LTD | Infrastructure | ₹2,569 | 142.1 | 3.5% |
+| FORTIS | FORTIS HEALTHCARE LTD | Pharma | ₹846 | 141.9 | 3.6% |
+| TATAELXSI | TATA ELXSI LIMITED | IT | ₹4,207 | 141.3 | 3.4% |
+| IFCI | IFCI LTD | Financials | ₹56 | 140.2 | 4.8% |
+| NESTLEIND | NESTLE INDIA LIMITED | FMCG/Consumer | ₹1,205 | 140.2 | 2.3% |
+| ADANIENSOL | ADANI ENERGY SOLUTION LTD | Energy | ₹1,037 | 140.1 | 3.7% |
+| VOLTAS | VOLTAS LTD | Auto | ₹1,423 | 138.3 | 3.7% |
+| LODHA | LODHA DEVELOPERS LIMITED | Realty | ₹854 | 136.8 | 3.9% |
+| MFSL | MAX FINANCIAL SERV LTD | Financials | ₹1,669 | 136.5 | 3.2% |
+| UNITDSPR | UNITED SPIRITS LIMITED | FMCG/Consumer | ₹1,320 | 136.2 | 3.5% |
+| GMDCLTD | GUJARAT MINERAL DEV CORP | Energy | ₹559 | 135.2 | 4.1% |
+| NHPC | NHPC LTD | Energy | ₹77 | 133.4 | 2.5% |
+| GOLDIETF | ICICI PRUDENTIAL GOLD ETF | Infrastructure | ₹132 | 133.0 | 3.2% |
+| MANKIND | MANKIND PHARMA LIMITED | Pharma | ₹2,103 | 133.0 | 3.2% |
+| MARICO | MARICO LIMITED | FMCG/Consumer | ₹756 | 132.5 | 2.2% |
+| MPHASIS | MPHASIS LIMITED | IT | ₹2,124 | 132.2 | 3.8% |
+| JBMA | JBM AUTO LIMITED | Auto | ₹585 | 131.2 | 4.5% |
+| J&KBANK | J & K BANK LTD. | Financials | ₹124 | 131.0 | 5.5% |
+| TATACONSUM | TATA CONSUMER PRODUCT LTD | FMCG/Consumer | ₹1,075 | 129.9 | 2.5% |
+| AMBUJACEM | AMBUJA CEMENTS LTD | Metals | ₹441 | 127.5 | 3.3% |
+| ASTRAL | ASTRAL LIMITED | Infrastructure | ₹1,668 | 126.8 | 3.7% |
+| KALYANKJIL | KALYAN JEWELLERS IND LTD | Auto | ₹390 | 126.2 | 3.2% |
+| URBANCO | URBAN COMPANY LIMITED | IT | ₹121 | 125.1 | 5.1% |
+| PRAJIND | PRAJ INDUSTRIES LTD | Infrastructure | ₹306 | 124.9 | 5.7% |
+| SUPREMEIND | SUPREME INDUSTRIES LTD | Infrastructure | ₹4,011 | 123.9 | 3.3% |
+| LTM | LTIMINDTREE LIMITED | IT | ₹4,299 | 122.1 | 3.3% |
+| SETFGOLD | SBI-ETF GOLD | Infrastructure | ₹132 | 121.6 | 3.1% |
+| GLENMARK | GLENMARK PHARMACEUTICALS | Pharma | ₹2,186 | 121.5 | 3.3% |
+| BIOCON | BIOCON LIMITED. | Pharma | ₹383 | 121.0 | 2.8% |
+| HDFCGOLD | HDFC GOLD ETF | Infrastructure | ₹132 | 120.0 | 2.8% |
+| NAVINFLUOR | NAVIN FLUORINE INT. LTD | Metals | ₹6,338 | 119.8 | 3.8% |
+| HYUNDAI | HYUNDAI MOTOR INDIA LTD | Auto | ₹1,990 | 118.9 | 3.1% |
+| ATHERENERG | ATHER ENERGY LIMITED | Auto | ₹750 | 117.8 | 4.0% |
+| JUBLFOOD | JUBILANT FOODWORKS LTD | Auto | ₹478 | 116.9 | 3.5% |
+| ICICIAMC | ICICI PRUDENTIAL AMC LTD | Financials | ₹3,020 | 116.9 | 3.8% |
+| LTTS | L&T TECHNOLOGY SER. LTD. | IT | ₹3,367 | 116.4 | 5.1% |
+| GMRAIRPORT | GMR AIRPORTS LIMITED | Infrastructure | ₹92 | 114.4 | 3.9% |
+| CONCORDBIO | CONCORD BIOTECH LIMITED | Pharma | ₹1,143 | 112.8 | 4.9% |
+| ICICIGI | ICICI LOMBARD GIC LIMITED | Financials | ₹1,831 | 112.4 | 2.4% |
+| UNOMINDA | UNO MINDA LIMITED | Auto | ₹1,073 | 112.3 | 4.5% |
+| LENSKART | LENSKART SOLUTIONS LTD | Pharma | ₹511 | 112.2 | 4.5% |
+| RADICO | RADICO KHAITAN LTD | FMCG/Consumer | ₹2,710 | 111.8 | 4.3% |
+| GRAPHITE | GRAPHITE INDIA LTD | Infrastructure | ₹624 | 110.7 | 4.9% |
+| CAMS | COMPUTER AGE MNGT SER LTD | IT | ₹658 | 109.0 | 3.6% |
+| SCI | SHIPPING CORP OF INDIA LT | Infrastructure | ₹240 | 108.8 | 5.2% |
+| ANANTRAJ | ANANT RAJ LIMITED | Realty | ₹471 | 107.8 | 4.2% |
+| HAVELLS | HAVELLS INDIA LIMITED | Infrastructure | ₹1,344 | 106.6 | 3.0% |
+| FIRSTCRY | BRAINBEES SOLUTIONS LTD | Auto | ₹214 | 106.6 | 4.0% |
+| BELRISE | BELRISE INDUSTRIES LTD | Auto | ₹184 | 106.1 | 4.2% |
+| NYKAA | FSN E COMMERCE VENTURES | Auto | ₹244 | 106.0 | 3.5% |
+| PRESTIGE | PRESTIGE ESTATE LTD | Realty | ₹1,321 | 106.0 | 3.8% |
+| ENRIN | SIEMENS ENERGY INDIA LTD | Energy | ₹2,841 | 104.8 | 4.0% |
+| KTKBANK | KARNATAKA BANK LIMITED | Financials | ₹232 | 104.2 | 4.7% |
+| PIDILITIND | PIDILITE INDUSTRIES LTD | Metals | ₹1,384 | 103.5 | 3.0% |
+| TORNTPOWER | TORRENT POWER LTD | Energy | ₹1,454 | 101.3 | 4.0% |
+| AVANTIFEED | AVANTI FEEDS LIMITED | FMCG/Consumer | ₹1,230 | 100.7 | 5.9% |
+| INOXWIND | INOX WIND LIMITED | Infrastructure | ₹82 | 99.8 | 4.8% |
+| COLPAL | COLGATE PALMOLIVE LTD. | FMCG/Consumer | ₹1,942 | 99.5 | 2.9% |
+| OFSS | ORACLE FIN SERV SOFT LTD. | IT | ₹6,594 | 99.2 | 3.0% |
+| SBICARD | SBI CARDS & PAY SER LTD | Financials | ₹716 | 98.9 | 3.3% |
+| PWL | PHYSICSWALLAH LIMITED | FMCG/Consumer | ₹87 | 95.9 | 5.4% |
+| BLUESTARCO | BLUE STAR LIMITED | Infrastructure | ₹1,820 | 93.6 | 4.2% |
+| DOMS | DOMS INDUSTRIES LIMITED | Infrastructure | ₹2,244 | 93.2 | 4.7% |
+| NBCC | NBCC (INDIA) LIMITED | Infrastructure | ₹88 | 92.5 | 4.0% |
+| MEESHO | MEESHO LIMITED | Auto | ₹148 | 92.2 | 5.8% |
+| IREDA | INDIAN RENEWABLE ENERGY | Financials | ₹118 | 91.3 | 3.7% |
+| GESHIP | THE GE SHPG.LTD | Infrastructure | ₹1,441 | 91.1 | 4.4% |
+| SILVER | BIRLASLAMC - SILVER | Infrastructure | ₹247 | 90.2 | 5.1% |
+| PATANJALI | PATANJALI FOODS LIMITED | FMCG/Consumer | ₹490 | 90.1 | 2.5% |
+| SBISILVER | SBIAMC - SBISILVER | Infrastructure | ₹243 | 88.9 | 5.0% |
+| SHAKTIPUMP | SHAKTI PUMPS (I) LTD | Infrastructure | ₹511 | 88.5 | 5.4% |
+| KSB | KSB LIMITED | Infrastructure | ₹811 | 86.9 | 4.3% |
+| AGIIL | AGI INFRA LIMITED | Realty | ₹301 | 86.8 | 5.2% |
+| HOMEFIRST | HOME FIRST FIN CO IND LTD | Financials | ₹984 | 86.3 | 5.2% |
+| JKTYRE | JK TYRE & INDUSTRIES LTD | Auto | ₹437 | 86.0 | 5.8% |
+| HEG | HEG LTD | Infrastructure | ₹511 | 85.9 | 4.2% |
+| KARURVYSYA | KARUR VYSYA BANK LTD | Financials | ₹285 | 85.5 | 3.9% |
+| AEROFLEX | AEROFLEX INDUSTRIES LTD | Infrastructure | ₹248 | 85.2 | 5.0% |
+| SYRMA | SYRMA SGS TECHNOLOGY LTD | IT | ₹784 | 85.2 | 4.9% |
+| ZENTEC | ZEN TECHNOLOGIES LIMITED | Infrastructure | ₹1,447 | 84.7 | 4.1% |
+| VIKRAMSOLR | VIKRAM SOLAR LIMITED | IT | ₹194 | 84.4 | 5.5% |
+| LGEINDIA | LG ELECTRONICS INDIA LTD | IT | ₹1,581 | 83.7 | 3.2% |
+| CYIENTDLM | CYIENT DLM LIMITED | IT | ₹314 | 83.7 | 5.9% |
+| IRCON | IRCON INTERNATIONAL LTD | Infrastructure | ₹130 | 83.5 | 5.1% |
+| AWL | AWL AGRI BUSINESS LIMITED | FMCG/Consumer | ₹177 | 83.3 | 3.8% |
+| KPIGREEN | KPI GREEN ENERGY LIMITED | Energy | ₹385 | 83.0 | 5.9% |
+| DABUR | DABUR INDIA LTD | FMCG/Consumer | ₹452 | 82.9 | 2.9% |
+| OLECTRA | OLECTRA GREENTECH LIMITED | Infrastructure | ₹1,056 | 82.9 | 4.3% |
+| LICI | LIFE INSURA CORP OF INDIA | Financials | ₹786 | 82.9 | 2.6% |
+| OBEROIRLTY | OBEROI REALTY LIMITED | Realty | ₹1,473 | 82.4 | 3.1% |
+| SHAILY | SHAILY ENG PLASTICS LTD | Metals | ₹2,351 | 82.4 | 4.8% |
+| TDPOWERSYS | TD POWER SYSTEMS LTD. | Infrastructure | ₹836 | 82.2 | 5.0% |
+| ABSLAMC | ADIT BIRL SUN LIF AMC LTD | Financials | ₹969 | 82.1 | 5.7% |
+| LICHSGFIN | LIC HOUSING FINANCE LTD | Financials | ₹503 | 81.8 | 2.9% |
+| AEGISLOG | AEGIS LOGISTICS LIMITED | Energy | ₹610 | 81.6 | 5.0% |
+| HSCL | HIMADRI SPECIALITY CHEM L | Metals | ₹454 | 81.4 | 4.3% |
+| JSL | JINDAL STAINLESS LIMITED | Metals | ₹735 | 80.9 | 4.7% |
+| RCF | RASHTRIYA CHEMICALS & FER | Metals | ₹121 | 80.6 | 5.6% |
+| ITCHOTELS | ITC HOTELS LIMITED | Auto | ₹158 | 80.2 | 3.6% |
+| ACUTAAS | ACUTAAS CHEMICALS LIMITED | Metals | ₹2,258 | 79.5 | 4.7% |
+| JBCHEPHARM | J B CHEMICALS AND PHARMA | Pharma | ₹2,118 | 78.7 | 2.6% |
+| LLOYDSME | LLOYDS METALS N ENERGY L | Metals | ₹1,247 | 77.7 | 4.5% |
+| HBLENGINE | HBL ENGINEERING LTD | Infrastructure | ₹680 | 77.4 | 4.4% |
+| 360ONE | 360 ONE WAM LIMITED | Financials | ₹1,070 | 76.2 | 3.0% |
+| ICICIPRULI | ICICI PRU LIFE INS CO LTD | Financials | ₹589 | 76.2 | 3.3% |
+| UJJIVANSFB | UJJIVAN SMALL FINANC BANK | Financials | ₹56 | 75.9 | 5.3% |
+| JYOTICNC | JYOTI CNC AUTOMATION LTD | Infrastructure | ₹764 | 75.7 | 4.5% |
+| QPOWER | QUALITY POWER ELEC EQUP L | Infrastructure | ₹826 | 75.6 | 5.3% |
+| COROMANDEL | COROMANDEL INTERNTL. LTD | Metals | ₹2,025 | 75.5 | 4.2% |
+| CONCOR | CONTAINER CORP OF IND LTD | Infrastructure | ₹459 | 74.6 | 3.1% |
+| GOKULAGRO | GOKUL AGRO RESOURCES LTD | FMCG/Consumer | ₹186 | 74.0 | 5.1% |
+| EDELWEISS | EDELWEISS FIN SERV LTD | Financials | ₹111 | 73.7 | 4.2% |
+| NITINSPIN | NITIN SPINNERS LIMITED | Auto | ₹372 | 73.3 | 3.5% |
+| SONACOMS | SONA BLW PRECISION FRGS L | Auto | ₹512 | 73.1 | 3.8% |
+| CARTRADE | CARTRADE TECH LIMITED | Auto | ₹1,698 | 73.1 | 5.2% |
+| PHOENIXLTD | THE PHOENIX MILLS LTD | Realty | ₹1,627 | 71.1 | 3.1% |
+| KFINTECH | KFIN TECHNOLOGIES LIMITED | IT | ₹944 | 70.6 | 3.4% |
+| SAILIFE | SAI LIFE SCIENCES LIMITED | Pharma | ₹1,014 | 70.2 | 4.4% |
+| SCHAEFFLER | SCHAEFFLER INDIA LIMITED | Auto | ₹4,054 | 69.0 | 4.2% |
+| DELHIVERY | DELHIVERY LIMITED | Infrastructure | ₹423 | 68.8 | 3.5% |
+| IEX | INDIAN ENERGY EXC LTD | Financials | ₹123 | 68.5 | 3.0% |
+| BAJAJHLDNG | BAJAJ HOLDINGS & INVS LTD | Financials | ₹9,859 | 68.0 | 3.0% |
+| PIIND | PI INDUSTRIES LTD | Metals | ₹2,928 | 65.5 | 2.7% |
+| BAJEL | BAJEL PROJECTS LIMITED | Energy | ₹168 | 65.0 | 5.7% |
+| PNBHOUSING | PNB HOUSING FIN LTD. | Financials | ₹808 | 64.7 | 3.8% |
+| CUB | CITY UNION BANK LTD | Financials | ₹251 | 64.7 | 4.8% |
+| PARADEEP | PARADEEP PHOSPHATES LTD | Metals | ₹116 | 63.9 | 5.0% |
+| HEXT | HEXAWARE TECHNOLOGIES LTD | IT | ₹437 | 63.7 | 5.0% |
+| HUDCO | HSG & URBAN DEV CORPN LTD | Financials | ₹179 | 63.2 | 3.5% |
+| SYNGENE | SYNGENE INTERNATIONAL LTD | Pharma | ₹420 | 63.1 | 3.2% |
+| BLS | BLS INTL SERVS LTD | Infrastructure | ₹246 | 62.9 | 4.3% |
+| BANKBEES | NIP IND ETF BANK BEES | Infrastructure | ₹569 | 62.3 | 2.2% |
+| ALKEM | ALKEM LABORATORIES LTD. | Pharma | ₹5,352 | 62.1 | 2.6% |
+| BSOFT | BIRLASOFT LIMITED | IT | ₹364 | 62.0 | 4.5% |
+| GOLD1 | KOTAK GOLD ETF | Infrastructure | ₹129 | 61.9 | 4.3% |
+| MOIL | MOIL LIMITED | Metals | ₹294 | 61.5 | 4.8% |
+| NCC | NCC LIMITED | Infrastructure | ₹147 | 61.3 | 3.9% |
+| IIFL | IIFL FINANCE LIMITED | Financials | ₹489 | 60.9 | 3.6% |
+| NLCINDIA | NLC INDIA LIMITED | Energy | ₹262 | 60.2 | 4.4% |
+| POONAWALLA | POONAWALLA FINCORP LTD | Financials | ₹412 | 59.0 | 3.8% |
+| KPRMILL | KPR MILL LTD. | Auto | ₹839 | 58.9 | 5.1% |
+| M&MFIN | M&M FIN. SERVICES LTD | Financials | ₹321 | 58.8 | 4.0% |
+| ZYDUSLIFE | ZYDUS LIFESCIENCES LTD | Pharma | ₹900 | 58.5 | 2.4% |
+| ZEEL | ZEE ENTERTAINMENT ENT LTD | IT | ₹77 | 58.3 | 3.7% |
+| KIRLOSENG | KIRLOSKAR OIL ENG LTD | Infrastructure | ₹1,436 | 56.6 | 4.7% |
+| APOLLOTYRE | APOLLO TYRES LTD | Auto | ₹420 | 56.3 | 3.7% |
+| ASAHIINDIA | ASAHI INDIA GLASS LIMITED | Auto | ₹864 | 56.2 | 5.2% |
+| TATATECH | TATA TECHNOLOGIES LIMITED | IT | ₹549 | 56.1 | 2.9% |
+| GOKEX | GOKALDAS EXPORTS LTD. | Auto | ₹596 | 55.4 | 5.5% |
+| ASTERDM | ASTER DM HEALTHCARE LTD. | Pharma | ₹662 | 55.3 | 4.4% |
+| NAM-INDIA | NIPPON L I A M LTD | Financials | ₹885 | 54.8 | 4.0% |
+| CEATLTD | CEAT LIMITED | Auto | ₹3,555 | 54.6 | 5.9% |
+| LEMONTREE | LEMON TREE HOTELS LTD | Auto | ₹108 | 54.4 | 4.1% |
+| MOTILALOFS | MOTILAL OSWAL FIN LTD | Financials | ₹698 | 54.1 | 3.8% |
+| ANANDRATHI | ANAND RATHI WEALTH LTD | Financials | ₹3,064 | 53.5 | 2.6% |
+| TATACAP | TATA CAPITAL LIMITED | Financials | ₹324 | 53.5 | 2.8% |
+| THERMAX | THERMAX LTD | Infrastructure | ₹3,279 | 53.4 | 3.6% |
+| WOCKPHARMA | WOCKHARDT LIMITED | Pharma | ₹1,216 | 52.3 | 4.0% |
+| MOBIKWIK | ONE MOBIKWIK SYSTEMS LTD | IT | ₹185 | 51.7 | 4.2% |
+| JAMNAAUTO | JAMNA AUTO IND LTD | Auto | ₹124 | 51.5 | 5.1% |
+| NH | NARAYANA HRUDAYALAYA LTD. | Pharma | ₹1,690 | 51.2 | 2.9% |
+| MGL | MAHANAGAR GAS LTD. | Energy | ₹1,000 | 50.6 | 4.4% |
+| KEC | KEC INTL. LIMITED | Infrastructure | ₹562 | 49.8 | 4.1% |
+| CPPLUS | ADITYA INFOTECH LIMITED | Infrastructure | ₹1,684 | 49.8 | 4.9% |
+| TATACOMM | TATA COMMUNICATIONS LTD | IT | ₹1,497 | 49.5 | 3.8% |
+| LUMAXTECH | LUMAX AUTO TECH LTD | Auto | ₹1,649 | 49.5 | 5.6% |
+| EMCURE | EMCURE PHARMACEUTICALS L | Pharma | ₹1,532 | 49.0 | 4.5% |
+| SANSERA | SANSERA ENGINEERING LTD | Auto | ₹2,199 | 48.7 | 4.9% |
+| COHANCE | COHANCE LIFESCIENCES LTD | Pharma | ₹306 | 48.5 | 4.8% |
+| JAINREC | JAIN RESOURCE RECYCLING L | Metals | ₹439 | 48.2 | 4.4% |
+| BALRAMCHIN | BALRAMPUR CHINI MILLS LTD | FMCG/Consumer | ₹476 | 48.0 | 5.0% |
+| PIRAMALFIN | PIRAMAL FINANCE LIMITED | Financials | ₹1,809 | 48.0 | 4.3% |
+| FSL | FIRSTSOURCE SOLU. LTD. | IT | ₹228 | 47.9 | 5.0% |
+| CROMPTON | CROMPT GREA CON ELEC LTD | Auto | ₹250 | 47.7 | 3.1% |
+| HDBFS | HDB FINANCIAL SERVICES L | Financials | ₹655 | 47.5 | 2.5% |
+| WABAG | VA TECH WABAG LTD | Infrastructure | ₹1,230 | 47.3 | 4.7% |
+| RRKABEL | R R KABEL LIMITED | Infrastructure | ₹1,438 | 47.3 | 4.5% |
+| IGL | INDRAPRASTHA GAS LTD | Energy | ₹157 | 46.9 | 3.8% |
+| DALBHARAT | DALMIA BHARAT LIMITED | Metals | ₹1,916 | 46.9 | 3.4% |
+| SMLMAH | SML MAHINDRA LIMITED | Auto | ₹4,145 | 46.8 | 5.6% |
+| GPIL | GODAWARI POW & ISP LTD | Metals | ₹260 | 46.5 | 4.4% |
+| DATAMATICS | DATAMATICS GLOBAL SER LTD | IT | ₹711 | 46.2 | 4.8% |
+| JUNIORBEES | NIP IND ETF JUNIOR BEES | Infrastructure | ₹706 | 45.8 | 2.9% |
+| AFFLE | AFFLE 3I LIMITED | IT | ₹1,346 | 45.2 | 4.4% |
+| MMTC | MMTC LIMITED | Infrastructure | ₹63 | 44.4 | 4.7% |
+| EXIDEIND | EXIDE INDUSTRIES LTD | Auto | ₹309 | 43.9 | 3.2% |
+| CENTUM | CENTUM ELECTRONICS LTD | IT | ₹2,836 | 43.8 | 5.7% |
+| CHOICEIN | CHOICE INTERNATIONAL LTD | Financials | ₹645 | 43.7 | 4.2% |
+| SANDUMA | SANDUR MANG & IRON ORES L | Metals | ₹188 | 43.4 | 4.8% |
+| ASTRAMICRO | ASTRA MICROWAVE LTD | IT | ₹946 | 43.0 | 4.3% |
+| RELIGARE | RELIGARE ENTER. LTD. | Financials | ₹227 | 42.8 | 4.1% |
+| VOLTAMP | VOLTAMP TRANSFORMERS LTD | Infrastructure | ₹8,725 | 42.5 | 3.9% |
+| CESC | CESC LTD | Energy | ₹156 | 42.5 | 3.9% |
+| SETFNIF50 | SBI-ETF NIFTY 50 | Infrastructure | ₹254 | 42.4 | 2.5% |
+| VESUVIUS | VESUVIUS INDIA LTD | Infrastructure | ₹490 | 42.3 | 4.2% |
+| PCBL | PCBL CHEMICAL LIMITED | Metals | ₹256 | 42.2 | 4.9% |
+| SUNDARMFIN | SUNDARAM FINANCE LTD | Financials | ₹5,000 | 42.0 | 5.2% |
+| SWANCORP | SWAN CORP LIMITED | Infrastructure | ₹347 | 41.9 | 5.1% |
+| BAJAJHFL | BAJAJ HOUSING FINANCE LTD | Financials | ₹83 | 41.9 | 2.5% |
+| NUVAMA | NUVAMA WEALTH MANAGE LTD | Financials | ₹1,179 | 41.6 | 3.4% |
+| JMFINANCIL | JM FINANCIAL LIMITED | Financials | ₹127 | 41.4 | 5.3% |
+| SARDAEN | SARDA ENERGY & MIN LTD | Metals | ₹527 | 41.0 | 4.7% |
+| PPLPHARMA | PIRAMAL PHARMA LIMITED | Pharma | ₹143 | 41.0 | 3.8% |
+| THANGAMAYL | THANGAMAYIL JEWELLERY LTD | Auto | ₹3,502 | 40.6 | 5.5% |
+| WEBELSOLAR | WEBSOL ENERGY SYSTEM LTD | IT | ₹62 | 40.6 | 5.8% |
+| ZAGGLE | ZAGGLE PREPA OCEAN SER L | IT | ₹220 | 40.5 | 5.1% |
+| AXISGOLD | AXIS MF - AXIS GOLD ETF | Infrastructure | ₹129 | 40.2 | 3.4% |
+| TITAGARH | TITAGARH RAIL SYSTEMS LTD | Infrastructure | ₹649 | 40.2 | 4.0% |
+| CCL | CCL PRODUCTS (I) LTD | FMCG/Consumer | ₹1,046 | 40.1 | 3.3% |
+| EIEL | ENVIRO INFRA ENGINEERS L | Infrastructure | ₹153 | 40.1 | 5.7% |
+| PSUBNKBEES | NIP IND ETF PSU BANK BEES | Infrastructure | ₹96 | 40.1 | 3.2% |
+| AJANTPHARM | AJANTA PHARMA LIMITED | Pharma | ₹3,057 | 39.6 | 3.7% |
+| EMMVEE | EMMVEE PHOTOVOLTAIC PWR L | IT | ₹239 | 39.6 | 5.4% |
+| GRANULES | GRANULES INDIA LIMITED | Pharma | ₹587 | 39.3 | 3.4% |
+| INTELLECT | INTELLECT DESIGN ARENA | IT | ₹677 | 39.2 | 3.7% |
+| BALUFORGE | BALU FORGE INDUSTRIES LTD | Infrastructure | ₹459 | 39.0 | 5.3% |
+| JSWINFRA | JSW INFRASTRUCTURE LTD | Infrastructure | ₹260 | 38.7 | 3.9% |
+| LALPATHLAB | DR. LAL PATH LABS LTD. | Pharma | ₹1,347 | 38.2 | 3.1% |
+| IKS | INVENTURUS KNOWLEDGE SO L | Pharma | ₹1,350 | 38.1 | 4.0% |
+| SILVERBETA | UTIAMC-SILVERBETA | Infrastructure | ₹239 | 38.0 | 4.9% |
+| WELCORP | WELSPUN CORP LIMITED | Metals | ₹822 | 37.7 | 4.2% |
+| LINDEINDIA | LINDE INDIA LIMITED | Metals | ₹7,222 | 37.5 | 3.8% |
+| ANURAS | ANUPAM RASAYAN INDIA LTD | Metals | ₹1,240 | 37.3 | 3.7% |
+| CHAMBLFERT | CHAMBAL FERTILIZERS LTD | Metals | ₹439 | 37.3 | 3.8% |
+| AARTIIND | AARTI INDUSTRIES LTD | Metals | ₹433 | 37.3 | 4.5% |
+| ONESOURCE | ONESOURCE SPECL PHARMA L | Pharma | ₹1,472 | 37.2 | 5.4% |
+| CREDITACC | CREDITACCESS GRAMEEN LTD | Financials | ₹1,188 | 37.2 | 4.6% |
+| RICOAUTO | RICO AUTO INDUSTRIES LTD | Auto | ₹113 | 37.1 | 5.6% |
+| BALKRISIND | BALKRISHNA IND. LTD | Auto | ₹2,172 | 37.1 | 4.1% |
+| ASHAPURMIN | ASHAPURA MINECHEM LTD | Metals | ₹507 | 37.0 | 4.6% |
+| BEML | BEML LIMITED | Infrastructure | ₹1,560 | 36.9 | 4.0% |
+| POLYMED | POLY MEDICURE LIMITED | Pharma | ₹1,279 | 36.5 | 5.0% |
+| RAILTEL | RAILTEL CORP OF IND LTD | IT | ₹282 | 36.5 | 4.4% |
+| MODEFENCE | MOTILALAMC - MODEFENCE | Infrastructure | ₹89 | 36.4 | 3.5% |
+| APTUS | APTUS VALUE HSG FIN I LTD | Financials | ₹219 | 35.8 | 3.5% |
+| TECHNOE | TECHNO ELEC & ENG CO. LTD | Infrastructure | ₹1,125 | 35.7 | 4.0% |
+| NIFTYIETF | ICICI PRUD NIFTY ETF | Infrastructure | ₹268 | 35.7 | 2.3% |
+| CRAFTSMAN | CRAFTSMAN AUTOMATION LTD | Auto | ₹6,888 | 35.6 | 4.5% |
+| TIMETECHNO | TIME TECHNOPLAST LTD. | Auto | ₹166 | 35.6 | 4.8% |
+| MOSCHIP | MOSCHIP TECHNOLOGIES LTD | IT | ₹171 | 35.5 | 4.4% |
+| KAJARIACER | KAJARIA CERAMICS LTD | Infrastructure | ₹955 | 35.3 | 4.0% |
+| IXIGO | LE TRAVENUES TECHNOLOGY L | Auto | ₹167 | 35.1 | 3.6% |
+| JKCEMENT | JK CEMENT LIMITED | Metals | ₹5,106 | 34.9 | 3.6% |
+| SANOFICONR | SANOFI CONS HEALTHC IND L | Pharma | ₹4,279 | 34.9 | 5.7% |
+| SJVN | SJVN LTD | Energy | ₹70 | 34.7 | 3.9% |
+| KIRLOSBROS | KIRLOSKAR BROTHERS LTD | Infrastructure | ₹1,577 | 34.6 | 4.6% |
+| NAZARA | NAZARA TECHNOLOGIES LTD | IT | ₹255 | 34.5 | 4.7% |
+| AZAD | AZAD ENGINEERING LIMITED | Infrastructure | ₹1,515 | 34.3 | 3.8% |
+| HDFCSML250 | HDFCAMC - HDFCSML250 | Infrastructure | ₹152 | 34.3 | 2.7% |
+| SIGNATURE | SIGNATUREGLOBAL INDIA LTD | Realty | ₹802 | 34.2 | 5.0% |
+| BLISSGVS | BLISS GVS PHARMA LTD | Pharma | ₹215 | 34.2 | 5.1% |
+| GOLDETF | MIRAEAMC - MAGOLDETF | Infrastructure | ₹150 | 33.6 | 2.6% |
+| ABLBL | ADITYA BIRLA LIFES BRAN L | Auto | ₹99 | 33.4 | 4.3% |
+| JSWCEMENT | JSW CEMENT LIMITED | Metals | ₹119 | 33.2 | 3.6% |
+| USHAMART | USHA MARTIN LTD. | Metals | ₹412 | 33.1 | 3.6% |
+| ROUTE | ROUTE MOBILE LIMITED | IT | ₹481 | 33.0 | 4.2% |
+| CGCL | CAPRI GLOBAL CAPITAL LTD | Financials | ₹170 | 32.9 | 4.0% |
+| DYNAMATECH | DYNAMATIC TECHNOLOGIES | Auto | ₹9,859 | 32.8 | 5.9% |
+| TATACHEM | TATA CHEMICALS LTD | Metals | ₹650 | 32.6 | 2.6% |
+| DREDGECORP | DREDGING CORP OF INDIA | Infrastructure | ₹910 | 32.5 | 5.8% |
+| PVRINOX | PVR INOX LIMITED | IT | ₹1,019 | 32.5 | 3.0% |
+| HGINFRA | H.G.INFRA ENGINEERING LTD | Infrastructure | ₹505 | 32.5 | 5.7% |
+| BLACKBUCK | BLACKBUCK LIMITED | IT | ₹596 | 31.9 | 4.1% |
+| CIEINDIA | CIE AUTOMOTIVE INDIA LTD | Auto | ₹481 | 31.6 | 4.3% |
+| IPCALAB | IPCA LABORATORIES LTD | Pharma | ₹1,544 | 31.1 | 3.1% |
+| VTL | VARDHMAN TEXTILES LIMITED | Auto | ₹549 | 31.0 | 3.5% |
+| GANECOS | GANESHA ECOSPHERE LIMITED | Auto | ₹837 | 30.9 | 5.5% |
+| NFL | NATIONAL FERT. LTD | Metals | ₹71 | 30.3 | 5.3% |
+| ACMESOLAR | ACME SOLAR HOLDINGS LTD | Energy | ₹249 | 30.1 | 4.7% |
+| ESCORTS | ESCORTS KUBOTA LIMITED | Infrastructure | ₹3,091 | 30.1 | 3.8% |
+| AAVAS | AAVAS FINANCIERS LIMITED | Financials | ₹1,124 | 30.0 | 3.7% |
+| OSWALPUMPS | OSWAL PUMPS LIMITED | Infrastructure | ₹319 | 29.9 | 4.9% |
+| INDIAMART | INDIAMART INTERMESH LTD | IT | ₹2,098 | 29.8 | 3.2% |
+| SWSOLAR | STRLNG & WIL REN ENE LTD | IT | ₹175 | 29.0 | 4.8% |
+| AIAENG | AIA ENGINEERING LIMITED | Infrastructure | ₹3,720 | 28.8 | 3.7% |
+| DCBBANK | DCB BANK LIMITED | Financials | ₹180 | 28.7 | 4.2% |
+| CPSEETF | CPSE ETF | Infrastructure | ₹102 | 28.7 | 3.1% |
+| GSPL | GUJARAT STATE PETRO LTD | Energy | ₹258 | 28.6 | 5.7% |
+| ACC | ACC LIMITED | Metals | ₹1,405 | 28.6 | 2.7% |
+| AXISILVER | AXISAMC - AXISILVER | Infrastructure | ₹246 | 28.4 | 5.1% |
+| DEVYANI | DEVYANI INTERNATIONAL LTD | Auto | ₹109 | 28.4 | 5.4% |
+| ZENSARTECH | ZENSAR TECHNOLOGIES  LTD | IT | ₹579 | 28.2 | 3.6% |
+| GRAVITA | GRAVITA INDIA LIMITED | Infrastructure | ₹1,446 | 28.1 | 3.9% |
+| ABREL | ADITYA BIRLA REAL EST LTD | Realty | ₹1,217 | 28.1 | 4.8% |
+| ELGIEQUIP | ELGI EQUIPMENTS LTD | Infrastructure | ₹482 | 27.9 | 4.1% |
+| AURIONPRO | AURIONPRO SOLN LTD | IT | ₹837 | 27.6 | 5.3% |
+| WELSPUNLIV | WELSPUN LIVING LIMITED | Auto | ₹115 | 27.6 | 4.2% |
+| MID150BEES | NIP IND ETF MIDCAP 150 | Infrastructure | ₹214 | 27.6 | 2.7% |
+| YATHARTH | YATHARTH HOSP & TRA C S L | Pharma | ₹673 | 27.6 | 4.0% |
+| GABRIEL | GABRIEL INDIA LTD | Auto | ₹872 | 27.4 | 4.7% |
+| CHOLAHLDNG | CHOLAMANDALAM FIN HOL LTD | Financials | ₹1,496 | 27.3 | 4.6% |
+| PRIVISCL | PRIVI SPECIALITY CHE LTD | Metals | ₹2,997 | 26.9 | 3.2% |
+| AADHARHFC | AADHAR HOUSING FINANCE L | Financials | ₹478 | 26.9 | 4.5% |
+| IIFLCAPS | IIFL CAPITAL SERVICES LTD | Financials | ₹285 | 26.7 | 5.4% |
+| RATNAMANI | RATNAMANI MET & TUB LTD. | Metals | ₹2,402 | 26.7 | 4.2% |
+| NIFTYETF | MIRAEAMC - MAN50ETF | Infrastructure | ₹257 | 26.4 | 2.4% |
+| DEEPAKFERT | DEEPAK FERTILIZERS & PETR | Metals | ₹943 | 26.1 | 4.6% |
+| SONATSOFTW | SONATA SOFTWARE LTD | IT | ₹241 | 26.1 | 4.4% |
+| IGIL | INTERNATIO GEMM INS (I) L | Metals | ₹339 | 26.0 | 4.0% |
+| TRANSRAILL | TRANSRAIL LIGHTING LTD | Infrastructure | ₹515 | 25.8 | 4.3% |
+| BAJAJCON | BAJAJ CONSUMER CARE LTD | FMCG/Consumer | ₹353 | 25.5 | 5.1% |
+| TENNIND | TENNECO CLEAN AIR INDIA L | Auto | ₹554 | 25.5 | 4.6% |
+| VINCOFE | VINTAGE COFFEE N BVRGS L | FMCG/Consumer | ₹131 | 25.4 | 4.7% |
+| MAPMYINDIA | C.E. INFO SYSTEMS LIMITED | IT | ₹880 | 25.2 | 4.1% |
+| KPIL | KALPATARU PROJECT INT LTD | Infrastructure | ₹1,068 | 25.2 | 4.9% |
+| KIMS | KRISHNA INST OF MED SCI L | Pharma | ₹672 | 24.8 | 4.3% |
+| SHRINGARMS | SHRINGAR HOU OF MANGALS L | Auto | ₹202 | 24.7 | 5.8% |
+| CSBBANK | CSB BANK LIMITED | Financials | ₹390 | 24.6 | 4.9% |
+| KITEX | KITEX GARMENTS LTD | Auto | ₹165 | 24.5 | 5.4% |
+| ARE&M | AMARA RAJA ENERGY MOB LTD | Infrastructure | ₹785 | 24.5 | 2.6% |
+| MON100 | MOTILAL OS NASDAQ100 ETF | Infrastructure | ₹225 | 24.5 | 3.1% |
+| EMAMILTD | EMAMI LIMITED | FMCG/Consumer | ₹417 | 24.5 | 3.5% |
+| WAAREERTL | WAAREE RENEWABLE TECH LTD | Energy | ₹864 | 24.3 | 3.8% |
+| TI | TILAKNAGAR INDUSTRIES LTD | FMCG/Consumer | ₹451 | 24.3 | 4.0% |
+| TIMKEN | TIMKEN INDIA LTD. | Infrastructure | ₹3,379 | 24.2 | 4.1% |
+| CYIENT | CYIENT LIMITED | Infrastructure | ₹858 | 24.1 | 4.0% |
+| SHARDACROP | SHARDA CROPCHEM LTD. | Metals | ₹1,012 | 24.1 | 5.5% |
+| BRIGADE | BRIGADE ENTER. LTD | Realty | ₹686 | 23.9 | 3.8% |
+| ASIANTILES | ASIAN GRANITO IND. LTD. | Infrastructure | ₹61 | 23.9 | 5.9% |
+| WHIRLPOOL | WHIRLPOOL OF INDIA LTD | Auto | ₹840 | 23.6 | 3.6% |
+| BBOX | BLACK BOX LIMITED | IT | ₹508 | 23.4 | 4.6% |
+| AEGISVOPAK | AEGIS VOPAK TERMINALS LTD | Energy | ₹189 | 23.4 | 5.5% |
+| LATENTVIEW | LATENT VIEW ANALYTICS LTD | Infrastructure | ₹286 | 22.7 | 4.8% |
+| POWERMECH | POWER MECH PROJECTS LTD. | Infrastructure | ₹2,034 | 22.4 | 4.5% |
+| DIACABS | DIAMOND POWER INFRA LTD | Infrastructure | ₹130 | 22.1 | 5.1% |
+| SHRIPISTON | SHRIRAM PIST. & RING LTD | Auto | ₹3,048 | 21.9 | 4.2% |
+| STARHEALTH | STAR HEALTH & AL INS CO L | Financials | ₹462 | 21.9 | 3.2% |
+| BORORENEW | BOROSIL RENEWABLES LTD | IT | ₹437 | 21.8 | 5.0% |
+| SHREEJISPG | SHREEJI SHIPPING GLOBAL L | Infrastructure | ₹371 | 21.4 | 3.9% |
+| TEXRAIL | TEXMACO RAIL & ENG. LTD. | Infrastructure | ₹93 | 21.4 | 4.5% |
+| AETHER | AETHER INDUSTRIES LIMITED | Metals | ₹1,069 | 21.4 | 4.9% |
+| EIDPARRY | EID PARRY INDIA LTD | Metals | ₹821 | 21.3 | 4.0% |
+| ABFRL | ADITYA BIRLA FASHION & RT | Auto | ₹59 | 21.2 | 3.9% |
+| ENDURANCE | ENDURANCE TECHNO. LTD. | Auto | ₹2,363 | 21.2 | 3.9% |
+| EIHOTEL | EIH LIMITED | Auto | ₹323 | 21.1 | 4.9% |
+| AXISCADES | AXISCADES TECH LTD | Infrastructure | ₹1,454 | 21.1 | 5.2% |
+| GMRP&UI | GMR POW AND URBAN INFRA L | Energy | ₹104 | 21.0 | 4.8% |
+| PARKHOSPS | PARK MEDI WORLD LIMITED | Pharma | ₹201 | 20.9 | 5.0% |
+| PRICOLLTD | PRICOL LIMITED | Auto | ₹546 | 20.9 | 4.1% |
+| PROTEAN | PROTEAN EGOV TECHNO LTD | IT | ₹531 | 20.8 | 4.5% |
+| GSFC | GUJ STATE FERT & CHEM LTD | Metals | ₹161 | 20.6 | 4.1% |
+| PARAGMILK | PARAG MILK FOODS LTD. | FMCG/Consumer | ₹202 | 20.4 | 4.8% |
+| INOXGREEN | INOX GREEN ENERGY SER LTD | Energy | ₹145 | 20.3 | 5.2% |
+| HONASA | HONASA CONSUMER LIMITED | FMCG/Consumer | ₹281 | 20.2 | 4.2% |
+| MANYAVAR | VEDANT FASHIONS LIMITED | Auto | ₹364 | 20.2 | 4.6% |
+| CLEAN | CLEAN SCIENCE & TECH LTD | Metals | ₹716 | 20.1 | 4.2% |
+| BLUESTONE | BLUESTONE JEWEL LFSTL LTD | Auto | ₹543 | 19.9 | 5.8% |
+| PINELABS | PINE LABS LIMITED | IT | ₹171 | 19.9 | 5.0% |
+| TANLA | TANLA PLATFORMS LIMITED | IT | ₹431 | 19.7 | 4.0% |
+| TMB | TAMILNAD MERCA BANK LTD | Financials | ₹632 | 19.7 | 4.6% |
+| STAR | STRIDES PHARMA SCI LTD | Pharma | ₹907 | 19.6 | 3.5% |
+| GOLDIAM | GOLDIAM INTERNATIONAL LTD | Auto | ₹306 | 19.6 | 5.0% |
+| CMSINFO | CMS INFO SYSTEMS LIMITED | Infrastructure | ₹291 | 19.5 | 3.2% |
+| SKYGOLD | SKY GOLD AND DIAMONDS LTD | Auto | ₹354 | 19.3 | 4.5% |
+| ASHOKA | ASHOKA BUILDCON LTD | Infrastructure | ₹117 | 19.3 | 4.9% |
+| SUNDRMFAST | SUNDRAM FASTENERS LTD | Auto | ₹811 | 19.3 | 3.6% |
+| POCL | PONDY OXIDES & CHEM LTD | Metals | ₹1,074 | 19.2 | 4.3% |
+| INDGN | INDEGENE LIMITED | Pharma | ₹453 | 19.1 | 3.6% |
+| UBL | UNITED BREWERIES LTD | FMCG/Consumer | ₹1,618 | 19.1 | 3.8% |
+| BERGEPAINT | BERGER PAINTS (I) LTD | Metals | ₹415 | 18.7 | 3.4% |
+| RKFORGE | RAMKRISHNA FORGINGS LTD | Infrastructure | ₹534 | 18.6 | 3.5% |
+| SMSPHARMA | SMS PHARMACEUTICALS LTD. | Pharma | ₹382 | 18.6 | 5.8% |
+| REFEX | REFEX INDUSTRIES LIMITED | Energy | ₹207 | 18.5 | 5.5% |
+| BAJAJELEC | BAJAJ ELECT.LTD | Auto | ₹348 | 18.5 | 5.7% |
+| EQUITASBNK | EQUITAS SMALL FIN BNK LTD | Financials | ₹58 | 18.4 | 4.5% |
+| DBL | DILIP BUILDCON LIMITED | Infrastructure | ₹437 | 18.3 | 4.0% |
+| ANTHEM | ANTHEM BIOSCIENCES LTD | Pharma | ₹648 | 18.2 | 3.7% |
+| INDOTHAI | INDO THAI SEC LTD | Financials | ₹257 | 18.2 | 4.3% |
+| FLUOROCHEM | GUJARAT FLUOROCHEM LTD | Metals | ₹3,143 | 18.1 | 4.1% |
+| KRBL | KRBL LIMITED | FMCG/Consumer | ₹292 | 18.1 | 5.2% |
+| TEGA | TEGA INDUSTRIES LIMITED | Infrastructure | ₹1,695 | 18.1 | 4.3% |
+| AMAGI | AMAGI MEDIA LABS LIMITED | IT | ₹351 | 18.0 | 4.6% |
+| RATEGAIN | RATEGAIN TRAVEL TECHN LTD | IT | ₹509 | 17.9 | 4.4% |
+| ATUL | ATUL LTD | Metals | ₹6,351 | 17.8 | 4.3% |
+| PTC | PTC INDIA LIMITED | Energy | ₹164 | 17.8 | 3.1% |
+| SILVERADD | DSPAMC - DSPSILVETF | Infrastructure | ₹239 | 17.8 | 5.2% |
+| SJS | SJS ENTERPRISES LIMITED | Auto | ₹1,658 | 17.7 | 4.4% |
+| ARVIND | ARVIND LIMITED | Auto | ₹365 | 17.6 | 3.9% |
+| SHAREINDIA | SHARE IND. SECURITIES LTD | Financials | ₹129 | 17.5 | 5.2% |
+| DBREALTY | VALOR ESTATE LIMITED | Realty | ₹102 | 17.5 | 5.5% |
+| ARVSMART | ARVIND SMARTSPACES LTD | Realty | ₹548 | 17.4 | 5.1% |
+| KSCL | KAVERI SEED CO. LTD. | Metals | ₹766 | 17.3 | 5.1% |
+| MIDHANI | MISHRA DHATU NIGAM LTD | Metals | ₹322 | 17.2 | 4.7% |
+| RAMCOCEM | THE RAMCO CEMENTS LIMITED | Metals | ₹982 | 17.1 | 4.2% |
+| KNRCON | KNR CONSTRU LTD. | Infrastructure | ₹123 | 17.0 | 4.4% |
+| SAMHI | SAMHI HOTELS LIMITED | Auto | ₹153 | 16.9 | 4.5% |
+| GREAVESCOT | GREAVES COTTON LTD. | Infrastructure | ₹139 | 16.9 | 5.1% |
+| KMEW | KNOWLEDGE MARINE & EN W L | Infrastructure | ₹1,562 | 16.9 | 5.2% |
+| SYMPHONY | SYMPHONY LIMITED | Auto | ₹816 | 16.9 | 4.0% |
+| RBA | RESTAURANT BRAND ASIA LTD | Auto | ₹62 | 16.8 | 1.4% |
+| JSFB | JANA SMALL FIN BANK LTD | Financials | ₹359 | 16.7 | 4.3% |
+| GRWRHITECH | GARWARE HI-TECH FILMS LTD | Metals | ₹3,879 | 16.7 | 5.2% |
+| ACE | ACTION CONST EQUIP LTD | Infrastructure | ₹845 | 16.7 | 3.8% |
+| AFCONS | AFCONS INFRASTRUCTURE LTD | Infrastructure | ₹288 | 16.6 | 3.8% |
+| POLYPLEX | POLYPLEX CORPORATION LTD | Metals | ₹885 | 16.6 | 5.0% |
+| SENCO | SENCO GOLD LIMITED | Auto | ₹304 | 16.5 | 3.5% |
+| SKFINDIA | SKF INDIA LTD | Infrastructure | ₹1,599 | 16.4 | 3.3% |
+| NAVA | NAVA LIMITED | Infrastructure | ₹566 | 16.4 | 4.3% |
+| KIRIINDUS | KIRI INDUSTRIES LIMITED | Metals | ₹395 | 16.4 | 4.5% |
+| VIKRAN | VIKRAN ENGINEERING LTD | Infrastructure | ₹63 | 16.3 | 5.0% |
+| PREMEXPLN | PREMIER EXPLOSIVES LTD | Metals | ₹450 | 16.3 | 5.5% |
+| EPACK | EPACK DURABLE LIMITED | Auto | ₹246 | 16.2 | 5.1% |
+| AEQUS | AEQUS LIMITED | Infrastructure | ₹126 | 16.0 | 5.1% |
+| PENIND | PENNAR INDUSTRIES LTD | Infrastructure | ₹144 | 15.9 | 5.3% |
+| DEEPAKNTR | DEEPAK NITRITE LTD | Metals | ₹1,413 | 15.8 | 3.4% |
+| CRISIL | CRISIL LTD | Financials | ₹4,034 | 15.7 | 2.8% |
+| SOBHA | SOBHA LIMITED | Realty | ₹1,294 | 15.7 | 4.2% |
+| SILVERAG | MIRAEAMC - MASILVER | Infrastructure | ₹241 | 15.6 | 5.4% |
+| VIYASH | VIYASH SCIENTIFIC LIMITED | Pharma | ₹195 | 15.5 | 5.3% |
+| ABDL | ALLIED BLEND N DISTILS L | FMCG/Consumer | ₹423 | 15.5 | 4.9% |
+| TBOTEK | TBO TEK LIMITED | Auto | ₹1,170 | 15.5 | 5.3% |
+| CEMPRO | CEMINDIA PROJECTS LIMITED | Infrastructure | ₹550 | 15.3 | 4.3% |
+| BHARTIHEXA | BHARTI HEXACOM LIMITED | IT | ₹1,594 | 15.2 | 3.3% |
+| GPPL | GUJARAT PIPAVAV PORT LTD | Infrastructure | ₹154 | 15.2 | 3.6% |
+| KANSAINER | KANSAI NEROLAC PAINTS LTD | Metals | ₹175 | 15.0 | 3.9% |
+| NIVABUPA | NIVA BUPA HEALTH INS CO L | Financials | ₹72 | 14.9 | 3.4% |
+| FIEMIND | FIEM INDUSTRIES LIMITED | Auto | ₹2,074 | 14.9 | 4.5% |
+| ELECON | ELECON ENG. CO. LTD | Infrastructure | ₹398 | 14.9 | 5.0% |
+| GLAND | GLAND PHARMA LIMITED | Pharma | ₹1,665 | 14.8 | 3.5% |
+| CANHLIFE | CANARA HSBC LIFE INS CO L | Financials | ₹147 | 14.8 | 4.0% |
+| JUSTDIAL | JUSTDIAL LTD. | IT | ₹529 | 14.8 | 3.9% |
+| TOP10ADD | DSPAMC - TOP10ADD | Infrastructure | ₹88 | 14.8 | 2.4% |
+| TRIVENI | TRIVENI ENGG. & INDS. LTD | FMCG/Consumer | ₹335 | 14.8 | 5.0% |
+| AVANTEL | AVANTEL LIMITED | IT | ₹133 | 14.8 | 5.2% |
+| JSLL | JEENA SIKHO LIFECARE LTD | Pharma | ₹628 | 14.7 | 4.4% |
+| PACEDIGITK | PACE DIGITEK LIMITED | IT | ₹171 | 14.6 | 4.3% |
+| SAPPHIRE | SAPPHIRE FOODS INDIA LTD | Auto | ₹172 | 14.6 | 5.8% |
+| THYROCARE | THYROCARE TECH LTD | Pharma | ₹373 | 14.5 | 4.3% |
+| MASTEK | MASTEK LTD | IT | ₹1,536 | 14.4 | 4.0% |
+| GOLDBETA | UTIAMC-UTIGOLDBETA | Infrastructure | ₹130 | 14.4 | 3.2% |
+| ORKLAINDIA | ORKLA INDIA LIMITED | FMCG/Consumer | ₹566 | 14.4 | 3.6% |
+| MBAPL | MADHYA BHARAT AGRO P. LTD | Metals | ₹449 | 14.3 | 3.3% |
+| SUNTV | SUN TV NETWORK LIMITED | IT | ₹598 | 14.3 | 4.6% |
+| TRITURBINE | TRIVENI TURBINE LIMITED | Infrastructure | ₹476 | 14.3 | 3.2% |
+| SHYAMMETL | SHYAM METALICS AND ENGY L | Metals | ₹787 | 14.3 | 3.7% |
+| INDIGOPNTS | INDIGO PAINTS LIMITED | Metals | ₹768 | 14.3 | 4.1% |
+| SAREGAMA | SAREGAMA INDIA LIMITED | IT | ₹352 | 13.8 | 4.2% |
+| IMFA | INDIAN METALS & FERRO | Metals | ₹1,258 | 13.7 | 4.8% |
+| V2RETAIL | V2 RETAIL LIMITED | Auto | ₹1,923 | 13.7 | 3.7% |
+| JYOTHYLAB | JYOTHY LABS LIMITED | FMCG/Consumer | ₹214 | 13.7 | 4.0% |
+| JUBLINGREA | JUBILANT INGREVIA LIMITED | Metals | ₹576 | 13.6 | 4.0% |
+| MEDANTA | GLOBAL HEALTH LIMITED | Pharma | ₹1,044 | 13.6 | 3.1% |
+| GILLETTE | GILLETTE INDIA LTD | FMCG/Consumer | ₹7,930 | 13.5 | 2.5% |
+| AVALON | AVALON TECHNOLOGIES LTD | IT | ₹940 | 13.4 | 4.9% |
+| MUFIN | MUFIN GREEN FINANCE LTD | Financials | ₹106 | 13.3 | 4.4% |
+| AGI | AGI GREENPAC LIMITED | Auto | ₹520 | 13.3 | 4.6% |
+| BANCOINDIA | BANCO PRODUCTS (I) LTD | Auto | ₹574 | 13.3 | 3.9% |
+| BATAINDIA | BATA INDIA LTD | Auto | ₹673 | 13.2 | 3.1% |
+| JUBLPHARMA | JUBILANT PHARMOVA LTD | Pharma | ₹857 | 13.2 | 3.8% |
+| SHADOWFAX | SHADOWFAX TECHNOLOGIES L | Infrastructure | ₹112 | 13.2 | 4.9% |
+| HERITGFOOD | HERITAGE FOODS LTD | FMCG/Consumer | ₹320 | 13.2 | 4.3% |
+| CANFINHOME | CAN FIN HOMES LTD | Financials | ₹842 | 13.1 | 4.7% |
+| ARSSBL | ANAND RATHI SH N STK BR L | Financials | ₹486 | 13.1 | 4.1% |
+| INTERARCH | INTERARCH BLDNG SOLTN LTD | Infrastructure | ₹1,800 | 13.1 | 3.8% |
+| EMSLIMITED | EMS LIMITED | Infrastructure | ₹297 | 13.1 | 6.0% |
+| CRAMC | CANARA ROBECO AMC LIMITED | Financials | ₹239 | 13.0 | 4.3% |
+| 63MOONS | 63 MOONS TECHNOLOGIES LTD | IT | ₹559 | 12.8 | 5.5% |
+| THOMASCOOK | THOMAS COOK (INDIA) LTD | Auto | ₹97 | 12.8 | 5.0% |
+| RAYMOND | RAYMOND LTD | Infrastructure | ₹377 | 12.5 | 4.6% |
+| RAYMONDREL | RAYMOND REALTY LIMITED | Realty | ₹433 | 12.5 | 5.8% |
+| BIRLACORPN | BIRLA CORPORATION LTD | Metals | ₹853 | 12.4 | 4.8% |
+| MEDPLUS | MEDPLUS HEALTH SERV LTD | Pharma | ₹845 | 12.4 | 3.2% |
+| SKIPPER | SKIPPER LIMITED | Infrastructure | ₹355 | 12.4 | 4.7% |
+| GODREJIND | GODREJ INDUSTRIES LTD | Infrastructure | ₹832 | 12.4 | 4.2% |
+| JTLIND | JTL INDUSTRIES LIMITED | Metals | ₹52 | 12.4 | 5.9% |
+| RAINBOW | RAINBOW CHILDRENS MED LTD | Pharma | ₹1,124 | 12.4 | 3.9% |
+| SBFC | SBFC FINANCE LIMITED | Financials | ₹89 | 12.4 | 3.4% |
+| SHILCTECH | SHILCHAR TECHNOLOGIES LTD | Infrastructure | ₹4,013 | 12.3 | 5.2% |
+| EUREKAFORB | EUREKA FORBES LIMITED | Auto | ₹454 | 12.3 | 4.5% |
+| VSTTILLERS | VST TILLERS TRACTORS LTD | Infrastructure | ₹5,295 | 12.2 | 4.5% |
+| GLAXO | GLAXOSMITHKLINE PHARMA LT | Pharma | ₹2,438 | 12.2 | 2.7% |
+| MANORAMA | MANORAMA INDUSTRIES LTD | FMCG/Consumer | ₹1,331 | 12.2 | 4.2% |
+| GARUDA | GARUDA CONSTRUCT N ENG L | Infrastructure | ₹165 | 12.1 | 5.0% |
+| BECTORFOOD | MRS BECTORS FOOD SPE LTD | FMCG/Consumer | ₹190 | 12.1 | 4.3% |
+| PICCADIL | PICCADILY AGRO INDUSTRI L | FMCG/Consumer | ₹546 | 12.0 | 3.9% |
+| IONEXCHANG | ION EXCHANGE (INDIA) LTD | Infrastructure | ₹339 | 11.9 | 5.1% |
+| KERNEX | KERNEX MICROSYS(I) LTD | IT | ₹968 | 11.9 | 4.3% |
+| NUVOCO | NUVOCO VISTAS CORP LTD | Metals | ₹304 | 11.9 | 4.5% |
+| NIFTY1 | KOTAK NIFTY ETF | Infrastructure | ₹262 | 11.8 | 2.2% |
+| SENORES | SENORES PHARMACEUTICALS L | Pharma | ₹750 | 11.7 | 3.7% |
+| GICRE | GENERAL INS CORP OF INDIA | Financials | ₹371 | 11.7 | 3.0% |
+| SHILPAMED | SHILPA MEDICARE LTD | Pharma | ₹325 | 11.7 | 4.3% |
+| FINEORG | FINE ORGANIC IND. LTD. | Metals | ₹4,320 | 11.7 | 3.1% |
+| SGMART | SG MART LIMITED | Infrastructure | ₹440 | 11.6 | 4.7% |
+| PNCINFRA | PNC INFRATECH LTD. | Infrastructure | ₹191 | 11.6 | 4.7% |
+| CHALET | CHALET HOTELS LIMITED | Auto | ₹751 | 11.6 | 4.1% |
+| SAFARI | SAFARI IND (INDIA) LTD | Auto | ₹1,534 | 11.5 | 5.4% |
+| CELLO | CELLO WORLD LIMITED | Auto | ₹408 | 11.4 | 4.5% |
+| MAHSEAMLES | MAHARASHTRA SEAMLESS LTD | Metals | ₹564 | 11.4 | 3.5% |
+| ANUP | THE ANUP ENGINEERING LTD | Infrastructure | ₹1,658 | 11.4 | 4.6% |
+| INDIASHLTR | INDIA SHELTER FIN CORP L | Financials | ₹753 | 11.3 | 4.1% |
+| INDIACEM | THE INDIA CEMENTS LIMITED | Metals | ₹370 | 11.2 | 3.9% |
+| ICICIB22 | ICICIPRAMC - BHARATIWIN | Infrastructure | ₹119 | 11.2 | 3.1% |
+| RUBICON | RUBICON RESEARCH LIMITED | Pharma | ₹768 | 11.2 | 4.0% |
+| AKZOINDIA | AKZO NOBEL INDIA LIMITED | Metals | ₹2,921 | 11.2 | 3.7% |
+| RITES | RITES LIMITED | Infrastructure | ₹197 | 11.1 | 3.4% |
+| GAEL | GUJARAT AMBUJA EXPORTS LT | FMCG/Consumer | ₹137 | 11.1 | 4.0% |
+| SIRCA | SIRCA PAINT INDIA LIMITED | Metals | ₹434 | 11.1 | 4.0% |
+| LXCHEM | LAXMI ORGANIC INDUS LTD | Metals | ₹125 | 11.0 | 5.3% |
+| MINDACORP | MINDA CORPORATION LTD | Auto | ₹505 | 11.0 | 4.3% |
+| SPARC | SUN PHARMA ADV.RES.CO.LTD | Pharma | ₹120 | 11.0 | 4.0% |
+| FEDFINA | FEDBANK FINANCIAL SER L | Financials | ₹137 | 11.0 | 4.5% |
+| BOROLTD | BOROSIL LIMITED | Auto | ₹234 | 10.9 | 5.9% |
+| HEMIPROP | HEMISPHERE PROP IND LTD | Realty | ₹138 | 10.8 | 3.4% |
+| CARBORUNIV | CARBORUNDUM UNIVERSAL LTD | Infrastructure | ₹768 | 10.8 | 3.0% |
+| VIJAYA | VIJAYA DIAGNOSTIC CEN LTD | Pharma | ₹938 | 10.7 | 3.6% |
+| AARTIPHARM | AARTI PHARMALABS LIMITED | Pharma | ₹656 | 10.7 | 4.0% |
+| EPL | EPL LIMITED | Auto | ₹196 | 10.6 | 4.6% |
+| SAMBHV | SAMBHV STEEL TUBES LTD | Metals | ₹93 | 10.6 | 4.7% |
+| HIRECT | HIND RECTIFIER LIMITED | Infrastructure | ₹1,519 | 10.4 | 4.9% |
+| DEEPINDS | DEEP INDUSTRIES LIMITED | Energy | ₹368 | 10.4 | 5.3% |
+| GOODLUCK | GOODLUCK INDIA LIMITED | Metals | ₹1,057 | 10.3 | 4.1% |
+| CAPLIPOINT | CAPLIN POINT LAB LTD. | Pharma | ₹1,648 | 10.3 | 2.4% |
+| FMCGIETF | ICICIPRAMC - ICICIFMCG | Infrastructure | ₹51 | 10.3 | 2.3% |
+| GNFC | GUJ NAR VAL FER & CHEM L | Metals | ₹421 | 10.1 | 3.7% |
+| FINPIPE | FINOLEX INDUSTRIES LTD | Infrastructure | ₹178 | 9.9 | 3.9% |
+| PFIZER | PFIZER LTD | Pharma | ₹4,818 | 9.8 | 2.8% |
+| NORTHARC | NORTHERN ARC CAPITAL LTD | Financials | ₹229 | 9.8 | 4.8% |
+| PNGJL | P N GADGIL JEWELLERS LTD | Auto | ₹561 | 9.8 | 4.1% |
+| MEDIASSIST | MEDI ASSIST HEALTH SER L | Pharma | ₹340 | 9.8 | 5.8% |
+| RHIM | RHI MAGNESITA INDIA LTD | Infrastructure | ₹381 | 9.7 | 4.2% |
+| HCG | HEALTHCARE GLOB. ENT. LTD | Pharma | ₹570 | 9.7 | 4.0% |
+| HDFCNIFTY | HDFCAMC - HDFCNIFTY | Infrastructure | ₹266 | 9.7 | 2.5% |
+| SUMICHEM | SUMITOMO CHEM INDIA LTD | Metals | ₹389 | 9.7 | 3.3% |
+| MAHLOG | MAHINDRA LOGISTIC LIMITED | Infrastructure | ₹382 | 9.6 | 5.1% |
+| TRAVELFOOD | TRAVEL FOOD SERVICES LTD | Auto | ₹1,133 | 9.6 | 3.5% |
+| NEXT50IETF | ICICIPRAMC - ICICINXT50 | Infrastructure | ₹69 | 9.4 | 3.8% |
+| COSMOFIRST | COSMO FIRST LIMITED | Auto | ₹643 | 9.4 | 5.2% |
+| ISGEC | ISGEC HEAVY ENG LTD | Infrastructure | ₹905 | 9.4 | 4.5% |
+| MARKSANS | MARKSANS PHARMA LIMITED | Pharma | ₹168 | 9.4 | 3.5% |
+| GODIGIT | GO DIGIT GENERAL INS LTD | Financials | ₹328 | 9.4 | 3.7% |
+| EMUDHRA | EMUDHRA LIMITED | IT | ₹412 | 9.3 | 4.7% |
+| JKPAPER | JK PAPER LIMITED | Metals | ₹334 | 9.3 | 4.1% |
+| PGIL | PEARL GLOBAL IND LIMITED | Auto | ₹1,537 | 9.3 | 4.0% |
+| AUTOBEES | NIPPONAMC - NETFAUTO | Infrastructure | ₹263 | 9.2 | 3.5% |
+| CERA | CERA SANITARYWARE LTD | Infrastructure | ₹4,982 | 9.2 | 3.1% |
+| TARC | TARC LIMITED | Realty | ₹125 | 9.1 | 5.3% |
+| GODREJAGRO | GODREJ AGROVET LIMITED | FMCG/Consumer | ₹591 | 9.0 | 4.0% |
+| STYLAMIND | STYLAM INDUSTRIES LIMITED | Auto | ₹2,216 | 9.0 | 1.0% |
+| GENUSPOWER | GENUS POWER INFRASTRU LTD | Infrastructure | ₹248 | 9.0 | 4.6% |
+| ESILVER | EDELAMC - ESILVER | Infrastructure | ₹249 | 8.9 | 5.5% |
+| NOCIL | NOCIL LIMITED | Metals | ₹148 | 8.9 | 4.6% |
+| EBGNG | GNG ELECTRONICS LIMITED | IT | ₹388 | 8.9 | 5.4% |
+| CIGNITITEC | CIGNITI TECHNOLOGIES LTD | IT | ₹1,110 | 8.8 | 5.1% |
+| AKUMS | AKUMS DRUGS AND PHARMA L | Pharma | ₹481 | 8.8 | 3.9% |
+| JKLAKSHMI | JK LAKSHMI CEMENT LTD | Metals | ₹616 | 8.8 | 3.7% |
+| BALAMINES | BALAJI AMINES LIMITED | Metals | ₹1,068 | 8.8 | 4.0% |
+| SUPRIYA | SUPRIYA LIFESCIENCE LTD | Pharma | ₹589 | 8.7 | 4.1% |
+| SANOFI | SANOFI INDIA LIMITED | Pharma | ₹3,461 | 8.7 | 2.7% |
+| ICIL | INDO COUNT INDUSTRIES LTD | Auto | ₹240 | 8.7 | 5.0% |
+| ENTERO | ENTERO HEALTHCARE SOLU L | Pharma | ₹1,112 | 8.7 | 4.0% |
+| STYRENIX | STYRENIX PERFORMANCE LTD | Metals | ₹1,987 | 8.6 | 4.0% |
+| THELEELA | LEELA PALACES HOTEL LTD | Auto | ₹411 | 8.6 | 4.3% |
+| INDIAGLYCO | INDIA GLYCOLS LTD | Metals | ₹877 | 8.5 | 4.5% |
+| BIKAJI | BIKAJI FOODS INTERN LTD | FMCG/Consumer | ₹618 | 8.5 | 3.0% |
+| RAYMONDLSL | RAYMOND LIFESTYLE LIMITED | Auto | ₹845 | 8.4 | 5.0% |
+| RALLIS | RALLIS INDIA LTD | Metals | ₹244 | 8.4 | 4.2% |
+| GMBREW | G M BREWERIES LTD | FMCG/Consumer | ₹1,029 | 8.4 | 4.0% |
+| SURYAROSNI | SURYA ROSHNI LTD | Metals | ₹211 | 8.4 | 4.3% |
+| GOLDADD | DSPAMC - DSPGOLD | Infrastructure | ₹150 | 8.3 | 2.3% |
+| SUDARSCHEM | SUDARSHAN CHEMICAL INDS L | Metals | ₹816 | 8.3 | 4.3% |
+| KSHINTL | KSH INTERNATIONAL LIMITED | Infrastructure | ₹418 | 8.3 | 5.3% |
+| BOMDYEING | BOMBAY DYEING & MFG. CO L | Auto | ₹108 | 8.2 | 4.4% |
+| SEAMECLTD | SEAMEC LIMITED | Infrastructure | ₹1,380 | 8.2 | 4.9% |
+| MANGLMCEM | MANGALAM CEMENT LTD | Metals | ₹825 | 8.2 | 3.9% |
+| UTIAMC | UTI ASSET MNGMT CO LTD | Financials | ₹971 | 8.2 | 3.3% |
+| ROLEXRINGS | ROLEX RINGS LIMITED | Infrastructure | ₹121 | 8.2 | 4.6% |
+| VARROC | VARROC ENGINEERING LTD. | Auto | ₹524 | 8.1 | 4.3% |
+| VAIBHAVGBL | VAIBHAV GLOBAL LIMITED | Auto | ₹214 | 8.1 | 3.8% |
+| GRINDWELL | GRINDWELL NORTON LIMITED | Infrastructure | ₹1,430 | 8.1 | 3.6% |
+| ERIS | ERIS LIFESCIENCES LIMITED | Pharma | ₹1,308 | 8.0 | 2.8% |
+| JKIL | JKUMAR INFR.LTD. | Infrastructure | ₹508 | 8.0 | 4.0% |
+| PRUDENT | PRUDENT CORP ADV SER LTD | Financials | ₹2,358 | 8.0 | 4.3% |
+| PURVA | PURAVANKARA LIMITED | Realty | ₹190 | 8.0 | 5.7% |
+| BAYERCROP | BAYER CROPSCIENCE LTD | Metals | ₹4,486 | 8.0 | 2.8% |
+| AVL | ADITYA VISION LIMITED | Auto | ₹450 | 8.0 | 4.3% |
+| LGBBROSLTD | LG BALAKRISHNAN & BROS | Auto | ₹1,812 | 7.9 | 4.6% |
+| ACI | ARCHEAN CHEMICAL IND LTD | Metals | ₹575 | 7.9 | 4.7% |
+| METROPOLIS | METROPOLIS HEALTHCARE LTD | Pharma | ₹1,868 | 7.9 | 2.9% |
+| HAPPYFORGE | HAPPY FORGINGS LIMITED | Infrastructure | ₹1,290 | 7.9 | 4.4% |
+| GMMPFAUDLR | GMM PFAUDLER LIMITED | Infrastructure | ₹874 | 7.8 | 4.1% |
+| BSLGOLDETF | ADITYBIRLA SL GOLD ETF-GR | Infrastructure | ₹136 | 7.8 | 2.4% |
+| VIPIND | VIP INDUSTRIES LTD | Auto | ₹337 | 7.7 | 3.8% |
+| KIRLPNU | KIRLOSKAR PNEUMATIC COM L | Infrastructure | ₹1,058 | 7.7 | 4.1% |
+| IOLCP | IOL CHEM AND PHARMA LTD | Pharma | ₹74 | 7.7 | 4.0% |
+| AHLUCONT | AHLUWALIA CONT IND LTD | Infrastructure | ₹746 | 7.6 | 4.3% |
+| EPIGRAL | EPIGRAL LIMITED | Metals | ₹854 | 7.6 | 4.4% |
+| VENUSPIPES | VENUS PIPES & TUBES LTD | Metals | ₹1,002 | 7.5 | 5.2% |
+| HIKAL | HIKAL LIMITED | Pharma | ₹174 | 7.4 | 4.6% |
+| BASF | BASF INDIA LTD | Metals | ₹3,424 | 7.3 | 3.3% |
+| VRLLOG | VRL LOGISTICS LIMITED | Infrastructure | ₹248 | 7.3 | 4.3% |
+| ASKAUTOLTD | ASK AUTOMOTIVE LIMITED | Auto | ₹418 | 7.3 | 3.6% |
+| ORIENTCEM | ORIENT CEMENT LTD. | Metals | ₹139 | 7.3 | 3.5% |
+| ORCHPHARMA | ORCHID PHARMA LIMITED | Pharma | ₹538 | 7.2 | 5.5% |
+| DCAL | DISHMAN CARBO AMCIS LTD | Pharma | ₹172 | 7.2 | 5.5% |
+| POKARNA | POKARNA LIMITED | Infrastructure | ₹865 | 7.1 | 4.6% |
+| ARVINDFASN | ARVIND FASHIONS LIMITED | Auto | ₹409 | 7.1 | 4.3% |
+| SETFNIFBK | SBI-ETF NIFTY BANK | Infrastructure | ₹566 | 7.1 | 2.8% |
+| TATVA | TATVA CHIN PHARM CHEM LTD | Metals | ₹1,176 | 7.0 | 5.1% |
+| INDRAMEDCO | INDRAPRASTHA MEDICAL CORP | Pharma | ₹407 | 7.0 | 3.7% |
+| SANGHVIMOV | SANGHVI MOVERS LTD | Infrastructure | ₹253 | 7.0 | 5.3% |
+| KALPATARU | KALPATARU LIMITED | Realty | ₹307 | 6.9 | 5.6% |
+| VADILALIND | VADILAL INDUSTRIES LTD | FMCG/Consumer | ₹4,681 | 6.9 | 3.7% |
+| IFBIND | IFB INDUSTRIES LTD | Auto | ₹1,030 | 6.9 | 3.9% |
+| AGARWALEYE | DR AGARWALS HEALTH CARE L | Pharma | ₹434 | 6.9 | 4.0% |
+| RAMCOSYS | RAMCO SYSTEMS LTD. | IT | ₹413 | 6.8 | 5.8% |
+| KALAMANDIR | SAI SILKS (KALAMANDIR) L | Auto | ₹102 | 6.8 | 4.6% |
+| CAMLINFINE | CAMLIN FINE SCIENCES LTD | Metals | ₹130 | 6.8 | 5.7% |
+| ALKYLAMINE | ALKYL AMINES CHEM. LTD | Metals | ₹1,350 | 6.8 | 4.2% |
+| DELTACORP | DELTA CORP LIMITED | Auto | ₹55 | 6.8 | 3.5% |
+| DCMSHRIRAM | DCM SHRIRAM LIMITED | Infrastructure | ₹1,094 | 6.8 | 3.8% |
+| SKFINDUS | SKF IND (INDUSTRIAL) LTD | Infrastructure | ₹2,251 | 6.8 | 4.9% |
+| SDBL | SOM DIST & BREW LTD | FMCG/Consumer | ₹75 | 6.8 | 4.5% |
+| MSTCLTD | MSTC LIMITED | Infrastructure | ₹427 | 6.8 | 3.9% |
+| SUNTECK | SUNTECK REALTY LIMITED | Realty | ₹326 | 6.7 | 5.6% |
+| EPACKPEB | EPACK PREFAB TECHN LTD | Infrastructure | ₹160 | 6.6 | 5.1% |
+| BANKIETF | ICICIPRAMC - IPRU5008 | Infrastructure | ₹57 | 6.6 | 2.4% |
+| STARCEMENT | STAR CEMENT LIMITED | Metals | ₹209 | 6.5 | 2.4% |
+| BBTC | BOMBAY BURMAH TRADING COR | FMCG/Consumer | ₹1,541 | 6.5 | 3.6% |
+| BBL | BHARAT BIJLEE LTD | Infrastructure | ₹2,376 | 6.5 | 3.5% |
+| VIMTALABS | VIMTA LABS LIMITED | Pharma | ₹432 | 6.5 | 4.0% |
+| INOXINDIA | INOX INDIA LIMITED | Infrastructure | ₹1,189 | 6.5 | 4.0% |
+| RUSTOMJEE | KEYSTONE REALTORS LIMITED | Realty | ₹387 | 6.4 | 5.2% |
+| HITECH | HI-TECH PIPES LIMITED | Metals | ₹78 | 6.4 | 4.4% |
+| MARATHON | MARATHON NXTGEN REALT LTD | Realty | ₹423 | 6.4 | 5.8% |
+| NUCLEUS | NUCLEUS SOFTWARE EXPORTS | IT | ₹830 | 6.3 | 4.7% |
+| SUDEEPPHRM | SUDEEP PHARMA LIMITED | Pharma | ₹622 | 6.2 | 5.3% |
+| GALLANTT | GALLANTT ISPAT LIMITED | Metals | ₹556 | 6.2 | 4.7% |
+| HNGSNGBEES | NIP IND ETF HANGSENG BEES | Infrastructure | ₹514 | 6.2 | 4.1% |
+| CEIGALL | CEIGALL INDIA LIMITED | Infrastructure | ₹278 | 6.1 | 4.2% |
+| CARERATING | CARE RATINGS LIMITED | Financials | ₹1,562 | 6.1 | 3.5% |
+| GKENERGY | GK ENERGY LIMITED | Energy | ₹107 | 6.1 | 4.9% |
+| VMART | VMART RETAIL LTD | Auto | ₹527 | 6.0 | 4.5% |
+| ARMANFIN | ARMAN FIN SERV LTD | Financials | ₹1,486 | 6.0 | 4.5% |
+| SENSEXIETF | ICICI PRUD SENSEX ETF | Infrastructure | ₹875 | 6.0 | 2.7% |
+| GULFOILLUB | GULF OIL LUB. IND. LTD. | Metals | ₹970 | 6.0 | 4.2% |
+| SANDHAR | SANDHAR TECHNOLOGIES LTD | Auto | ₹488 | 5.9 | 3.4% |
+| GHCL | GHCL LIMITED | Metals | ₹451 | 5.9 | 3.5% |
+| PGHL | PROCTER & GAMBLE HEALTH L | Pharma | ₹4,940 | 5.9 | 2.5% |
+| JUNIPER | JUNIPER HOTELS LIMITED | Auto | ₹205 | 5.9 | 5.6% |
+| CAMPUS | CAMPUS ACTIVEWEAR LIMITED | Auto | ₹229 | 5.9 | 3.8% |
+| BANKNIFTY1 | KOTAKMAMC-KOTAKBKETF | Infrastructure | ₹57 | 5.9 | 2.7% |
+| SANGHIIND | SANGHI INDUSTRIES LTD | Metals | ₹53 | 5.9 | 4.7% |
+| GLOBUSSPR | GLOBUS SPIRITS LTD | FMCG/Consumer | ₹877 | 5.8 | 4.2% |
+| CARYSIL | CARYSIL LIMITED | Auto | ₹814 | 5.8 | 4.6% |
+| PRAKASH | PRAKASH INDUSTRIES LTD | Metals | ₹122 | 5.8 | 4.5% |
+| TRUALT | TRUALT BIOENERGY LIMITED | Energy | ₹388 | 5.8 | 4.8% |
+| WHEELS | WHEELS INDIA LTD | Auto | ₹973 | 5.8 | 4.2% |
+| ALIVUS | ALIVUS LIFE SCIENCES LTD | Pharma | ₹942 | 5.8 | 3.7% |
+| SWARAJENG | SWARAJ ENGINES LTD | Auto | ₹3,702 | 5.8 | 3.1% |
+| VENTIVE | VENTIVE HOSPITALITY LTD | Auto | ₹667 | 5.7 | 3.7% |
+| KIOCL | KIOCL LIMITED | Metals | ₹325 | 5.7 | 4.7% |
+| DHANUKA | DHANUKA AGRITECH LTD | Metals | ₹1,004 | 5.7 | 3.8% |
+| MOREALTY | MOTILALAMC - MOREALTY | Infrastructure | ₹73 | 5.7 | 3.3% |
+| INGERRAND | INGERSOLL-RAND INDIA LTD | Infrastructure | ₹3,693 | 5.7 | 3.7% |
+| MARINE | MARINE ELECTRICAL (I) LTD | Infrastructure | ₹179 | 5.6 | 4.9% |
+| MIDWESTLTD | MIDWEST LIMITED | Metals | ₹1,312 | 5.6 | 5.5% |
+| EUROPRATIK | EURO PRATIK SALES LIMITED | Metals | ₹223 | 5.6 | 5.4% |
+| SFL | SHEELA FOAM LIMITED | Auto | ₹529 | 5.6 | 3.7% |
+| ETHOSLTD | ETHOS LIMITED | Auto | ₹2,182 | 5.5 | 4.4% |
+| NACLIND | NACL INDUSTRIES LIMITED | Metals | ₹127 | 5.5 | 5.5% |
+| NIFTYBETA | UTIAMC-NIFTYBETA | Infrastructure | ₹262 | 5.5 | 2.3% |
+| PRINCEPIPE | PRINCE PIPES FITTINGS LTD | Infrastructure | ₹249 | 5.5 | 4.8% |
+| WEWORK | WEWORK INDIA MANAGEMENT L | Realty | ₹497 | 5.4 | 5.4% |
+| NIACL | THE NEW INDIA ASSU CO LTD | Financials | ₹135 | 5.4 | 3.3% |
+| DODLA | DODLA DAIRY LIMITED | FMCG/Consumer | ₹1,098 | 5.3 | 4.6% |
+| MBEL | M AND B ENGINEERING LTD | Infrastructure | ₹281 | 5.3 | 5.0% |
+| JAICORPLTD | JAI CORP LIMITED | Metals | ₹103 | 5.2 | 4.8% |
+| PSUBANK | KOTAK PSU BANK | Infrastructure | ₹867 | 5.2 | 3.6% |
+| SHK | S H KELKAR AND CO. LTD. | Metals | ₹129 | 5.2 | 5.3% |
+| JASH | JASH ENGINEERING LIMITED | Infrastructure | ₹370 | 5.2 | 4.9% |
+| KDDL | KDDL LIMITED | Auto | ₹2,317 | 5.2 | 4.7% |
+| NESCO | NESCO LTD. | Infrastructure | ₹1,067 | 5.0 | 3.6% |
+| GATEWAY | GATEWAY DISTRIPARKS LTD | Infrastructure | ₹53 | 5.0 | 3.4% |
+| MAFANG | MIRAEAMC - MAFANG | Infrastructure | ₹160 | 5.0 | 1.6% |
+| SPANDANA | SPANDANA SPHOORTY FIN LTD | Financials | ₹213 | 5.0 | 5.5% |
+| METROBRAND | METRO BRANDS LIMITED | Auto | ₹982 | 5.0 | 3.6% |
+| UNIMECH | UNIMECH AEROSPACE N MFG L | Infrastructure | ₹771 | 4.9 | 4.4% |
+| SAATVIKGL | SAATVIK GREEN ENERGY LTD | IT | ₹358 | 4.8 | 4.8% |
+| ZOTA | ZOTA HEALTH CARE LIMITED | Pharma | ₹1,161 | 4.8 | 4.6% |
+| SERVOTECH | SERVOTECH REN POW SYS LTD | Infrastructure | ₹71 | 4.8 | 5.7% |
+| VGUARD | V-GUARD IND LTD. | Infrastructure | ₹332 | 4.8 | 3.5% |
+| QUESS | QUESS CORP LIMITED | Infrastructure | ₹183 | 4.8 | 3.5% |
+| SBCL | SHIVALIK BIMETAL CON. LTD | Infrastructure | ₹419 | 4.8 | 3.9% |
+| CAPILLARY | CAPILLARY TECHNO INDIA L | IT | ₹509 | 4.7 | 2.9% |
+| BANKBETA | UTIAMC-BANKBETA | Infrastructure | ₹57 | 4.7 | 2.9% |
+| TEAMLEASE | TEAMLEASE SERVICES LTD. | Infrastructure | ₹1,206 | 4.7 | 4.0% |
+| WELENT | WELSPUN ENTERPRISES LTD. | Infrastructure | ₹467 | 4.7 | 3.6% |
+| ADVAIT | ADVAIT ENRGY TRANSITION L | Infrastructure | ₹1,627 | 4.7 | 4.9% |
+| CORONA | CORONA REMEDIES LIMITED | Pharma | ₹1,631 | 4.6 | 4.0% |
+| MMFL | MM FORGINGS LTD | Infrastructure | ₹435 | 4.6 | 4.8% |
+| MPSLTD | MPS LIMITED | IT | ₹1,540 | 4.6 | 4.0% |
+| PARKHOTELS | PARKHOTELS | Auto | ₹113 | 4.6 | 4.4% |
+| TAJGVK | TAJ GVK HOTELS & RESORTS | Auto | ₹314 | 4.6 | 4.3% |
+| SETFNN50 | SBI-ETF NIFTY NEXT 50 | Infrastructure | ₹701 | 4.6 | 3.1% |
+| UNIVCABLES | UNIVERSAL CABLES LTD | Infrastructure | ₹653 | 4.6 | 5.0% |
+| GARFIBRES | GARWARE TECH FIBRES LTD | Auto | ₹628 | 4.6 | 3.7% |
+| GREENPLY | GREENPLY INDUSTRIES LTD | Metals | ₹200 | 4.5 | 4.3% |
+| ADVENZYMES | ADVANCED ENZYME TECH LTD | Metals | ₹282 | 4.5 | 4.0% |
+| MOGOLD | MOTILALAMC - MOGOLD | Infrastructure | ₹153 | 4.5 | 2.3% |
+| WAKEFIT | WAKEFIT INNOVATIONS LTD | Auto | ₹167 | 4.5 | 6.0% |
+| ARKADE | ARKADE DEVELOPERS LIMITED | Realty | ₹107 | 4.5 | 4.4% |
+| AJAXENGG | AJAX ENGINEERING LIMITED | Infrastructure | ₹491 | 4.5 | 4.3% |
+| XPROINDIA | XPRO INDIA LIMITED | Metals | ₹971 | 4.5 | 5.5% |
+| SHOPERSTOP | SHOPPERS STOP LIMITED | Auto | ₹301 | 4.5 | 4.9% |
+| PSPPROJECT | PSP PROJECTS LIMITED | Infrastructure | ₹678 | 4.5 | 4.1% |
+| DIAMONDYD | PRATAAP SNACKS LIMITED | FMCG/Consumer | ₹936 | 4.4 | 4.1% |
+| SGFIN | SG FINSERVE LIMITED | Financials | ₹383 | 4.4 | 4.2% |
+| BLUEDART | BLUE DART EXPRESS LTD | Infrastructure | ₹5,246 | 4.4 | 2.9% |
+| WESTLIFE | WESTLIFE FOODWORLD LTD | Auto | ₹440 | 4.4 | 5.0% |
+| TSFINV | TSF INVESTMENTS LIMITED | Financials | ₹370 | 4.3 | 4.7% |
+| APLLTD | ALEMBIC PHARMA LTD | Pharma | ₹676 | 4.3 | 3.1% |
+| SAKSOFT | SAKSOFT LIMITED | IT | ₹120 | 4.3 | 6.0% |
+| CRIZAC | CRIZAC LIMITED | FMCG/Consumer | ₹218 | 4.3 | 5.1% |
+| ASTRAZEN | ASTRAZENECA PHARMA IND LT | Pharma | ₹8,484 | 4.3 | 2.8% |
+| GROWWDEFNC | GROWWAMC - GROWWDEFNC | Infrastructure | ₹81 | 4.2 | 3.5% |
+| KRSNAA | KRSNAA DIAGNOSTICS LTD | Pharma | ₹605 | 4.2 | 3.8% |
+| EMIL | ELECTRONICS MART IND LTD | Auto | ₹94 | 4.2 | 4.4% |
+| SIS | SIS LIMITED | Infrastructure | ₹280 | 4.2 | 3.6% |
+| GNA | GNA AXLES LIMITED | Auto | ₹396 | 4.2 | 5.3% |
+| ORISSAMINE | ORISSA MIN DEV CO LTD | Metals | ₹3,651 | 4.2 | 4.3% |
+| SHARDAMOTR | SHARDA MOTOR INDS LTD | Auto | ₹827 | 4.1 | 4.6% |
+| AJMERA | AJMERA REALTY & INF I LTD | Realty | ₹115 | 4.1 | 4.9% |
+| MAHLIFE | MAHINDRA LIFESPACE DEVLTD | Realty | ₹351 | 4.1 | 3.4% |
+| GANESHHOU | GANESH HOUSING LIMITED | Realty | ₹624 | 4.0 | 4.8% |
+| MONARCH | MONARCH NETWORTH CAP LTD | Financials | ₹270 | 4.0 | 4.5% |
+| LUXIND | LUX INDUSTRIES LIMITED | Auto | ₹925 | 4.0 | 3.5% |
+| STYL | SESHAASAI TECHNOLOGIES L | IT | ₹253 | 4.0 | 4.6% |
+| ASALCBR | ASSO ALCOHOLS & BREW LTD | FMCG/Consumer | ₹744 | 4.0 | 4.3% |
+| SUBROS | SUBROS LIMITED | Auto | ₹696 | 4.0 | 3.8% |
+
+</details>

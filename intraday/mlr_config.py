@@ -24,8 +24,10 @@ import numpy as np
 import yaml
 
 from common.data import (
-    PROJECT_ROOT, TICKERS, BENCHMARK, fetch_yf,
+    PROJECT_ROOT, BENCHMARK, fetch_yf, load_universe_for_tier,
 )
+
+TICKERS = load_universe_for_tier("intraday")
 from common.indicators import compute_atr, _to_ist
 
 from intraday.mlr_stats import (

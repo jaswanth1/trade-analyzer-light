@@ -3,7 +3,7 @@ Common utilities for the trading system.
 Re-exports the most-used symbols for convenience.
 """
 
-from common.data import fetch_yf, fetch_ticker_info, TICKERS, BENCHMARK, OUTPUT_DIR, GAP_THRESHOLDS
+from common.data import fetch_yf, fetch_ticker_info, TICKERS, BENCHMARK, OUTPUT_DIR, GAP_THRESHOLDS, load_universe_for_tier
 from common.indicators import compute_atr, compute_beta, compute_vwap, _to_ist, classify_gaps
 from common.market import fetch_india_vix, vix_position_scale, detect_nifty_regime
 from common.risk import (

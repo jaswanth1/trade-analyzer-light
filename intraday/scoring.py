@@ -12,7 +12,9 @@ import pandas as pd
 import yaml
 from zoneinfo import ZoneInfo
 
-from common.data import TICKERS, PROJECT_ROOT
+from common.data import PROJECT_ROOT, load_universe_for_tier
+
+TICKERS = load_universe_for_tier("intraday")
 from common.indicators import compute_vwap, _to_ist, compute_atr as compute_atr_series
 from common.market import check_earnings_proximity, compute_market_context_scores
 from intraday.convergence import compute_convergence_score, compute_historical_hit_rate
@@ -288,13 +290,18 @@ def evaluate_symbol(symbol, intra_df, daily_df, nifty_state, vix_info,
     eligible = get_eligible_strategies(day_type, symbol_regime)
 
     if not eligible:
+        print(f"    [DEBUG] {symbol}: NO eligible strategies | day_type={day_type}, "
+              f"trend={symbol_regime.get('trend')}, liquidity={symbol_regime.get('liquidity')}")
         return candidates
+
+    _debug_parts = []  # collect per-strategy rejection reasons
 
     # Run each eligible strategy
     for strategy_name in eligible:
         # Time-relevance check — skip expired strategy windows
         time_rel = compute_time_relevance(strategy_name, now_ist=now_ist)
         if time_rel["status"] == "EXPIRED":
+            _debug_parts.append(f"{strategy_name}=EXPIRED")
             continue
 
         candidate = None
@@ -316,14 +323,17 @@ def evaluate_symbol(symbol, intra_df, daily_df, nifty_state, vix_info,
                                       symbol_regime, day_type, mlr_config=_mlr_config)
 
         if candidate is None:
+            _debug_parts.append(f"{strategy_name}=no_setup")
             continue
 
         # ── Bug Fix #4: Minimum RR gate ──
         if candidate["rr_ratio"] < MIN_RR_RATIO:
+            _debug_parts.append(f"{strategy_name}=RR_{candidate['rr_ratio']:.1f}<{MIN_RR_RATIO}")
             continue  # discard sub-threshold RR before scoring
 
         # ── LONG_ONLY filter: skip short/SELL setups in equity cash segment ──
         if LONG_ONLY and candidate.get("direction") == "short":
+            _debug_parts.append(f"{strategy_name}=short_blocked")
             continue
 
         # Enrich candidate with symbol metadata
@@ -504,7 +514,12 @@ def evaluate_symbol(symbol, intra_df, daily_df, nifty_state, vix_info,
             "liquidity": "normal" if not is_illiquid else "illiquid",
         }
 
+        _debug_parts.append(f"{strategy_name}={candidate['signal']}({composite:.0%})")
         candidates.append(candidate)
+
+    # Print debug summary for this symbol
+    if _debug_parts:
+        print(f"    [DEBUG] {symbol}: eligible={eligible} | {', '.join(_debug_parts)}")
 
     return candidates
 

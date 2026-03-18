@@ -7,12 +7,14 @@ Intraday scalp scanner and overnight BTST analyzer for Indian equity markets (NS
 ```
 common/              Shared utilities
   data.py            OHLCV fetching (yfinance + Upstox gap-fill + Supabase cache)
+  universe.py        Trade universe builder (MTF screening → universe.yaml)
   data_cache.py      Supabase-backed OHLCV bar cache
   analysis_cache.py  Supabase-backed analysis metric cache (VIX, regimes, hit rates)
   indicators.py      Technical indicators (ATR, VWAP, gaps)
   market.py          Market-level utilities (VIX, Nifty regime, institutional flow, earnings)
   risk.py            Position sizing, correlation clusters, portfolio heat
   upstox.py          Upstox API integration (auth, token management, REST data)
+  upstox_symbols.py  yfinance ↔ Upstox instrument key mapping
   db.py              Supabase (PostgreSQL) persistence layer
   llm.py             LLM advisory (Ollama / OpenAI / any OpenAI-compatible endpoint)
   display.py         Terminal box-drawing utilities
@@ -30,10 +32,12 @@ btst/                Buy Today Sell Tomorrow
 intraday/            Time-aware multi-strategy intraday & swing scanner
   scanner.py         Main orchestrator: phase detection → evaluate → rank → dashboard → report
   backtest.py        Replay historical days through scanner pipeline, validate signals
+  market_data.py     Market data report (global indices, sectors, commodities, universe movers)
+  config_check.py    Config staleness checker (MLR + scalp config freshness)
   explanations.py    Template + LLM educational explanations (per-phase)
   features.py        Technical indicators (EMA, RSI, MACD, Bollinger, Keltner, squeeze)
   regime.py          Day-type + symbol-level regime classification
-  strategies.py      Strategy modules (ORB, pullback, compression, mean-revert, swing, MLR)
+  strategies/        Strategy modules (ORB, pullback, compression, mean-revert, swing, MLR)
   convergence.py     Convergence scoring + historical pattern replay
   mlr_config.py      MLR config generator (precomputed per-ticker recovery stats)
 migrations/          Supabase SQL migrations (run once in SQL Editor)
@@ -45,6 +49,72 @@ main.py              FastAPI app (unrelated)
 ```bash
 uv sync
 ```
+
+## Trade Universe
+
+The system uses a **systematic trade universe** built from Upstox's MTF (Margin Trading Facility) instrument list. MTF eligibility means NSE Group 1 classification — stocks traded on ≥80% of trading days with impact cost ≤1%. This provides a pre-screened pool of liquid, actively traded equities.
+
+### Universe Builder
+
+Screens 1,400+ MTF instruments through a multi-filter pipeline and assigns stocks to three strategy tiers:
+
+```bash
+python -m common.universe              # build universe (uses Supabase cache for speed)
+python -m common.universe --force      # force full re-download + re-computation
+python -m common.universe --dry-run    # preview results without writing files
+```
+
+**Run weekly** to refresh. First run takes ~5-8 minutes (fetches OHLCV + sector info for all stocks). Subsequent runs take ~30 seconds (Supabase-cached metrics + sectors).
+
+### Filter Pipeline
+
+```
+Upstox MTF list (1,400+ stocks)
+  → NSE_EQ equities only
+  → Batch OHLCV fetch (yfinance, 1-month daily)
+  → Compute: last price, 20-day ADTV (₹ crore), 14-day ATR%
+  → Apply tier filters
+  → Fetch sector classification (yfinance, threaded)
+  → Sector cap (max 25% from any single sector)
+  → Write common/universe.yaml + common/universe_guide.md
+```
+
+### Strategy Tiers
+
+| Tier | ADTV Min | Price Range | ATR% Range | Target Size |
+|------|----------|-------------|------------|-------------|
+| **Scalp** | ₹15 Cr | ₹100-5,000 | 1.5-5.0% | ~80 stocks |
+| **Intraday** | ₹8 Cr | ₹50-10,000 | 1.5-7.0% | ~120 stocks |
+| **BTST** | ₹4 Cr | ₹50-10,000 | 1.0-6.0% | ~150 stocks |
+
+### How Scanners Use It
+
+- `common/data.py` loads `TICKERS` from `universe.yaml` automatically (intraday tier by default)
+- Scanners can load tier-specific universes: `load_universe_for_tier("scalp")`
+- If `universe.yaml` doesn't exist, falls back to the hardcoded 34-stock universe
+- Each stock in the universe includes: sector, instrument_key (for Upstox), ISIN, ADTV, ATR%, price, and tier eligibility flags
+
+### Caching
+
+| Layer | What | TTL |
+|-------|------|-----|
+| MTF instrument list | Local file (`~/.upstox_mtf.json`) | 1 day |
+| Stock metrics (price, ADTV, ATR%) | Supabase `universe_metrics` table | 1 day |
+| Sector classification | Supabase `universe_sectors` table + local file | 30 days |
+
+## Trade Plan Utilities
+
+Helper scripts that automate data collection for the daily trade plan (see `intraday/TRADE_PLAN_PROMPT.md`):
+
+```bash
+python -m intraday.market_data         # fetch global/India/sector/commodity data + universe movers
+python -m intraday.market_data --json  # JSON output for programmatic use
+python -m intraday.config_check        # check MLR + scalp config staleness
+python -m intraday.backtest --last-week # backtest last 5 trading days (auto-computed dates)
+```
+
+- **Market data report** fetches global indices, India markets, sector indices, commodities/FX, FII flow proxy, and universe movers. Computes conditional search triggers (VIX elevated, Brent move, etc.) and backtest date range. Output: markdown to stdout + saved to `intraday/reports/market_data_*.md`.
+- **Config check** verifies `mlr_config.yaml` (stale if ≥3 days) and `scalp_config.yaml` (stale if ≥7 days), checks ticker count mismatches, and recommends regeneration commands.
 
 ## Scalp Trading Workflow
 
@@ -178,6 +248,7 @@ Replays historical days through the intraday scanner's phase-aware pipeline. Sim
 ```bash
 python -m intraday.backtest --date 2026-02-20                        # Single day
 python -m intraday.backtest --start 2026-02-10 --end 2026-02-20     # Date range
+python -m intraday.backtest --last-week                              # Auto last 5 trading days
 python -m intraday.backtest --date 2026-02-20 --capital 500000       # Custom capital
 python -m intraday.backtest --date 2026-02-20 --llm                  # Add LLM summary
 ```

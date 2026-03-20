@@ -478,9 +478,13 @@ def main():
     print(f"\nProcessing {len(tickers)} tickers...")
     results = {}
 
-    for symbol, cfg in tickers.items():
+    for i, (symbol, cfg) in enumerate(tickers.items(), 1):
         result = process_ticker(symbol, cfg, verbose=args.verbose or bool(args.ticker))
         results[symbol] = result
+        # Rate-limit delay: every 10 tickers, pause to avoid yfinance throttling
+        if i % 10 == 0:
+            import time as _time
+            _time.sleep(2)
 
     # Build outputs
     config_path = build_yaml(results)

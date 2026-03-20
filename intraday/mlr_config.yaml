@@ -1,4 +1,4 @@
-generated: '2026-03-18T12:53:42.091704'
+generated: '2026-03-19T08:53:45.816010'
 description: MLR (Morning Low Recovery) per-ticker config — auto-generated
 methodology: 60 days of 5-min data + 1 year daily data analyzed per ticker. Morning
   lows identified, full-session phase analysis discovers per-stock low/high formation
@@ -10,16 +10,16 @@ tickers:
     name: Aditya Birla Capital
     edge_strength: 4
     sample_size: 58
-    avg_recovery_to_close_pct: 0.67
-    avg_recovery_to_post_low_high_pct: 1.59
-    pct_recovery_above_1: 32.8
+    avg_recovery_to_close_pct: 0.68
+    avg_recovery_to_post_low_high_pct: 1.61
+    pct_recovery_above_1: 34.5
     pct_recovery_above_3: 3.4
     mae_p90: 2.447
     mae_median: 0.739
     dow_favorable: false
     avg_drop_norm: 0.265
-    avg_high_norm: 0.308
-    avg_recovery_norm: 0.217
+    avg_high_norm: 0.311
+    avg_recovery_norm: 0.22
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
     optimal_target_pct: 1.5
@@ -167,7 +167,7 @@ tickers:
     low_cutoff_recommendation: '15:15'
     best_low_phase: 10:00-10:30
     best_post_low_high_phase: 14:30-15:15
-    avg_post_low_trade_window_mins: 156.0
+    avg_post_low_trade_window_mins: 159.0
     dow_stats:
       Monday:
         win_rate: 45.5
@@ -178,8 +178,8 @@ tickers:
         avg_recovery: 0.73
         n: 12
       Wednesday:
-        win_rate: 15.4
-        avg_recovery: 0.32
+        win_rate: 23.1
+        avg_recovery: 0.38
         n: 13
       Thursday:
         win_rate: 50.0
@@ -191,8 +191,8 @@ tickers:
         n: 12
     month_period_stats:
       Q1:
-        win_rate: 35.3
-        avg_recovery: 0.72
+        win_rate: 37.3
+        avg_recovery: 0.73
         n: 51
       Q4:
         win_rate: 14.3
@@ -211,7 +211,7 @@ tickers:
     mae_median: 0.699
     dow_favorable: false
     avg_drop_norm: 0.296
-    avg_high_norm: 0.278
+    avg_high_norm: 0.28
     avg_recovery_norm: 0.137
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
@@ -365,7 +365,7 @@ tickers:
     low_cutoff_recommendation: '15:15'
     best_low_phase: 11:00-11:30
     best_post_low_high_phase: 14:30-15:15
-    avg_post_low_trade_window_mins: 132.0
+    avg_post_low_trade_window_mins: 134.0
     dow_stats:
       Monday:
         win_rate: 45.5
@@ -377,7 +377,7 @@ tickers:
         n: 12
       Wednesday:
         win_rate: 38.5
-        avg_recovery: 0.8
+        avg_recovery: 0.79
         n: 13
       Thursday:
         win_rate: 50.0
@@ -390,7 +390,7 @@ tickers:
     month_period_stats:
       Q1:
         win_rate: 39.2
-        avg_recovery: 0.51
+        avg_recovery: 0.5
         n: 51
       Q4:
         win_rate: 0.0
@@ -409,7 +409,7 @@ tickers:
     mae_median: 0.65
     dow_favorable: false
     avg_drop_norm: 0.242
-    avg_high_norm: 0.352
+    avg_high_norm: 0.353
     avg_recovery_norm: 0.146
     optimal_entry_delay: 3
     optimal_stop_pct: 0.2
@@ -575,7 +575,7 @@ tickers:
     low_cutoff_recommendation: '15:15'
     best_low_phase: 10:00-10:30
     best_post_low_high_phase: 14:30-15:15
-    avg_post_low_trade_window_mins: 149.0
+    avg_post_low_trade_window_mins: 152.0
     dow_stats:
       Monday:
         win_rate: 27.3
@@ -587,7 +587,7 @@ tickers:
         n: 12
       Wednesday:
         win_rate: 30.8
-        avg_recovery: 0.67
+        avg_recovery: 0.66
         n: 13
       Thursday:
         win_rate: 40.0
@@ -612,15 +612,15 @@ tickers:
     edge_strength: 4
     sample_size: 58
     avg_recovery_to_close_pct: 0.69
-    avg_recovery_to_post_low_high_pct: 1.67
+    avg_recovery_to_post_low_high_pct: 1.7
     pct_recovery_above_1: 36.2
     pct_recovery_above_3: 5.2
     mae_p90: 1.959
     mae_median: 0.712
     dow_favorable: false
     avg_drop_norm: 0.206
-    avg_high_norm: 0.418
-    avg_recovery_norm: 0.211
+    avg_high_norm: 0.425
+    avg_recovery_norm: 0.212
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
     optimal_target_pct: 1.0
@@ -797,7 +797,7 @@ tickers:
         n: 12
       Wednesday:
         win_rate: 53.8
-        avg_recovery: 1.15
+        avg_recovery: 1.17
         n: 13
       Thursday:
         win_rate: 40.0
@@ -821,26 +821,26 @@ tickers:
     name: Aeroflex Industries
     edge_strength: 4
     sample_size: 58
-    avg_recovery_to_close_pct: 0.87
+    avg_recovery_to_close_pct: 0.82
     avg_recovery_to_post_low_high_pct: 2.36
-    pct_recovery_above_1: 51.7
+    pct_recovery_above_1: 50.0
     pct_recovery_above_3: 5.2
     mae_p90: 2.938
     mae_median: 0.741
-    dow_favorable: true
+    dow_favorable: false
     avg_drop_norm: 0.121
-    avg_high_norm: 0.442
-    avg_recovery_norm: 0.167
+    avg_high_norm: 0.443
+    avg_recovery_norm: 0.157
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
     optimal_target_pct: 2.0
-    ev: 0.6974
+    ev: 0.7023
     win_rate: 50.0
     oos_win_rate: 55.6
-    oos_ev: 0.9229
+    oos_ev: 0.9386
     monte_carlo:
-      ev_ci_lower: 0.4556
-      ev_ci_upper: 0.9406
+      ev_ci_lower: 0.4582
+      ev_ci_upper: 0.9462
       wr_ci_lower: 37.9
       wr_ci_upper: 62.1
       max_dd_ci_upper: 1.6
@@ -971,8 +971,8 @@ tickers:
         avg_recovery: 0.79
         n: 12
       Wednesday:
-        win_rate: 61.5
-        avg_recovery: 0.89
+        win_rate: 53.8
+        avg_recovery: 0.68
         n: 13
       Thursday:
         win_rate: 50.0
@@ -984,8 +984,8 @@ tickers:
         n: 12
     month_period_stats:
       Q1:
-        win_rate: 52.9
-        avg_recovery: 0.9
+        win_rate: 51.0
+        avg_recovery: 0.85
         n: 51
       Q4:
         win_rate: 42.9
@@ -996,16 +996,16 @@ tickers:
     name: Anant Raj
     edge_strength: 4
     sample_size: 58
-    avg_recovery_to_close_pct: 0.68
-    avg_recovery_to_post_low_high_pct: 1.93
+    avg_recovery_to_close_pct: 0.69
+    avg_recovery_to_post_low_high_pct: 1.94
     pct_recovery_above_1: 36.2
     pct_recovery_above_3: 13.8
     mae_p90: 2.986
     mae_median: 1.203
     dow_favorable: false
     avg_drop_norm: 0.246
-    avg_high_norm: 0.304
-    avg_recovery_norm: 0.16
+    avg_high_norm: 0.306
+    avg_recovery_norm: 0.162
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
     optimal_target_pct: 2.0
@@ -1027,25 +1027,25 @@ tickers:
         low_before_high_pct: 77.8
         recovered_past_open_pct: 33.3
         avg_drop_from_open_pct: 1.34
-        avg_high_from_open_pct: 1.09
-        avg_drop_norm: 0.296
+        avg_high_from_open_pct: 1.17
+        avg_drop_norm: 0.297
         median_drop_norm: 0.321
-        avg_high_norm: 0.25
+        avg_high_norm: 0.268
         median_high_norm: 0.033
-        avg_low_to_high_bars: 35.1
+        avg_low_to_high_bars: 37.9
         best_low_phase: 10:30-11:00
         post_low_high_window: 11:30-12:00
-        best_post_low_high_phase: 12:30-13:00
-        avg_post_low_trade_window_mins: 144.0
+        best_post_low_high_phase: 14:00-14:30
+        avg_post_low_trade_window_mins: 155.0
         low_1:
           window: 10:00-10:30
           probability: 44.4
           avg_drop_pct: 0.64
           drop_std: 2.02
-          avg_drop_norm: 0.116
-          avg_recovery_pct: 2.35
-          recovery_std: 1.24
-          median_recovery_pct: 2.84
+          avg_drop_norm: 0.117
+          avg_recovery_pct: 2.45
+          recovery_std: 1.28
+          median_recovery_pct: 3.05
           recovered_past_open_pct: 75.0
           recovery_by: 10:00-10:30
           n: 4
@@ -1141,7 +1141,7 @@ tickers:
     low_cutoff_recommendation: '15:15'
     best_low_phase: 10:30-11:00
     best_post_low_high_phase: 11:00-11:30
-    avg_post_low_trade_window_mins: 134.0
+    avg_post_low_trade_window_mins: 136.0
     dow_stats:
       Monday:
         win_rate: 36.4
@@ -1153,7 +1153,7 @@ tickers:
         n: 12
       Wednesday:
         win_rate: 46.2
-        avg_recovery: 0.73
+        avg_recovery: 0.76
         n: 13
       Thursday:
         win_rate: 30.0
@@ -1166,7 +1166,7 @@ tickers:
     month_period_stats:
       Q1:
         win_rate: 37.3
-        avg_recovery: 0.64
+        avg_recovery: 0.65
         n: 51
       Q4:
         win_rate: 28.6
@@ -1186,20 +1186,20 @@ tickers:
     dow_favorable: false
     avg_drop_norm: 0.209
     avg_high_norm: 0.375
-    avg_recovery_norm: 0.229
+    avg_recovery_norm: 0.23
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
     optimal_target_pct: 1.5
-    ev: 0.288
-    win_rate: 41.4
-    oos_win_rate: 38.9
-    oos_ev: 0.2166
+    ev: 0.2895
+    win_rate: 43.1
+    oos_win_rate: 44.4
+    oos_ev: 0.2216
     monte_carlo:
-      ev_ci_lower: 0.1296
-      ev_ci_upper: 0.4522
+      ev_ci_lower: 0.1321
+      ev_ci_upper: 0.4531
       wr_ci_lower: 27.6
       wr_ci_upper: 51.7
-      max_dd_ci_upper: 1.884
+      max_dd_ci_upper: 1.857
     profiles:
       gap_down_small:
         n: 7
@@ -1257,7 +1257,7 @@ tickers:
       gap_up_small:
         n: 21
         pct_of_days: 36.2
-        predictability: 0.4
+        predictability: 0.41
         low_before_high_pct: 71.4
         recovered_past_open_pct: 57.1
         avg_drop_from_open_pct: 0.24
@@ -1277,8 +1277,8 @@ tickers:
           avg_drop_pct: -0.06
           drop_std: 0.68
           avg_drop_norm: -0.024
-          avg_recovery_pct: 1.15
-          recovery_std: 2.23
+          avg_recovery_pct: 1.17
+          recovery_std: 2.22
           median_recovery_pct: 0.97
           recovered_past_open_pct: 66.7
           recovery_by: 10:00-10:30
@@ -1375,7 +1375,7 @@ tickers:
         n: 12
       Wednesday:
         win_rate: 23.1
-        avg_recovery: 0.75
+        avg_recovery: 0.77
         n: 13
       Thursday:
         win_rate: 40.0
@@ -1399,16 +1399,16 @@ tickers:
     name: Bharat Heavy Electricals
     edge_strength: 5
     sample_size: 58
-    avg_recovery_to_close_pct: 0.75
-    avg_recovery_to_post_low_high_pct: 1.85
+    avg_recovery_to_close_pct: 0.76
+    avg_recovery_to_post_low_high_pct: 1.87
     pct_recovery_above_1: 44.8
     pct_recovery_above_3: 5.2
     mae_p90: 2.643
     mae_median: 0.74
     dow_favorable: false
     avg_drop_norm: 0.218
-    avg_high_norm: 0.39
-    avg_recovery_norm: 0.223
+    avg_high_norm: 0.393
+    avg_recovery_norm: 0.224
     optimal_entry_delay: 5
     optimal_stop_pct: 0.2
     optimal_target_pct: 1.0
@@ -1467,28 +1467,28 @@ tickers:
       gap_up_small:
         n: 19
         pct_of_days: 32.8
-        predictability: 0.41
-        low_before_high_pct: 73.7
+        predictability: 0.43
+        low_before_high_pct: 78.9
         recovered_past_open_pct: 63.2
         avg_drop_from_open_pct: 0.56
-        avg_high_from_open_pct: 1.51
+        avg_high_from_open_pct: 1.55
         avg_drop_norm: 0.162
         median_drop_norm: 0.149
-        avg_high_norm: 0.466
-        median_high_norm: 0.314
-        avg_low_to_high_bars: 35.6
+        avg_high_norm: 0.476
+        median_high_norm: 0.422
+        avg_low_to_high_bars: 36.0
         best_low_phase: 11:00-11:30
         post_low_high_window: 14:30-15:15
         best_post_low_high_phase: 14:30-15:15
-        avg_post_low_trade_window_mins: 154.0
+        avg_post_low_trade_window_mins: 161.0
         low_1:
           window: 10:00-10:30
           probability: 42.1
           avg_drop_pct: 0.19
           drop_std: 0.91
           avg_drop_norm: 0.041
-          avg_recovery_pct: 1.83
-          recovery_std: 1.72
+          avg_recovery_pct: 1.87
+          recovery_std: 1.69
           median_recovery_pct: 1.35
           recovered_past_open_pct: 87.5
           recovery_by: 10:00-10:30
@@ -1507,10 +1507,10 @@ tickers:
           n: 6
         high_1:
           window: 10:00-10:30
-          probability: 31.6
-          avg_high_pct: 0.54
-          avg_high_norm: 0.176
-          n: 6
+          probability: 26.3
+          avg_high_pct: 0.44
+          avg_high_norm: 0.159
+          n: 5
         high_2:
           window: 14:30-15:15
           probability: 21.1
@@ -1573,7 +1573,7 @@ tickers:
     low_cutoff_recommendation: '15:15'
     best_low_phase: 11:00-11:30
     best_post_low_high_phase: 14:30-15:15
-    avg_post_low_trade_window_mins: 146.0
+    avg_post_low_trade_window_mins: 149.0
     dow_stats:
       Monday:
         win_rate: 54.5
@@ -1585,7 +1585,7 @@ tickers:
         n: 12
       Wednesday:
         win_rate: 38.5
-        avg_recovery: 0.71
+        avg_recovery: 0.73
         n: 13
       Thursday:
         win_rate: 40.0
@@ -1598,7 +1598,7 @@ tickers:
     month_period_stats:
       Q1:
         win_rate: 45.1
-        avg_recovery: 0.79
+        avg_recovery: 0.8
         n: 51
       Q4:
         win_rate: 42.9
@@ -1617,7 +1617,7 @@ tickers:
     mae_median: 0.681
     dow_favorable: false
     avg_drop_norm: 0.176
-    avg_high_norm: 0.387
+    avg_high_norm: 0.388
     avg_recovery_norm: 0.223
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
@@ -1693,16 +1693,16 @@ tickers:
         low_before_high_pct: 85.7
         recovered_past_open_pct: 50.0
         avg_drop_from_open_pct: 0.37
-        avg_high_from_open_pct: 1.25
+        avg_high_from_open_pct: 1.26
         avg_drop_norm: 0.114
         median_drop_norm: 0.115
         avg_high_norm: 0.38
         median_high_norm: 0.457
-        avg_low_to_high_bars: 37.5
+        avg_low_to_high_bars: 39.8
         best_low_phase: 11:00-11:30
         post_low_high_window: 14:30-15:15
         best_post_low_high_phase: 14:30-15:15
-        avg_post_low_trade_window_mins: 166.0
+        avg_post_low_trade_window_mins: 176.0
         low_1:
           window: 10:00-10:30
           probability: 64.3
@@ -1721,8 +1721,8 @@ tickers:
           avg_drop_pct: 1.11
           drop_std: 0.14
           avg_drop_norm: 0.319
-          avg_recovery_pct: 0.63
-          recovery_std: 0.59
+          avg_recovery_pct: 0.68
+          recovery_std: 0.66
           median_recovery_pct: 0.82
           recovered_past_open_pct: 33.3
           recovery_by: 11:30-12:00
@@ -1734,10 +1734,10 @@ tickers:
           avg_high_norm: 0.413
           n: 4
         high_2:
-          window: 12:00-12:30
+          window: 10:30-11:00
           probability: 14.3
-          avg_high_pct: 0.99
-          avg_high_norm: 0.343
+          avg_high_pct: 0.7
+          avg_high_norm: 0.271
           n: 2
         post_low_high_1:
           window: 14:30-15:15
@@ -1747,10 +1747,10 @@ tickers:
           n: 4
         post_low_high_2:
           window: 12:00-12:30
-          probability: 21.4
-          avg_high_pct: 0.51
-          avg_high_norm: 0.182
-          n: 3
+          probability: 14.3
+          avg_high_pct: 0.4
+          avg_high_norm: 0.165
+          n: 2
       gap_up_large:
         n: 9
         pct_of_days: 15.5
@@ -1819,7 +1819,7 @@ tickers:
     low_cutoff_recommendation: '15:15'
     best_low_phase: 10:00-10:30
     best_post_low_high_phase: 14:30-15:15
-    avg_post_low_trade_window_mins: 162.0
+    avg_post_low_trade_window_mins: 164.0
     dow_stats:
       Monday:
         win_rate: 45.5
@@ -1831,7 +1831,7 @@ tickers:
         n: 12
       Wednesday:
         win_rate: 46.2
-        avg_recovery: 1.12
+        avg_recovery: 1.13
         n: 13
       Thursday:
         win_rate: 50.0
@@ -1855,16 +1855,16 @@ tickers:
     name: Computer Age Mgmt Services
     edge_strength: 4
     sample_size: 58
-    avg_recovery_to_close_pct: 0.53
-    avg_recovery_to_post_low_high_pct: 1.38
+    avg_recovery_to_close_pct: 0.56
+    avg_recovery_to_post_low_high_pct: 1.41
     pct_recovery_above_1: 24.1
     pct_recovery_above_3: 0.0
     mae_p90: 2.198
     mae_median: 0.7
     dow_favorable: false
     avg_drop_norm: 0.283
-    avg_high_norm: 0.303
-    avg_recovery_norm: 0.18
+    avg_high_norm: 0.31
+    avg_recovery_norm: 0.187
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
     optimal_target_pct: 1.0
@@ -1932,71 +1932,6 @@ tickers:
           avg_high_pct: 2.36
           avg_high_norm: 0.771
           n: 3
-      gap_up_small:
-        n: 12
-        pct_of_days: 20.7
-        predictability: 0.47
-        low_before_high_pct: 58.3
-        recovered_past_open_pct: 33.3
-        avg_drop_from_open_pct: 0.86
-        avg_high_from_open_pct: 0.89
-        avg_drop_norm: 0.34
-        median_drop_norm: 0.374
-        avg_high_norm: 0.31
-        median_high_norm: 0.204
-        avg_low_to_high_bars: 27.0
-        best_low_phase: 11:00-11:30
-        post_low_high_window: 12:00-12:30
-        best_post_low_high_phase: 13:00-13:30
-        avg_post_low_trade_window_mins: 121.0
-        low_1:
-          window: 10:00-10:30
-          probability: 33.3
-          avg_drop_pct: 0.14
-          drop_std: 0.83
-          avg_drop_norm: 0.115
-          avg_recovery_pct: 0.69
-          recovery_std: 0.5
-          median_recovery_pct: 0.72
-          recovered_past_open_pct: 75.0
-          recovery_by: 10:00-10:30
-          n: 4
-        low_2:
-          window: 11:30-12:00
-          probability: 33.3
-          avg_drop_pct: 1.33
-          drop_std: 1.02
-          avg_drop_norm: 0.428
-          avg_recovery_pct: -0.47
-          recovery_std: 1.27
-          median_recovery_pct: 0.11
-          recovered_past_open_pct: 0.0
-          recovery_by: null
-          n: 4
-        high_1:
-          window: 10:00-10:30
-          probability: 50.0
-          avg_high_pct: 0.67
-          avg_high_norm: 0.214
-          n: 6
-        high_2:
-          window: 12:00-12:30
-          probability: 16.7
-          avg_high_pct: 0.67
-          avg_high_norm: 0.249
-          n: 2
-        post_low_high_1:
-          window: 12:00-12:30
-          probability: 16.7
-          avg_high_pct: 0.67
-          avg_high_norm: 0.249
-          n: 2
-        post_low_high_2:
-          window: 14:00-14:30
-          probability: 16.7
-          avg_high_pct: 0.28
-          avg_high_norm: 0.141
-          n: 2
       gap_up_large:
         n: 5
         pct_of_days: 8.6
@@ -2053,7 +1988,7 @@ tickers:
     low_cutoff_recommendation: '15:15'
     best_low_phase: 11:30-12:00
     best_post_low_high_phase: 12:00-12:30
-    avg_post_low_trade_window_mins: 138.0
+    avg_post_low_trade_window_mins: 141.0
     dow_stats:
       Monday:
         win_rate: 36.4
@@ -2065,7 +2000,7 @@ tickers:
         n: 12
       Wednesday:
         win_rate: 30.8
-        avg_recovery: 0.76
+        avg_recovery: 0.88
         n: 13
       Thursday:
         win_rate: 20.0
@@ -2078,7 +2013,7 @@ tickers:
     month_period_stats:
       Q1:
         win_rate: 27.5
-        avg_recovery: 0.6
+        avg_recovery: 0.64
         n: 51
       Q4:
         win_rate: 0.0
@@ -2089,29 +2024,29 @@ tickers:
     name: Coal India
     edge_strength: 4
     sample_size: 58
-    avg_recovery_to_close_pct: 0.65
-    avg_recovery_to_post_low_high_pct: 1.36
+    avg_recovery_to_close_pct: 0.67
+    avg_recovery_to_post_low_high_pct: 1.38
     pct_recovery_above_1: 20.7
     pct_recovery_above_3: 5.2
     mae_p90: 1.941
     mae_median: 0.517
     dow_favorable: false
     avg_drop_norm: 0.133
-    avg_high_norm: 0.54
-    avg_recovery_norm: 0.27
+    avg_high_norm: 0.543
+    avg_recovery_norm: 0.276
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
     optimal_target_pct: 1.0
-    ev: 0.2711
-    win_rate: 51.7
-    oos_win_rate: 61.1
-    oos_ev: 0.4101
+    ev: 0.2917
+    win_rate: 53.4
+    oos_win_rate: 66.7
+    oos_ev: 0.4768
     monte_carlo:
-      ev_ci_lower: 0.146
-      ev_ci_upper: 0.3959
-      wr_ci_lower: 36.2
-      wr_ci_upper: 60.3
-      max_dd_ci_upper: 1.508
+      ev_ci_lower: 0.1671
+      ev_ci_upper: 0.4166
+      wr_ci_lower: 37.9
+      wr_ci_upper: 62.1
+      max_dd_ci_upper: 1.389
     profiles:
       gap_down_small:
         n: 9
@@ -2210,7 +2145,7 @@ tickers:
     low_cutoff_recommendation: '14:00'
     best_low_phase: 10:30-11:00
     best_post_low_high_phase: 14:30-15:15
-    avg_post_low_trade_window_mins: 148.0
+    avg_post_low_trade_window_mins: 152.0
     dow_stats:
       Monday:
         win_rate: 27.3
@@ -2222,7 +2157,7 @@ tickers:
         n: 12
       Wednesday:
         win_rate: 15.4
-        avg_recovery: 0.37
+        avg_recovery: 0.45
         n: 13
       Thursday:
         win_rate: 20.0
@@ -2235,7 +2170,7 @@ tickers:
     month_period_stats:
       Q1:
         win_rate: 23.5
-        avg_recovery: 0.74
+        avg_recovery: 0.77
         n: 51
       Q4:
         win_rate: 0.0
@@ -2246,16 +2181,16 @@ tickers:
     name: Cummins India
     edge_strength: 4
     sample_size: 58
-    avg_recovery_to_close_pct: 0.69
-    avg_recovery_to_post_low_high_pct: 1.64
+    avg_recovery_to_close_pct: 0.68
+    avg_recovery_to_post_low_high_pct: 1.65
     pct_recovery_above_1: 50.0
     pct_recovery_above_3: 3.4
     mae_p90: 2.134
     mae_median: 0.464
-    dow_favorable: false
+    dow_favorable: true
     avg_drop_norm: 0.19
-    avg_high_norm: 0.436
-    avg_recovery_norm: 0.21
+    avg_high_norm: 0.439
+    avg_recovery_norm: 0.209
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
     optimal_target_pct: 2.0
@@ -2473,7 +2408,7 @@ tickers:
     low_cutoff_recommendation: '15:15'
     best_low_phase: 10:30-11:00
     best_post_low_high_phase: 14:00-14:30
-    avg_post_low_trade_window_mins: 160.0
+    avg_post_low_trade_window_mins: 161.0
     dow_stats:
       Monday:
         win_rate: 72.7
@@ -2485,7 +2420,7 @@ tickers:
         n: 12
       Wednesday:
         win_rate: 38.5
-        avg_recovery: 0.38
+        avg_recovery: 0.36
         n: 13
       Thursday:
         win_rate: 70.0
@@ -2507,31 +2442,31 @@ tickers:
   DATAPATTNS.NS:
     enabled: true
     name: Data Patterns
-    edge_strength: 4
+    edge_strength: 5
     sample_size: 58
-    avg_recovery_to_close_pct: 0.94
-    avg_recovery_to_post_low_high_pct: 2.42
-    pct_recovery_above_1: 37.9
+    avg_recovery_to_close_pct: 0.97
+    avg_recovery_to_post_low_high_pct: 2.45
+    pct_recovery_above_1: 39.7
     pct_recovery_above_3: 13.8
     mae_p90: 3.623
     mae_median: 0.708
     dow_favorable: false
     avg_drop_norm: 0.126
-    avg_high_norm: 0.477
-    avg_recovery_norm: 0.181
+    avg_high_norm: 0.48
+    avg_recovery_norm: 0.186
     optimal_entry_delay: 3
     optimal_stop_pct: 0.2
     optimal_target_pct: 1.5
-    ev: 0.6826
-    win_rate: 63.8
-    oos_win_rate: 66.7
-    oos_ev: 0.6802
+    ev: 0.7085
+    win_rate: 65.5
+    oos_win_rate: 72.2
+    oos_ev: 0.7639
     monte_carlo:
-      ev_ci_lower: 0.4899
-      ev_ci_upper: 0.8741
-      wr_ci_lower: 48.3
-      wr_ci_upper: 72.4
-      max_dd_ci_upper: 1.134
+      ev_ci_lower: 0.5162
+      ev_ci_upper: 0.8976
+      wr_ci_lower: 50.0
+      wr_ci_upper: 74.1
+      max_dd_ci_upper: 1.1
     profiles:
       gap_up_small:
         n: 12
@@ -2654,7 +2589,7 @@ tickers:
     low_cutoff_recommendation: '15:15'
     best_low_phase: 10:30-11:00
     best_post_low_high_phase: 14:30-15:15
-    avg_post_low_trade_window_mins: 127.0
+    avg_post_low_trade_window_mins: 132.0
     dow_stats:
       Monday:
         win_rate: 45.5
@@ -2665,8 +2600,8 @@ tickers:
         avg_recovery: 0.96
         n: 12
       Wednesday:
-        win_rate: 38.5
-        avg_recovery: 1.18
+        win_rate: 46.2
+        avg_recovery: 1.32
         n: 13
       Thursday:
         win_rate: 40.0
@@ -2678,8 +2613,8 @@ tickers:
         n: 12
     month_period_stats:
       Q1:
-        win_rate: 39.2
-        avg_recovery: 1.01
+        win_rate: 41.2
+        avg_recovery: 1.04
         n: 51
       Q4:
         win_rate: 28.6
@@ -2690,7 +2625,7 @@ tickers:
     name: Exide Industries
     edge_strength: 4
     sample_size: 58
-    avg_recovery_to_close_pct: 0.42
+    avg_recovery_to_close_pct: 0.41
     avg_recovery_to_post_low_high_pct: 1.16
     pct_recovery_above_1: 29.3
     pct_recovery_above_3: 0.0
@@ -2699,7 +2634,7 @@ tickers:
     dow_favorable: false
     avg_drop_norm: 0.254
     avg_high_norm: 0.322
-    avg_recovery_norm: 0.158
+    avg_recovery_norm: 0.157
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
     optimal_target_pct: 2.0
@@ -2793,7 +2728,7 @@ tickers:
       gap_up_small:
         n: 10
         pct_of_days: 17.2
-        predictability: 0.58
+        predictability: 0.57
         low_before_high_pct: 90.0
         recovered_past_open_pct: 80.0
         avg_drop_from_open_pct: 0.01
@@ -2813,8 +2748,8 @@ tickers:
           avg_drop_pct: -0.13
           drop_std: 0.58
           avg_drop_norm: -0.049
-          avg_recovery_pct: 0.98
-          recovery_std: 0.73
+          avg_recovery_pct: 0.94
+          recovery_std: 0.7
           median_recovery_pct: 1.12
           recovered_past_open_pct: 83.3
           recovery_by: 10:00-10:30
@@ -2899,7 +2834,7 @@ tickers:
         n: 12
       Wednesday:
         win_rate: 23.1
-        avg_recovery: 0.46
+        avg_recovery: 0.44
         n: 13
       Thursday:
         win_rate: 50.0
@@ -2912,7 +2847,7 @@ tickers:
     month_period_stats:
       Q1:
         win_rate: 29.4
-        avg_recovery: 0.45
+        avg_recovery: 0.44
         n: 51
       Q4:
         win_rate: 28.6
@@ -2923,16 +2858,16 @@ tickers:
     name: Finolex Cables
     edge_strength: 4
     sample_size: 58
-    avg_recovery_to_close_pct: 0.89
-    avg_recovery_to_post_low_high_pct: 1.76
-    pct_recovery_above_1: 37.9
+    avg_recovery_to_close_pct: 0.91
+    avg_recovery_to_post_low_high_pct: 1.77
+    pct_recovery_above_1: 39.7
     pct_recovery_above_3: 12.1
     mae_p90: 2.134
     mae_median: 0.685
     dow_favorable: false
     avg_drop_norm: 0.241
-    avg_high_norm: 0.393
-    avg_recovery_norm: 0.278
+    avg_high_norm: 0.396
+    avg_recovery_norm: 0.281
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
     optimal_target_pct: 1.0
@@ -3091,7 +3026,7 @@ tickers:
     low_cutoff_recommendation: '15:15'
     best_low_phase: 11:00-11:30
     best_post_low_high_phase: 14:30-15:15
-    avg_post_low_trade_window_mins: 154.0
+    avg_post_low_trade_window_mins: 156.0
     dow_stats:
       Monday:
         win_rate: 45.5
@@ -3102,8 +3037,8 @@ tickers:
         avg_recovery: 0.28
         n: 12
       Wednesday:
-        win_rate: 38.5
-        avg_recovery: 0.69
+        win_rate: 46.2
+        avg_recovery: 0.78
         n: 13
       Thursday:
         win_rate: 40.0
@@ -3115,8 +3050,8 @@ tickers:
         n: 12
     month_period_stats:
       Q1:
-        win_rate: 41.2
-        avg_recovery: 0.99
+        win_rate: 43.1
+        avg_recovery: 1.02
         n: 51
       Q4:
         win_rate: 14.3
@@ -3127,29 +3062,29 @@ tickers:
     name: Glenmark Pharmaceuticals
     edge_strength: 4
     sample_size: 58
-    avg_recovery_to_close_pct: 0.73
+    avg_recovery_to_close_pct: 0.71
     avg_recovery_to_post_low_high_pct: 1.58
     pct_recovery_above_1: 41.4
     pct_recovery_above_3: 3.4
     mae_p90: 1.975
     mae_median: 0.522
-    dow_favorable: false
+    dow_favorable: true
     avg_drop_norm: 0.255
     avg_high_norm: 0.437
-    avg_recovery_norm: 0.292
+    avg_recovery_norm: 0.286
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
-    optimal_target_pct: 1.0
-    ev: 0.4134
-    win_rate: 62.1
-    oos_win_rate: 55.6
-    oos_ev: 0.4275
+    optimal_target_pct: 1.5
+    ev: 0.4361
+    win_rate: 56.9
+    oos_win_rate: 50.0
+    oos_ev: 0.3938
     monte_carlo:
-      ev_ci_lower: 0.2878
-      ev_ci_upper: 0.5396
-      wr_ci_lower: 50.0
-      wr_ci_upper: 74.1
-      max_dd_ci_upper: 1.074
+      ev_ci_lower: 0.2686
+      ev_ci_upper: 0.6095
+      wr_ci_lower: 43.1
+      wr_ci_upper: 69.0
+      max_dd_ci_upper: 1.3
     profiles:
       gap_down_small:
         n: 5
@@ -3216,71 +3151,6 @@ tickers:
           avg_high_pct: -2.52
           avg_high_norm: -0.977
           n: 2
-      gap_up_small:
-        n: 16
-        pct_of_days: 27.6
-        predictability: 0.4
-        low_before_high_pct: 68.8
-        recovered_past_open_pct: 43.8
-        avg_drop_from_open_pct: 0.67
-        avg_high_from_open_pct: 1.14
-        avg_drop_norm: 0.272
-        median_drop_norm: 0.258
-        avg_high_norm: 0.428
-        median_high_norm: 0.355
-        avg_low_to_high_bars: 28.6
-        best_low_phase: 10:00-10:30
-        post_low_high_window: 11:30-12:00
-        best_post_low_high_phase: 11:30-12:00
-        avg_post_low_trade_window_mins: 159.0
-        low_1:
-          window: 10:00-10:30
-          probability: 50.0
-          avg_drop_pct: 0.44
-          drop_std: 1.52
-          avg_drop_norm: 0.214
-          avg_recovery_pct: 1.18
-          recovery_std: 1.69
-          median_recovery_pct: 0.58
-          recovered_past_open_pct: 50.0
-          recovery_by: 10:00-10:30
-          n: 8
-        low_2:
-          window: 11:00-11:30
-          probability: 18.8
-          avg_drop_pct: 0.25
-          drop_std: 0.52
-          avg_drop_norm: 0.096
-          avg_recovery_pct: 1.46
-          recovery_std: 0.06
-          median_recovery_pct: 1.48
-          recovered_past_open_pct: 100.0
-          recovery_by: 11:00-11:30
-          n: 3
-        high_1:
-          window: 10:00-10:30
-          probability: 31.2
-          avg_high_pct: 0.79
-          avg_high_norm: 0.347
-          n: 5
-        high_2:
-          window: 11:30-12:00
-          probability: 25.0
-          avg_high_pct: 1.46
-          avg_high_norm: 0.512
-          n: 4
-        post_low_high_1:
-          window: 11:30-12:00
-          probability: 25.0
-          avg_high_pct: 1.46
-          avg_high_norm: 0.512
-          n: 4
-        post_low_high_2:
-          window: 14:30-15:15
-          probability: 25.0
-          avg_high_pct: 0.02
-          avg_high_norm: 0.01
-          n: 4
       gap_up_large:
         n: 4
         pct_of_days: 6.9
@@ -3337,7 +3207,7 @@ tickers:
         n: 12
       Wednesday:
         win_rate: 15.4
-        avg_recovery: 0.62
+        avg_recovery: 0.54
         n: 13
       Thursday:
         win_rate: 60.0
@@ -3350,7 +3220,7 @@ tickers:
     month_period_stats:
       Q1:
         win_rate: 43.1
-        avg_recovery: 0.77
+        avg_recovery: 0.74
         n: 51
       Q4:
         win_rate: 28.6
@@ -3361,7 +3231,7 @@ tickers:
     name: Godawari Power & Ispat
     edge_strength: 4
     sample_size: 58
-    avg_recovery_to_close_pct: 0.85
+    avg_recovery_to_close_pct: 0.84
     avg_recovery_to_post_low_high_pct: 2.09
     pct_recovery_above_1: 43.1
     pct_recovery_above_3: 10.3
@@ -3370,7 +3240,7 @@ tickers:
     dow_favorable: false
     avg_drop_norm: 0.139
     avg_high_norm: 0.472
-    avg_recovery_norm: 0.214
+    avg_recovery_norm: 0.211
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
     optimal_target_pct: 2.0
@@ -3453,9 +3323,9 @@ tickers:
       gap_up_small:
         n: 12
         pct_of_days: 20.7
-        predictability: 0.5
+        predictability: 0.48
         low_before_high_pct: 91.7
-        recovered_past_open_pct: 75.0
+        recovered_past_open_pct: 66.7
         avg_drop_from_open_pct: 0.49
         avg_high_from_open_pct: 1.51
         avg_drop_norm: 0.128
@@ -3473,10 +3343,10 @@ tickers:
           avg_drop_pct: 0.19
           drop_std: 1.31
           avg_drop_norm: 0.023
-          avg_recovery_pct: 1.43
-          recovery_std: 1.9
-          median_recovery_pct: 0.99
-          recovered_past_open_pct: 87.5
+          avg_recovery_pct: 1.34
+          recovery_std: 1.97
+          median_recovery_pct: 0.86
+          recovered_past_open_pct: 75.0
           recovery_by: 10:00-10:30
           n: 8
         low_2:
@@ -3571,7 +3441,7 @@ tickers:
         n: 12
       Wednesday:
         win_rate: 46.2
-        avg_recovery: 0.55
+        avg_recovery: 0.5
         n: 13
       Thursday:
         win_rate: 50.0
@@ -3584,7 +3454,7 @@ tickers:
     month_period_stats:
       Q1:
         win_rate: 43.1
-        avg_recovery: 0.84
+        avg_recovery: 0.83
         n: 51
       Q4:
         win_rate: 42.9
@@ -3593,31 +3463,31 @@ tickers:
   GRAPHITE.NS:
     enabled: true
     name: Graphite India
-    edge_strength: 4
+    edge_strength: 5
     sample_size: 58
-    avg_recovery_to_close_pct: 0.9
-    avg_recovery_to_post_low_high_pct: 2.62
+    avg_recovery_to_close_pct: 0.89
+    avg_recovery_to_post_low_high_pct: 2.63
     pct_recovery_above_1: 48.3
     pct_recovery_above_3: 8.6
     mae_p90: 3.114
     mae_median: 0.811
-    dow_favorable: false
+    dow_favorable: true
     avg_drop_norm: 0.123
-    avg_high_norm: 0.525
-    avg_recovery_norm: 0.201
+    avg_high_norm: 0.527
+    avg_recovery_norm: 0.198
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
-    optimal_target_pct: 2.0
-    ev: 0.8978
-    win_rate: 56.9
-    oos_win_rate: 61.1
-    oos_ev: 0.8999
+    optimal_target_pct: 1.5
+    ev: 0.907
+    win_rate: 70.7
+    oos_win_rate: 72.2
+    oos_ev: 0.8448
     monte_carlo:
-      ev_ci_lower: 0.6442
-      ev_ci_upper: 1.154
-      wr_ci_lower: 44.8
-      wr_ci_upper: 69.0
-      max_dd_ci_upper: 1.23
+      ev_ci_lower: 0.7204
+      ev_ci_upper: 1.0822
+      wr_ci_lower: 58.6
+      wr_ci_upper: 81.0
+      max_dd_ci_upper: 0.9
     profiles:
       flat:
         n: 20
@@ -3740,7 +3610,7 @@ tickers:
     low_cutoff_recommendation: '11:30'
     best_low_phase: 10:30-11:00
     best_post_low_high_phase: 12:00-12:30
-    avg_post_low_trade_window_mins: 134.0
+    avg_post_low_trade_window_mins: 136.0
     dow_stats:
       Monday:
         win_rate: 45.5
@@ -3752,7 +3622,7 @@ tickers:
         n: 12
       Wednesday:
         win_rate: 46.2
-        avg_recovery: 1.78
+        avg_recovery: 1.72
         n: 13
       Thursday:
         win_rate: 60.0
@@ -3765,7 +3635,7 @@ tickers:
     month_period_stats:
       Q1:
         win_rate: 49.0
-        avg_recovery: 0.88
+        avg_recovery: 0.86
         n: 51
       Q4:
         win_rate: 42.9
@@ -3776,26 +3646,26 @@ tickers:
     name: Hindustan Aeronautics
     edge_strength: 4
     sample_size: 58
-    avg_recovery_to_close_pct: 0.62
+    avg_recovery_to_close_pct: 0.63
     avg_recovery_to_post_low_high_pct: 1.35
     pct_recovery_above_1: 34.5
     pct_recovery_above_3: 3.4
     mae_p90: 2.029
     mae_median: 0.651
-    dow_favorable: false
+    dow_favorable: true
     avg_drop_norm: 0.216
     avg_high_norm: 0.316
-    avg_recovery_norm: 0.209
+    avg_recovery_norm: 0.21
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
     optimal_target_pct: 1.0
-    ev: 0.2926
+    ev: 0.2944
     win_rate: 48.3
     oos_win_rate: 38.9
-    oos_ev: 0.1605
+    oos_ev: 0.1663
     monte_carlo:
-      ev_ci_lower: 0.1611
-      ev_ci_upper: 0.4216
+      ev_ci_lower: 0.1635
+      ev_ci_upper: 0.4231
       wr_ci_lower: 36.2
       wr_ci_upper: 60.3
       max_dd_ci_upper: 1.6
@@ -3998,7 +3868,7 @@ tickers:
         n: 12
       Wednesday:
         win_rate: 15.4
-        avg_recovery: 0.63
+        avg_recovery: 0.64
         n: 13
       Thursday:
         win_rate: 60.0
@@ -4011,7 +3881,7 @@ tickers:
     month_period_stats:
       Q1:
         win_rate: 37.3
-        avg_recovery: 0.73
+        avg_recovery: 0.74
         n: 51
       Q4:
         win_rate: 14.3
@@ -4022,16 +3892,16 @@ tickers:
     name: Havells India
     edge_strength: 4
     sample_size: 58
-    avg_recovery_to_close_pct: 0.55
-    avg_recovery_to_post_low_high_pct: 1.3
-    pct_recovery_above_1: 27.6
+    avg_recovery_to_close_pct: 0.57
+    avg_recovery_to_post_low_high_pct: 1.32
+    pct_recovery_above_1: 29.3
     pct_recovery_above_3: 1.7
     mae_p90: 1.708
     mae_median: 0.401
     dow_favorable: false
     avg_drop_norm: 0.267
-    avg_high_norm: 0.399
-    avg_recovery_norm: 0.247
+    avg_high_norm: 0.406
+    avg_recovery_norm: 0.255
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
     optimal_target_pct: 1.0
@@ -4167,7 +4037,7 @@ tickers:
     low_cutoff_recommendation: '15:15'
     best_low_phase: 10:00-10:30
     best_post_low_high_phase: 14:30-15:15
-    avg_post_low_trade_window_mins: 158.0
+    avg_post_low_trade_window_mins: 162.0
     dow_stats:
       Monday:
         win_rate: 45.5
@@ -4178,8 +4048,8 @@ tickers:
         avg_recovery: 0.35
         n: 12
       Wednesday:
-        win_rate: 23.1
-        avg_recovery: 0.6
+        win_rate: 30.8
+        avg_recovery: 0.71
         n: 13
       Thursday:
         win_rate: 40.0
@@ -4191,8 +4061,8 @@ tickers:
         n: 12
     month_period_stats:
       Q1:
-        win_rate: 31.4
-        avg_recovery: 0.61
+        win_rate: 33.3
+        avg_recovery: 0.63
         n: 51
       Q4:
         win_rate: 0.0
@@ -4203,7 +4073,7 @@ tickers:
     name: IDBI Bank
     edge_strength: 4
     sample_size: 58
-    avg_recovery_to_close_pct: 0.66
+    avg_recovery_to_close_pct: 0.65
     avg_recovery_to_post_low_high_pct: 2.16
     pct_recovery_above_1: 32.8
     pct_recovery_above_3: 12.1
@@ -4211,18 +4081,18 @@ tickers:
     mae_median: 0.73
     dow_favorable: false
     avg_drop_norm: 0.226
-    avg_high_norm: 0.417
-    avg_recovery_norm: 0.187
+    avg_high_norm: 0.418
+    avg_recovery_norm: 0.186
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
     optimal_target_pct: 1.5
-    ev: 0.6504
+    ev: 0.6628
     win_rate: 58.6
     oos_win_rate: 61.1
-    oos_ev: 0.5404
+    oos_ev: 0.5804
     monte_carlo:
-      ev_ci_lower: 0.449
-      ev_ci_upper: 0.8484
+      ev_ci_lower: 0.4602
+      ev_ci_upper: 0.8622
       wr_ci_lower: 43.1
       wr_ci_upper: 69.0
       max_dd_ci_upper: 1.328
@@ -4286,69 +4156,10 @@ tickers:
           avg_high_pct: 0.85
           avg_high_norm: 0.251
           n: 2
-      gap_up_large:
-        n: 9
-        pct_of_days: 15.5
-        predictability: 0.42
-        low_before_high_pct: 55.6
-        recovered_past_open_pct: 22.2
-        avg_drop_from_open_pct: 2.1
-        avg_high_from_open_pct: -0.11
-        avg_drop_norm: 0.453
-        median_drop_norm: 0.492
-        avg_high_norm: -0.002
-        median_high_norm: 0.048
-        avg_low_to_high_bars: 24.4
-        best_low_phase: 10:00-10:30
-        post_low_high_window: 11:00-11:30
-        best_post_low_high_phase: 12:30-13:00
-        avg_post_low_trade_window_mins: 104.0
-        low_1:
-          window: 10:00-10:30
-          probability: 44.4
-          avg_drop_pct: 2.9
-          drop_std: 1.51
-          avg_drop_norm: 0.655
-          avg_recovery_pct: 2.05
-          recovery_std: 1.67
-          median_recovery_pct: 1.46
-          recovered_past_open_pct: 25.0
-          recovery_by: 12:30-13:00
-          n: 4
-        low_2:
-          window: 10:30-11:00
-          probability: 22.2
-          avg_drop_pct: 2.16
-          drop_std: 2.24
-          avg_drop_norm: 0.329
-          avg_recovery_pct: 0.32
-          recovery_std: 1.08
-          median_recovery_pct: 0.32
-          recovered_past_open_pct: 50.0
-          recovery_by: 10:30-11:00
-          n: 2
-        high_1:
-          window: 10:00-10:30
-          probability: 44.4
-          avg_high_pct: -0.17
-          avg_high_norm: -0.015
-          n: 4
-        post_low_high_1:
-          window: 11:00-11:30
-          probability: 22.2
-          avg_high_pct: -0.3
-          avg_high_norm: -0.078
-          n: 2
-        post_low_high_2:
-          window: 14:30-15:15
-          probability: 22.2
-          avg_high_pct: -0.24
-          avg_high_norm: -0.067
-          n: 2
     low_cutoff_recommendation: '15:15'
     best_low_phase: 11:00-11:30
     best_post_low_high_phase: 14:30-15:15
-    avg_post_low_trade_window_mins: 106.0
+    avg_post_low_trade_window_mins: 109.0
     dow_stats:
       Monday:
         win_rate: 36.4
@@ -4360,7 +4171,7 @@ tickers:
         n: 12
       Wednesday:
         win_rate: 38.5
-        avg_recovery: 1.53
+        avg_recovery: 1.49
         n: 13
       Thursday:
         win_rate: 20.0
@@ -4373,7 +4184,7 @@ tickers:
     month_period_stats:
       Q1:
         win_rate: 37.3
-        avg_recovery: 0.74
+        avg_recovery: 0.73
         n: 51
       Q4:
         win_rate: 0.0
@@ -4385,15 +4196,15 @@ tickers:
     edge_strength: 4
     sample_size: 58
     avg_recovery_to_close_pct: 1.04
-    avg_recovery_to_post_low_high_pct: 1.77
-    pct_recovery_above_1: 48.3
+    avg_recovery_to_post_low_high_pct: 1.78
+    pct_recovery_above_1: 50.0
     pct_recovery_above_3: 10.3
     mae_p90: 1.988
     mae_median: 0.568
-    dow_favorable: true
+    dow_favorable: false
     avg_drop_norm: 0.221
-    avg_high_norm: 0.422
-    avg_recovery_norm: 0.351
+    avg_high_norm: 0.424
+    avg_recovery_norm: 0.353
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
     optimal_target_pct: 2.0
@@ -4594,7 +4405,7 @@ tickers:
     low_cutoff_recommendation: '14:30'
     best_low_phase: 10:30-11:00
     best_post_low_high_phase: 14:30-15:15
-    avg_post_low_trade_window_mins: 169.0
+    avg_post_low_trade_window_mins: 170.0
     dow_stats:
       Monday:
         win_rate: 63.6
@@ -4605,8 +4416,8 @@ tickers:
         avg_recovery: 1.19
         n: 12
       Wednesday:
-        win_rate: 76.9
-        avg_recovery: 1.69
+        win_rate: 84.6
+        avg_recovery: 1.71
         n: 13
       Thursday:
         win_rate: 40.0
@@ -4618,8 +4429,8 @@ tickers:
         n: 12
     month_period_stats:
       Q1:
-        win_rate: 49.0
-        avg_recovery: 1.04
+        win_rate: 51.0
+        avg_recovery: 1.05
         n: 51
       Q4:
         win_rate: 42.9
@@ -4630,16 +4441,16 @@ tickers:
     name: KFin Technologies
     edge_strength: 5
     sample_size: 58
-    avg_recovery_to_close_pct: 0.54
-    avg_recovery_to_post_low_high_pct: 1.5
+    avg_recovery_to_close_pct: 0.55
+    avg_recovery_to_post_low_high_pct: 1.52
     pct_recovery_above_1: 31.0
     pct_recovery_above_3: 1.7
     mae_p90: 1.959
     mae_median: 0.965
     dow_favorable: false
     avg_drop_norm: 0.256
-    avg_high_norm: 0.282
-    avg_recovery_norm: 0.182
+    avg_high_norm: 0.286
+    avg_recovery_norm: 0.183
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
     optimal_target_pct: 1.0
@@ -4803,8 +4614,8 @@ tickers:
           n: 2
     low_cutoff_recommendation: '15:15'
     best_low_phase: 10:30-11:00
-    best_post_low_high_phase: 11:30-12:00
-    avg_post_low_trade_window_mins: 146.0
+    best_post_low_high_phase: 13:30-14:00
+    avg_post_low_trade_window_mins: 148.0
     dow_stats:
       Monday:
         win_rate: 36.4
@@ -4816,7 +4627,7 @@ tickers:
         n: 12
       Wednesday:
         win_rate: 38.5
-        avg_recovery: 0.83
+        avg_recovery: 0.86
         n: 13
       Thursday:
         win_rate: 30.0
@@ -4829,7 +4640,7 @@ tickers:
     month_period_stats:
       Q1:
         win_rate: 31.4
-        avg_recovery: 0.55
+        avg_recovery: 0.56
         n: 51
       Q4:
         win_rate: 28.6
@@ -4840,7 +4651,7 @@ tickers:
     name: MTAR Technologies
     edge_strength: 4
     sample_size: 58
-    avg_recovery_to_close_pct: 0.86
+    avg_recovery_to_close_pct: 0.84
     avg_recovery_to_post_low_high_pct: 2.41
     pct_recovery_above_1: 43.1
     pct_recovery_above_3: 20.7
@@ -4849,7 +4660,7 @@ tickers:
     dow_favorable: false
     avg_drop_norm: 0.053
     avg_high_norm: 0.505
-    avg_recovery_norm: 0.175
+    avg_recovery_norm: 0.172
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
     optimal_target_pct: 2.5
@@ -5009,7 +4820,7 @@ tickers:
         n: 12
       Wednesday:
         win_rate: 38.5
-        avg_recovery: 0.28
+        avg_recovery: 0.2
         n: 13
       Thursday:
         win_rate: 30.0
@@ -5022,7 +4833,7 @@ tickers:
     month_period_stats:
       Q1:
         win_rate: 41.2
-        avg_recovery: 0.85
+        avg_recovery: 0.82
         n: 51
       Q4:
         win_rate: 57.1
@@ -5033,16 +4844,16 @@ tickers:
     name: NBCC (India)
     edge_strength: 4
     sample_size: 58
-    avg_recovery_to_close_pct: 0.62
-    avg_recovery_to_post_low_high_pct: 1.5
+    avg_recovery_to_close_pct: 0.66
+    avg_recovery_to_post_low_high_pct: 1.54
     pct_recovery_above_1: 41.4
     pct_recovery_above_3: 8.6
     mae_p90: 2.66
     mae_median: 1.183
-    dow_favorable: false
+    dow_favorable: true
     avg_drop_norm: 0.305
-    avg_high_norm: 0.202
-    avg_recovery_norm: 0.163
+    avg_high_norm: 0.213
+    avg_recovery_norm: 0.171
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
     optimal_target_pct: 3.0
@@ -5112,8 +4923,8 @@ tickers:
           n: 3
     low_cutoff_recommendation: '15:15'
     best_low_phase: 11:00-11:30
-    best_post_low_high_phase: 13:30-14:00
-    avg_post_low_trade_window_mins: 134.0
+    best_post_low_high_phase: 14:30-15:15
+    avg_post_low_trade_window_mins: 136.0
     dow_stats:
       Monday:
         win_rate: 63.6
@@ -5125,7 +4936,7 @@ tickers:
         n: 12
       Wednesday:
         win_rate: 38.5
-        avg_recovery: 0.68
+        avg_recovery: 0.85
         n: 13
       Thursday:
         win_rate: 60.0
@@ -5138,7 +4949,7 @@ tickers:
     month_period_stats:
       Q1:
         win_rate: 43.1
-        avg_recovery: 0.65
+        avg_recovery: 0.7
         n: 51
       Q4:
         win_rate: 28.6
@@ -5149,7 +4960,7 @@ tickers:
     name: Netweb Technologies
     edge_strength: 4
     sample_size: 58
-    avg_recovery_to_close_pct: 0.8
+    avg_recovery_to_close_pct: 0.79
     avg_recovery_to_post_low_high_pct: 2.37
     pct_recovery_above_1: 43.1
     pct_recovery_above_3: 12.1
@@ -5158,7 +4969,7 @@ tickers:
     dow_favorable: false
     avg_drop_norm: 0.183
     avg_high_norm: 0.385
-    avg_recovery_norm: 0.157
+    avg_recovery_norm: 0.155
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
     optimal_target_pct: 2.0
@@ -5253,7 +5064,7 @@ tickers:
         n: 12
       Wednesday:
         win_rate: 38.5
-        avg_recovery: 0.58
+        avg_recovery: 0.52
         n: 13
       Thursday:
         win_rate: 50.0
@@ -5266,7 +5077,7 @@ tickers:
     month_period_stats:
       Q1:
         win_rate: 47.1
-        avg_recovery: 0.89
+        avg_recovery: 0.88
         n: 51
       Q4:
         win_rate: 14.3
@@ -5278,7 +5089,7 @@ tickers:
     edge_strength: 3
     sample_size: 58
     avg_recovery_to_close_pct: 0.45
-    avg_recovery_to_post_low_high_pct: 1.1
+    avg_recovery_to_post_low_high_pct: 1.11
     pct_recovery_above_1: 19.0
     pct_recovery_above_3: 1.7
     mae_p90: 1.213
@@ -5333,7 +5144,7 @@ tickers:
     low_cutoff_recommendation: '15:15'
     best_low_phase: 11:30-12:00
     best_post_low_high_phase: 14:30-15:15
-    avg_post_low_trade_window_mins: 154.0
+    avg_post_low_trade_window_mins: 156.0
     dow_stats:
       Monday:
         win_rate: 18.2
@@ -5369,29 +5180,29 @@ tickers:
     name: Power Finance Corp
     edge_strength: 4
     sample_size: 58
-    avg_recovery_to_close_pct: 0.91
+    avg_recovery_to_close_pct: 0.93
     avg_recovery_to_post_low_high_pct: 1.68
-    pct_recovery_above_1: 37.9
+    pct_recovery_above_1: 39.7
     pct_recovery_above_3: 13.8
     mae_p90: 1.994
     mae_median: 0.42
     dow_favorable: false
     avg_drop_norm: 0.172
     avg_high_norm: 0.484
-    avg_recovery_norm: 0.309
+    avg_recovery_norm: 0.313
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
     optimal_target_pct: 1.0
-    ev: 0.2715
-    win_rate: 46.6
-    oos_win_rate: 66.7
-    oos_ev: 0.4624
+    ev: 0.2543
+    win_rate: 44.8
+    oos_win_rate: 61.1
+    oos_ev: 0.4068
     monte_carlo:
-      ev_ci_lower: 0.1444
-      ev_ci_upper: 0.3987
-      wr_ci_lower: 31.0
-      wr_ci_upper: 56.9
-      max_dd_ci_upper: 1.563
+      ev_ci_lower: 0.1299
+      ev_ci_upper: 0.3805
+      wr_ci_lower: 29.3
+      wr_ci_upper: 55.2
+      max_dd_ci_upper: 1.6
     profiles:
       gap_down_large:
         n: 5
@@ -5481,9 +5292,9 @@ tickers:
           avg_drop_pct: 0.29
           drop_std: 0.82
           avg_drop_norm: 0.123
-          avg_recovery_pct: 1.15
-          recovery_std: 1.26
-          median_recovery_pct: 0.7
+          avg_recovery_pct: 1.26
+          recovery_std: 1.25
+          median_recovery_pct: 0.84
           recovered_past_open_pct: 60.0
           recovery_by: 10:00-10:30
           n: 10
@@ -5578,8 +5389,8 @@ tickers:
         avg_recovery: 1.35
         n: 12
       Wednesday:
-        win_rate: 30.8
-        avg_recovery: 1.08
+        win_rate: 38.5
+        avg_recovery: 1.17
         n: 13
       Thursday:
         win_rate: 40.0
@@ -5591,8 +5402,8 @@ tickers:
         n: 12
     month_period_stats:
       Q1:
-        win_rate: 41.2
-        avg_recovery: 0.98
+        win_rate: 43.1
+        avg_recovery: 1.0
         n: 51
       Q4:
         win_rate: 14.3
@@ -5604,15 +5415,15 @@ tickers:
     edge_strength: 4
     sample_size: 58
     avg_recovery_to_close_pct: 0.8
-    avg_recovery_to_post_low_high_pct: 1.69
+    avg_recovery_to_post_low_high_pct: 1.71
     pct_recovery_above_1: 41.4
     pct_recovery_above_3: 5.2
     mae_p90: 2.792
     mae_median: 1.007
-    dow_favorable: false
+    dow_favorable: true
     avg_drop_norm: 0.226
-    avg_high_norm: 0.32
-    avg_recovery_norm: 0.224
+    avg_high_norm: 0.324
+    avg_recovery_norm: 0.225
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
     optimal_target_pct: 1.5
@@ -5825,7 +5636,7 @@ tickers:
     low_cutoff_recommendation: '15:15'
     best_low_phase: 10:30-11:00
     best_post_low_high_phase: 11:30-12:00
-    avg_post_low_trade_window_mins: 145.0
+    avg_post_low_trade_window_mins: 148.0
     dow_stats:
       Monday:
         win_rate: 36.4
@@ -5837,7 +5648,7 @@ tickers:
         n: 12
       Wednesday:
         win_rate: 38.5
-        avg_recovery: 0.78
+        avg_recovery: 0.81
         n: 13
       Thursday:
         win_rate: 60.0
@@ -5861,16 +5672,16 @@ tickers:
     name: SBI Life Insurance
     edge_strength: 4
     sample_size: 58
-    avg_recovery_to_close_pct: 0.81
-    avg_recovery_to_post_low_high_pct: 1.83
+    avg_recovery_to_close_pct: 0.82
+    avg_recovery_to_post_low_high_pct: 1.86
     pct_recovery_above_1: 43.1
     pct_recovery_above_3: 10.3
     mae_p90: 3.149
     mae_median: 0.438
     dow_favorable: false
     avg_drop_norm: 0.188
-    avg_high_norm: 0.384
-    avg_recovery_norm: 0.223
+    avg_high_norm: 0.39
+    avg_recovery_norm: 0.225
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
     optimal_target_pct: 3.0
@@ -5953,29 +5764,29 @@ tickers:
       flat:
         n: 22
         pct_of_days: 37.9
-        predictability: 0.48
+        predictability: 0.49
         low_before_high_pct: 59.1
         recovered_past_open_pct: 54.5
         avg_drop_from_open_pct: -0.03
-        avg_high_from_open_pct: 1.99
+        avg_high_from_open_pct: 2.06
         avg_drop_norm: 0.0
         median_drop_norm: 0.0
         avg_high_norm: 0.0
         median_high_norm: 0.0
-        avg_low_to_high_bars: 42.2
+        avg_low_to_high_bars: 45.8
         best_low_phase: 10:00-10:30
         post_low_high_window: other
         best_post_low_high_phase: 10:00-10:30
-        avg_post_low_trade_window_mins: 152.0
+        avg_post_low_trade_window_mins: 164.0
         low_1:
           window: 10:00-10:30
           probability: 50.0
           avg_drop_pct: -0.82
           drop_std: 1.47
           avg_drop_norm: 0.0
-          avg_recovery_pct: 1.73
-          recovery_std: 1.01
-          median_recovery_pct: 1.6
+          avg_recovery_pct: 1.78
+          recovery_std: 1.02
+          median_recovery_pct: 1.67
           recovered_past_open_pct: 90.9
           recovery_by: 10:00-10:30
           n: 11
@@ -6071,7 +5882,7 @@ tickers:
     low_cutoff_recommendation: '14:30'
     best_low_phase: 10:30-11:00
     best_post_low_high_phase: 14:30-15:15
-    avg_post_low_trade_window_mins: 160.0
+    avg_post_low_trade_window_mins: 164.0
     dow_stats:
       Monday:
         win_rate: 36.4
@@ -6083,7 +5894,7 @@ tickers:
         n: 12
       Wednesday:
         win_rate: 46.2
-        avg_recovery: 0.83
+        avg_recovery: 0.87
         n: 13
       Thursday:
         win_rate: 40.0
@@ -6096,7 +5907,7 @@ tickers:
     month_period_stats:
       Q1:
         win_rate: 43.1
-        avg_recovery: 0.85
+        avg_recovery: 0.86
         n: 51
       Q4:
         win_rate: 42.9
@@ -6107,29 +5918,29 @@ tickers:
     name: Shipping Corp of India
     edge_strength: 4
     sample_size: 58
-    avg_recovery_to_close_pct: 0.77
-    avg_recovery_to_post_low_high_pct: 2.1
+    avg_recovery_to_close_pct: 0.75
+    avg_recovery_to_post_low_high_pct: 2.11
     pct_recovery_above_1: 39.7
     pct_recovery_above_3: 12.1
     mae_p90: 2.243
     mae_median: 0.613
     dow_favorable: false
     avg_drop_norm: 0.182
-    avg_high_norm: 0.401
-    avg_recovery_norm: 0.184
+    avg_high_norm: 0.402
+    avg_recovery_norm: 0.181
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
     optimal_target_pct: 2.0
-    ev: 0.534
-    win_rate: 43.1
-    oos_win_rate: 55.6
-    oos_ev: 0.8554
+    ev: 0.5685
+    win_rate: 44.8
+    oos_win_rate: 61.1
+    oos_ev: 0.9665
     monte_carlo:
-      ev_ci_lower: 0.3029
-      ev_ci_upper: 0.7786
-      wr_ci_lower: 31.0
-      wr_ci_upper: 55.2
-      max_dd_ci_upper: 2.1
+      ev_ci_lower: 0.3306
+      ev_ci_upper: 0.8131
+      wr_ci_lower: 32.8
+      wr_ci_upper: 56.9
+      max_dd_ci_upper: 2.021
     profiles:
       gap_down_large:
         n: 4
@@ -6228,7 +6039,7 @@ tickers:
     low_cutoff_recommendation: '15:15'
     best_low_phase: 11:00-11:30
     best_post_low_high_phase: 14:30-15:15
-    avg_post_low_trade_window_mins: 131.0
+    avg_post_low_trade_window_mins: 134.0
     dow_stats:
       Monday:
         win_rate: 54.5
@@ -6240,7 +6051,7 @@ tickers:
         n: 12
       Wednesday:
         win_rate: 30.8
-        avg_recovery: 0.34
+        avg_recovery: 0.28
         n: 13
       Thursday:
         win_rate: 40.0
@@ -6253,7 +6064,7 @@ tickers:
     month_period_stats:
       Q1:
         win_rate: 39.2
-        avg_recovery: 0.76
+        avg_recovery: 0.75
         n: 51
       Q4:
         win_rate: 42.9
@@ -6273,20 +6084,20 @@ tickers:
     dow_favorable: false
     avg_drop_norm: 0.156
     avg_high_norm: 0.449
-    avg_recovery_norm: 0.204
+    avg_recovery_norm: 0.203
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
     optimal_target_pct: 1.0
-    ev: 0.23
+    ev: 0.2294
     win_rate: 48.3
     oos_win_rate: 55.6
-    oos_ev: 0.3558
+    oos_ev: 0.3538
     monte_carlo:
-      ev_ci_lower: 0.1011
-      ev_ci_upper: 0.3576
+      ev_ci_lower: 0.1004
+      ev_ci_upper: 0.3573
       wr_ci_lower: 32.8
       wr_ci_upper: 56.9
-      max_dd_ci_upper: 1.928
+      max_dd_ci_upper: 1.947
     profiles:
       gap_down_large:
         n: 4
@@ -6332,28 +6143,28 @@ tickers:
       gap_up_small:
         n: 13
         pct_of_days: 22.4
-        predictability: 0.43
-        low_before_high_pct: 69.2
+        predictability: 0.44
+        low_before_high_pct: 76.9
         recovered_past_open_pct: 69.2
         avg_drop_from_open_pct: 0.28
-        avg_high_from_open_pct: 1.13
+        avg_high_from_open_pct: 1.14
         avg_drop_norm: 0.132
         median_drop_norm: 0.153
-        avg_high_norm: 0.461
+        avg_high_norm: 0.463
         median_high_norm: 0.379
-        avg_low_to_high_bars: 47.4
+        avg_low_to_high_bars: 47.3
         best_low_phase: 10:00-10:30
         post_low_high_window: other
         best_post_low_high_phase: 14:30-15:15
-        avg_post_low_trade_window_mins: 176.0
+        avg_post_low_trade_window_mins: 190.0
         low_1:
           window: 10:00-10:30
           probability: 53.8
           avg_drop_pct: 0.26
           drop_std: 0.62
           avg_drop_norm: 0.14
-          avg_recovery_pct: 0.78
-          recovery_std: 0.92
+          avg_recovery_pct: 0.77
+          recovery_std: 0.93
           median_recovery_pct: 0.69
           recovered_past_open_pct: 71.4
           recovery_by: 10:30-11:00
@@ -6397,7 +6208,7 @@ tickers:
     low_cutoff_recommendation: '15:15'
     best_low_phase: 11:00-11:30
     best_post_low_high_phase: 14:30-15:15
-    avg_post_low_trade_window_mins: 150.0
+    avg_post_low_trade_window_mins: 153.0
     dow_stats:
       Monday:
         win_rate: 27.3
@@ -6433,7 +6244,7 @@ tickers:
     name: Trent
     edge_strength: 4
     sample_size: 58
-    avg_recovery_to_close_pct: 0.72
+    avg_recovery_to_close_pct: 0.71
     avg_recovery_to_post_low_high_pct: 1.55
     pct_recovery_above_1: 44.8
     pct_recovery_above_3: 3.4
@@ -6442,7 +6253,7 @@ tickers:
     dow_favorable: false
     avg_drop_norm: 0.263
     avg_high_norm: 0.364
-    avg_recovery_norm: 0.263
+    avg_recovery_norm: 0.259
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
     optimal_target_pct: 1.5
@@ -6596,7 +6407,7 @@ tickers:
         n: 12
       Wednesday:
         win_rate: 53.8
-        avg_recovery: 1.06
+        avg_recovery: 1.01
         n: 13
       Thursday:
         win_rate: 50.0
@@ -6609,7 +6420,7 @@ tickers:
     month_period_stats:
       Q1:
         win_rate: 47.1
-        avg_recovery: 0.71
+        avg_recovery: 0.7
         n: 51
       Q4:
         win_rate: 28.6
@@ -6620,7 +6431,7 @@ tickers:
     name: Varun Beverages
     edge_strength: 4
     sample_size: 58
-    avg_recovery_to_close_pct: 0.59
+    avg_recovery_to_close_pct: 0.58
     avg_recovery_to_post_low_high_pct: 1.5
     pct_recovery_above_1: 39.7
     pct_recovery_above_3: 5.2
@@ -6629,7 +6440,7 @@ tickers:
     dow_favorable: false
     avg_drop_norm: 0.268
     avg_high_norm: 0.345
-    avg_recovery_norm: 0.227
+    avg_recovery_norm: 0.225
     optimal_entry_delay: 2
     optimal_stop_pct: 0.2
     optimal_target_pct: 2.0
@@ -6794,7 +6605,7 @@ tickers:
         n: 12
       Wednesday:
         win_rate: 53.8
-        avg_recovery: 0.8
+        avg_recovery: 0.77
         n: 13
       Thursday:
         win_rate: 40.0
@@ -6807,7 +6618,7 @@ tickers:
     month_period_stats:
       Q1:
         win_rate: 39.2
-        avg_recovery: 0.54
+        avg_recovery: 0.53
         n: 51
       Q4:
         win_rate: 42.9

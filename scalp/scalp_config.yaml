@@ -35,337 +35,17 @@ global:
 # ── Tickers ─────────────────────────────────────────────────
 tickers:
 
-  # ── BHEL ────────────────────────────────────────────────
-  # Tradability: 61/100 | ATR: 3.88% | Beta: 1.42
-  # Best: small_up +2.0%/-1.5% EV=0.40 (58% hit, N=12)
-  # Best window: 10:00-11:30 (59% WR)
-  - symbol: BHEL.NS
-    name: Bharat Heavy Electricals Limited
-    enabled: true
-    direction: long
-    edge_strength: 4
-    regime_tags:
-    - industrials
-    - high_vol
-    active_phases:
-    - AFTERNOON_SCALP
-    - LATE_MORNING
-    avoid_phases:
-    - AVOID_ZONE
-    gap_rules:
-      LATE_MORNING:
-        preferred_gaps:
-        - flat
-    entry_conditions:
-      require_vwap_reclaim: true
-      require_higher_low: true
-      require_nifty_ok: true
-      min_volume_ratio: 0.5
-      min_range_multiple_of_atr: 0.5
-      max_move_from_open_pct: 2.6
-    risk:
-      base_target_pct: 2.0
-      base_stop_pct: 1.5
-      atr_target_multiple: 0.52
-      atr_stop_multiple: 0.39
-      kelly_fraction: 0.125
-      aggressiveness: medium
-      max_trades_per_day: 1
-      max_hold_minutes: 45
-      mae_analysis:
-        gap_type: small_up
-        target_pct: 0.5
-        stop_pct: 0.5
-        n_winners: 10
-        median_mae_pct: 0.154
-        p90_mae_pct: 0.346
-        pct_winners_beyond_stop: 0.0
-        optimal_stop_pct: 0.38
-      monte_carlo:
-        flat:
-          ev_ci_lower: -0.2905
-          ev_ci_upper: 0.6619
-          wr_ci_lower: 52.4
-          wr_ci_upper: 90.5
-          max_dd_p95: 8.5
-          fragile: true
-          n: 21
-        small_up:
-          ev_ci_lower: -0.4333
-          ev_ci_upper: 1.3167
-          wr_ci_lower: 33.3
-          wr_ci_upper: 83.3
-          max_dd_p95: 8.0
-          fragile: true
-          n: 12
-        small_down:
-          ev_ci_lower: -1.1625
-          ev_ci_upper: 1.4625
-          wr_ci_lower: 12.5
-          wr_ci_upper: 87.5
-          max_dd_p95: 8.0
-          fragile: true
-          n: 8
-        large_down:
-          ev_ci_lower: -0.6
-          ev_ci_upper: 0.9
-          wr_ci_lower: 0.0
-          wr_ci_upper: 60.0
-          max_dd_p95: 2.4
-          fragile: true
-          n: 5
-      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
-    notes: 'Auto-generated from 126d backtest. Best combo: small_up +2.0%/-1.5% EV=0.40
-      (58% hit, N=12). TRAP: large_up (33% up-close). Best window: 10:00-11:30 (59%
-      WR).'
-    gap_combos:
-      flat:
-        target_pct: 1.0
-        stop_pct: 1.5
-        ev: 0.139
-        win_rate: 71.4
-        n: 21
-      small_up:
-        target_pct: 2.0
-        stop_pct: 1.5
-        ev: 0.4
-        win_rate: 58.3
-        n: 12
-      small_down:
-        target_pct: 2.0
-        stop_pct: 1.5
-        ev: 0.15
-        win_rate: 50.0
-        n: 8
-      large_down:
-        target_pct: 2.0
-        stop_pct: 0.5
-        ev: 0.114
-        win_rate: 20.0
-        n: 5
-    avoid_days:
-    - 3
-
-  # ── CUMMINSIND ──────────────────────────────────────────
-  # Tradability: 60/100 | ATR: 3.69% | Beta: 1.06
-  # Best: small_down +1.0%/-0.5% EV=0.40 (71% hit, N=7)
-  - symbol: CUMMINSIND.NS
-    name: Cummins India Limited
+  # ── GRAPHITE ────────────────────────────────────────────
+  # Tradability: 52/100 | ATR: 4.82% | Beta: 1.27
+  # Best: large_up +2.0%/-1.0% EV=0.61 (60% hit, N=5)
+  # Best window: 09:15-10:00 (59% WR)
+  - symbol: GRAPHITE.NS
+    name: Graphite India Limited
     enabled: false
     direction: long
     edge_strength: 4
     regime_tags:
     - industrials
-    - high_vol
-    active_phases:
-    - LATE_MORNING
-    avoid_phases:
-    - AVOID_ZONE
-    gap_rules:
-      LATE_MORNING:
-        preferred_gaps:
-        - flat
-    entry_conditions:
-      require_vwap_reclaim: true
-      require_higher_low: true
-      require_nifty_ok: true
-      min_volume_ratio: 0.5
-      min_range_multiple_of_atr: 0.5
-      max_move_from_open_pct: 2.5
-    risk:
-      base_target_pct: 1.0
-      base_stop_pct: 1.5
-      atr_target_multiple: 0.27
-      atr_stop_multiple: 0.41
-      kelly_fraction: 0.2
-      aggressiveness: high
-      max_trades_per_day: 1
-      max_hold_minutes: 45
-      mae_analysis:
-        gap_type: flat
-        target_pct: 0.5
-        stop_pct: 0.5
-        n_winners: 19
-        median_mae_pct: 0.0
-        p90_mae_pct: 0.394
-        pct_winners_beyond_stop: 0.0
-        optimal_stop_pct: 0.43
-      monte_carlo:
-        small_up:
-          ev_ci_lower: -0.6625
-          ev_ci_upper: 0.9
-          wr_ci_lower: 37.5
-          wr_ci_upper: 100.0
-          max_dd_p95: 4.8
-          fragile: true
-          n: 8
-        small_down:
-          ev_ci_lower: 0.0429
-          ev_ci_upper: 0.9
-          wr_ci_lower: 42.9
-          wr_ci_upper: 100.0
-          max_dd_p95: 1.8
-          fragile: false
-          n: 7
-        flat:
-          ev_ci_lower: -0.0783
-          ev_ci_upper: 0.7913
-          wr_ci_lower: 60.9
-          wr_ci_upper: 95.7
-          max_dd_p95: 6.5
-          fragile: true
-          n: 23
-      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
-    notes: 'Auto-generated from 126d backtest. Best combo: flat +1.0%/-1.5% EV=0.30
-      (78% hit, N=23). TRAP: large_up (25% up-close). TRAP: small_down (30% up-close).'
-    gap_combos:
-      small_up:
-        target_pct: 1.0
-        stop_pct: 1.5
-        ev: 0.15
-        win_rate: 75.0
-        n: 8
-      small_down:
-        target_pct: 1.0
-        stop_pct: 0.5
-        ev: 0.4
-        win_rate: 71.4
-        n: 7
-      flat:
-        target_pct: 1.0
-        stop_pct: 1.5
-        ev: 0.3
-        win_rate: 78.3
-        n: 23
-    avoid_days:
-    - 1
-
-  # ── INDIANB ─────────────────────────────────────────────
-  # Tradability: 59/100 | ATR: 3.69% | Beta: 1.59
-  # Best: large_up +2.0%/-1.0% EV=0.77 (67% hit, N=6)
-  # Best window: 14:30-15:15 (61% WR)
-  - symbol: INDIANB.NS
-    name: Indian Bank
-    enabled: true
-    direction: long
-    edge_strength: 4
-    regime_tags:
-    - financials
-    - high_beta
-    - high_vol
-    active_phases:
-    - AFTERNOON_SCALP
-    - EARLY_AFTERNOON
-    - LATE_MORNING
-    avoid_phases:
-    - AVOID_ZONE
-    gap_rules:
-      LATE_MORNING:
-        preferred_gaps:
-        - flat
-    entry_conditions:
-      require_vwap_reclaim: true
-      require_higher_low: true
-      require_nifty_ok: true
-      min_volume_ratio: 0.5
-      min_range_multiple_of_atr: 0.5
-      max_move_from_open_pct: 2.5
-    risk:
-      base_target_pct: 2.0
-      base_stop_pct: 1.0
-      atr_target_multiple: 0.54
-      atr_stop_multiple: 0.27
-      kelly_fraction: 0.219
-      aggressiveness: high
-      max_trades_per_day: 1
-      max_hold_minutes: 45
-      mae_analysis:
-        gap_type: large_up
-        target_pct: 0.5
-        stop_pct: 0.5
-        n_winners: 4
-        median_mae_pct: 0.241
-        p90_mae_pct: 0.581
-        pct_winners_beyond_stop: 25.0
-        optimal_stop_pct: 0.64
-      monte_carlo:
-        flat:
-          ev_ci_lower: -0.1217
-          ev_ci_upper: 0.4
-          wr_ci_lower: 73.9
-          wr_ci_upper: 100.0
-          max_dd_p95: 5.6
-          fragile: true
-          n: 23
-        small_up:
-          ev_ci_lower: -0.3333
-          ev_ci_upper: 0.6
-          wr_ci_lower: 13.3
-          wr_ci_upper: 60.0
-          max_dd_p95: 5.8
-          fragile: true
-          n: 15
-        large_up:
-          ev_ci_lower: -0.1
-          ev_ci_upper: 1.9
-          wr_ci_lower: 33.3
-          wr_ci_upper: 100.0
-          max_dd_p95: 3.3
-          fragile: true
-          n: 6
-        small_down:
-          ev_ci_lower: -0.9
-          ev_ci_upper: 1.9
-          wr_ci_lower: 20.0
-          wr_ci_upper: 100.0
-          max_dd_p95: 4.8
-          fragile: true
-          n: 5
-      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
-    notes: 'Auto-generated from 126d backtest. Best combo: large_up +2.0%/-1.0% EV=0.77
-      (67% hit, N=6). TRAP: large_down (25% up-close). Best window: 14:30-15:15 (61%
-      WR).'
-    gap_combos:
-      flat:
-        target_pct: 0.5
-        stop_pct: 1.5
-        ev: 0.08
-        win_rate: 87.0
-        n: 23
-      small_up:
-        target_pct: 1.5
-        stop_pct: 0.5
-        ev: 0.106
-        win_rate: 33.3
-        n: 15
-      large_up:
-        target_pct: 2.0
-        stop_pct: 1.0
-        ev: 0.775
-        win_rate: 66.7
-        n: 6
-      small_down:
-        target_pct: 2.0
-        stop_pct: 1.5
-        ev: 0.4
-        win_rate: 60.0
-        n: 5
-    avoid_days:
-    - 1
-    - 3
-
-  # ── GRAPHITE ────────────────────────────────────────────
-  # Tradability: 55/100 | ATR: 4.84% | Beta: 1.71
-  # Best: large_up +2.0%/-1.0% EV=0.61 (60% hit, N=5)
-  # Best window: 09:15-10:00 (59% WR)
-  - symbol: GRAPHITE.NS
-    name: Graphite India Limited
-    enabled: true
-    direction: long
-    edge_strength: 4
-    regime_tags:
-    - industrials
-    - high_beta
     - high_vol
     active_phases:
     - MORNING_SCALP
@@ -464,8 +144,115 @@ tickers:
     avoid_days:
     - 4
 
+  # ── DATAPATTNS ──────────────────────────────────────────
+  # Tradability: 50/100 | ATR: 6.03% | Beta: 1.33
+  # Best: small_down +2.0%/-1.0% EV=0.61 (58% hit, N=12)
+  # Best window: 13:30-14:30 (55% WR)
+  - symbol: DATAPATTNS.NS
+    name: Data Patterns (India) Limited
+    enabled: false
+    direction: long
+    edge_strength: 4
+    regime_tags:
+    - industrials
+    - high_vol
+    active_phases:
+    - PRE_CLOSE_SETUP
+    avoid_phases:
+    - AVOID_ZONE
+    gap_rules:
+      LATE_MORNING:
+        preferred_gaps:
+        - flat
+    entry_conditions:
+      require_vwap_reclaim: true
+      require_higher_low: true
+      require_nifty_ok: true
+      min_volume_ratio: 0.5
+      min_range_multiple_of_atr: 0.5
+      max_move_from_open_pct: 4.0
+    risk:
+      base_target_pct: 2.0
+      base_stop_pct: 1.0
+      atr_target_multiple: 0.33
+      atr_stop_multiple: 0.17
+      kelly_fraction: 0.179
+      aggressiveness: high
+      max_trades_per_day: 1
+      max_hold_minutes: 45
+      mae_analysis:
+        gap_type: small_down
+        target_pct: 0.5
+        stop_pct: 0.5
+        n_winners: 9
+        median_mae_pct: 0.397
+        p90_mae_pct: 0.474
+        pct_winners_beyond_stop: 0.0
+        optimal_stop_pct: 0.52
+      monte_carlo:
+        flat:
+          ev_ci_lower: -0.2429
+          ev_ci_upper: 0.65
+          wr_ci_lower: 14.3
+          wr_ci_upper: 50.0
+          max_dd_p95: 7.8
+          fragile: true
+          n: 28
+        small_down:
+          ev_ci_lower: -0.1
+          ev_ci_upper: 1.4
+          wr_ci_lower: 33.3
+          wr_ci_upper: 83.3
+          max_dd_p95: 5.5
+          fragile: true
+          n: 12
+        small_up:
+          ev_ci_lower: -0.9
+          ev_ci_upper: 1.2
+          wr_ci_lower: 20.0
+          wr_ci_upper: 80.0
+          max_dd_p95: 9.3
+          fragile: true
+          n: 10
+        large_up:
+          ev_ci_lower: -1.1
+          ev_ci_upper: 1.3
+          wr_ci_lower: 0.0
+          wr_ci_upper: 80.0
+          max_dd_p95: 4.4
+          fragile: true
+          n: 5
+      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
+    notes: 'Auto-generated from 126d backtest. Best combo: small_down +2.0%/-1.0% EV=0.61
+      (58% hit, N=12). Best window: 13:30-14:30 (55% WR).'
+    gap_combos:
+      flat:
+        target_pct: 2.0
+        stop_pct: 0.5
+        ev: 0.233
+        win_rate: 32.1
+        n: 28
+      small_down:
+        target_pct: 2.0
+        stop_pct: 1.0
+        ev: 0.614
+        win_rate: 58.3
+        n: 12
+      small_up:
+        target_pct: 2.0
+        stop_pct: 1.5
+        ev: 0.15
+        win_rate: 50.0
+        n: 10
+      large_up:
+        target_pct: 2.0
+        stop_pct: 1.0
+        ev: 0.186
+        win_rate: 40.0
+        n: 5
+
   # ── MTARTECH ────────────────────────────────────────────
-  # Tradability: 53/100 | ATR: 5.55% | Beta: 1.4
+  # Tradability: 50/100 | ATR: 5.58% | Beta: 0.72
   # Best: small_down +2.0%/-1.5% EV=0.73 (70% hit, N=10)
   # Best window: 09:15-10:00 (67% WR)
   - symbol: MTARTECH.NS
@@ -475,6 +262,7 @@ tickers:
     edge_strength: 4
     regime_tags:
     - industrials
+    - low_beta
     - high_vol
     active_phases:
     - AFTERNOON_SCALP
@@ -489,7 +277,7 @@ tickers:
       require_vwap_reclaim: true
       require_higher_low: true
       require_nifty_ok: true
-      min_volume_ratio: 0.6
+      min_volume_ratio: 0.5
       min_range_multiple_of_atr: 0.5
       max_move_from_open_pct: 3.7
     risk:
@@ -572,683 +360,16 @@ tickers:
         win_rate: 55.6
         n: 9
 
-  # ── NTPC ────────────────────────────────────────────────
-  # Tradability: 69/100 | ATR: 2.85% | Beta: 0.81
-  # Best: flat +1.0%/-1.5% EV=0.42 (83% hit, N=24)
-  # Best window: 09:15-10:00 (62% WR)
-  - symbol: NTPC.NS
-    name: NTPC Limited
-    enabled: true
-    direction: long
-    edge_strength: 3
-    regime_tags:
-    - general
-    active_phases:
-    - MORNING_SCALP
-    - PRE_CLOSE_SETUP
-    avoid_phases:
-    - AVOID_ZONE
-    gap_rules:
-      LATE_MORNING:
-        preferred_gaps:
-        - flat
-    entry_conditions:
-      require_vwap_reclaim: true
-      require_higher_low: true
-      require_nifty_ok: true
-      min_volume_ratio: 0.5
-      min_range_multiple_of_atr: 0.4
-      max_move_from_open_pct: 1.9
-    risk:
-      base_target_pct: 1.0
-      base_stop_pct: 1.5
-      atr_target_multiple: 0.35
-      atr_stop_multiple: 0.53
-      kelly_fraction: 0.26
-      aggressiveness: high
-      max_trades_per_day: 1
-      max_hold_minutes: 45
-      mae_analysis:
-        gap_type: flat
-        target_pct: 0.5
-        stop_pct: 0.5
-        n_winners: 23
-        median_mae_pct: 0.124
-        p90_mae_pct: 0.433
-        pct_winners_beyond_stop: 0.0
-        optimal_stop_pct: 0.48
-      monte_carlo:
-        flat:
-          ev_ci_lower: 0.0667
-          ev_ci_upper: 0.7958
-          wr_ci_lower: 66.7
-          wr_ci_upper: 95.8
-          max_dd_p95: 5.3
-          fragile: false
-          n: 24
-    notes: 'Auto-generated from 126d backtest. Best combo: flat +1.0%/-1.5% EV=0.42
-      (83% hit, N=24). TRAP: large_up (25% up-close). TRAP: small_up (28% up-close).
-      Best window: 09:15-10:00 (62% WR).'
-    gap_combos:
-      flat:
-        target_pct: 1.0
-        stop_pct: 1.5
-        ev: 0.419
-        win_rate: 83.3
-        n: 24
-
-  # ── PFC ─────────────────────────────────────────────────
-  # Tradability: 63/100 | ATR: 3.87% | Beta: 1.46
-  # Best: flat +0.5%/-1.0% EV=0.07 (81% hit, N=21)
-  # Best window: 14:30-15:15 (65% WR)
-  - symbol: PFC.NS
-    name: Power Finance Corporation Limited
-    enabled: true
-    direction: long
-    edge_strength: 3
-    regime_tags:
-    - financials
-    - high_vol
-    active_phases:
-    - AFTERNOON_SCALP
-    - LATE_MORNING
-    avoid_phases:
-    - AVOID_ZONE
-    gap_rules:
-      LATE_MORNING:
-        preferred_gaps:
-        - flat
-    entry_conditions:
-      require_vwap_reclaim: true
-      require_higher_low: true
-      require_nifty_ok: true
-      min_volume_ratio: 0.5
-      min_range_multiple_of_atr: 0.5
-      max_move_from_open_pct: 2.6
-    risk:
-      base_target_pct: 0.5
-      base_stop_pct: 1.0
-      atr_target_multiple: 0.13
-      atr_stop_multiple: 0.26
-      kelly_fraction: 0.174
-      aggressiveness: high
-      max_trades_per_day: 1
-      max_hold_minutes: 45
-      mae_analysis:
-        gap_type: flat
-        target_pct: 0.5
-        stop_pct: 0.5
-        n_winners: 15
-        median_mae_pct: 0.363
-        p90_mae_pct: 0.506
-        pct_winners_beyond_stop: 13.3
-        optimal_stop_pct: 0.56
-      monte_carlo:
-        small_up:
-          ev_ci_lower: -0.2667
-          ev_ci_upper: 0.4
-          wr_ci_lower: 66.7
-          wr_ci_upper: 100.0
-          max_dd_p95: 4.8
-          fragile: true
-          n: 15
-        flat:
-          ev_ci_lower: -0.1714
-          ev_ci_upper: 0.3286
-          wr_ci_lower: 61.9
-          wr_ci_upper: 95.2
-          max_dd_p95: 4.6
-          fragile: true
-          n: 21
-      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
-    notes: 'Auto-generated from 126d backtest. Best combo: flat +0.5%/-1.0% EV=0.07
-      (81% hit, N=21). TRAP: large_up (25% up-close). Best window: 14:30-15:15 (65%
-      WR).'
-    gap_combos:
-      small_up:
-        target_pct: 0.5
-        stop_pct: 1.5
-        ev: 0.047
-        win_rate: 86.7
-        n: 15
-      flat:
-        target_pct: 0.5
-        stop_pct: 1.0
-        ev: 0.074
-        win_rate: 81.0
-        n: 21
-    avoid_days:
-    - 3
-
-  # ── BEL ─────────────────────────────────────────────────
-  # Tradability: 61/100 | ATR: 3.22% | Beta: 0.95
-  # Best: small_down +2.0%/-0.5% EV=0.34 (33% hit, N=6)
-  # Best window: 14:30-15:15 (60% WR)
-  - symbol: BEL.NS
-    name: Bharat Electronics Limited
-    enabled: true
-    direction: long
-    edge_strength: 3
-    regime_tags:
-    - industrials
-    active_phases:
-    - AFTERNOON_SCALP
-    - PRE_CLOSE_SETUP
-    avoid_phases:
-    - AVOID_ZONE
-    gap_rules:
-      LATE_MORNING:
-        preferred_gaps:
-        - flat
-    entry_conditions:
-      require_vwap_reclaim: true
-      require_higher_low: true
-      require_nifty_ok: true
-      min_volume_ratio: 0.5
-      min_range_multiple_of_atr: 0.5
-      max_move_from_open_pct: 2.2
-    risk:
-      base_target_pct: 2.0
-      base_stop_pct: 0.5
-      atr_target_multiple: 0.62
-      atr_stop_multiple: 0.16
-      kelly_fraction: 0.109
-      aggressiveness: medium
-      max_trades_per_day: 1
-      max_hold_minutes: 45
-      mae_analysis:
-        gap_type: small_down
-        target_pct: 0.5
-        stop_pct: 0.5
-        n_winners: 5
-        median_mae_pct: 0.0
-        p90_mae_pct: 0.368
-        pct_winners_beyond_stop: 0.0
-        optimal_stop_pct: 0.4
-      monte_carlo:
-        flat:
-          ev_ci_lower: -0.2875
-          ev_ci_upper: 0.3375
-          wr_ci_lower: 20.8
-          wr_ci_upper: 62.5
-          max_dd_p95: 6.6
-          fragile: true
-          n: 24
-        small_up:
-          ev_ci_lower: -0.2875
-          ev_ci_upper: 0.8062
-          wr_ci_lower: 12.5
-          wr_ci_upper: 56.2
-          max_dd_p95: 6.0
-          fragile: true
-          n: 16
-        small_down:
-          ev_ci_lower: -0.6
-          ev_ci_upper: 1.0667
-          wr_ci_lower: 0.0
-          wr_ci_upper: 66.7
-          max_dd_p95: 3.0
-          fragile: true
-          n: 6
-      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
-    notes: 'Auto-generated from 126d backtest. Best combo: small_down +2.0%/-0.5% EV=0.34
-      (33% hit, N=6). TRAP: large_up (12% up-close). Best window: 14:30-15:15 (60% WR).'
-    gap_combos:
-      flat:
-        target_pct: 1.0
-        stop_pct: 0.5
-        ev: 0.035
-        win_rate: 41.7
-        n: 24
-      small_up:
-        target_pct: 2.0
-        stop_pct: 0.5
-        ev: 0.233
-        win_rate: 31.2
-        n: 16
-      small_down:
-        target_pct: 2.0
-        stop_pct: 0.5
-        ev: 0.337
-        win_rate: 33.3
-        n: 6
-    avoid_days:
-    - 1
-
-  # ── ANANTRAJ ────────────────────────────────────────────
-  # Tradability: 57/100 | ATR: 4.18% | Beta: 1.4
-  # Best: small_up +2.0%/-0.5% EV=0.54 (44% hit, N=9)
-  # Best window: 14:30-15:15 (58% WR)
-  - symbol: ANANTRAJ.NS
-    name: Anant Raj Limited
-    enabled: true
-    direction: long
-    edge_strength: 3
-    regime_tags:
-    - high_vol
-    active_phases:
-    - AFTERNOON_SCALP
-    avoid_phases:
-    - AVOID_ZONE
-    gap_rules:
-      LATE_MORNING:
-        preferred_gaps:
-        - flat
-    entry_conditions:
-      require_vwap_reclaim: true
-      require_higher_low: true
-      require_nifty_ok: true
-      min_volume_ratio: 0.5
-      min_range_multiple_of_atr: 0.5
-      max_move_from_open_pct: 2.8
-    risk:
-      base_target_pct: 2.0
-      base_stop_pct: 0.5
-      atr_target_multiple: 0.48
-      atr_stop_multiple: 0.12
-      kelly_fraction: 0.159
-      aggressiveness: high
-      max_trades_per_day: 1
-      max_hold_minutes: 45
-      mae_analysis:
-        gap_type: small_up
-        target_pct: 0.5
-        stop_pct: 0.5
-        n_winners: 7
-        median_mae_pct: 0.24
-        p90_mae_pct: 0.804
-        pct_winners_beyond_stop: 28.6
-        optimal_stop_pct: 0.88
-      monte_carlo:
-        small_up:
-          ev_ci_lower: -0.3222
-          ev_ci_upper: 1.3444
-          wr_ci_lower: 11.1
-          wr_ci_upper: 77.8
-          max_dd_p95: 3.6
-          fragile: true
-          n: 9
-        flat:
-          ev_ci_lower: -0.3391
-          ev_ci_upper: 0.3565
-          wr_ci_lower: 13.0
-          wr_ci_upper: 47.8
-          max_dd_p95: 8.2
-          fragile: true
-          n: 23
-        small_down:
-          ev_ci_lower: -0.6
-          ev_ci_upper: 0.65
-          wr_ci_lower: 0.0
-          wr_ci_upper: 50.0
-          max_dd_p95: 6.0
-          fragile: true
-          n: 12
-      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
-    notes: 'Auto-generated from 126d backtest. Best combo: small_up +2.0%/-0.5% EV=0.54
-      (44% hit, N=9). Best window: 14:30-15:15 (58% WR).'
-    gap_combos:
-      small_up:
-        target_pct: 2.0
-        stop_pct: 0.5
-        ev: 0.536
-        win_rate: 44.4
-        n: 9
-      flat:
-        target_pct: 1.5
-        stop_pct: 0.5
-        ev: 0.04
-        win_rate: 30.4
-        n: 23
-      small_down:
-        target_pct: 2.0
-        stop_pct: 0.5
-        ev: 0.114
-        win_rate: 25.0
-        n: 12
-    avoid_days:
-    - 1
-    - 3
-
-  # ── SAILIFE ─────────────────────────────────────────────
-  # Tradability: 56/100 | ATR: 4.34% | Beta: 1.36
-  # Best: small_up +2.0%/-0.5% EV=0.40 (38% hit, N=13)
-  # Best window: 09:15-10:00 (59% WR)
-  - symbol: SAILIFE.NS
-    name: SBI Life Insurance
-    enabled: true
-    direction: long
-    edge_strength: 3
-    regime_tags:
-    - high_vol
-    active_phases:
-    - AFTERNOON_SCALP
-    - MORNING_SCALP
-    avoid_phases:
-    - AVOID_ZONE
-    gap_rules:
-      LATE_MORNING:
-        preferred_gaps:
-        - flat
-    entry_conditions:
-      require_vwap_reclaim: true
-      require_higher_low: true
-      require_nifty_ok: true
-      min_volume_ratio: 0.5
-      min_range_multiple_of_atr: 0.5
-      max_move_from_open_pct: 2.9
-    risk:
-      base_target_pct: 2.0
-      base_stop_pct: 0.5
-      atr_target_multiple: 0.46
-      atr_stop_multiple: 0.12
-      kelly_fraction: 0.125
-      aggressiveness: medium
-      max_trades_per_day: 1
-      max_hold_minutes: 45
-      mae_analysis:
-        gap_type: small_up
-        target_pct: 0.5
-        stop_pct: 0.5
-        n_winners: 6
-        median_mae_pct: 0.099
-        p90_mae_pct: 0.375
-        pct_winners_beyond_stop: 0.0
-        optimal_stop_pct: 0.41
-      monte_carlo:
-        flat:
-          ev_ci_lower: -0.0773
-          ev_ci_upper: 0.4
-          wr_ci_lower: 68.2
-          wr_ci_upper: 100.0
-          max_dd_p95: 3.3
-          fragile: true
-          n: 22
-        small_up:
-          ev_ci_lower: -0.2154
-          ev_ci_upper: 0.9385
-          wr_ci_lower: 15.4
-          wr_ci_upper: 61.5
-          max_dd_p95: 4.8
-          fragile: true
-          n: 13
-        large_down:
-          ev_ci_lower: -0.6
-          ev_ci_upper: 1.4
-          wr_ci_lower: 20.0
-          wr_ci_upper: 100.0
-          max_dd_p95: 3.3
-          fragile: true
-          n: 5
-        large_up:
-          ev_ci_lower: -0.6
-          ev_ci_upper: 0.8286
-          wr_ci_lower: 0.0
-          wr_ci_upper: 57.1
-          max_dd_p95: 3.6
-          fragile: true
-          n: 7
-      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
-    notes: 'Auto-generated from 126d backtest. Best combo: small_up +2.0%/-0.5% EV=0.40
-      (38% hit, N=13). TRAP: large_down (14% up-close). TRAP: large_up (30% up-close).
-      Best window: 09:15-10:00 (59% WR).'
-    gap_combos:
-      flat:
-        target_pct: 0.5
-        stop_pct: 1.0
-        ev: 0.15
-        win_rate: 86.4
-        n: 22
-      small_up:
-        target_pct: 2.0
-        stop_pct: 0.5
-        ev: 0.4
-        win_rate: 38.5
-        n: 13
-      large_down:
-        target_pct: 1.5
-        stop_pct: 1.0
-        ev: 0.329
-        win_rate: 60.0
-        n: 5
-      large_up:
-        target_pct: 2.0
-        stop_pct: 0.5
-        ev: 0.233
-        win_rate: 28.6
-        n: 7
-
-  # ── AEROFLEX ────────────────────────────────────────────
-  # Tradability: 52/100 | ATR: 4.85% | Beta: 1.58
-  # Best: small_up +2.0%/-1.5% EV=0.95 (78% hit, N=9)
-  # Best window: 09:15-10:00 (57% WR)
-  - symbol: AEROFLEX.NS
-    name: Aeroflex Industries Limited
-    enabled: false
-    direction: long
-    edge_strength: 3
-    regime_tags:
-    - industrials
-    - high_beta
-    - high_vol
-    active_phases:
-    - MORNING_SCALP
-    avoid_phases:
-    - AVOID_ZONE
-    gap_rules:
-      LATE_MORNING:
-        preferred_gaps:
-        - flat
-    entry_conditions:
-      require_vwap_reclaim: true
-      require_higher_low: true
-      require_nifty_ok: true
-      min_volume_ratio: 0.5
-      min_range_multiple_of_atr: 0.5
-      max_move_from_open_pct: 3.2
-    risk:
-      base_target_pct: 2.0
-      base_stop_pct: 1.5
-      atr_target_multiple: 0.41
-      atr_stop_multiple: 0.31
-      kelly_fraction: 0.261
-      aggressiveness: high
-      max_trades_per_day: 1
-      max_hold_minutes: 45
-      mae_analysis:
-        gap_type: small_up
-        target_pct: 0.5
-        stop_pct: 0.5
-        n_winners: 6
-        median_mae_pct: 0.089
-        p90_mae_pct: 0.65
-        pct_winners_beyond_stop: 16.7
-        optimal_stop_pct: 0.71
-      monte_carlo:
-        small_down:
-          ev_ci_lower: -0.0375
-          ev_ci_upper: 0.9
-          wr_ci_lower: 62.5
-          wr_ci_upper: 100.0
-          max_dd_p95: 3.2
-          fragile: true
-          n: 8
-        small_up:
-          ev_ci_lower: -0.0444
-          ev_ci_upper: 1.9
-          wr_ci_lower: 44.4
-          wr_ci_upper: 100.0
-          max_dd_p95: 4.8
-          fragile: true
-          n: 9
-        large_up:
-          ev_ci_lower: -0.6385
-          ev_ci_upper: 0.9769
-          wr_ci_lower: 15.4
-          wr_ci_upper: 69.2
-          max_dd_p95: 9.1
-          fragile: true
-          n: 13
-        large_down:
-          ev_ci_lower: -0.3143
-          ev_ci_upper: 1.1143
-          wr_ci_lower: 14.3
-          wr_ci_upper: 85.7
-          max_dd_p95: 2.4
-          fragile: true
-          n: 7
-      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
-    notes: 'Auto-generated from 126d backtest. Best combo: small_up +2.0%/-1.5% EV=0.95
-      (78% hit, N=9). TRAP: small_down (33% up-close). Best window: 09:15-10:00 (57%
-      WR).'
-    gap_combos:
-      small_down:
-        target_pct: 1.0
-        stop_pct: 1.5
-        ev: 0.4
-        win_rate: 87.5
-        n: 8
-      small_up:
-        target_pct: 2.0
-        stop_pct: 1.5
-        ev: 0.945
-        win_rate: 77.8
-        n: 9
-      large_up:
-        target_pct: 2.0
-        stop_pct: 1.0
-        ev: 0.1
-        win_rate: 38.5
-        n: 13
-      large_down:
-        target_pct: 1.5
-        stop_pct: 0.5
-        ev: 0.511
-        win_rate: 57.1
-        n: 7
-    avoid_days:
-    - 1
-
-  # ── DATAPATTNS ──────────────────────────────────────────
-  # Tradability: 50/100 | ATR: 6.07% | Beta: 1.63
-  # Best: small_down +2.0%/-1.0% EV=0.61 (58% hit, N=12)
-  - symbol: DATAPATTNS.NS
-    name: Data Patterns (India) Limited
-    enabled: false
-    direction: long
-    edge_strength: 3
-    regime_tags:
-    - industrials
-    - high_beta
-    - high_vol
-    active_phases:
-    - LATE_MORNING
-    avoid_phases:
-    - AVOID_ZONE
-    gap_rules:
-      LATE_MORNING:
-        preferred_gaps:
-        - flat
-    entry_conditions:
-      require_vwap_reclaim: true
-      require_higher_low: true
-      require_nifty_ok: true
-      min_volume_ratio: 0.5
-      min_range_multiple_of_atr: 0.5
-      max_move_from_open_pct: 4.1
-    risk:
-      base_target_pct: 2.0
-      base_stop_pct: 1.0
-      atr_target_multiple: 0.33
-      atr_stop_multiple: 0.16
-      kelly_fraction: 0.179
-      aggressiveness: high
-      max_trades_per_day: 1
-      max_hold_minutes: 45
-      mae_analysis:
-        gap_type: small_down
-        target_pct: 0.5
-        stop_pct: 0.5
-        n_winners: 9
-        median_mae_pct: 0.397
-        p90_mae_pct: 0.474
-        pct_winners_beyond_stop: 0.0
-        optimal_stop_pct: 0.52
-      monte_carlo:
-        flat:
-          ev_ci_lower: -0.2429
-          ev_ci_upper: 0.65
-          wr_ci_lower: 14.3
-          wr_ci_upper: 50.0
-          max_dd_p95: 7.8
-          fragile: true
-          n: 28
-        small_down:
-          ev_ci_lower: -0.1
-          ev_ci_upper: 1.4
-          wr_ci_lower: 33.3
-          wr_ci_upper: 83.3
-          max_dd_p95: 5.5
-          fragile: true
-          n: 12
-        small_up:
-          ev_ci_lower: -0.9
-          ev_ci_upper: 1.2
-          wr_ci_lower: 20.0
-          wr_ci_upper: 80.0
-          max_dd_p95: 9.3
-          fragile: true
-          n: 10
-        large_up:
-          ev_ci_lower: -1.1
-          ev_ci_upper: 1.3
-          wr_ci_lower: 0.0
-          wr_ci_upper: 80.0
-          max_dd_p95: 4.4
-          fragile: true
-          n: 5
-      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
-    notes: 'Auto-generated from 126d backtest. Best combo: small_down +2.0%/-1.0% EV=0.61
-      (58% hit, N=12).'
-    gap_combos:
-      flat:
-        target_pct: 2.0
-        stop_pct: 0.5
-        ev: 0.233
-        win_rate: 32.1
-        n: 28
-      small_down:
-        target_pct: 2.0
-        stop_pct: 1.0
-        ev: 0.614
-        win_rate: 58.3
-        n: 12
-      small_up:
-        target_pct: 2.0
-        stop_pct: 1.5
-        ev: 0.15
-        win_rate: 50.0
-        n: 10
-      large_up:
-        target_pct: 2.0
-        stop_pct: 1.0
-        ev: 0.186
-        win_rate: 40.0
-        n: 5
-    avoid_days:
-    - 2
-
   # ── SCI ─────────────────────────────────────────────────
-  # Tradability: 49/100 | ATR: 5.2% | Beta: 1.54
+  # Tradability: 49/100 | ATR: 5.21% | Beta: 1.34
   # Best: large_down +2.0%/-1.0% EV=0.61 (60% hit, N=5)
   - symbol: SCI.NS
     name: The Shipping Corporation of India Limited
     enabled: false
     direction: long
-    edge_strength: 3
+    edge_strength: 4
     regime_tags:
     - industrials
-    - high_beta
     - high_vol
     active_phases:
     - LATE_MORNING
@@ -1359,8 +480,1020 @@ tickers:
         win_rate: 60.0
         n: 5
 
+  # ── NTPC ────────────────────────────────────────────────
+  # Tradability: 68/100 | ATR: 2.86% | Beta: 0.83
+  # Best: flat +1.0%/-1.5% EV=0.42 (83% hit, N=24)
+  # Best window: 09:15-10:00 (62% WR)
+  - symbol: NTPC.NS
+    name: NTPC Limited
+    enabled: true
+    direction: long
+    edge_strength: 3
+    regime_tags:
+    - general
+    active_phases:
+    - MORNING_SCALP
+    - PRE_CLOSE_SETUP
+    avoid_phases:
+    - AVOID_ZONE
+    gap_rules:
+      LATE_MORNING:
+        preferred_gaps:
+        - flat
+    entry_conditions:
+      require_vwap_reclaim: true
+      require_higher_low: true
+      require_nifty_ok: true
+      min_volume_ratio: 0.5
+      min_range_multiple_of_atr: 0.4
+      max_move_from_open_pct: 1.9
+    risk:
+      base_target_pct: 1.0
+      base_stop_pct: 1.5
+      atr_target_multiple: 0.35
+      atr_stop_multiple: 0.52
+      kelly_fraction: 0.26
+      aggressiveness: high
+      max_trades_per_day: 1
+      max_hold_minutes: 45
+      mae_analysis:
+        gap_type: flat
+        target_pct: 0.5
+        stop_pct: 0.5
+        n_winners: 23
+        median_mae_pct: 0.124
+        p90_mae_pct: 0.433
+        pct_winners_beyond_stop: 0.0
+        optimal_stop_pct: 0.48
+      monte_carlo:
+        flat:
+          ev_ci_lower: 0.0667
+          ev_ci_upper: 0.7958
+          wr_ci_lower: 66.7
+          wr_ci_upper: 95.8
+          max_dd_p95: 5.3
+          fragile: false
+          n: 24
+    notes: 'Auto-generated from 126d backtest. Best combo: flat +1.0%/-1.5% EV=0.42
+      (83% hit, N=24). TRAP: small_up (32% up-close). Best window: 09:15-10:00 (62%
+      WR).'
+    gap_combos:
+      flat:
+        target_pct: 1.0
+        stop_pct: 1.5
+        ev: 0.419
+        win_rate: 83.3
+        n: 24
+    avoid_days:
+    - 3
+
+  # ── BEL ─────────────────────────────────────────────────
+  # Tradability: 61/100 | ATR: 3.2% | Beta: 0.78
+  # Best: small_down +2.0%/-0.5% EV=0.34 (33% hit, N=6)
+  # Best window: 14:30-15:15 (60% WR)
+  - symbol: BEL.NS
+    name: Bharat Electronics Limited
+    enabled: true
+    direction: long
+    edge_strength: 3
+    regime_tags:
+    - industrials
+    - low_beta
+    active_phases:
+    - AFTERNOON_SCALP
+    - PRE_CLOSE_SETUP
+    avoid_phases:
+    - AVOID_ZONE
+    gap_rules:
+      LATE_MORNING:
+        preferred_gaps:
+        - flat
+    entry_conditions:
+      require_vwap_reclaim: true
+      require_higher_low: true
+      require_nifty_ok: true
+      min_volume_ratio: 0.5
+      min_range_multiple_of_atr: 0.5
+      max_move_from_open_pct: 2.1
+    risk:
+      base_target_pct: 2.0
+      base_stop_pct: 0.5
+      atr_target_multiple: 0.62
+      atr_stop_multiple: 0.16
+      kelly_fraction: 0.109
+      aggressiveness: medium
+      max_trades_per_day: 1
+      max_hold_minutes: 45
+      mae_analysis:
+        gap_type: small_down
+        target_pct: 0.5
+        stop_pct: 0.5
+        n_winners: 5
+        median_mae_pct: 0.0
+        p90_mae_pct: 0.368
+        pct_winners_beyond_stop: 0.0
+        optimal_stop_pct: 0.4
+      monte_carlo:
+        flat:
+          ev_ci_lower: -0.2875
+          ev_ci_upper: 0.3375
+          wr_ci_lower: 20.8
+          wr_ci_upper: 62.5
+          max_dd_p95: 6.6
+          fragile: true
+          n: 24
+        small_up:
+          ev_ci_lower: -0.2875
+          ev_ci_upper: 0.8062
+          wr_ci_lower: 12.5
+          wr_ci_upper: 56.2
+          max_dd_p95: 6.0
+          fragile: true
+          n: 16
+        small_down:
+          ev_ci_lower: -0.6
+          ev_ci_upper: 1.0667
+          wr_ci_lower: 0.0
+          wr_ci_upper: 66.7
+          max_dd_p95: 3.0
+          fragile: true
+          n: 6
+      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
+    notes: 'Auto-generated from 126d backtest. Best combo: small_down +2.0%/-0.5% EV=0.34
+      (33% hit, N=6). TRAP: large_up (28% up-close). Best window: 14:30-15:15 (60% WR).'
+    gap_combos:
+      flat:
+        target_pct: 1.0
+        stop_pct: 0.5
+        ev: 0.035
+        win_rate: 41.7
+        n: 24
+      small_up:
+        target_pct: 2.0
+        stop_pct: 0.5
+        ev: 0.233
+        win_rate: 31.2
+        n: 16
+      small_down:
+        target_pct: 2.0
+        stop_pct: 0.5
+        ev: 0.337
+        win_rate: 33.3
+        n: 6
+    avoid_days:
+    - 1
+
+  # ── INDIANB ─────────────────────────────────────────────
+  # Tradability: 59/100 | ATR: 3.71% | Beta: 0.7
+  # Best: large_up +2.0%/-1.0% EV=0.77 (67% hit, N=6)
+  # Best window: 14:30-15:15 (60% WR)
+  - symbol: INDIANB.NS
+    name: Indian Bank
+    enabled: true
+    direction: long
+    edge_strength: 3
+    regime_tags:
+    - financials
+    - low_beta
+    - high_vol
+    active_phases:
+    - AFTERNOON_SCALP
+    - EARLY_AFTERNOON
+    - LATE_MORNING
+    avoid_phases:
+    - AVOID_ZONE
+    gap_rules:
+      LATE_MORNING:
+        preferred_gaps:
+        - flat
+    entry_conditions:
+      require_vwap_reclaim: true
+      require_higher_low: true
+      require_nifty_ok: true
+      min_volume_ratio: 0.5
+      min_range_multiple_of_atr: 0.5
+      max_move_from_open_pct: 2.5
+    risk:
+      base_target_pct: 2.0
+      base_stop_pct: 1.0
+      atr_target_multiple: 0.54
+      atr_stop_multiple: 0.27
+      kelly_fraction: 0.219
+      aggressiveness: high
+      max_trades_per_day: 1
+      max_hold_minutes: 45
+      mae_analysis:
+        gap_type: large_up
+        target_pct: 0.5
+        stop_pct: 0.5
+        n_winners: 4
+        median_mae_pct: 0.241
+        p90_mae_pct: 0.581
+        pct_winners_beyond_stop: 25.0
+        optimal_stop_pct: 0.64
+      monte_carlo:
+        flat:
+          ev_ci_lower: -0.1217
+          ev_ci_upper: 0.4
+          wr_ci_lower: 73.9
+          wr_ci_upper: 100.0
+          max_dd_p95: 5.6
+          fragile: true
+          n: 23
+        small_up:
+          ev_ci_lower: -0.3333
+          ev_ci_upper: 0.6
+          wr_ci_lower: 13.3
+          wr_ci_upper: 60.0
+          max_dd_p95: 5.8
+          fragile: true
+          n: 15
+        large_up:
+          ev_ci_lower: -0.1
+          ev_ci_upper: 1.9
+          wr_ci_lower: 33.3
+          wr_ci_upper: 100.0
+          max_dd_p95: 3.3
+          fragile: true
+          n: 6
+        small_down:
+          ev_ci_lower: -0.9
+          ev_ci_upper: 1.9
+          wr_ci_lower: 20.0
+          wr_ci_upper: 100.0
+          max_dd_p95: 4.8
+          fragile: true
+          n: 5
+      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
+    notes: 'Auto-generated from 126d backtest. Best combo: large_up +2.0%/-1.0% EV=0.77
+      (67% hit, N=6). Best window: 14:30-15:15 (60% WR).'
+    gap_combos:
+      flat:
+        target_pct: 0.5
+        stop_pct: 1.5
+        ev: 0.08
+        win_rate: 87.0
+        n: 23
+      small_up:
+        target_pct: 1.5
+        stop_pct: 0.5
+        ev: 0.106
+        win_rate: 33.3
+        n: 15
+      large_up:
+        target_pct: 2.0
+        stop_pct: 1.0
+        ev: 0.775
+        win_rate: 66.7
+        n: 6
+      small_down:
+        target_pct: 2.0
+        stop_pct: 1.5
+        ev: 0.4
+        win_rate: 60.0
+        n: 5
+    avoid_days:
+    - 1
+
+  # ── BHEL ────────────────────────────────────────────────
+  # Tradability: 57/100 | ATR: 3.86% | Beta: 1.31
+  # Best: small_up +2.0%/-1.5% EV=0.40 (58% hit, N=12)
+  # Best window: 10:00-11:30 (59% WR)
+  - symbol: BHEL.NS
+    name: Bharat Heavy Electricals Limited
+    enabled: true
+    direction: long
+    edge_strength: 3
+    regime_tags:
+    - industrials
+    - high_vol
+    active_phases:
+    - AFTERNOON_SCALP
+    - LATE_MORNING
+    avoid_phases:
+    - AVOID_ZONE
+    gap_rules:
+      LATE_MORNING:
+        preferred_gaps:
+        - flat
+    entry_conditions:
+      require_vwap_reclaim: true
+      require_higher_low: true
+      require_nifty_ok: true
+      min_volume_ratio: 0.5
+      min_range_multiple_of_atr: 0.5
+      max_move_from_open_pct: 2.6
+    risk:
+      base_target_pct: 2.0
+      base_stop_pct: 1.5
+      atr_target_multiple: 0.52
+      atr_stop_multiple: 0.39
+      kelly_fraction: 0.125
+      aggressiveness: medium
+      max_trades_per_day: 1
+      max_hold_minutes: 45
+      mae_analysis:
+        gap_type: small_up
+        target_pct: 0.5
+        stop_pct: 0.5
+        n_winners: 10
+        median_mae_pct: 0.154
+        p90_mae_pct: 0.346
+        pct_winners_beyond_stop: 0.0
+        optimal_stop_pct: 0.38
+      monte_carlo:
+        flat:
+          ev_ci_lower: -0.2905
+          ev_ci_upper: 0.6619
+          wr_ci_lower: 52.4
+          wr_ci_upper: 90.5
+          max_dd_p95: 8.5
+          fragile: true
+          n: 21
+        small_up:
+          ev_ci_lower: -0.4333
+          ev_ci_upper: 1.3167
+          wr_ci_lower: 33.3
+          wr_ci_upper: 83.3
+          max_dd_p95: 8.0
+          fragile: true
+          n: 12
+        small_down:
+          ev_ci_lower: -1.1625
+          ev_ci_upper: 1.4625
+          wr_ci_lower: 12.5
+          wr_ci_upper: 87.5
+          max_dd_p95: 8.0
+          fragile: true
+          n: 8
+        large_down:
+          ev_ci_lower: -0.6
+          ev_ci_upper: 0.9
+          wr_ci_lower: 0.0
+          wr_ci_upper: 60.0
+          max_dd_p95: 2.4
+          fragile: true
+          n: 5
+      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
+    notes: 'Auto-generated from 126d backtest. Best combo: small_up +2.0%/-1.5% EV=0.40
+      (58% hit, N=12). TRAP: large_up (31% up-close). Best window: 10:00-11:30 (59%
+      WR).'
+    gap_combos:
+      flat:
+        target_pct: 1.0
+        stop_pct: 1.5
+        ev: 0.139
+        win_rate: 71.4
+        n: 21
+      small_up:
+        target_pct: 2.0
+        stop_pct: 1.5
+        ev: 0.4
+        win_rate: 58.3
+        n: 12
+      small_down:
+        target_pct: 2.0
+        stop_pct: 1.5
+        ev: 0.15
+        win_rate: 50.0
+        n: 8
+      large_down:
+        target_pct: 2.0
+        stop_pct: 0.5
+        ev: 0.114
+        win_rate: 20.0
+        n: 5
+    avoid_days:
+    - 3
+
+  # ── CUMMINSIND ──────────────────────────────────────────
+  # Tradability: 56/100 | ATR: 3.72% | Beta: 0.98
+  # Best: small_down +1.0%/-0.5% EV=0.40 (71% hit, N=7)
+  - symbol: CUMMINSIND.NS
+    name: Cummins India Limited
+    enabled: false
+    direction: long
+    edge_strength: 3
+    regime_tags:
+    - industrials
+    - high_vol
+    active_phases:
+    - LATE_MORNING
+    avoid_phases:
+    - AVOID_ZONE
+    gap_rules:
+      LATE_MORNING:
+        preferred_gaps:
+        - flat
+    entry_conditions:
+      require_vwap_reclaim: true
+      require_higher_low: true
+      require_nifty_ok: true
+      min_volume_ratio: 0.5
+      min_range_multiple_of_atr: 0.5
+      max_move_from_open_pct: 2.5
+    risk:
+      base_target_pct: 1.0
+      base_stop_pct: 1.5
+      atr_target_multiple: 0.27
+      atr_stop_multiple: 0.4
+      kelly_fraction: 0.2
+      aggressiveness: high
+      max_trades_per_day: 1
+      max_hold_minutes: 45
+      mae_analysis:
+        gap_type: flat
+        target_pct: 0.5
+        stop_pct: 0.5
+        n_winners: 19
+        median_mae_pct: 0.0
+        p90_mae_pct: 0.394
+        pct_winners_beyond_stop: 0.0
+        optimal_stop_pct: 0.43
+      monte_carlo:
+        small_up:
+          ev_ci_lower: -0.6625
+          ev_ci_upper: 0.9
+          wr_ci_lower: 37.5
+          wr_ci_upper: 100.0
+          max_dd_p95: 4.8
+          fragile: true
+          n: 8
+        small_down:
+          ev_ci_lower: 0.0429
+          ev_ci_upper: 0.9
+          wr_ci_lower: 42.9
+          wr_ci_upper: 100.0
+          max_dd_p95: 1.8
+          fragile: false
+          n: 7
+        flat:
+          ev_ci_lower: -0.0783
+          ev_ci_upper: 0.7913
+          wr_ci_lower: 60.9
+          wr_ci_upper: 95.7
+          max_dd_p95: 6.5
+          fragile: true
+          n: 23
+      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
+    notes: 'Auto-generated from 126d backtest. Best combo: flat +1.0%/-1.5% EV=0.30
+      (78% hit, N=23).'
+    gap_combos:
+      small_up:
+        target_pct: 1.0
+        stop_pct: 1.5
+        ev: 0.15
+        win_rate: 75.0
+        n: 8
+      small_down:
+        target_pct: 1.0
+        stop_pct: 0.5
+        ev: 0.4
+        win_rate: 71.4
+        n: 7
+      flat:
+        target_pct: 1.0
+        stop_pct: 1.5
+        ev: 0.3
+        win_rate: 78.3
+        n: 23
+    avoid_days:
+    - 1
+
+  # ── SAILIFE ─────────────────────────────────────────────
+  # Tradability: 55/100 | ATR: 4.37% | Beta: 1.41
+  # Best: small_up +2.0%/-0.5% EV=0.40 (38% hit, N=13)
+  # Best window: 09:15-10:00 (59% WR)
+  - symbol: SAILIFE.NS
+    name: SBI Life Insurance
+    enabled: true
+    direction: long
+    edge_strength: 3
+    regime_tags:
+    - high_vol
+    active_phases:
+    - AFTERNOON_SCALP
+    - MORNING_SCALP
+    avoid_phases:
+    - AVOID_ZONE
+    gap_rules:
+      LATE_MORNING:
+        preferred_gaps:
+        - flat
+    entry_conditions:
+      require_vwap_reclaim: true
+      require_higher_low: true
+      require_nifty_ok: true
+      min_volume_ratio: 0.5
+      min_range_multiple_of_atr: 0.5
+      max_move_from_open_pct: 2.9
+    risk:
+      base_target_pct: 2.0
+      base_stop_pct: 0.5
+      atr_target_multiple: 0.46
+      atr_stop_multiple: 0.11
+      kelly_fraction: 0.125
+      aggressiveness: medium
+      max_trades_per_day: 1
+      max_hold_minutes: 45
+      mae_analysis:
+        gap_type: small_up
+        target_pct: 0.5
+        stop_pct: 0.5
+        n_winners: 6
+        median_mae_pct: 0.099
+        p90_mae_pct: 0.375
+        pct_winners_beyond_stop: 0.0
+        optimal_stop_pct: 0.41
+      monte_carlo:
+        flat:
+          ev_ci_lower: -0.0773
+          ev_ci_upper: 0.4
+          wr_ci_lower: 68.2
+          wr_ci_upper: 100.0
+          max_dd_p95: 3.3
+          fragile: true
+          n: 22
+        small_up:
+          ev_ci_lower: -0.2154
+          ev_ci_upper: 0.9385
+          wr_ci_lower: 15.4
+          wr_ci_upper: 61.5
+          max_dd_p95: 4.8
+          fragile: true
+          n: 13
+        large_down:
+          ev_ci_lower: -0.6
+          ev_ci_upper: 1.4
+          wr_ci_lower: 20.0
+          wr_ci_upper: 100.0
+          max_dd_p95: 3.3
+          fragile: true
+          n: 5
+        large_up:
+          ev_ci_lower: -0.6
+          ev_ci_upper: 0.8286
+          wr_ci_lower: 0.0
+          wr_ci_upper: 57.1
+          max_dd_p95: 3.6
+          fragile: true
+          n: 7
+      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
+    notes: 'Auto-generated from 126d backtest. Best combo: small_up +2.0%/-0.5% EV=0.40
+      (38% hit, N=13). Best window: 09:15-10:00 (59% WR).'
+    gap_combos:
+      flat:
+        target_pct: 0.5
+        stop_pct: 1.0
+        ev: 0.15
+        win_rate: 86.4
+        n: 22
+      small_up:
+        target_pct: 2.0
+        stop_pct: 0.5
+        ev: 0.4
+        win_rate: 38.5
+        n: 13
+      large_down:
+        target_pct: 1.5
+        stop_pct: 1.0
+        ev: 0.329
+        win_rate: 60.0
+        n: 5
+      large_up:
+        target_pct: 2.0
+        stop_pct: 0.5
+        ev: 0.233
+        win_rate: 28.6
+        n: 7
+    avoid_days:
+    - 1
+    - 3
+
+  # ── GPIL ────────────────────────────────────────────────
+  # Tradability: 55/100 | ATR: 4.34% | Beta: 1.27
+  # Best: flat +2.0%/-1.0% EV=0.30 (46% hit, N=13)
+  # Best window: 09:15-10:00 (59% WR)
+  - symbol: GPIL.NS
+    name: Godawari Power & Ispat Limited
+    enabled: true
+    direction: long
+    edge_strength: 3
+    regime_tags:
+    - high_vol
+    active_phases:
+    - AFTERNOON_SCALP
+    - LATE_MORNING
+    - MORNING_SCALP
+    avoid_phases:
+    - AVOID_ZONE
+    gap_rules:
+      LATE_MORNING:
+        preferred_gaps:
+        - flat
+    entry_conditions:
+      require_vwap_reclaim: true
+      require_higher_low: true
+      require_nifty_ok: true
+      min_volume_ratio: 0.5
+      min_range_multiple_of_atr: 0.5
+      max_move_from_open_pct: 2.9
+    risk:
+      base_target_pct: 2.0
+      base_stop_pct: 1.0
+      atr_target_multiple: 0.46
+      atr_stop_multiple: 0.23
+      kelly_fraction: 0.1
+      aggressiveness: medium
+      max_trades_per_day: 1
+      max_hold_minutes: 45
+      mae_analysis:
+        gap_type: flat
+        target_pct: 0.5
+        stop_pct: 0.5
+        n_winners: 7
+        median_mae_pct: 0.081
+        p90_mae_pct: 0.369
+        pct_winners_beyond_stop: 0.0
+        optimal_stop_pct: 0.41
+      monte_carlo:
+        large_up:
+          ev_ci_lower: -0.6
+          ev_ci_upper: 1.0
+          wr_ci_lower: 0.0
+          wr_ci_upper: 80.0
+          max_dd_p95: 2.4
+          fragile: true
+          n: 5
+        small_up:
+          ev_ci_lower: -0.3
+          ev_ci_upper: 0.7
+          wr_ci_lower: 32.0
+          wr_ci_upper: 72.0
+          max_dd_p95: 9.3
+          fragile: true
+          n: 25
+        flat:
+          ev_ci_lower: -0.4077
+          ev_ci_upper: 0.9769
+          wr_ci_lower: 23.1
+          wr_ci_upper: 69.2
+          max_dd_p95: 7.7
+          fragile: true
+          n: 13
+        large_down:
+          ev_ci_lower: 0.4
+          ev_ci_upper: 0.4
+          wr_ci_lower: 100.0
+          wr_ci_upper: 100.0
+          max_dd_p95: 0.0
+          fragile: false
+          n: 6
+      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
+    notes: 'Auto-generated from 126d backtest. Best combo: flat +2.0%/-1.0% EV=0.30
+      (46% hit, N=13). Best window: 09:15-10:00 (59% WR).'
+    gap_combos:
+      large_up:
+        target_pct: 1.5
+        stop_pct: 0.5
+        ev: 0.257
+        win_rate: 40.0
+        n: 5
+      small_up:
+        target_pct: 1.5
+        stop_pct: 1.0
+        ev: 0.196
+        win_rate: 52.0
+        n: 25
+      flat:
+        target_pct: 2.0
+        stop_pct: 1.0
+        ev: 0.3
+        win_rate: 46.2
+        n: 13
+      large_down:
+        target_pct: 0.5
+        stop_pct: 1.5
+        ev: 0.15
+        win_rate: 100.0
+        n: 6
+    avoid_days:
+    - 4
+
+  # ── ANANTRAJ ────────────────────────────────────────────
+  # Tradability: 55/100 | ATR: 4.23% | Beta: 1.74
+  # Best: small_up +2.0%/-0.5% EV=0.54 (44% hit, N=9)
+  # Best window: 14:30-15:15 (57% WR)
+  - symbol: ANANTRAJ.NS
+    name: Anant Raj Limited
+    enabled: true
+    direction: long
+    edge_strength: 3
+    regime_tags:
+    - high_beta
+    - high_vol
+    active_phases:
+    - AFTERNOON_SCALP
+    avoid_phases:
+    - AVOID_ZONE
+    gap_rules:
+      LATE_MORNING:
+        preferred_gaps:
+        - flat
+    entry_conditions:
+      require_vwap_reclaim: true
+      require_higher_low: true
+      require_nifty_ok: true
+      min_volume_ratio: 0.5
+      min_range_multiple_of_atr: 0.5
+      max_move_from_open_pct: 2.8
+    risk:
+      base_target_pct: 2.0
+      base_stop_pct: 0.5
+      atr_target_multiple: 0.47
+      atr_stop_multiple: 0.12
+      kelly_fraction: 0.159
+      aggressiveness: high
+      max_trades_per_day: 1
+      max_hold_minutes: 45
+      mae_analysis:
+        gap_type: small_up
+        target_pct: 0.5
+        stop_pct: 0.5
+        n_winners: 7
+        median_mae_pct: 0.24
+        p90_mae_pct: 0.804
+        pct_winners_beyond_stop: 28.6
+        optimal_stop_pct: 0.88
+      monte_carlo:
+        small_up:
+          ev_ci_lower: -0.3222
+          ev_ci_upper: 1.3444
+          wr_ci_lower: 11.1
+          wr_ci_upper: 77.8
+          max_dd_p95: 3.6
+          fragile: true
+          n: 9
+        flat:
+          ev_ci_lower: -0.3391
+          ev_ci_upper: 0.3565
+          wr_ci_lower: 13.0
+          wr_ci_upper: 47.8
+          max_dd_p95: 8.2
+          fragile: true
+          n: 23
+        small_down:
+          ev_ci_lower: -0.6
+          ev_ci_upper: 0.65
+          wr_ci_lower: 0.0
+          wr_ci_upper: 50.0
+          max_dd_p95: 6.0
+          fragile: true
+          n: 12
+      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
+    notes: 'Auto-generated from 126d backtest. Best combo: small_up +2.0%/-0.5% EV=0.54
+      (44% hit, N=9). TRAP: flat (34% up-close). Best window: 14:30-15:15 (57% WR).'
+    gap_combos:
+      small_up:
+        target_pct: 2.0
+        stop_pct: 0.5
+        ev: 0.536
+        win_rate: 44.4
+        n: 9
+      flat:
+        target_pct: 1.5
+        stop_pct: 0.5
+        ev: 0.04
+        win_rate: 30.4
+        n: 23
+      small_down:
+        target_pct: 2.0
+        stop_pct: 0.5
+        ev: 0.114
+        win_rate: 25.0
+        n: 12
+    avoid_days:
+    - 1
+    - 2
+    - 3
+
+  # ── AEROFLEX ────────────────────────────────────────────
+  # Tradability: 52/100 | ATR: 4.86% | Beta: 1.2
+  # Best: small_up +2.0%/-1.5% EV=0.95 (78% hit, N=9)
+  # Best window: 09:15-10:00 (57% WR)
+  - symbol: AEROFLEX.NS
+    name: Aeroflex Industries Limited
+    enabled: false
+    direction: long
+    edge_strength: 3
+    regime_tags:
+    - industrials
+    - high_vol
+    active_phases:
+    - MORNING_SCALP
+    avoid_phases:
+    - AVOID_ZONE
+    gap_rules:
+      LATE_MORNING:
+        preferred_gaps:
+        - flat
+    entry_conditions:
+      require_vwap_reclaim: true
+      require_higher_low: true
+      require_nifty_ok: true
+      min_volume_ratio: 0.5
+      min_range_multiple_of_atr: 0.5
+      max_move_from_open_pct: 3.3
+    risk:
+      base_target_pct: 2.0
+      base_stop_pct: 1.5
+      atr_target_multiple: 0.41
+      atr_stop_multiple: 0.31
+      kelly_fraction: 0.261
+      aggressiveness: high
+      max_trades_per_day: 1
+      max_hold_minutes: 45
+      mae_analysis:
+        gap_type: small_up
+        target_pct: 0.5
+        stop_pct: 0.5
+        n_winners: 6
+        median_mae_pct: 0.089
+        p90_mae_pct: 0.65
+        pct_winners_beyond_stop: 16.7
+        optimal_stop_pct: 0.71
+      monte_carlo:
+        small_down:
+          ev_ci_lower: -0.0375
+          ev_ci_upper: 0.9
+          wr_ci_lower: 62.5
+          wr_ci_upper: 100.0
+          max_dd_p95: 3.2
+          fragile: true
+          n: 8
+        small_up:
+          ev_ci_lower: -0.0444
+          ev_ci_upper: 1.9
+          wr_ci_lower: 44.4
+          wr_ci_upper: 100.0
+          max_dd_p95: 4.8
+          fragile: true
+          n: 9
+        large_up:
+          ev_ci_lower: -0.6385
+          ev_ci_upper: 0.9769
+          wr_ci_lower: 15.4
+          wr_ci_upper: 69.2
+          max_dd_p95: 9.1
+          fragile: true
+          n: 13
+        large_down:
+          ev_ci_lower: -0.3143
+          ev_ci_upper: 1.1143
+          wr_ci_lower: 14.3
+          wr_ci_upper: 85.7
+          max_dd_p95: 2.4
+          fragile: true
+          n: 7
+      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
+    notes: 'Auto-generated from 126d backtest. Best combo: small_up +2.0%/-1.5% EV=0.95
+      (78% hit, N=9). TRAP: flat (33% up-close). Best window: 09:15-10:00 (57% WR).'
+    gap_combos:
+      small_down:
+        target_pct: 1.0
+        stop_pct: 1.5
+        ev: 0.4
+        win_rate: 87.5
+        n: 8
+      small_up:
+        target_pct: 2.0
+        stop_pct: 1.5
+        ev: 0.945
+        win_rate: 77.8
+        n: 9
+      large_up:
+        target_pct: 2.0
+        stop_pct: 1.0
+        ev: 0.1
+        win_rate: 38.5
+        n: 13
+      large_down:
+        target_pct: 1.5
+        stop_pct: 0.5
+        ev: 0.511
+        win_rate: 57.1
+        n: 7
+    avoid_days:
+    - 1
+    - 3
+
+  # ── NETWEB ──────────────────────────────────────────────
+  # Tradability: 50/100 | ATR: 5.71% | Beta: 1.41
+  # Best: small_down +1.0%/-1.5% EV=0.59 (100% hit, N=6)
+  - symbol: NETWEB.NS
+    name: Netweb Technologies India Limited
+    enabled: false
+    direction: long
+    edge_strength: 3
+    regime_tags:
+    - high_vol
+    active_phases:
+    - LATE_MORNING
+    avoid_phases:
+    - AVOID_ZONE
+    gap_rules:
+      LATE_MORNING:
+        preferred_gaps:
+        - flat
+    entry_conditions:
+      require_vwap_reclaim: true
+      require_higher_low: true
+      require_nifty_ok: true
+      min_volume_ratio: 0.5
+      min_range_multiple_of_atr: 0.5
+      max_move_from_open_pct: 3.8
+    risk:
+      base_target_pct: 1.0
+      base_stop_pct: 1.5
+      atr_target_multiple: 0.18
+      atr_stop_multiple: 0.26
+      kelly_fraction: 0.344
+      aggressiveness: high
+      max_trades_per_day: 1
+      max_hold_minutes: 45
+      mae_analysis:
+        gap_type: small_down
+        target_pct: 0.5
+        stop_pct: 0.5
+        n_winners: 4
+        median_mae_pct: 0.005
+        p90_mae_pct: 0.45
+        pct_winners_beyond_stop: 25.0
+        optimal_stop_pct: 0.5
+      monte_carlo:
+        small_down:
+          ev_ci_lower: 0.9
+          ev_ci_upper: 0.9
+          wr_ci_lower: 100.0
+          wr_ci_upper: 100.0
+          max_dd_p95: 0.0
+          fragile: false
+          n: 6
+        small_up:
+          ev_ci_lower: -0.1882
+          ev_ci_upper: 0.4
+          wr_ci_lower: 70.6
+          wr_ci_upper: 100.0
+          max_dd_p95: 4.8
+          fragile: true
+          n: 17
+        large_up:
+          ev_ci_lower: -0.2667
+          ev_ci_upper: 0.4
+          wr_ci_lower: 33.3
+          wr_ci_upper: 100.0
+          max_dd_p95: 2.4
+          fragile: true
+          n: 9
+        large_down:
+          ev_ci_lower: -0.4
+          ev_ci_upper: 1.4
+          wr_ci_lower: 40.0
+          wr_ci_upper: 100.0
+          max_dd_p95: 3.2
+          fragile: true
+          n: 5
+      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
+    notes: 'Auto-generated from 126d backtest. Best combo: small_down +1.0%/-1.5% EV=0.59
+      (100% hit, N=6).'
+    gap_combos:
+      small_down:
+        target_pct: 1.0
+        stop_pct: 1.5
+        ev: 0.587
+        win_rate: 100.0
+        n: 6
+      small_up:
+        target_pct: 0.5
+        stop_pct: 1.5
+        ev: 0.084
+        win_rate: 88.2
+        n: 17
+      large_up:
+        target_pct: 0.5
+        stop_pct: 0.5
+        ev: 0.036
+        win_rate: 66.7
+        n: 9
+      large_down:
+        target_pct: 1.5
+        stop_pct: 1.5
+        ev: 0.543
+        win_rate: 80.0
+        n: 5
+
   # ── FINCABLES ───────────────────────────────────────────
-  # Tradability: 49/100 | ATR: 6.01% | Beta: 0.79
+  # Tradability: 49/100 | ATR: 6.01% | Beta: 0.98
   # Best: small_up +1.5%/-1.0% EV=0.36 (60% hit, N=10)
   - symbol: FINCABLES.NS
     name: Finolex Cables Limited
@@ -1369,7 +1502,6 @@ tickers:
     edge_strength: 3
     regime_tags:
     - industrials
-    - low_beta
     - high_vol
     active_phases:
     - LATE_MORNING
@@ -1423,7 +1555,7 @@ tickers:
           n: 33
       monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
     notes: 'Auto-generated from 126d backtest. Best combo: small_up +1.5%/-1.0% EV=0.36
-      (60% hit, N=10). TRAP: flat (32% up-close). TRAP: large_up (25% up-close).'
+      (60% hit, N=10). TRAP: flat (33% up-close). TRAP: large_up (30% up-close).'
     gap_combos:
       small_up:
         target_pct: 1.5
@@ -1443,7 +1575,7 @@ tickers:
     - 4
 
   # ── IDBI ────────────────────────────────────────────────
-  # Tradability: 46/100 | ATR: 7.52% | Beta: 1.4
+  # Tradability: 46/100 | ATR: 7.5% | Beta: 1.39
   # Best: small_up +2.0%/-1.5% EV=0.37 (57% hit, N=14)
   - symbol: IDBI.NS
     name: IDBI Bank Limited
@@ -1469,23 +1601,23 @@ tickers:
       min_range_multiple_of_atr: 0.5
       max_move_from_open_pct: 5.0
     risk:
-      base_target_pct: 1.0
+      base_target_pct: 2.0
       base_stop_pct: 1.5
-      atr_target_multiple: 0.13
+      atr_target_multiple: 0.27
       atr_stop_multiple: 0.2
-      kelly_fraction: 0.188
-      aggressiveness: high
+      kelly_fraction: 0.117
+      aggressiveness: medium
       max_trades_per_day: 1
       max_hold_minutes: 45
       mae_analysis:
-        gap_type: flat
+        gap_type: small_up
         target_pct: 0.5
         stop_pct: 0.5
         n_winners: 12
-        median_mae_pct: 0.28
-        p90_mae_pct: 0.495
-        pct_winners_beyond_stop: 8.3
-        optimal_stop_pct: 0.54
+        median_mae_pct: 0.241
+        p90_mae_pct: 0.508
+        pct_winners_beyond_stop: 16.7
+        optimal_stop_pct: 0.56
       monte_carlo:
         small_up:
           ev_ci_lower: -0.6
@@ -1520,8 +1652,8 @@ tickers:
           fragile: true
           n: 5
       monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
-    notes: 'Auto-generated from 126d backtest. Best combo: flat +1.0%/-1.5% EV=0.28
-      (78% hit, N=18). TRAP: large_down (29% up-close).'
+    notes: 'Auto-generated from 126d backtest. Best combo: small_up +2.0%/-1.5% EV=0.37
+      (57% hit, N=14).'
     gap_combos:
       small_up:
         target_pct: 2.0
@@ -1548,93 +1680,13 @@ tickers:
         win_rate: 40.0
         n: 5
     avoid_days:
-    - 0
     - 1
     - 3
 
-  # ── HAVELLS ─────────────────────────────────────────────
-  # Tradability: 68/100 | ATR: 2.93% | Beta: 1.1
-  # Best: small_up +1.5%/-1.5% EV=0.54 (80% hit, N=5)
-  - symbol: HAVELLS.NS
-    name: Havells India Limited
-    enabled: false
-    direction: long
-    edge_strength: 2
-    regime_tags:
-    - industrials
-    active_phases:
-    - LATE_MORNING
-    avoid_phases:
-    - AVOID_ZONE
-    gap_rules:
-      LATE_MORNING:
-        preferred_gaps:
-        - flat
-    entry_conditions:
-      require_vwap_reclaim: true
-      require_higher_low: true
-      require_nifty_ok: true
-      min_volume_ratio: 0.5
-      min_range_multiple_of_atr: 0.4
-      max_move_from_open_pct: 2.0
-    risk:
-      base_target_pct: 1.5
-      base_stop_pct: 1.5
-      atr_target_multiple: 0.51
-      atr_stop_multiple: 0.51
-      kelly_fraction: 0.214
-      aggressiveness: high
-      max_trades_per_day: 1
-      max_hold_minutes: 45
-      mae_analysis:
-        gap_type: small_up
-        target_pct: 0.5
-        stop_pct: 0.5
-        n_winners: 5
-        median_mae_pct: 0.197
-        p90_mae_pct: 0.362
-        pct_winners_beyond_stop: 0.0
-        optimal_stop_pct: 0.4
-      monte_carlo:
-        small_up:
-          ev_ci_lower: -0.4
-          ev_ci_upper: 1.4
-          wr_ci_lower: 40.0
-          wr_ci_upper: 100.0
-          max_dd_p95: 3.2
-          fragile: true
-          n: 5
-        small_down:
-          ev_ci_lower: -0.5444
-          ev_ci_upper: 1.1222
-          wr_ci_lower: 22.2
-          wr_ci_upper: 88.9
-          max_dd_p95: 5.5
-          fragile: true
-          n: 9
-      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
-    notes: 'Auto-generated from 126d backtest. Best combo: small_up +1.5%/-1.5% EV=0.54
-      (80% hit, N=5). TRAP: large_down (0% up-close).'
-    gap_combos:
-      small_up:
-        target_pct: 1.5
-        stop_pct: 1.5
-        ev: 0.543
-        win_rate: 80.0
-        n: 5
-      small_down:
-        target_pct: 1.5
-        stop_pct: 1.0
-        ev: 0.264
-        win_rate: 55.6
-        n: 9
-    avoid_days:
-    - 1
-
   # ── BSE ─────────────────────────────────────────────────
-  # Tradability: 63/100 | ATR: 3.36% | Beta: 1.82
+  # Tradability: 61/100 | ATR: 3.35% | Beta: 1.43
   # Best: large_up +2.0%/-1.0% EV=0.57 (57% hit, N=7)
-  # Best window: 14:30-15:15 (63% WR)
+  # Best window: 14:30-15:15 (62% WR)
   - symbol: BSE.NS
     name: BSE Limited
     enabled: false
@@ -1642,10 +1694,10 @@ tickers:
     edge_strength: 2
     regime_tags:
     - financials
-    - high_beta
     active_phases:
     - AFTERNOON_SCALP
     - MORNING_SCALP
+    - PRE_CLOSE_SETUP
     avoid_phases:
     - AVOID_ZONE
     gap_rules:
@@ -1658,7 +1710,7 @@ tickers:
       require_nifty_ok: true
       min_volume_ratio: 0.5
       min_range_multiple_of_atr: 0.5
-      max_move_from_open_pct: 2.3
+      max_move_from_open_pct: 2.2
     risk:
       base_target_pct: 2.0
       base_stop_pct: 1.0
@@ -1704,7 +1756,7 @@ tickers:
           n: 7
       monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
     notes: 'Auto-generated from 126d backtest. Best combo: large_up +2.0%/-1.0% EV=0.57
-      (57% hit, N=7). Best window: 14:30-15:15 (63% WR).'
+      (57% hit, N=7). Best window: 14:30-15:15 (62% WR).'
     gap_combos:
       small_up:
         target_pct: 1.5
@@ -1724,16 +1776,656 @@ tickers:
         ev: 0.567
         win_rate: 57.1
         n: 7
+    avoid_days:
+    - 1
+
+  # ── EXIDEIND ────────────────────────────────────────────
+  # Tradability: 59/100 | ATR: 3.25% | Beta: 1.07
+  # Best: small_up +1.5%/-1.5% EV=0.65 (83% hit, N=6)
+  # Best window: 14:30-15:15 (55% WR)
+  - symbol: EXIDEIND.NS
+    name: Exide Industries Limited
+    enabled: false
+    direction: long
+    edge_strength: 2
+    regime_tags:
+    - general
+    active_phases:
+    - AFTERNOON_SCALP
+    avoid_phases:
+    - AVOID_ZONE
+    gap_rules:
+      LATE_MORNING:
+        preferred_gaps:
+        - flat
+    entry_conditions:
+      require_vwap_reclaim: true
+      require_higher_low: true
+      require_nifty_ok: true
+      min_volume_ratio: 0.5
+      min_range_multiple_of_atr: 0.5
+      max_move_from_open_pct: 2.2
+    risk:
+      base_target_pct: 1.5
+      base_stop_pct: 1.5
+      atr_target_multiple: 0.46
+      atr_stop_multiple: 0.46
+      kelly_fraction: 0.25
+      aggressiveness: high
+      max_trades_per_day: 1
+      max_hold_minutes: 45
+      mae_analysis:
+        gap_type: small_up
+        target_pct: 0.5
+        stop_pct: 0.5
+        n_winners: 4
+        median_mae_pct: 0.06
+        p90_mae_pct: 0.279
+        pct_winners_beyond_stop: 0.0
+        optimal_stop_pct: 0.31
+      monte_carlo:
+        small_up:
+          ev_ci_lower: -0.1
+          ev_ci_upper: 1.4
+          wr_ci_lower: 50.0
+          wr_ci_upper: 100.0
+          max_dd_p95: 3.2
+          fragile: true
+          n: 6
+      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
+    notes: 'Auto-generated from 126d backtest. Best combo: small_up +1.5%/-1.5% EV=0.65
+      (83% hit, N=6). Best window: 14:30-15:15 (55% WR).'
+    gap_combos:
+      small_up:
+        target_pct: 1.5
+        stop_pct: 1.5
+        ev: 0.65
+        win_rate: 83.3
+        n: 6
+
+  # ── ABCAPITAL ───────────────────────────────────────────
+  # Tradability: 58/100 | ATR: 3.7% | Beta: 1.48
+  # Best: small_down +1.0%/-1.5% EV=0.34 (86% hit, N=7)
+  # Best window: 14:30-15:15 (59% WR)
+  - symbol: ABCAPITAL.NS
+    name: Aditya Birla Capital Limited
+    enabled: false
+    direction: long
+    edge_strength: 2
+    regime_tags:
+    - financials
+    - high_vol
+    active_phases:
+    - AFTERNOON_SCALP
+    avoid_phases:
+    - AVOID_ZONE
+    gap_rules:
+      LATE_MORNING:
+        preferred_gaps:
+        - flat
+    entry_conditions:
+      require_vwap_reclaim: true
+      require_higher_low: true
+      require_nifty_ok: true
+      min_volume_ratio: 0.5
+      min_range_multiple_of_atr: 0.5
+      max_move_from_open_pct: 2.5
+    risk:
+      base_target_pct: 1.0
+      base_stop_pct: 1.5
+      atr_target_multiple: 0.27
+      atr_stop_multiple: 0.41
+      kelly_fraction: 0.222
+      aggressiveness: high
+      max_trades_per_day: 1
+      max_hold_minutes: 45
+      mae_analysis:
+        gap_type: small_down
+        target_pct: 0.5
+        stop_pct: 0.5
+        n_winners: 4
+        median_mae_pct: 0.085
+        p90_mae_pct: 0.217
+        pct_winners_beyond_stop: 0.0
+        optimal_stop_pct: 0.24
+      monte_carlo:
+        small_up:
+          ev_ci_lower: -0.6
+          ev_ci_upper: 0.5538
+          wr_ci_lower: 0.0
+          wr_ci_upper: 46.2
+          max_dd_p95: 6.6
+          fragile: true
+          n: 13
+        small_down:
+          ev_ci_lower: -0.1714
+          ev_ci_upper: 0.9
+          wr_ci_lower: 57.1
+          wr_ci_upper: 100.0
+          max_dd_p95: 3.2
+          fragile: true
+          n: 7
+      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
+    notes: 'Auto-generated from 126d backtest. Best combo: small_down +1.0%/-1.5% EV=0.34
+      (86% hit, N=7). Best window: 14:30-15:15 (59% WR).'
+    gap_combos:
+      small_up:
+        target_pct: 2.0
+        stop_pct: 0.5
+        ev: 0.067
+        win_rate: 23.1
+        n: 13
+      small_down:
+        target_pct: 1.0
+        stop_pct: 1.5
+        ev: 0.344
+        win_rate: 85.7
+        n: 7
+
+  # ── ADANIENT ────────────────────────────────────────────
+  # Tradability: 58/100 | ATR: 3.13% | Beta: 1.6
+  # Best: small_down +2.0%/-1.0% EV=0.61 (60% hit, N=5)
+  - symbol: ADANIENT.NS
+    name: Adani Enterprises Limited
+    enabled: false
+    direction: long
+    edge_strength: 2
+    regime_tags:
+    - energy
+    - high_beta
+    active_phases:
+    - LATE_MORNING
+    avoid_phases:
+    - AVOID_ZONE
+    gap_rules:
+      LATE_MORNING:
+        preferred_gaps:
+        - flat
+    entry_conditions:
+      require_vwap_reclaim: true
+      require_higher_low: true
+      require_nifty_ok: true
+      min_volume_ratio: 0.5
+      min_range_multiple_of_atr: 0.5
+      max_move_from_open_pct: 2.1
+    risk:
+      base_target_pct: 2.0
+      base_stop_pct: 1.0
+      atr_target_multiple: 0.64
+      atr_stop_multiple: 0.32
+      kelly_fraction: 0.179
+      aggressiveness: high
+      max_trades_per_day: 1
+      max_hold_minutes: 45
+      mae_analysis:
+        gap_type: small_down
+        target_pct: 0.5
+        stop_pct: 0.5
+        n_winners: 3
+        median_mae_pct: 0.299
+        p90_mae_pct: 0.412
+        pct_winners_beyond_stop: 0.0
+        optimal_stop_pct: 0.45
+      monte_carlo:
+        large_up:
+          ev_ci_lower: -0.6
+          ev_ci_upper: 1.4
+          wr_ci_lower: 0.0
+          wr_ci_upper: 80.0
+          max_dd_p95: 2.4
+          fragile: true
+          n: 5
+        small_down:
+          ev_ci_lower: -0.5
+          ev_ci_upper: 1.9
+          wr_ci_lower: 20.0
+          wr_ci_upper: 100.0
+          max_dd_p95: 3.3
+          fragile: true
+          n: 5
+      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
+    notes: 'Auto-generated from 126d backtest. Best combo: small_down +2.0%/-1.0% EV=0.61
+      (60% hit, N=5). TRAP: flat (35% up-close).'
+    gap_combos:
+      large_up:
+        target_pct: 2.0
+        stop_pct: 0.5
+        ev: 0.471
+        win_rate: 40.0
+        n: 5
+      small_down:
+        target_pct: 2.0
+        stop_pct: 1.0
+        ev: 0.614
+        win_rate: 60.0
+        n: 5
+    avoid_days:
+    - 1
+    - 3
+
+  # ── VBL ─────────────────────────────────────────────────
+  # Tradability: 58/100 | ATR: 3.54% | Beta: 0.91
+  # Best: small_down +1.0%/-1.5% EV=0.54 (92% hit, N=12)
+  # Best window: 14:30-15:15 (55% WR)
+  - symbol: VBL.NS
+    name: Varun Beverages Limited
+    enabled: false
+    direction: long
+    edge_strength: 2
+    regime_tags:
+    - high_vol
+    active_phases:
+    - AFTERNOON_SCALP
+    avoid_phases:
+    - AVOID_ZONE
+    gap_rules:
+      LATE_MORNING:
+        preferred_gaps:
+        - flat
+    entry_conditions:
+      require_vwap_reclaim: true
+      require_higher_low: true
+      require_nifty_ok: true
+      min_volume_ratio: 0.5
+      min_range_multiple_of_atr: 0.5
+      max_move_from_open_pct: 2.4
+    risk:
+      base_target_pct: 1.0
+      base_stop_pct: 1.5
+      atr_target_multiple: 0.28
+      atr_stop_multiple: 0.42
+      kelly_fraction: 0.321
+      aggressiveness: high
+      max_trades_per_day: 1
+      max_hold_minutes: 45
+      mae_analysis:
+        gap_type: small_down
+        target_pct: 0.5
+        stop_pct: 0.5
+        n_winners: 10
+        median_mae_pct: 0.054
+        p90_mae_pct: 0.461
+        pct_winners_beyond_stop: 0.0
+        optimal_stop_pct: 0.51
+      monte_carlo:
+        large_up:
+          ev_ci_lower: -0.6
+          ev_ci_upper: 0.9
+          wr_ci_lower: 40.0
+          wr_ci_upper: 100.0
+          max_dd_p95: 3.2
+          fragile: true
+          n: 5
+        small_down:
+          ev_ci_lower: 0.275
+          ev_ci_upper: 0.9
+          wr_ci_lower: 75.0
+          wr_ci_upper: 100.0
+          max_dd_p95: 3.2
+          fragile: false
+          n: 12
+      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
+    notes: 'Auto-generated from 126d backtest. Best combo: small_down +1.0%/-1.5% EV=0.54
+      (92% hit, N=12). TRAP: small_up (21% up-close). Best window: 14:30-15:15 (55%
+      WR).'
+    gap_combos:
+      large_up:
+        target_pct: 1.0
+        stop_pct: 1.5
+        ev: 0.186
+        win_rate: 80.0
+        n: 5
+      small_down:
+        target_pct: 1.0
+        stop_pct: 1.5
+        ev: 0.543
+        win_rate: 91.7
+        n: 12
+    avoid_days:
+    - 1
+
+  # ── ADANIPORTS ──────────────────────────────────────────
+  # Tradability: 57/100 | ATR: 3.46% | Beta: 1.26
+  # Best: small_up +1.0%/-1.0% EV=0.23 (71% hit, N=7)
+  - symbol: ADANIPORTS.NS
+    name: Adani Ports and Special Economic Zone Limited
+    enabled: false
+    direction: long
+    edge_strength: 2
+    regime_tags:
+    - industrials
+    active_phases:
+    - LATE_MORNING
+    avoid_phases:
+    - AVOID_ZONE
+    gap_rules:
+      LATE_MORNING:
+        preferred_gaps:
+        - flat
+    entry_conditions:
+      require_vwap_reclaim: true
+      require_higher_low: true
+      require_nifty_ok: true
+      min_volume_ratio: 0.5
+      min_range_multiple_of_atr: 0.5
+      max_move_from_open_pct: 2.3
+    risk:
+      base_target_pct: 1.0
+      base_stop_pct: 1.0
+      atr_target_multiple: 0.29
+      atr_stop_multiple: 0.29
+      kelly_fraction: 0.167
+      aggressiveness: high
+      max_trades_per_day: 1
+      max_hold_minutes: 45
+      mae_analysis:
+        gap_type: small_up
+        target_pct: 0.5
+        stop_pct: 0.5
+        n_winners: 4
+        median_mae_pct: 0.317
+        p90_mae_pct: 0.433
+        pct_winners_beyond_stop: 0.0
+        optimal_stop_pct: 0.48
+      monte_carlo:
+        small_up:
+          ev_ci_lower: -0.2429
+          ev_ci_upper: 0.9
+          wr_ci_lower: 42.9
+          wr_ci_upper: 100.0
+          max_dd_p95: 3.3
+          fragile: true
+          n: 7
+        small_down:
+          ev_ci_lower: -0.6
+          ev_ci_upper: 0.65
+          wr_ci_lower: 0.0
+          wr_ci_upper: 50.0
+          max_dd_p95: 3.0
+          fragile: true
+          n: 6
+        large_up:
+          ev_ci_lower: -0.6
+          ev_ci_upper: 0.9
+          wr_ci_lower: 0.0
+          wr_ci_upper: 60.0
+          max_dd_p95: 2.4
+          fragile: true
+          n: 5
+      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
+    notes: 'Auto-generated from 126d backtest. Best combo: small_up +1.0%/-1.0% EV=0.23
+      (71% hit, N=7).'
+    gap_combos:
+      small_up:
+        target_pct: 1.0
+        stop_pct: 1.0
+        ev: 0.233
+        win_rate: 71.4
+        n: 7
+      small_down:
+        target_pct: 2.0
+        stop_pct: 0.5
+        ev: 0.025
+        win_rate: 16.7
+        n: 6
+      large_up:
+        target_pct: 2.0
+        stop_pct: 0.5
+        ev: 0.114
+        win_rate: 20.0
+        n: 5
+    avoid_days:
+    - 1
+    - 4
+
+  # ── TATAPOWER ───────────────────────────────────────────
+  # Tradability: 70/100 | ATR: 3.0% | Beta: 1.17
+  # Best: small_down +2.0%/-0.5% EV=0.65 (50% hit, N=6)
+  # Best window: 14:30-15:15 (69% WR)
+  - symbol: TATAPOWER.NS
+    name: Tata Power Company Limited
+    enabled: false
+    direction: long
+    edge_strength: 1
+    regime_tags:
+    - general
+    active_phases:
+    - AFTERNOON_SCALP
+    avoid_phases:
+    - AVOID_ZONE
+    gap_rules:
+      AFTERNOON_SCALP:
+        preferred_gaps:
+        - small_down
+    entry_conditions:
+      require_vwap_reclaim: true
+      require_higher_low: true
+      require_nifty_ok: true
+      min_volume_ratio: 0.5
+      min_range_multiple_of_atr: 0.5
+      max_move_from_open_pct: 2.0
+    risk:
+      base_target_pct: 2.0
+      base_stop_pct: 0.5
+      atr_target_multiple: 0.67
+      atr_stop_multiple: 0.17
+      kelly_fraction: 0.188
+      aggressiveness: high
+      max_trades_per_day: 1
+      max_hold_minutes: 45
+      mae_analysis:
+        gap_type: small_down
+        target_pct: 0.5
+        stop_pct: 0.5
+        n_winners: 4
+        median_mae_pct: 0.047
+        p90_mae_pct: 0.12
+        pct_winners_beyond_stop: 0.0
+        optimal_stop_pct: 0.13
+      monte_carlo:
+        small_down:
+          ev_ci_lower: -0.1833
+          ev_ci_upper: 1.4833
+          wr_ci_lower: 16.7
+          wr_ci_upper: 83.3
+          max_dd_p95: 2.4
+          fragile: true
+          n: 6
+        small_up:
+          ev_ci_lower: -0.6
+          ev_ci_upper: 1.0667
+          wr_ci_lower: 0.0
+          wr_ci_upper: 66.7
+          max_dd_p95: 3.0
+          fragile: true
+          n: 6
+      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
+    notes: 'Auto-generated from 126d backtest. Best combo: small_down +2.0%/-0.5% EV=0.65
+      (50% hit, N=6). TRAP: large_up (25% up-close). Best window: 14:30-15:15 (69% WR).'
+    gap_combos:
+      small_down:
+        target_pct: 2.0
+        stop_pct: 0.5
+        ev: 0.65
+        win_rate: 50.0
+        n: 6
+      small_up:
+        target_pct: 2.0
+        stop_pct: 0.5
+        ev: 0.337
+        win_rate: 33.3
+        n: 6
+
+  # ── HAL ─────────────────────────────────────────────────
+  # Tradability: 67/100 | ATR: 2.73% | Beta: 0.8
+  # Best: small_down +2.0%/-0.5% EV=0.11 (20% hit, N=5)
+  # Best window: 14:30-15:15 (57% WR)
+  - symbol: HAL.NS
+    name: Hindustan Aeronautics Limited
+    enabled: false
+    direction: long
+    edge_strength: 1
+    regime_tags:
+    - industrials
+    active_phases:
+    - AFTERNOON_SCALP
+    - LATE_MORNING
+    - PRE_CLOSE_SETUP
+    avoid_phases:
+    - AVOID_ZONE
+    gap_rules:
+      LATE_MORNING:
+        preferred_gaps:
+        - flat
+    entry_conditions:
+      require_vwap_reclaim: true
+      require_higher_low: true
+      require_nifty_ok: true
+      min_volume_ratio: 0.5
+      min_range_multiple_of_atr: 0.4
+      max_move_from_open_pct: 1.8
+    risk:
+      base_target_pct: 2.0
+      base_stop_pct: 0.5
+      atr_target_multiple: 0.73
+      atr_stop_multiple: 0.18
+      kelly_fraction: 0.054
+      aggressiveness: low
+      max_trades_per_day: 1
+      max_hold_minutes: 45
+      mae_analysis:
+        gap_type: small_down
+        target_pct: 0.5
+        stop_pct: 0.5
+        n_winners: 3
+        median_mae_pct: 0.283
+        p90_mae_pct: 0.443
+        pct_winners_beyond_stop: 0.0
+        optimal_stop_pct: 0.49
+      monte_carlo:
+        flat:
+          ev_ci_lower: -0.2957
+          ev_ci_upper: 0.313
+          wr_ci_lower: 65.2
+          wr_ci_upper: 95.7
+          max_dd_p95: 7.2
+          fragile: true
+          n: 23
+        small_down:
+          ev_ci_lower: -0.6
+          ev_ci_upper: 0.9
+          wr_ci_lower: 0.0
+          wr_ci_upper: 60.0
+          max_dd_p95: 2.4
+          fragile: true
+          n: 5
+      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
+    notes: 'Auto-generated from 126d backtest. Best combo: small_down +2.0%/-0.5% EV=0.11
+      (20% hit, N=5). Best window: 14:30-15:15 (57% WR).'
+    gap_combos:
+      flat:
+        target_pct: 0.5
+        stop_pct: 1.5
+        ev: 0.0
+        win_rate: 82.6
+        n: 23
+      small_down:
+        target_pct: 2.0
+        stop_pct: 0.5
+        ev: 0.114
+        win_rate: 20.0
+        n: 5
+    avoid_days:
+    - 1
+
+  # ── HAVELLS ─────────────────────────────────────────────
+  # Tradability: 66/100 | ATR: 2.93% | Beta: 0.7
+  # Best: small_up +1.5%/-1.5% EV=0.54 (80% hit, N=5)
+  # Best window: 14:30-15:15 (55% WR)
+  - symbol: HAVELLS.NS
+    name: Havells India Limited
+    enabled: false
+    direction: long
+    edge_strength: 1
+    regime_tags:
+    - industrials
+    - low_beta
+    active_phases:
+    - AFTERNOON_SCALP
+    avoid_phases:
+    - AVOID_ZONE
+    gap_rules:
+      LATE_MORNING:
+        preferred_gaps:
+        - flat
+    entry_conditions:
+      require_vwap_reclaim: true
+      require_higher_low: true
+      require_nifty_ok: true
+      min_volume_ratio: 0.5
+      min_range_multiple_of_atr: 0.4
+      max_move_from_open_pct: 2.0
+    risk:
+      base_target_pct: 1.5
+      base_stop_pct: 1.0
+      atr_target_multiple: 0.51
+      atr_stop_multiple: 0.34
+      kelly_fraction: 0.121
+      aggressiveness: medium
+      max_trades_per_day: 1
+      max_hold_minutes: 45
+      mae_analysis:
+        gap_type: small_down
+        target_pct: 0.5
+        stop_pct: 0.5
+        n_winners: 3
+        median_mae_pct: 0.0
+        p90_mae_pct: 0.313
+        pct_winners_beyond_stop: 0.0
+        optimal_stop_pct: 0.34
+      monte_carlo:
+        small_up:
+          ev_ci_lower: -0.4
+          ev_ci_upper: 1.4
+          wr_ci_lower: 40.0
+          wr_ci_upper: 100.0
+          max_dd_p95: 3.2
+          fragile: true
+          n: 5
+        small_down:
+          ev_ci_lower: -0.5444
+          ev_ci_upper: 1.1222
+          wr_ci_lower: 22.2
+          wr_ci_upper: 88.9
+          max_dd_p95: 5.5
+          fragile: true
+          n: 9
+      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
+    notes: 'Auto-generated from 126d backtest. Best combo: small_down +1.5%/-1.0% EV=0.26
+      (56% hit, N=9). Best window: 14:30-15:15 (55% WR).'
+    gap_combos:
+      small_up:
+        target_pct: 1.5
+        stop_pct: 1.5
+        ev: 0.543
+        win_rate: 80.0
+        n: 5
+      small_down:
+        target_pct: 1.5
+        stop_pct: 1.0
+        ev: 0.264
+        win_rate: 55.6
+        n: 9
 
   # ── COALINDIA ───────────────────────────────────────────
-  # Tradability: 63/100 | ATR: 3.07% | Beta: 0.74
+  # Tradability: 63/100 | ATR: 3.06% | Beta: 0.73
   # Best: small_down +1.5%/-0.5% EV=0.26 (40% hit, N=5)
-  # Best window: 14:30-15:15 (63% WR)
+  # Best window: 14:30-15:15 (64% WR)
   - symbol: COALINDIA.NS
     name: Coal India Limited
     enabled: false
     direction: long
-    edge_strength: 2
+    edge_strength: 1
     regime_tags:
     - energy
     - low_beta
@@ -1798,7 +2490,7 @@ tickers:
           n: 5
       monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
     notes: 'Auto-generated from 126d backtest. Best combo: small_down +1.5%/-0.5% EV=0.26
-      (40% hit, N=5). TRAP: large_up (33% up-close). Best window: 14:30-15:15 (63% WR).'
+      (40% hit, N=5). Best window: 14:30-15:15 (64% WR).'
     gap_combos:
       flat:
         target_pct: 2.0
@@ -1821,824 +2513,17 @@ tickers:
     avoid_days:
     - 1
 
-  # ── EXIDEIND ────────────────────────────────────────────
-  # Tradability: 61/100 | ATR: 3.24% | Beta: 1.38
-  # Best: small_up +1.5%/-1.5% EV=0.65 (83% hit, N=6)
-  - symbol: EXIDEIND.NS
-    name: Exide Industries Limited
-    enabled: false
-    direction: long
-    edge_strength: 2
-    regime_tags:
-    - general
-    active_phases:
-    - LATE_MORNING
-    avoid_phases:
-    - AVOID_ZONE
-    gap_rules:
-      LATE_MORNING:
-        preferred_gaps:
-        - flat
-    entry_conditions:
-      require_vwap_reclaim: true
-      require_higher_low: true
-      require_nifty_ok: true
-      min_volume_ratio: 0.5
-      min_range_multiple_of_atr: 0.5
-      max_move_from_open_pct: 2.2
-    risk:
-      base_target_pct: 1.5
-      base_stop_pct: 1.5
-      atr_target_multiple: 0.46
-      atr_stop_multiple: 0.46
-      kelly_fraction: 0.25
-      aggressiveness: high
-      max_trades_per_day: 1
-      max_hold_minutes: 45
-      mae_analysis:
-        gap_type: small_up
-        target_pct: 0.5
-        stop_pct: 0.5
-        n_winners: 4
-        median_mae_pct: 0.06
-        p90_mae_pct: 0.279
-        pct_winners_beyond_stop: 0.0
-        optimal_stop_pct: 0.31
-      monte_carlo:
-        small_up:
-          ev_ci_lower: -0.1
-          ev_ci_upper: 1.4
-          wr_ci_lower: 50.0
-          wr_ci_upper: 100.0
-          max_dd_p95: 3.2
-          fragile: true
-          n: 6
-      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
-    notes: 'Auto-generated from 126d backtest. Best combo: small_up +1.5%/-1.5% EV=0.65
-      (83% hit, N=6).'
-    gap_combos:
-      small_up:
-        target_pct: 1.5
-        stop_pct: 1.5
-        ev: 0.65
-        win_rate: 83.3
-        n: 6
-    avoid_days:
-    - 1
-
-  # ── GLENMARK ────────────────────────────────────────────
-  # Tradability: 61/100 | ATR: 3.27% | Beta: 1.05
-  # Best: small_down +2.0%/-1.0% EV=0.40 (50% hit, N=8)
-  # Best window: 09:15-10:00 (60% WR)
-  - symbol: GLENMARK.NS
-    name: Glenmark Pharmaceuticals Limited
-    enabled: false
-    direction: long
-    edge_strength: 2
-    regime_tags:
-    - general
-    active_phases:
-    - LATE_MORNING
-    - MORNING_SCALP
-    avoid_phases:
-    - AVOID_ZONE
-    gap_rules:
-      LATE_MORNING:
-        preferred_gaps:
-        - flat
-    entry_conditions:
-      require_vwap_reclaim: true
-      require_higher_low: true
-      require_nifty_ok: true
-      min_volume_ratio: 0.5
-      min_range_multiple_of_atr: 0.5
-      max_move_from_open_pct: 2.2
-    risk:
-      base_target_pct: 2.0
-      base_stop_pct: 1.0
-      atr_target_multiple: 0.61
-      atr_stop_multiple: 0.31
-      kelly_fraction: 0.125
-      aggressiveness: medium
-      max_trades_per_day: 1
-      max_hold_minutes: 45
-      mae_analysis:
-        gap_type: small_down
-        target_pct: 0.5
-        stop_pct: 0.5
-        n_winners: 6
-        median_mae_pct: 0.076
-        p90_mae_pct: 0.541
-        pct_winners_beyond_stop: 16.7
-        optimal_stop_pct: 0.6
-      monte_carlo:
-        flat:
-          ev_ci_lower: -0.2207
-          ev_ci_upper: 0.331
-          wr_ci_lower: 69.0
-          wr_ci_upper: 96.6
-          max_dd_p95: 8.0
-          fragile: true
-          n: 29
-        small_down:
-          ev_ci_lower: -0.725
-          ev_ci_upper: 1.525
-          wr_ci_lower: 12.5
-          wr_ci_upper: 87.5
-          max_dd_p95: 5.5
-          fragile: true
-          n: 8
-      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
-    notes: 'Auto-generated from 126d backtest. Best combo: small_down +2.0%/-1.0% EV=0.40
-      (50% hit, N=8). TRAP: small_up (28% up-close). Best window: 09:15-10:00 (60% WR).'
-    gap_combos:
-      flat:
-        target_pct: 0.5
-        stop_pct: 1.5
-        ev: 0.013
-        win_rate: 82.8
-        n: 29
-      small_down:
-        target_pct: 2.0
-        stop_pct: 1.0
-        ev: 0.4
-        win_rate: 50.0
-        n: 8
-
-  # ── ABCAPITAL ───────────────────────────────────────────
-  # Tradability: 58/100 | ATR: 3.69% | Beta: 1.23
-  # Best: small_down +1.0%/-1.5% EV=0.34 (86% hit, N=7)
-  # Best window: 14:30-15:15 (58% WR)
-  - symbol: ABCAPITAL.NS
-    name: Aditya Birla Capital Limited
-    enabled: false
-    direction: long
-    edge_strength: 2
-    regime_tags:
-    - financials
-    - high_vol
-    active_phases:
-    - AFTERNOON_SCALP
-    avoid_phases:
-    - AVOID_ZONE
-    gap_rules:
-      LATE_MORNING:
-        preferred_gaps:
-        - flat
-    entry_conditions:
-      require_vwap_reclaim: true
-      require_higher_low: true
-      require_nifty_ok: true
-      min_volume_ratio: 0.5
-      min_range_multiple_of_atr: 0.5
-      max_move_from_open_pct: 2.5
-    risk:
-      base_target_pct: 1.0
-      base_stop_pct: 1.5
-      atr_target_multiple: 0.27
-      atr_stop_multiple: 0.41
-      kelly_fraction: 0.222
-      aggressiveness: high
-      max_trades_per_day: 1
-      max_hold_minutes: 45
-      mae_analysis:
-        gap_type: small_down
-        target_pct: 0.5
-        stop_pct: 0.5
-        n_winners: 4
-        median_mae_pct: 0.085
-        p90_mae_pct: 0.217
-        pct_winners_beyond_stop: 0.0
-        optimal_stop_pct: 0.24
-      monte_carlo:
-        small_up:
-          ev_ci_lower: -0.6
-          ev_ci_upper: 0.5538
-          wr_ci_lower: 0.0
-          wr_ci_upper: 46.2
-          max_dd_p95: 6.6
-          fragile: true
-          n: 13
-        small_down:
-          ev_ci_lower: -0.1714
-          ev_ci_upper: 0.9
-          wr_ci_lower: 57.1
-          wr_ci_upper: 100.0
-          max_dd_p95: 3.2
-          fragile: true
-          n: 7
-      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
-    notes: 'Auto-generated from 126d backtest. Best combo: small_down +1.0%/-1.5% EV=0.34
-      (86% hit, N=7). Best window: 14:30-15:15 (58% WR).'
-    gap_combos:
-      small_up:
-        target_pct: 2.0
-        stop_pct: 0.5
-        ev: 0.067
-        win_rate: 23.1
-        n: 13
-      small_down:
-        target_pct: 1.0
-        stop_pct: 1.5
-        ev: 0.344
-        win_rate: 85.7
-        n: 7
-    avoid_days:
-    - 4
-
-  # ── VBL ─────────────────────────────────────────────────
-  # Tradability: 57/100 | ATR: 3.52% | Beta: 1.12
-  # Best: small_down +1.0%/-1.5% EV=0.54 (92% hit, N=12)
-  - symbol: VBL.NS
-    name: Varun Beverages Limited
-    enabled: false
-    direction: long
-    edge_strength: 2
-    regime_tags:
-    - high_vol
-    active_phases:
-    - LATE_MORNING
-    avoid_phases:
-    - AVOID_ZONE
-    gap_rules:
-      LATE_MORNING:
-        preferred_gaps:
-        - flat
-    entry_conditions:
-      require_vwap_reclaim: true
-      require_higher_low: true
-      require_nifty_ok: true
-      min_volume_ratio: 0.5
-      min_range_multiple_of_atr: 0.5
-      max_move_from_open_pct: 2.4
-    risk:
-      base_target_pct: 1.0
-      base_stop_pct: 1.5
-      atr_target_multiple: 0.28
-      atr_stop_multiple: 0.43
-      kelly_fraction: 0.321
-      aggressiveness: high
-      max_trades_per_day: 1
-      max_hold_minutes: 45
-      mae_analysis:
-        gap_type: small_down
-        target_pct: 0.5
-        stop_pct: 0.5
-        n_winners: 10
-        median_mae_pct: 0.054
-        p90_mae_pct: 0.461
-        pct_winners_beyond_stop: 0.0
-        optimal_stop_pct: 0.51
-      monte_carlo:
-        large_up:
-          ev_ci_lower: -0.6
-          ev_ci_upper: 0.9
-          wr_ci_lower: 40.0
-          wr_ci_upper: 100.0
-          max_dd_p95: 3.2
-          fragile: true
-          n: 5
-        small_down:
-          ev_ci_lower: 0.275
-          ev_ci_upper: 0.9
-          wr_ci_lower: 75.0
-          wr_ci_upper: 100.0
-          max_dd_p95: 3.2
-          fragile: false
-          n: 12
-      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
-    notes: 'Auto-generated from 126d backtest. Best combo: small_down +1.0%/-1.5% EV=0.54
-      (92% hit, N=12). TRAP: small_up (12% up-close).'
-    gap_combos:
-      large_up:
-        target_pct: 1.0
-        stop_pct: 1.5
-        ev: 0.186
-        win_rate: 80.0
-        n: 5
-      small_down:
-        target_pct: 1.0
-        stop_pct: 1.5
-        ev: 0.543
-        win_rate: 91.7
-        n: 12
-    avoid_days:
-    - 2
-
-  # ── RVNL ────────────────────────────────────────────────
-  # Tradability: 56/100 | ATR: 4.65% | Beta: 1.25
-  # Best: large_up +0.5%/-1.0% EV=0.23 (100% hit, N=7)
-  # Best window: 14:30-15:15 (70% WR)
-  - symbol: RVNL.NS
-    name: Rail Vikas Nigam Limited
-    enabled: false
-    direction: long
-    edge_strength: 2
-    regime_tags:
-    - industrials
-    - high_vol
-    active_phases:
-    - AFTERNOON_SCALP
-    avoid_phases:
-    - AVOID_ZONE
-    gap_rules:
-      LATE_MORNING:
-        preferred_gaps:
-        - flat
-    entry_conditions:
-      require_vwap_reclaim: true
-      require_higher_low: true
-      require_nifty_ok: true
-      min_volume_ratio: 0.5
-      min_range_multiple_of_atr: 0.5
-      max_move_from_open_pct: 3.1
-    risk:
-      base_target_pct: 0.5
-      base_stop_pct: 1.5
-      atr_target_multiple: 0.11
-      atr_stop_multiple: 0.32
-      kelly_fraction: 0.3
-      aggressiveness: high
-      max_trades_per_day: 1
-      max_hold_minutes: 45
-      mae_analysis:
-        gap_type: small_down
-        target_pct: 0.5
-        stop_pct: 0.5
-        n_winners: 7
-        median_mae_pct: 0.397
-        p90_mae_pct: 0.601
-        pct_winners_beyond_stop: 28.6
-        optimal_stop_pct: 0.66
-      monte_carlo:
-        flat:
-          ev_ci_lower: -0.2
-          ev_ci_upper: 0.4
-          wr_ci_lower: 70.0
-          wr_ci_upper: 100.0
-          max_dd_p95: 6.0
-          fragile: true
-          n: 20
-        small_up:
-          ev_ci_lower: -0.1294
-          ev_ci_upper: 0.4
-          wr_ci_lower: 64.7
-          wr_ci_upper: 100.0
-          max_dd_p95: 3.9
-          fragile: true
-          n: 17
-        large_up:
-          ev_ci_lower: 0.4
-          ev_ci_upper: 0.4
-          wr_ci_lower: 100.0
-          wr_ci_upper: 100.0
-          max_dd_p95: 0.0
-          fragile: false
-          n: 7
-        small_down:
-          ev_ci_lower: 0.4
-          ev_ci_upper: 0.4
-          wr_ci_lower: 100.0
-          wr_ci_upper: 100.0
-          max_dd_p95: 0.0
-          fragile: false
-          n: 8
-        large_down:
-          ev_ci_lower: -0.6
-          ev_ci_upper: 0.9
-          wr_ci_lower: 0.0
-          wr_ci_upper: 60.0
-          max_dd_p95: 2.4
-          fragile: true
-          n: 5
-      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
-    notes: 'Auto-generated from 126d backtest. Best combo: small_down +0.5%/-1.5% EV=0.20
-      (100% hit, N=8). TRAP: flat (33% up-close). Best window: 14:30-15:15 (70% WR).'
-    gap_combos:
-      flat:
-        target_pct: 0.5
-        stop_pct: 1.5
-        ev: 0.036
-        win_rate: 85.0
-        n: 20
-      small_up:
-        target_pct: 0.5
-        stop_pct: 1.0
-        ev: 0.084
-        win_rate: 82.4
-        n: 17
-      large_up:
-        target_pct: 0.5
-        stop_pct: 1.0
-        ev: 0.233
-        win_rate: 100.0
-        n: 7
-      small_down:
-        target_pct: 0.5
-        stop_pct: 1.5
-        ev: 0.2
-        win_rate: 100.0
-        n: 8
-      large_down:
-        target_pct: 2.0
-        stop_pct: 0.5
-        ev: 0.114
-        win_rate: 20.0
-        n: 5
-    avoid_days:
-    - 1
-    - 3
-
-  # ── GPIL ────────────────────────────────────────────────
-  # Tradability: 55/100 | ATR: 4.35% | Beta: 1.24
-  # Best: flat +2.0%/-1.0% EV=0.30 (46% hit, N=13)
-  # Best window: 09:15-10:00 (59% WR)
-  - symbol: GPIL.NS
-    name: Godawari Power & Ispat Limited
-    enabled: false
-    direction: long
-    edge_strength: 2
-    regime_tags:
-    - high_vol
-    active_phases:
-    - AFTERNOON_SCALP
-    - LATE_MORNING
-    - MORNING_SCALP
-    avoid_phases:
-    - AVOID_ZONE
-    gap_rules:
-      LATE_MORNING:
-        preferred_gaps:
-        - flat
-    entry_conditions:
-      require_vwap_reclaim: true
-      require_higher_low: true
-      require_nifty_ok: true
-      min_volume_ratio: 0.5
-      min_range_multiple_of_atr: 0.5
-      max_move_from_open_pct: 2.9
-    risk:
-      base_target_pct: 1.5
-      base_stop_pct: 1.0
-      atr_target_multiple: 0.34
-      atr_stop_multiple: 0.23
-      kelly_fraction: 0.099
-      aggressiveness: medium
-      max_trades_per_day: 1
-      max_hold_minutes: 45
-      mae_analysis:
-        gap_type: small_up
-        target_pct: 0.5
-        stop_pct: 0.5
-        n_winners: 16
-        median_mae_pct: 0.211
-        p90_mae_pct: 0.417
-        pct_winners_beyond_stop: 0.0
-        optimal_stop_pct: 0.46
-      monte_carlo:
-        large_up:
-          ev_ci_lower: -0.6
-          ev_ci_upper: 1.0
-          wr_ci_lower: 0.0
-          wr_ci_upper: 80.0
-          max_dd_p95: 2.4
-          fragile: true
-          n: 5
-        small_up:
-          ev_ci_lower: -0.3
-          ev_ci_upper: 0.7
-          wr_ci_lower: 32.0
-          wr_ci_upper: 72.0
-          max_dd_p95: 9.3
-          fragile: true
-          n: 25
-        flat:
-          ev_ci_lower: -0.4077
-          ev_ci_upper: 0.9769
-          wr_ci_lower: 23.1
-          wr_ci_upper: 69.2
-          max_dd_p95: 7.7
-          fragile: true
-          n: 13
-        large_down:
-          ev_ci_lower: 0.4
-          ev_ci_upper: 0.4
-          wr_ci_lower: 100.0
-          wr_ci_upper: 100.0
-          max_dd_p95: 0.0
-          fragile: false
-          n: 6
-      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
-    notes: 'Auto-generated from 126d backtest. Best combo: small_up +1.5%/-1.0% EV=0.20
-      (52% hit, N=25). TRAP: large_up (27% up-close). Best window: 09:15-10:00 (59%
-      WR).'
-    gap_combos:
-      large_up:
-        target_pct: 1.5
-        stop_pct: 0.5
-        ev: 0.257
-        win_rate: 40.0
-        n: 5
-      small_up:
-        target_pct: 1.5
-        stop_pct: 1.0
-        ev: 0.196
-        win_rate: 52.0
-        n: 25
-      flat:
-        target_pct: 2.0
-        stop_pct: 1.0
-        ev: 0.3
-        win_rate: 46.2
-        n: 13
-      large_down:
-        target_pct: 0.5
-        stop_pct: 1.5
-        ev: 0.15
-        win_rate: 100.0
-        n: 6
-    avoid_days:
-    - 3
-    - 4
-
-  # ── NETWEB ──────────────────────────────────────────────
-  # Tradability: 50/100 | ATR: 5.72% | Beta: 0.67
-  # Best: small_down +1.0%/-1.5% EV=0.59 (100% hit, N=6)
-  - symbol: NETWEB.NS
-    name: Netweb Technologies India Limited
-    enabled: false
-    direction: long
-    edge_strength: 2
-    regime_tags:
-    - low_beta
-    - high_vol
-    active_phases:
-    - LATE_MORNING
-    avoid_phases:
-    - AVOID_ZONE
-    gap_rules:
-      LATE_MORNING:
-        preferred_gaps:
-        - flat
-    entry_conditions:
-      require_vwap_reclaim: true
-      require_higher_low: true
-      require_nifty_ok: true
-      min_volume_ratio: 0.5
-      min_range_multiple_of_atr: 0.5
-      max_move_from_open_pct: 3.8
-    risk:
-      base_target_pct: 1.0
-      base_stop_pct: 1.5
-      atr_target_multiple: 0.17
-      atr_stop_multiple: 0.26
-      kelly_fraction: 0.344
-      aggressiveness: high
-      max_trades_per_day: 1
-      max_hold_minutes: 45
-      mae_analysis:
-        gap_type: small_down
-        target_pct: 0.5
-        stop_pct: 0.5
-        n_winners: 4
-        median_mae_pct: 0.005
-        p90_mae_pct: 0.45
-        pct_winners_beyond_stop: 25.0
-        optimal_stop_pct: 0.5
-      monte_carlo:
-        small_down:
-          ev_ci_lower: 0.9
-          ev_ci_upper: 0.9
-          wr_ci_lower: 100.0
-          wr_ci_upper: 100.0
-          max_dd_p95: 0.0
-          fragile: false
-          n: 6
-        small_up:
-          ev_ci_lower: -0.1882
-          ev_ci_upper: 0.4
-          wr_ci_lower: 70.6
-          wr_ci_upper: 100.0
-          max_dd_p95: 4.8
-          fragile: true
-          n: 17
-        large_up:
-          ev_ci_lower: -0.2667
-          ev_ci_upper: 0.4
-          wr_ci_lower: 33.3
-          wr_ci_upper: 100.0
-          max_dd_p95: 2.4
-          fragile: true
-          n: 9
-        large_down:
-          ev_ci_lower: -0.4
-          ev_ci_upper: 1.4
-          wr_ci_lower: 40.0
-          wr_ci_upper: 100.0
-          max_dd_p95: 3.2
-          fragile: true
-          n: 5
-      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
-    notes: 'Auto-generated from 126d backtest. Best combo: small_down +1.0%/-1.5% EV=0.59
-      (100% hit, N=6). TRAP: large_down (27% up-close).'
-    gap_combos:
-      small_down:
-        target_pct: 1.0
-        stop_pct: 1.5
-        ev: 0.587
-        win_rate: 100.0
-        n: 6
-      small_up:
-        target_pct: 0.5
-        stop_pct: 1.5
-        ev: 0.084
-        win_rate: 88.2
-        n: 17
-      large_up:
-        target_pct: 0.5
-        stop_pct: 0.5
-        ev: 0.036
-        win_rate: 66.7
-        n: 9
-      large_down:
-        target_pct: 1.5
-        stop_pct: 1.5
-        ev: 0.543
-        win_rate: 80.0
-        n: 5
-
-  # ── HAL ─────────────────────────────────────────────────
-  # Tradability: 67/100 | ATR: 2.74% | Beta: 0.96
-  # Best: small_down +2.0%/-0.5% EV=0.11 (20% hit, N=5)
-  # Best window: 14:30-15:15 (56% WR)
-  - symbol: HAL.NS
-    name: Hindustan Aeronautics Limited
-    enabled: false
-    direction: long
-    edge_strength: 1
-    regime_tags:
-    - industrials
-    active_phases:
-    - AFTERNOON_SCALP
-    - LATE_MORNING
-    avoid_phases:
-    - AVOID_ZONE
-    gap_rules:
-      LATE_MORNING:
-        preferred_gaps:
-        - flat
-    entry_conditions:
-      require_vwap_reclaim: true
-      require_higher_low: true
-      require_nifty_ok: true
-      min_volume_ratio: 0.5
-      min_range_multiple_of_atr: 0.4
-      max_move_from_open_pct: 1.8
-    risk:
-      base_target_pct: 0.5
-      base_stop_pct: 1.5
-      atr_target_multiple: 0.18
-      atr_stop_multiple: 0.55
-      kelly_fraction: 0.1
-      aggressiveness: medium
-      max_trades_per_day: 1
-      max_hold_minutes: 45
-      mae_analysis:
-        gap_type: flat
-        target_pct: 0.5
-        stop_pct: 0.5
-        n_winners: 15
-        median_mae_pct: 0.158
-        p90_mae_pct: 0.375
-        pct_winners_beyond_stop: 0.0
-        optimal_stop_pct: 0.41
-      monte_carlo:
-        flat:
-          ev_ci_lower: -0.2957
-          ev_ci_upper: 0.313
-          wr_ci_lower: 65.2
-          wr_ci_upper: 95.7
-          max_dd_p95: 7.2
-          fragile: true
-          n: 23
-        small_down:
-          ev_ci_lower: -0.6
-          ev_ci_upper: 0.9
-          wr_ci_lower: 0.0
-          wr_ci_upper: 60.0
-          max_dd_p95: 2.4
-          fragile: true
-          n: 5
-      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
-    notes: 'Auto-generated from 126d backtest. Best combo: flat +0.5%/-1.5% EV=0.00
-      (83% hit, N=23). TRAP: large_up (0% up-close). Best window: 14:30-15:15 (56% WR).'
-    gap_combos:
-      flat:
-        target_pct: 0.5
-        stop_pct: 1.5
-        ev: 0.0
-        win_rate: 82.6
-        n: 23
-      small_down:
-        target_pct: 2.0
-        stop_pct: 0.5
-        ev: 0.114
-        win_rate: 20.0
-        n: 5
-    avoid_days:
-    - 1
-
-  # ── TATAPOWER ───────────────────────────────────────────
-  # Tradability: 64/100 | ATR: 3.02% | Beta: 1.07
-  # Best: small_down +2.0%/-0.5% EV=0.65 (50% hit, N=6)
-  # Best window: 14:30-15:15 (70% WR)
-  - symbol: TATAPOWER.NS
-    name: Tata Power Company Limited
-    enabled: false
-    direction: long
-    edge_strength: 1
-    regime_tags:
-    - general
-    active_phases:
-    - AFTERNOON_SCALP
-    avoid_phases:
-    - AVOID_ZONE
-    gap_rules:
-      AFTERNOON_SCALP:
-        preferred_gaps:
-        - small_down
-    entry_conditions:
-      require_vwap_reclaim: true
-      require_higher_low: true
-      require_nifty_ok: true
-      min_volume_ratio: 0.5
-      min_range_multiple_of_atr: 0.5
-      max_move_from_open_pct: 2.0
-    risk:
-      base_target_pct: 2.0
-      base_stop_pct: 0.5
-      atr_target_multiple: 0.66
-      atr_stop_multiple: 0.17
-      kelly_fraction: 0.188
-      aggressiveness: high
-      max_trades_per_day: 1
-      max_hold_minutes: 45
-      mae_analysis:
-        gap_type: small_down
-        target_pct: 0.5
-        stop_pct: 0.5
-        n_winners: 4
-        median_mae_pct: 0.047
-        p90_mae_pct: 0.12
-        pct_winners_beyond_stop: 0.0
-        optimal_stop_pct: 0.13
-      monte_carlo:
-        small_down:
-          ev_ci_lower: -0.1833
-          ev_ci_upper: 1.4833
-          wr_ci_lower: 16.7
-          wr_ci_upper: 83.3
-          max_dd_p95: 2.4
-          fragile: true
-          n: 6
-        small_up:
-          ev_ci_lower: -0.6
-          ev_ci_upper: 1.0667
-          wr_ci_lower: 0.0
-          wr_ci_upper: 66.7
-          max_dd_p95: 3.0
-          fragile: true
-          n: 6
-      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
-    notes: 'Auto-generated from 126d backtest. Best combo: small_down +2.0%/-0.5% EV=0.65
-      (50% hit, N=6). TRAP: large_up (0% up-close). Best window: 14:30-15:15 (70% WR).'
-    gap_combos:
-      small_down:
-        target_pct: 2.0
-        stop_pct: 0.5
-        ev: 0.65
-        win_rate: 50.0
-        n: 6
-      small_up:
-        target_pct: 2.0
-        stop_pct: 0.5
-        ev: 0.337
-        win_rate: 33.3
-        n: 6
-    avoid_days:
-    - 4
-
   # ── TRENT ───────────────────────────────────────────────
-  # Tradability: 62/100 | ATR: 3.16% | Beta: 1.26
+  # Tradability: 61/100 | ATR: 3.17% | Beta: 1.52
   # Best: small_up +1.0%/-1.5% EV=0.19 (75% hit, N=12)
-  # Best window: 14:30-15:15 (61% WR)
+  # Best window: 13:30-14:30 (60% WR)
   - symbol: TRENT.NS
     name: Trent Limited
     enabled: false
     direction: long
     edge_strength: 1
     regime_tags:
-    - general
+    - high_beta
     active_phases:
     - AFTERNOON_SCALP
     - PRE_CLOSE_SETUP
@@ -2700,8 +2585,8 @@ tickers:
           n: 9
       monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
     notes: 'Auto-generated from 126d backtest. Best combo: small_up +1.0%/-1.5% EV=0.19
-      (75% hit, N=12). TRAP: large_down (29% up-close). TRAP: large_up (0% up-close).
-      Best window: 14:30-15:15 (61% WR).'
+      (75% hit, N=12). TRAP: large_up (23% up-close). Best window: 13:30-14:30 (60%
+      WR).'
     gap_combos:
       small_up:
         target_pct: 1.0
@@ -2726,16 +2611,16 @@ tickers:
     - 4
 
   # ── KFINTECH ────────────────────────────────────────────
-  # Tradability: 61/100 | ATR: 3.35% | Beta: 1.34
+  # Tradability: 60/100 | ATR: 3.39% | Beta: 1.55
   # Best: large_up +1.5%/-0.5% EV=0.26 (40% hit, N=5)
-  # Best window: 14:30-15:15 (61% WR)
+  # Best window: 14:30-15:15 (60% WR)
   - symbol: KFINTECH.NS
     name: KFin Technologies Limited
     enabled: false
     direction: long
     edge_strength: 1
     regime_tags:
-    - general
+    - high_beta
     active_phases:
     - AFTERNOON_SCALP
     avoid_phases:
@@ -2750,11 +2635,11 @@ tickers:
       require_nifty_ok: true
       min_volume_ratio: 0.5
       min_range_multiple_of_atr: 0.5
-      max_move_from_open_pct: 2.2
+      max_move_from_open_pct: 2.3
     risk:
       base_target_pct: 1.5
       base_stop_pct: 0.5
-      atr_target_multiple: 0.45
+      atr_target_multiple: 0.44
       atr_stop_multiple: 0.15
       kelly_fraction: 0.119
       aggressiveness: medium
@@ -2780,8 +2665,7 @@ tickers:
           n: 5
       monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
     notes: 'Auto-generated from 126d backtest. Best combo: large_up +1.5%/-0.5% EV=0.26
-      (40% hit, N=5). TRAP: small_down (33% up-close). TRAP: small_up (32% up-close).
-      Best window: 14:30-15:15 (61% WR).'
+      (40% hit, N=5). Best window: 14:30-15:15 (60% WR).'
     gap_combos:
       large_up:
         target_pct: 1.5
@@ -2791,12 +2675,175 @@ tickers:
         n: 5
     avoid_days:
     - 1
-    - 2
     - 3
 
+  # ── PFC ─────────────────────────────────────────────────
+  # Tradability: 60/100 | ATR: 3.88% | Beta: 1.46
+  # Best: flat +0.5%/-1.0% EV=0.07 (81% hit, N=21)
+  # Best window: 14:30-15:15 (66% WR)
+  - symbol: PFC.NS
+    name: Power Finance Corporation Limited
+    enabled: false
+    direction: long
+    edge_strength: 1
+    regime_tags:
+    - financials
+    - high_vol
+    active_phases:
+    - AFTERNOON_SCALP
+    - LATE_MORNING
+    avoid_phases:
+    - AVOID_ZONE
+    gap_rules:
+      LATE_MORNING:
+        preferred_gaps:
+        - flat
+    entry_conditions:
+      require_vwap_reclaim: true
+      require_higher_low: true
+      require_nifty_ok: true
+      min_volume_ratio: 0.5
+      min_range_multiple_of_atr: 0.5
+      max_move_from_open_pct: 2.6
+    risk:
+      base_target_pct: 0.5
+      base_stop_pct: 1.5
+      atr_target_multiple: 0.13
+      atr_stop_multiple: 0.39
+      kelly_fraction: 0.147
+      aggressiveness: medium
+      max_trades_per_day: 1
+      max_hold_minutes: 45
+      mae_analysis:
+        gap_type: small_up
+        target_pct: 0.5
+        stop_pct: 0.5
+        n_winners: 11
+        median_mae_pct: 0.247
+        p90_mae_pct: 0.429
+        pct_winners_beyond_stop: 0.0
+        optimal_stop_pct: 0.47
+      monte_carlo:
+        small_up:
+          ev_ci_lower: -0.2667
+          ev_ci_upper: 0.4
+          wr_ci_lower: 66.7
+          wr_ci_upper: 100.0
+          max_dd_p95: 4.8
+          fragile: true
+          n: 15
+        flat:
+          ev_ci_lower: -0.1714
+          ev_ci_upper: 0.3286
+          wr_ci_lower: 61.9
+          wr_ci_upper: 95.2
+          max_dd_p95: 4.6
+          fragile: true
+          n: 21
+      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
+    notes: 'Auto-generated from 126d backtest. Best combo: small_up +0.5%/-1.5% EV=0.05
+      (87% hit, N=15). Best window: 14:30-15:15 (66% WR).'
+    gap_combos:
+      small_up:
+        target_pct: 0.5
+        stop_pct: 1.5
+        ev: 0.047
+        win_rate: 86.7
+        n: 15
+      flat:
+        target_pct: 0.5
+        stop_pct: 1.0
+        ev: 0.074
+        win_rate: 81.0
+        n: 21
+    avoid_days:
+    - 4
+
+  # ── GLENMARK ────────────────────────────────────────────
+  # Tradability: 60/100 | ATR: 3.33% | Beta: 0.23
+  # Best: small_down +2.0%/-1.0% EV=0.40 (50% hit, N=8)
+  # Best window: 09:15-10:00 (60% WR)
+  - symbol: GLENMARK.NS
+    name: Glenmark Pharmaceuticals Limited
+    enabled: false
+    direction: long
+    edge_strength: 1
+    regime_tags:
+    - low_beta
+    active_phases:
+    - AFTERNOON_SCALP
+    - LATE_MORNING
+    - MORNING_SCALP
+    avoid_phases:
+    - AVOID_ZONE
+    gap_rules:
+      LATE_MORNING:
+        preferred_gaps:
+        - flat
+    entry_conditions:
+      require_vwap_reclaim: true
+      require_higher_low: true
+      require_nifty_ok: true
+      min_volume_ratio: 0.5
+      min_range_multiple_of_atr: 0.5
+      max_move_from_open_pct: 2.2
+    risk:
+      base_target_pct: 2.0
+      base_stop_pct: 1.0
+      atr_target_multiple: 0.6
+      atr_stop_multiple: 0.3
+      kelly_fraction: 0.125
+      aggressiveness: medium
+      max_trades_per_day: 1
+      max_hold_minutes: 45
+      mae_analysis:
+        gap_type: small_down
+        target_pct: 0.5
+        stop_pct: 0.5
+        n_winners: 6
+        median_mae_pct: 0.076
+        p90_mae_pct: 0.541
+        pct_winners_beyond_stop: 16.7
+        optimal_stop_pct: 0.6
+      monte_carlo:
+        flat:
+          ev_ci_lower: -0.2207
+          ev_ci_upper: 0.331
+          wr_ci_lower: 69.0
+          wr_ci_upper: 96.6
+          max_dd_p95: 8.0
+          fragile: true
+          n: 29
+        small_down:
+          ev_ci_lower: -0.725
+          ev_ci_upper: 1.525
+          wr_ci_lower: 12.5
+          wr_ci_upper: 87.5
+          max_dd_p95: 5.5
+          fragile: true
+          n: 8
+      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
+    notes: 'Auto-generated from 126d backtest. Best combo: small_down +2.0%/-1.0% EV=0.40
+      (50% hit, N=8). Best window: 09:15-10:00 (60% WR).'
+    gap_combos:
+      flat:
+        target_pct: 0.5
+        stop_pct: 1.5
+        ev: 0.013
+        win_rate: 82.8
+        n: 29
+      small_down:
+        target_pct: 2.0
+        stop_pct: 1.0
+        ev: 0.4
+        win_rate: 50.0
+        n: 8
+    avoid_days:
+    - 1
+
   # ── NBCC ────────────────────────────────────────────────
-  # Tradability: 60/100 | ATR: 3.95% | Beta: 1.71
-  # Best window: 14:30-15:15 (67% WR)
+  # Tradability: 59/100 | ATR: 4.02% | Beta: 1.55
+  # Best window: 14:30-15:15 (66% WR)
   - symbol: NBCC.NS
     name: NBCC (India) Limited
     enabled: false
@@ -2820,108 +2867,26 @@ tickers:
       require_nifty_ok: true
       min_volume_ratio: 0.5
       min_range_multiple_of_atr: 0.5
-      max_move_from_open_pct: 2.6
+      max_move_from_open_pct: 2.7
     risk:
       base_target_pct: 0.5
       base_stop_pct: 1.5
-      atr_target_multiple: 0.13
-      atr_stop_multiple: 0.38
+      atr_target_multiple: 0.12
+      atr_stop_multiple: 0.37
       kelly_fraction: 0.0
       aggressiveness: none
       max_trades_per_day: 1
       max_hold_minutes: 45
-    notes: 'Auto-generated from 126d backtest. TRAP: flat (31% up-close). TRAP: large_up
-      (25% up-close). Best window: 14:30-15:15 (67% WR).'
+    notes: 'Auto-generated from 126d backtest. Best window: 14:30-15:15 (66% WR).'
     avoid_days:
     - 1
     - 3
     - 4
 
-  # ── ADANIENT ────────────────────────────────────────────
-  # Tradability: 59/100 | ATR: 3.14% | Beta: 1.84
-  # Best: small_down +2.0%/-1.0% EV=0.61 (60% hit, N=5)
-  - symbol: ADANIENT.NS
-    name: Adani Enterprises Limited
-    enabled: false
-    direction: long
-    edge_strength: 1
-    regime_tags:
-    - energy
-    - high_beta
-    active_phases:
-    - LATE_MORNING
-    avoid_phases:
-    - AVOID_ZONE
-    gap_rules:
-      LATE_MORNING:
-        preferred_gaps:
-        - flat
-    entry_conditions:
-      require_vwap_reclaim: true
-      require_higher_low: true
-      require_nifty_ok: true
-      min_volume_ratio: 0.5
-      min_range_multiple_of_atr: 0.5
-      max_move_from_open_pct: 2.1
-    risk:
-      base_target_pct: 2.0
-      base_stop_pct: 1.0
-      atr_target_multiple: 0.64
-      atr_stop_multiple: 0.32
-      kelly_fraction: 0.179
-      aggressiveness: high
-      max_trades_per_day: 1
-      max_hold_minutes: 45
-      mae_analysis:
-        gap_type: small_down
-        target_pct: 0.5
-        stop_pct: 0.5
-        n_winners: 3
-        median_mae_pct: 0.299
-        p90_mae_pct: 0.412
-        pct_winners_beyond_stop: 0.0
-        optimal_stop_pct: 0.45
-      monte_carlo:
-        large_up:
-          ev_ci_lower: -0.6
-          ev_ci_upper: 1.4
-          wr_ci_lower: 0.0
-          wr_ci_upper: 80.0
-          max_dd_p95: 2.4
-          fragile: true
-          n: 5
-        small_down:
-          ev_ci_lower: -0.5
-          ev_ci_upper: 1.9
-          wr_ci_lower: 20.0
-          wr_ci_upper: 100.0
-          max_dd_p95: 3.3
-          fragile: true
-          n: 5
-      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
-    notes: 'Auto-generated from 126d backtest. Best combo: small_down +2.0%/-1.0% EV=0.61
-      (60% hit, N=5). TRAP: flat (31% up-close).'
-    gap_combos:
-      large_up:
-        target_pct: 2.0
-        stop_pct: 0.5
-        ev: 0.471
-        win_rate: 40.0
-        n: 5
-      small_down:
-        target_pct: 2.0
-        stop_pct: 1.0
-        ev: 0.614
-        win_rate: 60.0
-        n: 5
-    avoid_days:
-    - 1
-    - 3
-
   # ── CAMS ────────────────────────────────────────────────
-  # Tradability: 58/100 | ATR: 3.59% | Beta: 1.5
+  # Tradability: 58/100 | ATR: 3.66% | Beta: 1.4
   # Best: large_up +1.0%/-1.0% EV=0.33 (80% hit, N=5)
-  # Best window: 14:30-15:15 (56% WR)
+  # Best window: 14:30-15:15 (57% WR)
   - symbol: CAMS.NS
     name: Computer Age Management Services Limited
     enabled: false
@@ -2943,12 +2908,12 @@ tickers:
       require_nifty_ok: true
       min_volume_ratio: 0.5
       min_range_multiple_of_atr: 0.5
-      max_move_from_open_pct: 2.4
+      max_move_from_open_pct: 2.5
     risk:
       base_target_pct: 1.0
       base_stop_pct: 1.0
-      atr_target_multiple: 0.28
-      atr_stop_multiple: 0.28
+      atr_target_multiple: 0.27
+      atr_stop_multiple: 0.27
       kelly_fraction: 0.214
       aggressiveness: high
       max_trades_per_day: 1
@@ -2973,7 +2938,7 @@ tickers:
           n: 5
       monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
     notes: 'Auto-generated from 126d backtest. Best combo: large_up +1.0%/-1.0% EV=0.33
-      (80% hit, N=5). Best window: 14:30-15:15 (56% WR).'
+      (80% hit, N=5). Best window: 14:30-15:15 (57% WR).'
     gap_combos:
       large_up:
         target_pct: 1.0
@@ -2983,106 +2948,9 @@ tickers:
         n: 5
     avoid_days:
     - 1
-    - 3
-    - 4
-
-  # ── ADANIPORTS ──────────────────────────────────────────
-  # Tradability: 56/100 | ATR: 3.47% | Beta: 1.67
-  # Best: small_up +1.0%/-1.0% EV=0.23 (71% hit, N=7)
-  - symbol: ADANIPORTS.NS
-    name: Adani Ports and Special Economic Zone Limited
-    enabled: false
-    direction: long
-    edge_strength: 1
-    regime_tags:
-    - industrials
-    - high_beta
-    active_phases:
-    - LATE_MORNING
-    avoid_phases:
-    - AVOID_ZONE
-    gap_rules:
-      LATE_MORNING:
-        preferred_gaps:
-        - flat
-    entry_conditions:
-      require_vwap_reclaim: true
-      require_higher_low: true
-      require_nifty_ok: true
-      min_volume_ratio: 0.5
-      min_range_multiple_of_atr: 0.5
-      max_move_from_open_pct: 2.3
-    risk:
-      base_target_pct: 2.0
-      base_stop_pct: 0.5
-      atr_target_multiple: 0.58
-      atr_stop_multiple: 0.14
-      kelly_fraction: 0.054
-      aggressiveness: low
-      max_trades_per_day: 1
-      max_hold_minutes: 45
-      mae_analysis:
-        gap_type: large_up
-        target_pct: 0.5
-        stop_pct: 1.0
-        n_winners: 3
-        median_mae_pct: 0.756
-        p90_mae_pct: 0.757
-        pct_winners_beyond_stop: 0.0
-        optimal_stop_pct: 0.83
-      monte_carlo:
-        small_up:
-          ev_ci_lower: -0.2429
-          ev_ci_upper: 0.9
-          wr_ci_lower: 42.9
-          wr_ci_upper: 100.0
-          max_dd_p95: 3.3
-          fragile: true
-          n: 7
-        small_down:
-          ev_ci_lower: -0.6
-          ev_ci_upper: 0.65
-          wr_ci_lower: 0.0
-          wr_ci_upper: 50.0
-          max_dd_p95: 3.0
-          fragile: true
-          n: 6
-        large_up:
-          ev_ci_lower: -0.6
-          ev_ci_upper: 0.9
-          wr_ci_lower: 0.0
-          wr_ci_upper: 60.0
-          max_dd_p95: 2.4
-          fragile: true
-          n: 5
-      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
-    notes: 'Auto-generated from 126d backtest. Best combo: large_up +2.0%/-0.5% EV=0.11
-      (20% hit, N=5).'
-    gap_combos:
-      small_up:
-        target_pct: 1.0
-        stop_pct: 1.0
-        ev: 0.233
-        win_rate: 71.4
-        n: 7
-      small_down:
-        target_pct: 2.0
-        stop_pct: 0.5
-        ev: 0.025
-        win_rate: 16.7
-        n: 6
-      large_up:
-        target_pct: 2.0
-        stop_pct: 0.5
-        ev: 0.114
-        win_rate: 20.0
-        n: 5
-    avoid_days:
-    - 1
-    - 4
 
   # ── ADANIPOWER ──────────────────────────────────────────
-  # Tradability: 55/100 | ATR: 3.55% | Beta: 1.13
+  # Tradability: 56/100 | ATR: 3.53% | Beta: 1.23
   # Best: small_down +2.0%/-1.0% EV=0.19 (40% hit, N=5)
   - symbol: ADANIPOWER.NS
     name: Adani Power Limited
@@ -3109,7 +2977,7 @@ tickers:
     risk:
       base_target_pct: 2.0
       base_stop_pct: 1.0
-      atr_target_multiple: 0.56
+      atr_target_multiple: 0.57
       atr_stop_multiple: 0.28
       kelly_fraction: 0.071
       aggressiveness: low
@@ -3143,7 +3011,7 @@ tickers:
           n: 8
       monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
     notes: 'Auto-generated from 126d backtest. Best combo: small_down +2.0%/-1.0% EV=0.19
-      (40% hit, N=5). TRAP: flat (35% up-close). TRAP: small_up (33% up-close).'
+      (40% hit, N=5).'
     gap_combos:
       small_down:
         target_pct: 2.0
@@ -3158,7 +3026,134 @@ tickers:
         win_rate: 75.0
         n: 8
     avoid_days:
+    - 1
     - 2
+    - 3
+
+  # ── RVNL ────────────────────────────────────────────────
+  # Tradability: 56/100 | ATR: 4.68% | Beta: 1.7
+  # Best: large_up +0.5%/-1.0% EV=0.23 (100% hit, N=7)
+  # Best window: 14:30-15:15 (69% WR)
+  - symbol: RVNL.NS
+    name: Rail Vikas Nigam Limited
+    enabled: false
+    direction: long
+    edge_strength: 1
+    regime_tags:
+    - industrials
+    - high_beta
+    - high_vol
+    active_phases:
+    - AFTERNOON_SCALP
+    avoid_phases:
+    - AVOID_ZONE
+    gap_rules:
+      LATE_MORNING:
+        preferred_gaps:
+        - flat
+    entry_conditions:
+      require_vwap_reclaim: true
+      require_higher_low: true
+      require_nifty_ok: true
+      min_volume_ratio: 0.5
+      min_range_multiple_of_atr: 0.5
+      max_move_from_open_pct: 3.1
+    risk:
+      base_target_pct: 0.5
+      base_stop_pct: 1.0
+      atr_target_multiple: 0.11
+      atr_stop_multiple: 0.21
+      kelly_fraction: 0.333
+      aggressiveness: high
+      max_trades_per_day: 1
+      max_hold_minutes: 45
+      mae_analysis:
+        gap_type: large_up
+        target_pct: 0.5
+        stop_pct: 0.5
+        n_winners: 5
+        median_mae_pct: 0.38
+        p90_mae_pct: 1.337
+        pct_winners_beyond_stop: 20.0
+        optimal_stop_pct: 1.47
+      monte_carlo:
+        flat:
+          ev_ci_lower: -0.2
+          ev_ci_upper: 0.4
+          wr_ci_lower: 70.0
+          wr_ci_upper: 100.0
+          max_dd_p95: 6.0
+          fragile: true
+          n: 20
+        small_up:
+          ev_ci_lower: -0.1294
+          ev_ci_upper: 0.4
+          wr_ci_lower: 64.7
+          wr_ci_upper: 100.0
+          max_dd_p95: 3.9
+          fragile: true
+          n: 17
+        large_up:
+          ev_ci_lower: 0.4
+          ev_ci_upper: 0.4
+          wr_ci_lower: 100.0
+          wr_ci_upper: 100.0
+          max_dd_p95: 0.0
+          fragile: false
+          n: 7
+        small_down:
+          ev_ci_lower: 0.4
+          ev_ci_upper: 0.4
+          wr_ci_lower: 100.0
+          wr_ci_upper: 100.0
+          max_dd_p95: 0.0
+          fragile: false
+          n: 8
+        large_down:
+          ev_ci_lower: -0.6
+          ev_ci_upper: 0.9
+          wr_ci_lower: 0.0
+          wr_ci_upper: 60.0
+          max_dd_p95: 2.4
+          fragile: true
+          n: 5
+      monte_carlo_warning: Some combos have fragile edge (EV CI crosses 0)
+    notes: 'Auto-generated from 126d backtest. Best combo: large_up +0.5%/-1.0% EV=0.23
+      (100% hit, N=7). TRAP: flat (35% up-close). TRAP: small_up (32% up-close). Best
+      window: 14:30-15:15 (69% WR).'
+    gap_combos:
+      flat:
+        target_pct: 0.5
+        stop_pct: 1.5
+        ev: 0.036
+        win_rate: 85.0
+        n: 20
+      small_up:
+        target_pct: 0.5
+        stop_pct: 1.0
+        ev: 0.084
+        win_rate: 82.4
+        n: 17
+      large_up:
+        target_pct: 0.5
+        stop_pct: 1.0
+        ev: 0.233
+        win_rate: 100.0
+        n: 7
+      small_down:
+        target_pct: 0.5
+        stop_pct: 1.5
+        ev: 0.2
+        win_rate: 100.0
+        n: 8
+      large_down:
+        target_pct: 2.0
+        stop_pct: 0.5
+        ev: 0.114
+        win_rate: 20.0
+        n: 5
+    avoid_days:
+    - 1
     - 3
 
 # ── Open Positions ───────────────────────────────────────────

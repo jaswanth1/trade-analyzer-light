@@ -125,17 +125,25 @@ def _load_universe(tier=None):
 
 
 def load_universe_for_tier(tier):
-    """Load stocks eligible for a specific tier. Falls back to TICKERS.
+    """Load stocks eligible for a specific tier. Falls back to hardcoded TICKERS.
+
+    Set USE_UNIVERSE = True to enable dynamic universe from universe.yaml.
+    When False (default), always uses the hardcoded 34-stock list.
 
     Usage in scanners:
         from common.data import load_universe_for_tier
         stocks = load_universe_for_tier("scalp")
     """
-    return _load_universe(tier=tier) or _HARDCODED_TICKERS
+    if USE_UNIVERSE:
+        return _load_universe(tier=tier) or _HARDCODED_TICKERS
+    return _HARDCODED_TICKERS
 
 
-# Default TICKERS: load intraday tier from universe, fallback to hardcoded
-TICKERS = _load_universe(tier="intraday") or _HARDCODED_TICKERS
+# Toggle: set True to use universe.yaml, False to always use hardcoded tickers
+USE_UNIVERSE = False
+
+# Default TICKERS: hardcoded list (or universe if enabled)
+TICKERS = load_universe_for_tier("intraday")
 
 BENCHMARK = "^NSEI"  # Nifty 50
 
@@ -166,7 +174,13 @@ def _fetch_yfinance(symbol, period, interval, max_retries=3):
                 df.columns = df.columns.droplevel("Ticker")
             return df
         except Exception as e:
-            if attempt < max_retries - 1:
+            err_str = str(e).lower()
+            if "rate" in err_str or "429" in err_str or "too many" in err_str:
+                # Rate limited — longer backoff
+                wait = 5 * (attempt + 1)
+                print(f"  [RATE] {symbol}: rate limited, waiting {wait}s...")
+                time.sleep(wait)
+            elif attempt < max_retries - 1:
                 time.sleep(2 ** attempt)
             else:
                 print(f"  [WARN] Failed to fetch {symbol} ({period}/{interval}): {e}")

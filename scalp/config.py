@@ -1827,6 +1827,9 @@ def main():
             return
 
     # 3. For stale symbols: fetch OHLCV → compute → cache
+    # Cache sector daily data to avoid re-fetching the same sector index repeatedly
+    _sector_cache = {}
+
     for i, symbol in enumerate(stale_symbols, 1):
         cfg = TICKERS[symbol]
         print(f"  [{i}/{len(stale_symbols)}] {symbol} ({cfg['name']})")
@@ -1836,17 +1839,31 @@ def main():
             print(f"    [SKIP] No daily data")
             continue
 
+        # Rate-limit delay: every 10 tickers, pause to avoid yfinance throttling
+        if i % 10 == 0:
+            import time as _time
+            _time.sleep(2)
+
         intraday_df = fetch_yf(symbol, period="60d", interval="5m")
         if intraday_df.empty:
             print(f"    [SKIP] No intraday data")
             continue
 
-        sector_daily = fetch_yf(cfg["sector"], period="6mo", interval="1d")
+        # Reuse sector daily data across tickers in the same sector
+        sector_key = cfg["sector"]
+        if sector_key not in _sector_cache:
+            _sector_cache[sector_key] = fetch_yf(sector_key, period="6mo", interval="1d")
+        sector_daily = _sector_cache[sector_key]
+
         info = fetch_ticker_info(symbol)
 
-        compute_and_cache_ticker(symbol, cfg, daily_df, intraday_df,
-                                  bench_daily, sector_daily, info)
-        print(f"    Computed and cached")
+        try:
+            compute_and_cache_ticker(symbol, cfg, daily_df, intraday_df,
+                                      bench_daily, sector_daily, info)
+            print(f"    Computed and cached")
+        except Exception as e:
+            print(f"    [ERROR] {e}")
+            continue
 
     # 4. Process ALL symbols from cache → generate config
     configs = []

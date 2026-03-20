@@ -405,9 +405,6 @@ def _batch_fetch_ohlcv(symbols, period="1mo", interval="1d", batch_size=50):
         except Exception as e:
             _stderr(f"  [WARN] Batch {batch_num} failed: {e}")
 
-        # Rate-limit courtesy delay between batches
-        if i + batch_size < total:
-            time.sleep(2)
 
     return all_data
 

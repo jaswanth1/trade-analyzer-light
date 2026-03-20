@@ -43,12 +43,12 @@ def fetch_india_vix():
 def vix_position_scale(vix_val):
     """Scale position size based on VIX using smooth piecewise linear interpolation.
 
-    Knots: VIX<=10 → 1.3x, 14 → 1.0x, 20 → 0.5x, >=25 → 0.0x.
-    Eliminates cliff effects from step-function thresholds.
+    Knots: VIX<=10 → 1.3x, 14 → 1.0x, 20 → 0.5x, >=30 → 0.1x.
+    Floor at 0.1x so the system can always take tiny positions in extreme stress.
     """
     if vix_val is None:
         return 1.0
-    return round(float(np.interp(vix_val, [10, 14, 20, 25], [1.3, 1.0, 0.5, 0.0])), 3)
+    return round(max(0.1, float(np.interp(vix_val, [10, 14, 20, 30], [1.3, 1.0, 0.5, 0.1]))), 3)
 
 
 def compute_market_context_scores(nifty_daily, vix_val, inst_flow, regime_strength=None):

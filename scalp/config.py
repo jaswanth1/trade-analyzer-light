@@ -1839,10 +1839,6 @@ def main():
             print(f"    [SKIP] No daily data")
             continue
 
-        # Rate-limit delay: every 10 tickers, pause to avoid yfinance throttling
-        if i % 10 == 0:
-            import time as _time
-            _time.sleep(2)
 
         intraday_df = fetch_yf(symbol, period="60d", interval="5m")
         if intraday_df.empty:

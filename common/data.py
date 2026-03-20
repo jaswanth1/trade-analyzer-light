@@ -45,51 +45,142 @@ CONFIG_PATH = SCALP_CONFIG_PATH
 _UNIVERSE_PATH = PROJECT_ROOT / "common" / "universe.yaml"
 
 _HARDCODED_TICKERS = {
-    # ── Financials ──
+    # ── Banks (14) ──
+    "HDFCBANK.NS":    {"sector": "^CNXBANK",   "name": "HDFC Bank"},
+    "ICICIBANK.NS":   {"sector": "^CNXBANK",   "name": "ICICI Bank"},
+    "SBIN.NS":        {"sector": "^CNXBANK",   "name": "State Bank of India"},
+    "KOTAKBANK.NS":   {"sector": "^CNXBANK",   "name": "Kotak Mahindra Bank"},
+    "AXISBANK.NS":    {"sector": "^CNXBANK",   "name": "Axis Bank"},
+    "INDUSINDBK.NS":  {"sector": "^CNXBANK",   "name": "IndusInd Bank"},
+    "BANKBARODA.NS":  {"sector": "^CNXBANK",   "name": "Bank of Baroda"},
+    "PNB.NS":         {"sector": "^CNXBANK",   "name": "Punjab National Bank"},
+    "CANBK.NS":       {"sector": "^CNXBANK",   "name": "Canara Bank"},
+    "UNIONBANK.NS":   {"sector": "^CNXBANK",   "name": "Union Bank of India"},
+    "FEDERALBNK.NS":  {"sector": "^CNXBANK",   "name": "Federal Bank"},
+    "IDFCFIRSTB.NS":  {"sector": "^CNXBANK",   "name": "IDFC First Bank"},
+    "AUBANK.NS":      {"sector": "^CNXBANK",   "name": "AU Small Finance Bank"},
+    "IDBI.NS":        {"sector": "^CNXBANK",   "name": "IDBI Bank"},  # borderline ATR ~8%, watch monthly
+    # ── Financials / Insurance / NBFC (14) ──
     "SAILIFE.NS":     {"sector": "^CNXFIN",    "name": "SBI Life Insurance"},
+    "SBILIFE.NS":     {"sector": "^CNXFIN",    "name": "SBI Life Insurance Co"},
+    "HDFCLIFE.NS":    {"sector": "^CNXFIN",    "name": "HDFC Life Insurance"},
+    "BAJFINANCE.NS":  {"sector": "^CNXFIN",    "name": "Bajaj Finance"},
+    "BAJAJFINSV.NS":  {"sector": "^CNXFIN",    "name": "Bajaj Finserv"},
     "KFINTECH.NS":    {"sector": "^CNXFIN",    "name": "KFin Technologies"},
     "CAMS.NS":        {"sector": "^CNXFIN",    "name": "Computer Age Mgmt Services"},
-    "IDBI.NS":        {"sector": "^CNXFIN",    "name": "IDBI Bank"},
     "BSE.NS":         {"sector": "^CNXFIN",    "name": "BSE Limited"},
     "PFC.NS":         {"sector": "^CNXFIN",    "name": "Power Finance Corp"},
+    "RECLTD.NS":      {"sector": "^CNXFIN",    "name": "REC Limited"},
     "ABCAPITAL.NS":   {"sector": "^CNXFIN",    "name": "Aditya Birla Capital"},
     "INDIANB.NS":     {"sector": "^CNXFIN",    "name": "Indian Bank"},
-    # ── Energy ──
+    "BAJAJHFL.NS":    {"sector": "^CNXFIN",    "name": "Bajaj Housing Finance"},
+    "SHRIRAMFIN.NS":  {"sector": "^CNXFIN",    "name": "Shriram Finance"},
+    "MCX.NS":         {"sector": "^CNXFIN",    "name": "Multi Commodity Exchange"},
+    "JIOFIN.NS":      {"sector": "^CNXFIN",    "name": "Jio Financial Services"},
+    # ── Energy / Oil & Gas / Power (14) ──
+    "RELIANCE.NS":    {"sector": "^CNXENERGY", "name": "Reliance Industries"},
     "TATAPOWER.NS":   {"sector": "^CNXENERGY", "name": "Tata Power"},
     "ADANIPOWER.NS":  {"sector": "^CNXENERGY", "name": "Adani Power"},
     "NTPC.NS":        {"sector": "^CNXENERGY", "name": "NTPC"},
     "COALINDIA.NS":   {"sector": "^CNXENERGY", "name": "Coal India"},
-    # ── Metals & Commodities ──
+    "IOC.NS":         {"sector": "^CNXENERGY", "name": "Indian Oil Corporation"},
+    "BPCL.NS":        {"sector": "^CNXENERGY", "name": "Bharat Petroleum"},
+    "HINDPETRO.NS":   {"sector": "^CNXENERGY", "name": "Hindustan Petroleum"},
+    "ONGC.NS":        {"sector": "^CNXENERGY", "name": "Oil & Natural Gas Corp"},
+    "GAIL.NS":        {"sector": "^CNXENERGY", "name": "GAIL (India)"},
+    "ADANIGREEN.NS":  {"sector": "^CNXENERGY", "name": "Adani Green Energy"},
+    "JSWENERGY.NS":   {"sector": "^CNXENERGY", "name": "JSW Energy"},
+    "POWERGRID.NS":   {"sector": "^CNXENERGY", "name": "Power Grid Corporation"},
+    "ADANIENSOL.NS":  {"sector": "^CNXENERGY", "name": "Adani Energy Solutions"},
+    # ── Metals / Mining (9) ──
+    "JSWSTEEL.NS":    {"sector": "^CNXMETAL",  "name": "JSW Steel"},
+    "TATASTEEL.NS":   {"sector": "^CNXMETAL",  "name": "Tata Steel"},
+    "JINDALSTEL.NS":  {"sector": "^CNXMETAL",  "name": "Jindal Steel & Power"},
+    "HINDALCO.NS":    {"sector": "^CNXMETAL",  "name": "Hindalco Industries"},
+    "HINDZINC.NS":    {"sector": "^CNXMETAL",  "name": "Hindustan Zinc"},
+    "VEDL.NS":        {"sector": "^CNXMETAL",  "name": "Vedanta"},
     "GPIL.NS":        {"sector": "^CNXMETAL",  "name": "Godawari Power & Ispat"},
     "ADANIENT.NS":    {"sector": "^CNXMETAL",  "name": "Adani Enterprises"},
     "GRAPHITE.NS":    {"sector": "^CNXMETAL",  "name": "Graphite India"},
-    # ── PSE / Defence ──
+    # ── PSE / Defence (9) ──
     "BEL.NS":         {"sector": "^CNXPSE",    "name": "Bharat Electronics"},
     "BHEL.NS":        {"sector": "^CNXPSE",    "name": "Bharat Heavy Electricals"},
     "HAL.NS":         {"sector": "^CNXPSE",    "name": "Hindustan Aeronautics"},
+    "MAZDOCK.NS":     {"sector": "^CNXPSE",    "name": "Mazagon Dock Shipbuilders"},
     "DATAPATTNS.NS":  {"sector": "^CNXPSE",    "name": "Data Patterns"},
     "MTARTECH.NS":    {"sector": "^CNXPSE",    "name": "MTAR Technologies"},
     "SCI.NS":         {"sector": "^CNXPSE",    "name": "Shipping Corp of India"},
     "RVNL.NS":        {"sector": "^CNXPSE",    "name": "Rail Vikas Nigam"},
-    # ── Infra ──
+    "COCHINSHIP.NS":  {"sector": "^CNXPSE",    "name": "Cochin Shipyard"},
+    # ── Infra / Capital Goods (11) ──
     "ADANIPORTS.NS":  {"sector": "^CNXINFRA",  "name": "Adani Ports"},
-    "NBCC.NS":        {"sector": "^CNXINFRA",  "name": "NBCC (India)"},
-    "FINCABLES.NS":   {"sector": "^CNXINFRA",  "name": "Finolex Cables"},
+    "LT.NS":          {"sector": "^CNXINFRA",  "name": "Larsen & Toubro"},
+    "SIEMENS.NS":     {"sector": "^CNXINFRA",  "name": "Siemens"},
+    "ABB.NS":         {"sector": "^CNXINFRA",  "name": "ABB India"},
+    "CGPOWER.NS":     {"sector": "^CNXINFRA",  "name": "CG Power & Industrial"},
     "CUMMINSIND.NS":  {"sector": "^CNXINFRA",  "name": "Cummins India"},
     "HAVELLS.NS":     {"sector": "^CNXINFRA",  "name": "Havells India"},
-    # ── IT ──
+    "NBCC.NS":        {"sector": "^CNXINFRA",  "name": "NBCC (India)"},
+    "FINCABLES.NS":   {"sector": "^CNXINFRA",  "name": "Finolex Cables"},
+    "AMBUJACEM.NS":   {"sector": "^CNXINFRA",  "name": "Ambuja Cements"},
+    "GRASIM.NS":      {"sector": "^CNXINFRA",  "name": "Grasim Industries"},
+    # ── IT (8) ──
+    "TCS.NS":         {"sector": "^CNXIT",     "name": "Tata Consultancy Services"},
+    "INFY.NS":        {"sector": "^CNXIT",     "name": "Infosys"},
+    "HCLTECH.NS":     {"sector": "^CNXIT",     "name": "HCL Technologies"},
+    "TECHM.NS":       {"sector": "^CNXIT",     "name": "Tech Mahindra"},
+    "WIPRO.NS":       {"sector": "^CNXIT",     "name": "Wipro"},
     "NETWEB.NS":      {"sector": "^CNXIT",     "name": "Netweb Technologies"},
-    # ── Auto ──
+    "HAPPSTMNDS.NS":  {"sector": "^CNXIT",     "name": "Happiest Minds Technologies"},
+    "NAUKRI.NS":      {"sector": "^CNXIT",     "name": "Info Edge (Naukri)"},
+    # ── Telecom (1) ──
+    "BHARTIARTL.NS":  {"sector": "^CNXIT",     "name": "Bharti Airtel"},  # no NSE telecom index, park under IT
+    # ── Auto / Auto Ancillary (8) ──
+    "M&M.NS":         {"sector": "^CNXAUTO",   "name": "Mahindra & Mahindra"},
+    "BAJAJ-AUTO.NS":  {"sector": "^CNXAUTO",   "name": "Bajaj Auto"},
+    "EICHERMOT.NS":   {"sector": "^CNXAUTO",   "name": "Eicher Motors"},
+    "TVSMOTOR.NS":    {"sector": "^CNXAUTO",   "name": "TVS Motor Company"},
+    "MOTHERSON.NS":   {"sector": "^CNXAUTO",   "name": "Motherson Sumi Systems"},
     "EXIDEIND.NS":    {"sector": "^CNXAUTO",   "name": "Exide Industries"},
-    # ── FMCG / Consumer ──
-    "VBL.NS":         {"sector": "^CNXFMCG",   "name": "Varun Beverages"},
+    "TMPV.NS":        {"sector": "^CNXAUTO",   "name": "Tata Motors Passenger Vehicles"},
+    # ── FMCG / Consumer (12) ──
+    "HINDUNILVR.NS":  {"sector": "^CNXFMCG",   "name": "Hindustan Unilever"},
+    "ITC.NS":         {"sector": "^CNXFMCG",   "name": "ITC"},
     "TRENT.NS":       {"sector": "^CNXFMCG",   "name": "Trent"},
-    # ── Realty ──
+    "TITAN.NS":       {"sector": "^CNXFMCG",   "name": "Titan Company"},
+    "NESTLEIND.NS":   {"sector": "^CNXFMCG",   "name": "Nestle India"},
+    "BRITANNIA.NS":   {"sector": "^CNXFMCG",   "name": "Britannia Industries"},
+    "TATACONSUM.NS":  {"sector": "^CNXFMCG",   "name": "Tata Consumer Products"},
+    "PIDILITIND.NS":  {"sector": "^CNXFMCG",   "name": "Pidilite Industries"},
+    "ASIANPAINT.NS":  {"sector": "^CNXFMCG",   "name": "Asian Paints"},
+    "VBL.NS":         {"sector": "^CNXFMCG",   "name": "Varun Beverages"},
+    "UNITDSPR.NS":    {"sector": "^CNXFMCG",   "name": "United Spirits"},
+    "GODREJCP.NS":    {"sector": "^CNXFMCG",   "name": "Godrej Consumer Products"},
+    "ETERNAL.NS":     {"sector": "^CNXFMCG",   "name": "Eternal (Zomato)"},
+    "FIRSTCRY.NS":    {"sector": "^CNXFMCG",   "name": "FirstCry"},
+    "INDHOTEL.NS":    {"sector": "^CNXFMCG",   "name": "Indian Hotels"},
+    "DMART.NS":       {"sector": "^CNXFMCG",   "name": "Avenue Supermarts (DMart)"},
+    # ── Realty (3) ──
+    "DLF.NS":         {"sector": "^CNXREALTY",  "name": "DLF"},
     "ANANTRAJ.NS":    {"sector": "^CNXREALTY",  "name": "Anant Raj"},
-    # ── Pharma ──
+    "LODHA.NS":       {"sector": "^CNXREALTY",  "name": "Macrotech Developers"},
+    # ── Pharma / Healthcare (8) ──
+    "SUNPHARMA.NS":   {"sector": "^CNXPHARMA", "name": "Sun Pharma Industries"},
+    "DRREDDY.NS":     {"sector": "^CNXPHARMA", "name": "Dr. Reddy's Laboratories"},
+    "CIPLA.NS":       {"sector": "^CNXPHARMA", "name": "Cipla"},
+    "DIVISLAB.NS":    {"sector": "^CNXPHARMA", "name": "Divi's Laboratories"},
+    "APOLLOHOSP.NS":  {"sector": "^CNXPHARMA", "name": "Apollo Hospitals"},
     "GLENMARK.NS":    {"sector": "^CNXPHARMA", "name": "Glenmark Pharmaceuticals"},
-    # ── Industrial / Other ──
+    "TORNTPHARM.NS":  {"sector": "^CNXPHARMA", "name": "Torrent Pharmaceuticals"},
+    "ZYDUSLIFE.NS":   {"sector": "^CNXPHARMA", "name": "Zydus Lifesciences"},
+    # ── Airlines (1) ──
+    "INDIGO.NS":      {"sector": "^CNXINFRA",  "name": "InterGlobe Aviation"},  # no airline index, park under infra
+    # ── Industrial / Other (5) ──
     "AEROFLEX.NS":    {"sector": "^CNXMETAL",  "name": "Aeroflex Industries"},
+    "GUJALKALI.NS":   {"sector": "^CNXMETAL",  "name": "Gujarat Alkalies & Chemicals"},
+    "GMDCLTD.NS":     {"sector": "^CNXMETAL",  "name": "Gujarat Mineral Dev Corp"},
+    "AETHER.NS":      {"sector": "^CNXPHARMA", "name": "Aether Industries"},
+    "LICI.NS":        {"sector": "^CNXFIN",    "name": "Life Insurance Corp"},
 }
 
 

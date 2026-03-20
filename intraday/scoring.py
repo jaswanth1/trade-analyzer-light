@@ -34,6 +34,7 @@ IST = ZoneInfo("Asia/Kolkata")
 # ── Constants ─────────────────────────────────────────────────────────────
 
 MIN_RR_RATIO = 1.2  # minimum RR gate — discard below this
+MLR_MIN_RR_RATIO = 0.5  # MLR has high win-rate edge (50-72%); RR 0.8 @ 72% WR = EV +0.30
 LONG_ONLY = True  # equity cash segment — BUY only, no short selling
 EXIT_DEADLINE = dtime(15, 0)
 LUNCH_WINDOW = (dtime(12, 0), dtime(13, 0))
@@ -326,9 +327,12 @@ def evaluate_symbol(symbol, intra_df, daily_df, nifty_state, vix_info,
             _debug_parts.append(f"{strategy_name}=no_setup")
             continue
 
-        # ── Bug Fix #4: Minimum RR gate ──
-        if candidate["rr_ratio"] < MIN_RR_RATIO:
-            _debug_parts.append(f"{strategy_name}=RR_{candidate['rr_ratio']:.1f}<{MIN_RR_RATIO}")
+        # ── Minimum RR gate (strategy-aware) ──
+        # MLR has high win-rate edge (50-72%), so its EV is positive even at low RR.
+        # Applying the same 1.2x RR gate as ORB/swing kills all MLR signals.
+        effective_min_rr = MLR_MIN_RR_RATIO if strategy_name == "mlr" else MIN_RR_RATIO
+        if candidate["rr_ratio"] < effective_min_rr:
+            _debug_parts.append(f"{strategy_name}=RR_{candidate['rr_ratio']:.1f}<{effective_min_rr}")
             continue  # discard sub-threshold RR before scoring
 
         # ── LONG_ONLY filter: skip short/SELL setups in equity cash segment ──

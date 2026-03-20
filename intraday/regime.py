@@ -401,7 +401,7 @@ def classify_symbol_regime(daily_df, intra_ist, nifty_daily=None, sector_daily=N
                     hist_vols.append(day_vol)
                 if hist_vols:
                     median_vol = float(np.median(hist_vols))
-                    if median_vol > 0 and today_vol < 0.5 * median_vol:
+                    if median_vol > 0 and today_vol < 0.3 * median_vol:
                         liquidity = "illiquid"
 
     # Momentum: EMA20 slope over 5 bars

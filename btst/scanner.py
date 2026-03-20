@@ -23,7 +23,7 @@ import yaml
 from zoneinfo import ZoneInfo
 
 from common.data import (
-    fetch_yf, BENCHMARK, CONFIG_PATH, PROJECT_ROOT,
+    fetch_yf, fetch_bulk, fetch_bulk_single, BENCHMARK, CONFIG_PATH, PROJECT_ROOT,
     load_universe_for_tier,
 )
 
@@ -319,7 +319,11 @@ def evaluate_btst(symbol, intra_df, daily_df, nifty_state, vix_info, sector_data
         return result
 
     # Convert to IST + compute VWAP
-    intra_ist = compute_vwap(_to_ist(intra_df))
+    intra_ist = _to_ist(intra_df)
+    if not isinstance(intra_ist.index, pd.DatetimeIndex):
+        result["action_text"] = "Bad index format"
+        return result
+    intra_ist = compute_vwap(intra_ist)
     now = datetime.now(IST)
     today = now.date()
     intra_today = intra_ist[intra_ist.index.date == today]
@@ -1186,22 +1190,18 @@ def main():
     inst_flow = estimate_institutional_flow()
     print(f"  Institutional flow: {inst_flow}")
 
-    # Fetch sector indices
-    print("  Fetching sector indices...")
-    sectors = set(cfg["sector"] for cfg in TICKERS.values() if cfg.get("sector"))
-    sector_data = {}
-    for sec in sectors:
-        sector_data[sec] = fetch_yf(sec, period="5d", interval="1d")
+    # Fetch sector indices (parallel)
+    sectors = list(set(cfg["sector"] for cfg in TICKERS.values() if cfg.get("sector")))
+    print(f"  Fetching {len(sectors)} sector indices in parallel...")
+    sector_data = fetch_bulk_single(sectors, "5d", "1d", max_workers=6, label="Sectors")
 
-    # Fetch all ticker data
-    all_data = {}
+    # Fetch all ticker data (parallel)
     symbols = list(TICKERS.keys())
-    for sym in symbols:
-        print(f"  Fetching {sym}...")
-        all_data[sym] = {
-            "intra": fetch_yf(sym, period="5d", interval="5m"),
-            "daily": fetch_yf(sym, period="6mo", interval="1d"),
-        }
+    print(f"  Fetching {len(symbols)} tickers in parallel...")
+    all_data = fetch_bulk(symbols, {
+        "intra": ("5d", "5m"),
+        "daily": ("6mo", "1d"),
+    }, max_workers=10, label="BTST")
 
     # Fetch news & sentiment
     print("  Fetching news & sentiment...")

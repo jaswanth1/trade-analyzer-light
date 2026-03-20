@@ -10,11 +10,18 @@ Data strategy (transparent to callers):
 """
 
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from threading import Lock
 
 import pandas as pd
 import yfinance as yf
+
+# ── Parallel fetch throttle ──────────────────────────────────────────────
+_yf_lock = Lock()
+_YF_MIN_INTERVAL = 0.15  # seconds between yfinance API calls (avoids 429s)
+_yf_last_call = 0.0
 
 IST = timezone(timedelta(hours=5, minutes=30))
 
@@ -46,20 +53,20 @@ _UNIVERSE_PATH = PROJECT_ROOT / "common" / "universe.yaml"
 
 _HARDCODED_TICKERS = {
     # ── Banks (14) ──
-    "HDFCBANK.NS":    {"sector": "^CNXBANK",   "name": "HDFC Bank"},
-    "ICICIBANK.NS":   {"sector": "^CNXBANK",   "name": "ICICI Bank"},
-    "SBIN.NS":        {"sector": "^CNXBANK",   "name": "State Bank of India"},
-    "KOTAKBANK.NS":   {"sector": "^CNXBANK",   "name": "Kotak Mahindra Bank"},
-    "AXISBANK.NS":    {"sector": "^CNXBANK",   "name": "Axis Bank"},
-    "INDUSINDBK.NS":  {"sector": "^CNXBANK",   "name": "IndusInd Bank"},
-    "BANKBARODA.NS":  {"sector": "^CNXBANK",   "name": "Bank of Baroda"},
-    "PNB.NS":         {"sector": "^CNXBANK",   "name": "Punjab National Bank"},
-    "CANBK.NS":       {"sector": "^CNXBANK",   "name": "Canara Bank"},
-    "UNIONBANK.NS":   {"sector": "^CNXBANK",   "name": "Union Bank of India"},
-    "FEDERALBNK.NS":  {"sector": "^CNXBANK",   "name": "Federal Bank"},
-    "IDFCFIRSTB.NS":  {"sector": "^CNXBANK",   "name": "IDFC First Bank"},
-    "AUBANK.NS":      {"sector": "^CNXBANK",   "name": "AU Small Finance Bank"},
-    "IDBI.NS":        {"sector": "^CNXBANK",   "name": "IDBI Bank"},  # borderline ATR ~8%, watch monthly
+    "HDFCBANK.NS":    {"sector": "^NSEBANK",   "name": "HDFC Bank"},
+    "ICICIBANK.NS":   {"sector": "^NSEBANK",   "name": "ICICI Bank"},
+    "SBIN.NS":        {"sector": "^NSEBANK",   "name": "State Bank of India"},
+    "KOTAKBANK.NS":   {"sector": "^NSEBANK",   "name": "Kotak Mahindra Bank"},
+    "AXISBANK.NS":    {"sector": "^NSEBANK",   "name": "Axis Bank"},
+    "INDUSINDBK.NS":  {"sector": "^NSEBANK",   "name": "IndusInd Bank"},
+    "BANKBARODA.NS":  {"sector": "^NSEBANK",   "name": "Bank of Baroda"},
+    "PNB.NS":         {"sector": "^NSEBANK",   "name": "Punjab National Bank"},
+    "CANBK.NS":       {"sector": "^NSEBANK",   "name": "Canara Bank"},
+    "UNIONBANK.NS":   {"sector": "^NSEBANK",   "name": "Union Bank of India"},
+    "FEDERALBNK.NS":  {"sector": "^NSEBANK",   "name": "Federal Bank"},
+    "IDFCFIRSTB.NS":  {"sector": "^NSEBANK",   "name": "IDFC First Bank"},
+    "AUBANK.NS":      {"sector": "^NSEBANK",   "name": "AU Small Finance Bank"},
+    "IDBI.NS":        {"sector": "^NSEBANK",   "name": "IDBI Bank"},  # borderline ATR ~8%, watch monthly
     # ── Financials / Insurance / NBFC (14) ──
     "SAILIFE.NS":     {"sector": "^CNXFIN",    "name": "SBI Life Insurance"},
     "SBILIFE.NS":     {"sector": "^CNXFIN",    "name": "SBI Life Insurance Co"},
@@ -254,15 +261,37 @@ STOP_PCTS = [0.5, 1.0, 1.5]
 
 # ── Data Fetching ─────────────────────────────────────────────────────────
 
+def _throttle_yf():
+    """Thread-safe throttle to space out yfinance API calls."""
+    global _yf_last_call
+    with _yf_lock:
+        now = time.monotonic()
+        elapsed = now - _yf_last_call
+        if elapsed < _YF_MIN_INTERVAL:
+            time.sleep(_YF_MIN_INTERVAL - elapsed)
+        _yf_last_call = time.monotonic()
+
+
 def _fetch_yfinance(symbol, period, interval, max_retries=3):
     """Raw yfinance download with retries. No caching."""
     for attempt in range(max_retries):
         try:
+            _throttle_yf()
             df = yf.download(symbol, period=period, interval=interval, progress=False)
             if df.empty:
                 return pd.DataFrame()
+            # yfinance may return MultiIndex columns — flatten to single level
             if isinstance(df.columns, pd.MultiIndex):
-                df.columns = df.columns.droplevel("Ticker")
+                # If only one ticker, just drop the Ticker level
+                if df.columns.get_level_values("Ticker").nunique() <= 1:
+                    df.columns = df.columns.droplevel("Ticker")
+                else:
+                    # Multiple tickers somehow — pick the first
+                    first_ticker = df.columns.get_level_values("Ticker")[0]
+                    df = df.xs(first_ticker, level="Ticker", axis=1)
+            # Guard against duplicate columns (e.g. after droplevel)
+            if df.columns.duplicated().any():
+                df = df.loc[:, ~df.columns.duplicated()]
             return df
         except Exception as e:
             err_str = str(e).lower()
@@ -468,3 +497,76 @@ def fetch_ticker_info(symbol):
         return yf.Ticker(symbol).info or {}
     except Exception:
         return {}
+
+
+# ── Parallel / Batch Fetching ────────────────────────────────────────────
+
+def fetch_bulk(symbols, specs, max_workers=10, label=""):
+    """Fetch multiple symbols × multiple (period, interval) specs in parallel.
+
+    Args:
+        symbols: list of yfinance symbols (e.g., ["RELIANCE.NS", "TCS.NS"])
+        specs: dict mapping key names to (period, interval) tuples.
+               Example: {"intra": ("5d", "5m"), "daily": ("6mo", "1d")}
+        max_workers: thread pool size (default 10; throttle prevents 429s)
+        label: optional prefix for progress messages
+
+    Returns:
+        dict: {symbol: {spec_key: DataFrame, ...}, ...}
+        Symbols that fail all retries get empty DataFrames.
+
+    Example:
+        data = fetch_bulk(
+            ["RELIANCE.NS", "TCS.NS", "INFY.NS"],
+            {"intra": ("5d", "5m"), "daily": ("6mo", "1d")},
+        )
+        data["RELIANCE.NS"]["intra"]  # → 5-day 5-min DataFrame
+        data["RELIANCE.NS"]["daily"]  # → 6-month daily DataFrame
+    """
+    result = {sym: {k: pd.DataFrame() for k in specs} for sym in symbols}
+    total_tasks = len(symbols) * len(specs)
+
+    # Build flat task list: (symbol, spec_key, period, interval)
+    tasks = []
+    for sym in symbols:
+        for key, (period, interval) in specs.items():
+            tasks.append((sym, key, period, interval))
+
+    completed = 0
+    prefix = f"  {label} " if label else "  "
+
+    def _do_fetch(sym, key, period, interval):
+        return sym, key, fetch_yf(sym, period, interval)
+
+    with ThreadPoolExecutor(max_workers=max_workers) as pool:
+        futures = {
+            pool.submit(_do_fetch, sym, key, period, interval): (sym, key)
+            for sym, key, period, interval in tasks
+        }
+        for future in as_completed(futures):
+            sym, key = futures[future]
+            completed += 1
+            try:
+                _, _, df = future.result()
+                result[sym][key] = df
+            except Exception as e:
+                print(f"  [WARN] {sym}/{key}: {e}")
+
+            # Progress every 20 completions
+            if completed % 20 == 0 or completed == total_tasks:
+                print(f"{prefix}[{completed}/{total_tasks}] fetched")
+
+    return result
+
+
+def fetch_bulk_single(symbols, period, interval, max_workers=10, label=""):
+    """Fetch one (period, interval) for many symbols in parallel.
+
+    Convenience wrapper around fetch_bulk for the common single-spec case.
+
+    Returns:
+        dict: {symbol: DataFrame}
+    """
+    data = fetch_bulk(symbols, {"_": (period, interval)},
+                      max_workers=max_workers, label=label)
+    return {sym: data[sym]["_"] for sym in symbols}

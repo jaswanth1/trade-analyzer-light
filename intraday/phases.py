@@ -14,7 +14,7 @@ import yaml
 import yfinance as yf
 from zoneinfo import ZoneInfo
 
-from common.data import fetch_yf, BENCHMARK, PROJECT_ROOT, CONFIG_PATH, load_universe_for_tier
+from common.data import fetch_yf, fetch_bulk, fetch_bulk_single, BENCHMARK, PROJECT_ROOT, CONFIG_PATH, load_universe_for_tier
 
 TICKERS = load_universe_for_tier("intraday")
 from common.indicators import compute_atr, compute_beta, compute_vwap, _to_ist, classify_gaps
@@ -270,14 +270,16 @@ def run_pre_market_scan(config, symbols, now_ist=None, data_override=None,
     if not data_override:
         print(f"  DOW: {dow_name} | Period: {month_period}")
 
-    # Fetch daily data and build scenarios for each ticker
+    # Fetch daily data for all tickers (parallel)
+    if not data_override:
+        print(f"  Fetching {len(symbols)} tickers in parallel...")
+        _daily_bulk = fetch_bulk_single(symbols, "6mo", "1d", max_workers=10, label="PreMkt")
+    else:
+        _daily_bulk = {sym: data_override.get(sym, {}).get("daily", pd.DataFrame()) for sym in symbols}
+
     all_setups = []
     for sym in symbols:
-        if data_override:
-            daily_df = data_override.get(sym, {}).get("daily", pd.DataFrame())
-        else:
-            print(f"  Fetching {sym}...")
-            daily_df = fetch_yf(sym, period="6mo", interval="1d")
+        daily_df = _daily_bulk.get(sym, pd.DataFrame())
         if daily_df.empty:
             continue
 
@@ -1071,15 +1073,27 @@ def run_post_market_scan(config, symbols, now_ist=None, data_override=None,
         print(f"  Today: {dow_name} ({day_type_info['type']}) | Tomorrow: {tomorrow_dow}")
         print(f"  Nifty: {nifty_regime.upper()} | VIX: {vix_val or 'N/A'} | Flow: {inst_flow}")
 
+    # ── Bulk fetch for session review + tomorrow watchlist ──
+    if not data_override:
+        print(f"  Fetching {len(symbols)} tickers in parallel...")
+        _post_bulk = fetch_bulk(symbols, {
+            "intra": ("5d", "5m"),
+            "daily": ("6mo", "1d"),
+        }, max_workers=10, label="PostMkt")
+    else:
+        _post_bulk = {
+            sym: {
+                "intra": data_override.get(sym, {}).get("intra", pd.DataFrame()),
+                "daily": data_override.get(sym, {}).get("daily", pd.DataFrame()),
+            }
+            for sym in symbols
+        }
+
     # ── Section 1: Session Review ──
     session_summaries = []
     for sym in symbols:
-        if data_override:
-            intra_df = data_override.get(sym, {}).get("intra", pd.DataFrame())
-            daily_df = data_override.get(sym, {}).get("daily", pd.DataFrame())
-        else:
-            intra_df = fetch_yf(sym, period="5d", interval="5m")
-            daily_df = fetch_yf(sym, period="6mo", interval="1d")
+        intra_df = _post_bulk.get(sym, {}).get("intra", pd.DataFrame())
+        daily_df = _post_bulk.get(sym, {}).get("daily", pd.DataFrame())
         if intra_df.empty or daily_df.empty:
             continue
 
@@ -1116,10 +1130,7 @@ def run_post_market_scan(config, symbols, now_ist=None, data_override=None,
     # ── Section 2: Tomorrow's Watchlist ──
     tomorrow_setups = []
     for sym in symbols:
-        if data_override:
-            daily_df = data_override.get(sym, {}).get("daily", pd.DataFrame())
-        else:
-            daily_df = fetch_yf(sym, period="6mo", interval="1d")
+        daily_df = _post_bulk.get(sym, {}).get("daily", pd.DataFrame())
         if daily_df.empty:
             continue
 
@@ -1663,32 +1674,29 @@ def _run_live_scan(config, symbols, now_ist=None, data_override=None,
         except Exception:
             pass
 
-    # Fetch sector indices
+    # Fetch sector indices (parallel)
     sectors = set(cfg["sector"] for cfg in TICKERS.values() if cfg.get("sector"))
-    sector_data = {}
     if data_override:
-        for sec in sectors:
-            sector_data[sec] = data_override.get(sec, {}).get("daily", pd.DataFrame())
+        sector_data = {sec: data_override.get(sec, {}).get("daily", pd.DataFrame()) for sec in sectors}
     else:
-        print("  Fetching sector indices...")
-        for sec in sectors:
-            sector_data[sec] = fetch_yf(sec, period="5d", interval="1d")
+        print(f"  Fetching {len(sectors)} sector indices in parallel...")
+        sector_data = fetch_bulk_single(list(sectors), "5d", "1d", max_workers=8, label="Sectors")
 
-    # Fetch all ticker data
-    all_data = {}
+    # Fetch all ticker data (parallel)
     if data_override:
-        for sym in symbols:
-            all_data[sym] = {
+        all_data = {
+            sym: {
                 "intra": data_override.get(sym, {}).get("intra", pd.DataFrame()),
                 "daily": data_override.get(sym, {}).get("daily", pd.DataFrame()),
             }
+            for sym in symbols
+        }
     else:
-        for sym in symbols:
-            print(f"  Fetching {sym}...")
-            all_data[sym] = {
-                "intra": fetch_yf(sym, period="5d", interval="5m"),
-                "daily": fetch_yf(sym, period="6mo", interval="1d"),
-            }
+        print(f"  Fetching {len(symbols)} tickers in parallel...")
+        all_data = fetch_bulk(symbols, {
+            "intra": ("5d", "5m"),
+            "daily": ("6mo", "1d"),
+        }, max_workers=10, label="Live")
 
     # Evaluate signals (skip if drawdown or velocity breached)
     print("  Evaluating intraday signals...")

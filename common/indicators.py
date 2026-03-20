@@ -106,10 +106,15 @@ def _to_ist(intraday_df):
 
 def compute_vwap(intraday_df):
     """Compute daily VWAP reset per day."""
+    if intraday_df.empty:
+        return intraday_df
+    # Non-DatetimeIndex (e.g. RangeIndex) → cannot compute VWAP, return as-is
+    if not isinstance(intraday_df.index, pd.DatetimeIndex):
+        return intraday_df
     # Safety check: VWAP day boundaries require IST-aware index.
     # If the index is UTC or naive, groupby("date") will split at UTC midnight
     # instead of IST midnight, producing wrong VWAP values.
-    if not intraday_df.empty and intraday_df.index.tz is not None:
+    if intraday_df.index.tz is not None:
         tz_name = str(intraday_df.index.tz)
         if "Kolkata" not in tz_name and "IST" not in tz_name and "+05:30" not in tz_name:
             warnings.warn(
@@ -118,7 +123,7 @@ def compute_vwap(intraday_df):
                 "Call _to_ist() before compute_vwap().",
                 stacklevel=2,
             )
-    elif not intraday_df.empty and intraday_df.index.tz is None:
+    elif intraday_df.index.tz is None:
         warnings.warn(
             "compute_vwap() received timezone-naive data. "
             "Expected IST (Asia/Kolkata). Call _to_ist() before compute_vwap().",

@@ -15,7 +15,7 @@ import pandas as pd
 import yaml
 from zoneinfo import ZoneInfo
 
-from common.data import fetch_yf, GAP_THRESHOLDS, SCALP_CONFIG_PATH, SCALP_REPORT_DIR
+from common.data import fetch_yf, fetch_bulk, GAP_THRESHOLDS, SCALP_CONFIG_PATH, SCALP_REPORT_DIR
 
 CONFIG_PATH = SCALP_CONFIG_PATH
 from common.indicators import compute_vwap, compute_atr, compute_atr_percentile, _to_ist, classify_gaps
@@ -225,7 +225,11 @@ def evaluate_ticker(ticker_cfg, intra_df, daily_df, nifty_ist, nifty_ok, phase, 
         return result
 
     # Convert to IST + VWAP
-    intra_ist = compute_vwap(_to_ist(intra_df))
+    intra_ist = _to_ist(intra_df)
+    if not isinstance(intra_ist.index, pd.DatetimeIndex):
+        result["action_text"] = "Bad index format"
+        return result
+    intra_ist = compute_vwap(intra_ist)
     today = now_ist.date()
     intra_today = intra_ist[intra_ist.index.date == today]
     if intra_today.empty:
@@ -1395,17 +1399,13 @@ def main():
     nifty_state = {"ok": nifty_ok, "above_vwap": nifty_above_vwap, "new_lows": nifty_new_lows,
                    "vix": vix_val, "vix_regime": vix_regime}
 
-    # Fetch all ticker data
-    all_data = {}
+    # Fetch all ticker data (parallel)
     symbols = list({tc["symbol"] for tc in tickers_cfg})
-    for sym in symbols:
-        print(f"  Fetching {sym}...")
-        all_data[sym] = {
-            "intra": fetch_yf(sym, period=data_cfg.get("intraday", "5d"),
-                              interval=data_cfg.get("intraday_interval", "5m")),
-            "daily": fetch_yf(sym, period=data_cfg.get("daily", "1mo"),
-                              interval=data_cfg.get("daily_interval", "1d")),
-        }
+    print(f"  Fetching {len(symbols)} tickers in parallel...")
+    all_data = fetch_bulk(symbols, {
+        "intra": (data_cfg.get("intraday", "5d"), data_cfg.get("intraday_interval", "5m")),
+        "daily": (data_cfg.get("daily", "1mo"), data_cfg.get("daily_interval", "1d")),
+    }, max_workers=10, label="Scalp")
 
     # Compute next phase for lookahead
     next_phase_info = get_next_phase(phase, phases_cfg)

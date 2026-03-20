@@ -475,12 +475,31 @@ def main():
     else:
         tickers = TICKERS
 
-    print(f"\nProcessing {len(tickers)} tickers...")
+    print(f"\nProcessing {len(tickers)} tickers in parallel...")
     results = {}
 
-    for i, (symbol, cfg) in enumerate(tickers.items(), 1):
-        result = process_ticker(symbol, cfg, verbose=args.verbose or bool(args.ticker))
-        results[symbol] = result
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+    verbose_flag = args.verbose or bool(args.ticker)
+
+    def _process(sym_cfg):
+        sym, cfg = sym_cfg
+        return sym, process_ticker(sym, cfg, verbose=verbose_flag)
+
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        futures = {pool.submit(_process, (sym, cfg)): sym
+                   for sym, cfg in tickers.items()}
+        done = 0
+        for future in as_completed(futures):
+            done += 1
+            sym = futures[future]
+            try:
+                _, result = future.result()
+                results[sym] = result
+            except Exception as e:
+                print(f"  [WARN] {sym}: {e}")
+                results[sym] = None
+            if done % 10 == 0 or done == len(tickers):
+                print(f"  [{done}/{len(tickers)}] processed")
 
     # Build outputs
     config_path = build_yaml(results)

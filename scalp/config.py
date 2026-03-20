@@ -23,7 +23,7 @@ from sklearn.preprocessing import StandardScaler
 
 from common.data import (
     PROJECT_ROOT, SCALP_CONFIG_PATH, SCALP_DIR,
-    BENCHMARK, fetch_yf, fetch_ticker_info,
+    BENCHMARK, fetch_yf, fetch_bulk, fetch_bulk_single, fetch_ticker_info,
     load_universe_for_tier,
 )
 
@@ -1826,40 +1826,46 @@ def main():
             print("[ERROR] Could not fetch benchmark data. Exiting.")
             return
 
-    # 3. For stale symbols: fetch OHLCV → compute → cache
-    # Cache sector daily data to avoid re-fetching the same sector index repeatedly
-    _sector_cache = {}
+    # 3. For stale symbols: fetch OHLCV in parallel → compute → cache
+    if stale_symbols:
+        # Pre-fetch all ticker data in parallel
+        print(f"  Fetching {len(stale_symbols)} tickers in parallel...")
+        _bulk_data = fetch_bulk(stale_symbols, {
+            "daily": ("6mo", "1d"),
+            "intra": ("60d", "5m"),
+        }, max_workers=8, label="ScalpCfg")
 
-    for i, symbol in enumerate(stale_symbols, 1):
-        cfg = TICKERS[symbol]
-        print(f"  [{i}/{len(stale_symbols)}] {symbol} ({cfg['name']})")
+        # Pre-fetch sector indices (deduplicated)
+        _sector_keys = list({TICKERS[s]["sector"] for s in stale_symbols if TICKERS[s].get("sector")})
+        print(f"  Fetching {len(_sector_keys)} sector indices...")
+        _sector_cache = fetch_bulk_single(_sector_keys, "6mo", "1d", max_workers=6, label="Sectors")
 
-        daily_df = fetch_yf(symbol, period="6mo", interval="1d")
-        if daily_df.empty:
-            print(f"    [SKIP] No daily data")
-            continue
+        for i, symbol in enumerate(stale_symbols, 1):
+            cfg = TICKERS[symbol]
+            print(f"  [{i}/{len(stale_symbols)}] {symbol} ({cfg['name']})")
 
+            daily_df = _bulk_data.get(symbol, {}).get("daily", pd.DataFrame())
+            if daily_df.empty:
+                print(f"    [SKIP] No daily data")
+                continue
 
-        intraday_df = fetch_yf(symbol, period="60d", interval="5m")
-        if intraday_df.empty:
-            print(f"    [SKIP] No intraday data")
-            continue
+            intraday_df = _bulk_data.get(symbol, {}).get("intra", pd.DataFrame())
+            if intraday_df.empty:
+                print(f"    [SKIP] No intraday data")
+                continue
 
-        # Reuse sector daily data across tickers in the same sector
-        sector_key = cfg["sector"]
-        if sector_key not in _sector_cache:
-            _sector_cache[sector_key] = fetch_yf(sector_key, period="6mo", interval="1d")
-        sector_daily = _sector_cache[sector_key]
+            sector_key = cfg["sector"]
+            sector_daily = _sector_cache.get(sector_key, pd.DataFrame())
 
-        info = fetch_ticker_info(symbol)
+            info = fetch_ticker_info(symbol)
 
-        try:
-            compute_and_cache_ticker(symbol, cfg, daily_df, intraday_df,
-                                      bench_daily, sector_daily, info)
-            print(f"    Computed and cached")
-        except Exception as e:
-            print(f"    [ERROR] {e}")
-            continue
+            try:
+                compute_and_cache_ticker(symbol, cfg, daily_df, intraday_df,
+                                          bench_daily, sector_daily, info)
+                print(f"    Computed and cached")
+            except Exception as e:
+                print(f"    [ERROR] {e}")
+                continue
 
     # 4. Process ALL symbols from cache → generate config
     configs = []

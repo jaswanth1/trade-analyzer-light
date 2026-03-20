@@ -46,6 +46,7 @@ SECTOR_INDICES = sorted({meta["sector"] for meta in TICKERS.values()})
 
 # Friendly names for sector indices
 SECTOR_NAMES = {
+    "^NSEBANK": "BANK",
     "^CNXFIN": "FIN",
     "^CNXENERGY": "ENERGY",
     "^CNXMETAL": "METAL",

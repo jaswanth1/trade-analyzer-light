@@ -259,7 +259,10 @@ def evaluate_symbol(symbol, intra_df, daily_df, nifty_state, vix_info,
         return candidates
 
     # Convert to IST + compute VWAP
-    intra_ist = compute_vwap(_to_ist(intra_df))
+    intra_ist = _to_ist(intra_df)
+    if not isinstance(intra_ist.index, pd.DatetimeIndex):
+        return candidates
+    intra_ist = compute_vwap(intra_ist)
     today = intra_ist.index[-1].date()
     today_bars = intra_ist[intra_ist.index.date == today]
     if today_bars.empty:

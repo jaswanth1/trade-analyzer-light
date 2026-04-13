@@ -9,6 +9,7 @@ Data strategy (transparent to callers):
   5. Degrade gracefully if Upstox/Supabase unavailable
 """
 
+import logging
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
@@ -17,6 +18,8 @@ from threading import Lock
 
 import pandas as pd
 import yfinance as yf
+
+log = logging.getLogger(__name__)
 
 # ── Parallel fetch throttle ──────────────────────────────────────────────
 _yf_lock = Lock()
@@ -279,6 +282,7 @@ def _fetch_yfinance(symbol, period, interval, max_retries=3):
             _throttle_yf()
             df = yf.download(symbol, period=period, interval=interval, progress=False)
             if df.empty:
+                log.info("%s: yfinance returned empty (%s/%s)", symbol, period, interval)
                 return pd.DataFrame()
             # yfinance may return MultiIndex columns — flatten to single level
             if isinstance(df.columns, pd.MultiIndex):
@@ -292,18 +296,24 @@ def _fetch_yfinance(symbol, period, interval, max_retries=3):
             # Guard against duplicate columns (e.g. after droplevel)
             if df.columns.duplicated().any():
                 df = df.loc[:, ~df.columns.duplicated()]
+            log.debug(
+                "%s: yfinance OK — %d rows, index_type=%s, cols=%s (%s/%s)",
+                symbol, len(df), type(df.index).__name__, list(df.columns),
+                period, interval,
+            )
             return df
         except Exception as e:
             err_str = str(e).lower()
             if "rate" in err_str or "429" in err_str or "too many" in err_str:
                 # Rate limited — longer backoff
                 wait = 5 * (attempt + 1)
-                print(f"  [RATE] {symbol}: rate limited, waiting {wait}s...")
+                log.warning("%s: rate limited (attempt %d/%d), waiting %ds", symbol, attempt + 1, max_retries, wait)
                 time.sleep(wait)
             elif attempt < max_retries - 1:
+                log.debug("%s: fetch attempt %d failed: %s — retrying", symbol, attempt + 1, e)
                 time.sleep(2 ** attempt)
             else:
-                print(f"  [WARN] Failed to fetch {symbol} ({period}/{interval}): {e}")
+                log.warning("%s: all %d fetch attempts failed (%s/%s): %s", symbol, max_retries, period, interval, e)
                 return pd.DataFrame()
 
 
@@ -364,7 +374,14 @@ def _fill_realtime_gap(symbol, yf_df, interval):
 
     gap_bars = upstox_df[upstox_df.index > last_bar_compare]
     if gap_bars.empty:
+        log.debug("%s: no Upstox gap bars after %s", symbol, last_bar_compare)
         return None
+
+    log.debug(
+        "%s: filling gap — %d Upstox bars after %s (yf_tz=%s, upstox_tz=%s)",
+        symbol, len(gap_bars), last_bar_compare,
+        getattr(yf_df.index, 'tz', None), getattr(gap_bars.index, 'tz', None),
+    )
 
     # Make timezone-naive to match yfinance if needed
     if yf_df.index.tz is None and gap_bars.index.tz is not None:
@@ -429,6 +446,7 @@ def fetch_yf(symbol, period, interval, max_retries=3):
     if is_cache_fresh(symbol, interval):
         cached = get_cached_bars(symbol, interval)
         if not cached.empty:
+            log.debug("%s: cache hit (%d rows, %s)", symbol, len(cached), interval)
             return cached
 
     # 2. Fetch from yfinance
@@ -438,18 +456,33 @@ def fetch_yf(symbol, period, interval, max_retries=3):
     if interval in ("1m", "2m", "5m", "15m") and not yf_df.empty:
         filled = _fill_realtime_gap(symbol, yf_df, interval)
         if filled is not None:
+            log.debug(
+                "%s: gap-filled — yf=%d + upstox gap → %d rows, index_type=%s",
+                symbol, len(yf_df), len(filled), type(filled.index).__name__,
+            )
             cache_bars(symbol, interval, filled)
             return filled
 
     # 4. If yfinance empty, try Upstox as full fallback
     if yf_df.empty:
+        log.info("%s: yfinance empty, trying Upstox full fallback (%s/%s)", symbol, period, interval)
         upstox_df = _try_upstox_full(symbol, period, interval)
         if upstox_df is not None and not upstox_df.empty:
+            log.info(
+                "%s: Upstox fallback OK — %d rows, index_type=%s",
+                symbol, len(upstox_df), type(upstox_df.index).__name__,
+            )
             cache_bars(symbol, interval, upstox_df)
             return upstox_df
+        log.warning("%s: no data from yfinance or Upstox (%s/%s)", symbol, period, interval)
 
     # 5. Cache whatever we got and return
     if not yf_df.empty:
+        log.debug(
+            "%s: returning yfinance data — %d rows, index_type=%s, tz=%s",
+            symbol, len(yf_df), type(yf_df.index).__name__,
+            getattr(yf_df.index, 'tz', None),
+        )
         cache_bars(symbol, interval, yf_df)
     return yf_df
 
@@ -550,11 +583,11 @@ def fetch_bulk(symbols, specs, max_workers=10, label=""):
                 _, _, df = future.result()
                 result[sym][key] = df
             except Exception as e:
-                print(f"  [WARN] {sym}/{key}: {e}")
+                log.warning("%s/%s: %s", sym, key, e)
 
             # Progress every 20 completions
             if completed % 20 == 0 or completed == total_tasks:
-                print(f"{prefix}[{completed}/{total_tasks}] fetched")
+                log.info("%s[%d/%d] fetched", prefix, completed, total_tasks)
 
     return result
 

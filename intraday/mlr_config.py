@@ -17,11 +17,14 @@ Usage: python -m intraday.mlr_config
 """
 
 import argparse
+import logging
 from datetime import datetime
 from pathlib import Path
 
 import numpy as np
 import yaml
+
+log = logging.getLogger(__name__)
 
 from common.data import (
     PROJECT_ROOT, BENCHMARK, fetch_yf, load_universe_for_tier,
@@ -134,33 +137,53 @@ def compute_edge_strength(best_combo, oos_result, mc_result, sample_size):
 
 # ── Main pipeline per ticker ─────────────────────────────────────────
 
-def process_ticker(symbol, cfg, verbose=False):
+def process_ticker(symbol, cfg):
     """Full MLR pipeline for one ticker. Returns config dict or None."""
-    if verbose:
-        print(f"  Processing {symbol}...", end=" ", flush=True)
+    log.info("Processing %s...", symbol)
 
     # Fetch data: 60d of 5-min (yfinance/Upstox limit) + 1y daily for stats
     # fetch_yf handles cache -> yfinance -> Upstox fallback transparently
     try:
         intra_raw = fetch_yf(symbol, period="60d", interval="5m")
+        log.debug(
+            "%s: intra_raw — %d rows, index_type=%s, tz=%s",
+            symbol, len(intra_raw) if not intra_raw.empty else 0,
+            type(intra_raw.index).__name__,
+            getattr(intra_raw.index, 'tz', None),
+        )
         intra_df = _to_ist(intra_raw) if not intra_raw.empty else intra_raw
+        log.debug(
+            "%s: after _to_ist — %d rows, index_type=%s, tz=%s",
+            symbol, len(intra_df) if not intra_df.empty else 0,
+            type(intra_df.index).__name__,
+            getattr(intra_df.index, 'tz', None),
+        )
         daily_df = fetch_yf(symbol, period="1y", interval="1d")
+        log.debug(
+            "%s: daily_df — %d rows, index_type=%s",
+            symbol, len(daily_df) if not daily_df.empty else 0,
+            type(daily_df.index).__name__,
+        )
     except Exception as e:
-        if verbose:
-            print(f"SKIP (fetch error: {e})")
+        log.warning("%s: SKIP (fetch error: %s)", symbol, e)
         return None
 
     if intra_df.empty or daily_df.empty or len(daily_df) < 60:
-        if verbose:
-            print("SKIP (insufficient data)")
+        log.info(
+            "%s: SKIP (insufficient data — intra=%d, daily=%d)",
+            symbol, len(intra_df) if not intra_df.empty else 0,
+            len(daily_df) if not daily_df.empty else 0,
+        )
         return None
 
     # Step 1a: Morning low stats (default cutoff for strategy use)
     # Finds the low within 10:00-11:30 morning window on each day
     stats_df = compute_morning_low_stats(intra_df, daily_df)
     if stats_df.empty or len(stats_df) < MIN_SAMPLE:
-        if verbose:
-            print(f"SKIP ({len(stats_df) if not stats_df.empty else 0} morning low days < {MIN_SAMPLE})")
+        log.info(
+            "%s: SKIP (%d morning low days < %d min)",
+            symbol, len(stats_df) if not stats_df.empty else 0, MIN_SAMPLE,
+        )
         return None
 
     # Step 1b: Full-session low analysis (wide cutoff) — for phase window discovery
@@ -263,37 +286,41 @@ def process_ticker(symbol, cfg, verbose=False):
     result["month_period_stats"] = seasonality.get("month_period", {})
 
     status = "ENABLED" if enabled else "disabled"
-    if verbose:
-        cutoff = result.get("low_cutoff_recommendation", "11:30")
-        profiles_data = result.get("profiles", {})
-        best_lp = result.get("best_low_phase", "?")
-        best_plhp = result.get("best_post_low_high_phase", "?")
-        tw = result.get("avg_post_low_trade_window_mins", 0)
-        if best:
-            print(f"{status} | edge={edge} | EV={best['ev']:.3f} | WR={best['win_rate']:.0f}% | n={sample_size} | "
-                  f"drop={avg_drop_norm:.2f}x ATR | high={avg_high_norm:.2f}x ATR | "
-                  f"low@{best_lp} -> high@{best_plhp} ({tw:.0f}min)")
-        else:
-            print(f"{status} | no valid combos")
-        for ot_name in ("gap_down_large", "gap_down_small", "flat", "gap_up_small", "gap_up_large"):
-            prof = profiles_data.get(ot_name)
-            if not prof:
-                continue
-            low1 = prof.get("low_1", {})
-            high1 = prof.get("high_1", {})
-            l_win = low1.get("window", "?")
-            h_win = high1.get("window", "?")
-            drop = prof.get("avg_drop_from_open_pct", 0)
-            drop_n = prof.get("avg_drop_norm", 0)
-            recov = low1.get("avg_recovery_pct", 0)
-            recov_by = low1.get("recovery_by", "?")
-            rec_open = prof.get("recovered_past_open_pct", 0)
-            pred = prof.get("predictability", 0)
-            tw_ot = prof.get("avg_post_low_trade_window_mins", 0)
-            print(f"  {ot_name} (n={prof['n']}, pred={pred:.2f}): "
-                  f"low@{l_win}({drop_n:.2f}x ATR) -> high@{h_win} | "
-                  f"-{drop:.1f}% drop -> +{recov:.1f}% recov by {recov_by} | "
-                  f"{rec_open:.0f}% past open | window {tw_ot:.0f}min")
+    cutoff = result.get("low_cutoff_recommendation", "11:30")
+    profiles_data = result.get("profiles", {})
+    best_lp = result.get("best_low_phase", "?")
+    best_plhp = result.get("best_post_low_high_phase", "?")
+    tw = result.get("avg_post_low_trade_window_mins", 0)
+    if best:
+        log.info(
+            "%s: %s | edge=%s | EV=%.3f | WR=%.0f%% | n=%d | "
+            "drop=%.2fx ATR | high=%.2fx ATR | low@%s -> high@%s (%.0fmin)",
+            symbol, status, edge, best['ev'], best['win_rate'], sample_size,
+            avg_drop_norm, avg_high_norm, best_lp, best_plhp, tw,
+        )
+    else:
+        log.info("%s: %s | no valid combos", symbol, status)
+    for ot_name in ("gap_down_large", "gap_down_small", "flat", "gap_up_small", "gap_up_large"):
+        prof = profiles_data.get(ot_name)
+        if not prof:
+            continue
+        low1 = prof.get("low_1", {})
+        high1 = prof.get("high_1", {})
+        l_win = low1.get("window", "?")
+        h_win = high1.get("window", "?")
+        drop = prof.get("avg_drop_from_open_pct", 0)
+        drop_n = prof.get("avg_drop_norm", 0)
+        recov = low1.get("avg_recovery_pct", 0)
+        recov_by = low1.get("recovery_by", "?")
+        rec_open = prof.get("recovered_past_open_pct", 0)
+        pred = prof.get("predictability", 0)
+        tw_ot = prof.get("avg_post_low_trade_window_mins", 0)
+        log.debug(
+            "%s:   %s (n=%d, pred=%.2f): low@%s(%.2fx ATR) -> high@%s | "
+            "-%.1f%% drop -> +%.1f%% recov by %s | %.0f%% past open | window %.0fmin",
+            symbol, ot_name, prof['n'], pred, l_win, drop_n, h_win,
+            drop, recov, recov_by, rec_open, tw_ot,
+        )
 
     return result
 
@@ -462,28 +489,35 @@ def generate_documentation(ticker_results, output_path=DOC_PATH):
 
 def main():
     parser = argparse.ArgumentParser(description="Generate MLR config (mlr_config.yaml)")
-    parser.add_argument("--verbose", "-v", action="store_true", help="Print progress per ticker")
+    parser.add_argument("--verbose", "-v", action="store_true", help="DEBUG-level logging per ticker")
     parser.add_argument("--ticker", "-t", type=str, help="Process single ticker (e.g. RELIANCE.NS)")
     args = parser.parse_args()
 
-    print("=" * 60)
-    print("MLR Config Generator — Morning Low Recovery")
-    print("=" * 60)
+    # Configure logging — verbose gets DEBUG, default gets INFO
+    level = logging.DEBUG if (args.verbose or args.ticker) else logging.INFO
+    logging.basicConfig(
+        level=level,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+        datefmt="%H:%M:%S",
+    )
+
+    log.info("=" * 60)
+    log.info("MLR Config Generator — Morning Low Recovery")
+    log.info("=" * 60)
 
     if args.ticker:
         tickers = {args.ticker: TICKERS.get(args.ticker, {"name": args.ticker, "sector": ""})}
     else:
         tickers = TICKERS
 
-    print(f"\nProcessing {len(tickers)} tickers in parallel...")
+    log.info("Processing %d tickers in parallel...", len(tickers))
     results = {}
 
     from concurrent.futures import ThreadPoolExecutor, as_completed
-    verbose_flag = args.verbose or bool(args.ticker)
 
     def _process(sym_cfg):
         sym, cfg = sym_cfg
-        return sym, process_ticker(sym, cfg, verbose=verbose_flag)
+        return sym, process_ticker(sym, cfg)
 
     with ThreadPoolExecutor(max_workers=8) as pool:
         futures = {pool.submit(_process, (sym, cfg)): sym
@@ -496,10 +530,10 @@ def main():
                 _, result = future.result()
                 results[sym] = result
             except Exception as e:
-                print(f"  [WARN] {sym}: {e}")
+                log.warning("%s: %s", sym, e)
                 results[sym] = None
             if done % 10 == 0 or done == len(tickers):
-                print(f"  [{done}/{len(tickers)}] processed")
+                log.info("[%d/%d] processed", done, len(tickers))
 
     # Build outputs
     config_path = build_yaml(results)
@@ -510,14 +544,14 @@ def main():
     total = len(results)
     processed = sum(1 for r in results.values() if r is not None)
 
-    print(f"\n{'=' * 60}")
-    print(f"Results: {processed}/{total} tickers processed")
-    print(f"  Enabled:  {enabled}")
-    print(f"  Disabled: {processed - enabled}")
-    print(f"  Skipped:  {total - processed}")
-    print(f"\nConfig: {config_path}")
-    print(f"Guide:  {doc_path}")
-    print("=" * 60)
+    log.info("=" * 60)
+    log.info("Results: %d/%d tickers processed", processed, total)
+    log.info("  Enabled:  %d", enabled)
+    log.info("  Disabled: %d", processed - enabled)
+    log.info("  Skipped:  %d", total - processed)
+    log.info("Config: %s", config_path)
+    log.info("Guide:  %s", doc_path)
+    log.info("=" * 60)
 
 
 if __name__ == "__main__":

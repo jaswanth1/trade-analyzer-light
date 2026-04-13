@@ -231,8 +231,12 @@ def yf_to_upstox(yf_symbol: str) -> str | None:
     if yf_symbol in INDEX_MAP:
         return INDEX_MAP[yf_symbol]
 
-    mapping = load_instrument_map()
-    return mapping.get(yf_symbol)
+    # Direct lookup against BOD map — avoids rebuilding full map + noisy warnings
+    bod = _load_bod_map()
+    if not bod:
+        return None
+    trading_sym = yf_symbol.replace(".NS", "").replace(".BO", "")
+    return bod.get(trading_sym)
 
 
 def upstox_to_yf(instrument_key: str) -> str | None:
@@ -240,6 +244,7 @@ def upstox_to_yf(instrument_key: str) -> str | None:
     if instrument_key in _INDEX_MAP_REV:
         return _INDEX_MAP_REV[instrument_key]
 
-    mapping = load_instrument_map()
-    rev = {v: k for k, v in mapping.items()}
+    # Reverse lookup against BOD map directly
+    bod = _load_bod_map()
+    rev = {v: f"{k}.NS" for k, v in bod.items()}
     return rev.get(instrument_key)

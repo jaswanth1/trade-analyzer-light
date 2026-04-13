@@ -9,6 +9,7 @@ Token lifecycle:
 """
 
 import json
+import logging
 import os
 import webbrowser
 from datetime import datetime, timedelta, timezone
@@ -16,6 +17,8 @@ from pathlib import Path
 
 import pandas as pd
 from dotenv import load_dotenv
+
+log = logging.getLogger(__name__)
 
 load_dotenv(dotenv_path=Path(__file__).parent.parent / ".env.local")
 
@@ -84,7 +87,7 @@ def save_access_token(token: str):
         )
         cur.fetchone()
     except Exception as e:
-        print(f"  [WARN] Supabase token save failed (local fallback OK): {e}")
+        log.warning("Supabase token save failed (local fallback OK): %s", e)
 
 
 def get_access_token() -> str | None:
@@ -139,7 +142,7 @@ def exchange_auth_code(code: str) -> str | None:
             save_access_token(token)
             return token
     except Exception as e:
-        print(f"  [ERROR] Token exchange failed: {e}")
+        log.error("Token exchange failed: %s", e)
     return None
 
 
@@ -215,7 +218,7 @@ def fetch_upstox_intraday(instrument_key: str, interval_min: int = 5) -> pd.Data
         candles = response.data.candles if response.data else []
         return _candles_to_df(candles)
     except Exception as e:
-        print(f"  [WARN] Upstox intraday fetch failed for {instrument_key}: {e}")
+        log.warning("Upstox intraday fetch failed for %s: %s", instrument_key, e)
         return pd.DataFrame()
 
 
@@ -249,7 +252,7 @@ def fetch_upstox_historical(
         candles = response.data.candles if response.data else []
         return _candles_to_df(candles)
     except Exception as e:
-        print(f"  [WARN] Upstox historical fetch failed for {instrument_key}: {e}")
+        log.warning("Upstox historical fetch failed for %s: %s", instrument_key, e)
         return pd.DataFrame()
 
 
@@ -275,7 +278,7 @@ def fetch_upstox_ltp(instrument_keys: list[str]) -> dict[str, float]:
                     result[key] = float(quote.last_price)
         return result
     except Exception as e:
-        print(f"  [WARN] Upstox LTP fetch failed: {e}")
+        log.warning("Upstox LTP fetch failed: %s", e)
         return {}
 
 

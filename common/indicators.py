@@ -2,10 +2,13 @@
 Technical indicator computations shared across scanners and reports.
 """
 
+import logging
 import warnings
 
 import numpy as np
 import pandas as pd
+
+log = logging.getLogger(__name__)
 
 from common.data import GAP_THRESHOLDS, IST_WINDOWS, TARGET_PCTS, STOP_PCTS
 
@@ -94,9 +97,19 @@ def _to_ist(intraday_df):
     df = intraday_df.copy()
     if not isinstance(df.index, pd.DatetimeIndex):
         # Non-datetime index (e.g. RangeIndex) — try to convert
+        log.warning(
+            "_to_ist: non-DatetimeIndex received — type=%s, dtype=%s, first_5=%s",
+            type(df.index).__name__, df.index.dtype,
+            list(df.index[:5]),
+        )
         try:
             df.index = pd.to_datetime(df.index)
-        except Exception:
+            log.info("_to_ist: successfully converted %s → DatetimeIndex", type(intraday_df.index).__name__)
+        except Exception as e:
+            log.error(
+                "_to_ist: failed to convert index to datetime — type=%s, dtype=%s, error=%s, first_5=%s",
+                type(df.index).__name__, df.index.dtype, e, list(df.index[:5]),
+            )
             return df
     if df.index.tz is None:
         df.index = df.index.tz_localize("UTC")

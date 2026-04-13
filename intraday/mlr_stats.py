@@ -9,10 +9,13 @@ Monte Carlo CIs, DOW/month seasonality, open-type profiles.
 Used by mlr_config.py pipeline.
 """
 
+import logging
 from datetime import time as dtime
 
 import numpy as np
 import pandas as pd
+
+log = logging.getLogger(__name__)
 
 # ── Tunable Constants (shared with mlr_config.py via re-export) ──────
 
@@ -107,6 +110,38 @@ def compute_morning_low_stats(intra_df, daily_df, low_cutoff_hour=None,
     if intra_df.empty or daily_df.empty:
         return pd.DataFrame()
 
+    # Ensure indexes are DatetimeIndex (required for .date / .time accessors)
+    if not isinstance(intra_df.index, pd.DatetimeIndex):
+        log.warning(
+            "compute_morning_low_stats: intra_df has non-DatetimeIndex — type=%s, dtype=%s, shape=%s, first_5=%s",
+            type(intra_df.index).__name__, intra_df.index.dtype, intra_df.shape,
+            list(intra_df.index[:5]),
+        )
+        try:
+            intra_df = intra_df.copy()
+            intra_df.index = pd.to_datetime(intra_df.index)
+        except Exception as e:
+            raise ValueError(
+                f"intraday DataFrame index cannot be converted to DatetimeIndex: "
+                f"type={type(intra_df.index).__name__}, dtype={intra_df.index.dtype}, "
+                f"first_5={list(intra_df.index[:5])}, error={e}"
+            )
+    if not isinstance(daily_df.index, pd.DatetimeIndex):
+        log.warning(
+            "compute_morning_low_stats: daily_df has non-DatetimeIndex — type=%s, dtype=%s, shape=%s, first_5=%s",
+            type(daily_df.index).__name__, daily_df.index.dtype, daily_df.shape,
+            list(daily_df.index[:5]),
+        )
+        try:
+            daily_df = daily_df.copy()
+            daily_df.index = pd.to_datetime(daily_df.index)
+        except Exception as e:
+            raise ValueError(
+                f"daily DataFrame index cannot be converted to DatetimeIndex: "
+                f"type={type(daily_df.index).__name__}, dtype={daily_df.index.dtype}, "
+                f"first_5={list(daily_df.index[:5])}, error={e}"
+            )
+
     cutoff_h = low_cutoff_hour if low_cutoff_hour is not None else MORNING_CUTOFF_HOUR
     cutoff_m = low_cutoff_min if low_cutoff_min is not None else MORNING_CUTOFF_MIN
     cutoff_time = dtime(cutoff_h, cutoff_m)
@@ -140,12 +175,16 @@ def compute_morning_low_stats(intra_df, daily_df, low_cutoff_hour=None,
             continue
 
         # Low within the morning window specifically
+        if morning_window["Low"].isna().all():
+            continue
         low_idx = morning_window["Low"].idxmin()
         low_price = float(morning_window.loc[low_idx, "Low"])
         low_time = low_idx
 
         # High from the entire post-settle session (10:00 to close)
         post_settle = day_bars[day_bars.index.time >= SETTLE_TIME]
+        if post_settle["High"].isna().all():
+            continue
         high_idx = post_settle["High"].idxmax()
         high_price = float(post_settle.loc[high_idx, "High"])
         high_time = high_idx

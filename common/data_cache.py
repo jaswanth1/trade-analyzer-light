@@ -10,9 +10,12 @@ Table: ohlcv_cache
   open, high, low, close, volume, fetched_at
 """
 
+import logging
 from datetime import datetime, timedelta, timezone
 
 import pandas as pd
+
+log = logging.getLogger(__name__)
 
 IST = timezone(timedelta(hours=5, minutes=30))
 BATCH_SIZE = 500
@@ -101,7 +104,7 @@ def get_cached_bars(
         return df
 
     except Exception as e:
-        print(f"  [WARN] Cache read failed for {symbol}/{interval}: {e}")
+        log.warning("Cache read failed for %s/%s: %s", symbol, interval, e)
         return pd.DataFrame()
 
 
@@ -125,6 +128,10 @@ def cache_bars(symbol: str, interval: str, df: pd.DataFrame):
 
         rows = []
         for idx, row in df.iterrows():
+            # Skip rows with NaN in any OHLCV field
+            o, h, l, c, v = row[open_col], row[high_col], row[low_col], row[close_col], row[vol_col]
+            if any(pd.isna(x) for x in (o, h, l, c, v)):
+                continue
             ts = idx
             if hasattr(ts, 'isoformat'):
                 ts_str = ts.isoformat()
@@ -132,9 +139,7 @@ def cache_bars(symbol: str, interval: str, df: pd.DataFrame):
                 ts_str = str(ts)
             rows.append((
                 symbol, interval, ts_str,
-                float(row[open_col]), float(row[high_col]),
-                float(row[low_col]), float(row[close_col]),
-                int(row[vol_col]),
+                float(o), float(h), float(l), float(c), int(v),
             ))
 
         cur = _get_cursor()
@@ -157,7 +162,7 @@ def cache_bars(symbol: str, interval: str, df: pd.DataFrame):
             )
 
     except Exception as e:
-        print(f"  [WARN] Cache write failed for {symbol}/{interval}: {e}")
+        log.warning("Cache write failed for %s/%s: %s", symbol, interval, e)
 
 
 # ── Cache Freshness ──────────────────────────────────────────────────────

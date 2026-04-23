@@ -22,6 +22,7 @@ dependencies = [
     "psycopg2-binary>=2.9.11",
     "websocket-client",
     "protobuf",
+    "openpyxl>=3.1.5",
 ]
 
 [tool.uv]

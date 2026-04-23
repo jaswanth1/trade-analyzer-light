@@ -2,6 +2,19 @@
 """
 Trade Universe Builder — systematic stock selection from Upstox MTF instruments.
 
+NOTE: This automated universe builder is NOT in active use. It pulls 1,400+ MTF
+instruments and produces a very large universe (~918 stocks). We now maintain the
+universe manually by curating stocks in common/universe.yaml directly, using
+watchlists exported from broker platforms (e.g. Upstox Excel exports).
+
+To add/remove stocks from the universe, edit common/universe.yaml by hand.
+Do NOT run `python -m common.universe` — it will overwrite manual curation.
+
+The code below is retained for reference in case we want to re-enable automated
+universe building in the future, or cherry-pick individual utility functions.
+
+--- Original description ---
+
 Pipeline:
   1. Download MTF instrument list (Upstox CDN, auth optional)
   2. Batch-fetch 1-month daily OHLCV via yfinance for all MTF equities
@@ -11,7 +24,7 @@ Pipeline:
   6. Apply sector cap (max 25% from any single sector per tier)
   7. Write common/universe.yaml + common/universe_guide.md
 
-Run weekly to refresh:
+Previously run weekly to refresh:
     python -m common.universe
     python -m common.universe --force   # skip cache, re-download everything
     python -m common.universe --dry-run # show what would change without writing
@@ -84,6 +97,15 @@ TIERS = {
         "min_adtv_cr": 4,        # ₹4 Cr ADTV — longer hold tolerates lower liquidity
         "min_atr_pct": 1.0,
         "max_atr_pct": 6.0,
+        "target_size": 150,
+        "sector_cap_pct": 25,
+    },
+    "intra_week": {
+        "min_price": 50,
+        "max_price": 10000,
+        "min_adtv_cr": 5,        # ₹5 Cr ADTV — multi-day holds need decent liquidity
+        "min_atr_pct": 2.0,      # need enough volatility for 10%+ moves
+        "max_atr_pct": 8.0,      # not too wild (operator stocks)
         "target_size": 150,
         "sector_cap_pct": 25,
     },

@@ -43,6 +43,9 @@ BTST_REPORT_DIR = BTST_DIR / "reports"
 INTRADAY_DIR = PROJECT_ROOT / "intraday"
 INTRADAY_REPORT_DIR = INTRADAY_DIR / "reports"
 
+INTRAWEEK_DIR = PROJECT_ROOT / "intra_week"
+INTRAWEEK_REPORT_DIR = INTRAWEEK_DIR / "reports"
+
 # Legacy aliases (for backwards compat during transition)
 OUTPUT_DIR = SCALP_OUTPUT_DIR
 CONFIG_PATH = SCALP_CONFIG_PATH

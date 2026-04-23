@@ -10,11 +10,14 @@ New pipeline: python -m scalp.config  (fetch → compute → cache → YAML)
 This file is kept for reference only.
 """
 
+import logging
 import os
 import warnings
 
 import numpy as np
 import pandas as pd
+
+log = logging.getLogger(__name__)
 
 from common.data import (
     BENCHMARK, GAP_THRESHOLDS, TARGET_PCTS, STOP_PCTS, SCALP_OUTPUT_DIR,
@@ -328,40 +331,46 @@ def generate_report(symbol, cfg, daily_df, intraday_df, bench_daily, sector_dail
 
 
 def main():
-    print("Fetching benchmark data...")
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+        datefmt="%H:%M:%S",
+    )
+
+    log.info("Fetching benchmark data...")
     bench_daily = fetch_yf(BENCHMARK, period="6mo", interval="1d")
     if bench_daily.empty:
-        print("[ERROR] Could not fetch benchmark data. Exiting.")
+        log.error("Could not fetch benchmark data. Exiting.")
         return
 
     for symbol, cfg in TICKERS.items():
-        print(f"\n{'='*60}")
-        print(f"Processing {symbol} ({cfg['name']})")
-        print(f"{'='*60}")
+        log.info("=" * 60)
+        log.info("Processing %s (%s)", symbol, cfg['name'])
+        log.info("=" * 60)
 
-        print("  Fetching daily OHLCV (6mo)...")
+        log.info("Fetching daily OHLCV (6mo)...")
         daily_df = fetch_yf(symbol, period="6mo", interval="1d")
         if daily_df.empty:
-            print(f"  [SKIP] No daily data for {symbol}")
+            log.warning("%s: SKIP — no daily data", symbol)
             continue
 
-        print("  Fetching 5-min OHLCV (60d)...")
+        log.info("Fetching 5-min OHLCV (60d)...")
         intraday_df = fetch_yf(symbol, period="60d", interval="5m")
         if intraday_df.empty:
-            print(f"  [SKIP] No intraday data for {symbol}")
+            log.warning("%s: SKIP — no intraday data", symbol)
             continue
 
-        print(f"  Fetching sector index ({cfg['sector']})...")
+        log.info("Fetching sector index (%s)...", cfg['sector'])
         sector_daily = fetch_yf(cfg["sector"], period="6mo", interval="1d")
 
-        print("  Fetching ticker info...")
+        log.info("Fetching ticker info...")
         info = fetch_ticker_info(symbol)
 
-        print("  Generating report...")
+        log.info("Generating report...")
         report_path = generate_report(symbol, cfg, daily_df, intraday_df, bench_daily, sector_daily, info)
-        print(f"  Report saved: {report_path}")
+        log.info("Report saved: %s", report_path)
 
-    print(f"\nDone. Output in ./{OUTPUT_DIR}/")
+    log.info("Done. Output in ./%s/", OUTPUT_DIR)
 
 
 if __name__ == "__main__":

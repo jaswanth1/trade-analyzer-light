@@ -103,7 +103,7 @@ def _to_ist(intraday_df):
             list(df.index[:5]),
         )
         try:
-            df.index = pd.to_datetime(df.index)
+            df.index = pd.to_datetime(df.index, utc=True)
             log.info("_to_ist: successfully converted %s → DatetimeIndex", type(intraday_df.index).__name__)
         except Exception as e:
             log.error(

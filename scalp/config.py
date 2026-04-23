@@ -11,6 +11,7 @@ Usage: python -m scalp.config
 """
 
 import argparse
+import logging
 import math
 from pathlib import Path
 
@@ -20,6 +21,8 @@ import yaml
 from scipy.stats import binomtest
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
+
+log = logging.getLogger(__name__)
 
 from common.data import (
     PROJECT_ROOT, SCALP_CONFIG_PATH, SCALP_DIR,
@@ -1187,12 +1190,12 @@ def print_summary(configs: list[dict]):
     total = len(configs)
     enabled_count = sum(1 for c in configs if c["enabled"])
 
-    print()
-    print(f"┌{'─' * 78}┐")
-    print(f"│ SCALP CONFIG GENERATOR — {total} tickers analyzed, {enabled_count} enabled{' ' * (78 - 55 - len(str(total)) - len(str(enabled_count)))}│")
-    print(f"├{'─' * 14}┬{'─' * 3}┬{'─' * 4}┬{'─' * 9}┬{'─' * 22}┬{'─' * 20}┤")
-    print(f"│ {'Ticker':<12} │ E │ On │ {'Score':>7} │ {'Best Combo':<20} │ {'Best Phase':<18} │")
-    print(f"├{'─' * 14}┼{'─' * 3}┼{'─' * 4}┼{'─' * 9}┼{'─' * 22}┼{'─' * 20}┤")
+    log.info("")
+    log.info("┌%s┐", '─' * 78)
+    log.info("│ SCALP CONFIG GENERATOR — %d tickers analyzed, %d enabled%s│", total, enabled_count, ' ' * (78 - 55 - len(str(total)) - len(str(enabled_count))))
+    log.info("├%s┬%s┬%s┬%s┬%s┬%s┤", '─' * 14, '─' * 3, '─' * 4, '─' * 9, '─' * 22, '─' * 20)
+    log.info("│ %-12s │ E │ On │ %7s │ %-20s │ %-18s │", 'Ticker', 'Score', 'Best Combo', 'Best Phase')
+    log.info("├%s┼%s┼%s┼%s┼%s┼%s┤", '─' * 14, '─' * 3, '─' * 4, '─' * 9, '─' * 22, '─' * 20)
 
     for cfg in configs:
         sym = cfg["symbol"].replace(".NS", "")
@@ -1224,10 +1227,10 @@ def print_summary(configs: list[dict]):
             phase_str = "N/A"
         phase_str = phase_str[:18]
 
-        print(f"│ {sym:<12} │ {edge} │ {on:<2} │ {score:>3}/100 │ {combo_str:<20} │ {phase_str:<18} │")
+        log.info("│ %-12s │ %s │ %-2s │ %3s/100 │ %-20s │ %-18s │", sym, edge, on, score, combo_str, phase_str)
 
-    print(f"└{'─' * 14}┴{'─' * 3}┴{'─' * 4}┴{'─' * 9}┴{'─' * 22}┴{'─' * 20}┘")
-    print()
+    log.info("└%s┴%s┴%s┴%s┴%s┴%s┘", '─' * 14, '─' * 3, '─' * 4, '─' * 9, '─' * 22, '─' * 20)
+    log.info("")
 
 
 # ── Documentation Generation ──────────────────────────────────────
@@ -1675,25 +1678,25 @@ def generate_documentation(configs: list[dict], existing_config: dict):
     llm_failures = 0
     for idx, cfg in enumerate(configs, 1):
         sym = cfg["symbol"].replace(".NS", "")
-        print(f"  [{idx}/{total}] Generating explanation for {sym}...", end=" ", flush=True)
+        log.info("[%d/%d] Generating explanation for %s...", idx, total, sym)
         explanation = _generate_llm_explanation(cfg, existing_config)
         if explanation:
             llm_explanations[sym] = explanation
-            print("ok")
+            log.debug("%s: LLM explanation OK", sym)
         else:
             llm_failures += 1
-            print("fallback to template")
+            log.info("%s: fallback to template", sym)
             if llm_failures >= 3 and not llm_explanations:
                 # LLM is completely unavailable, skip remaining calls
-                print("  LLM unavailable — using templates for remaining tickers")
+                log.warning("LLM unavailable — using templates for remaining tickers")
                 break
 
     generated = len(llm_explanations)
     templated = total - generated
     if generated > 0:
-        print(f"  LLM: {generated} tickers | Templates: {templated} tickers")
+        log.info("LLM: %d tickers | Templates: %d tickers", generated, templated)
     else:
-        print("  Using template explanations for all tickers (LLM unavailable)")
+        log.info("Using template explanations for all tickers (LLM unavailable)")
 
     # Per-ticker sections
     lines.append("---")
@@ -1788,7 +1791,7 @@ def generate_documentation(configs: list[dict], existing_config: dict):
     lines.append("")
 
     DOC_PATH.write_text("\n".join(lines))
-    print(f"Wrote {DOC_PATH} ({len(configs)} tickers documented)")
+    log.info("Wrote %s (%d tickers documented)", DOC_PATH, len(configs))
 
 
 def main():
@@ -1799,13 +1802,20 @@ def main():
                         help="Force recomputation even if cache is fresh")
     args = parser.parse_args()
 
+    # Configure logging
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+        datefmt="%H:%M:%S",
+    )
+
     all_symbols = list(TICKERS.keys())
-    print(f"Processing {len(all_symbols)} tickers...")
+    log.info("Processing %d tickers...", len(all_symbols))
 
     # 1. Determine which symbols need recomputation
     if args.force:
         stale_symbols = all_symbols
-        print(f"  Force mode: recomputing all {len(stale_symbols)} tickers")
+        log.info("Force mode: recomputing all %d tickers", len(stale_symbols))
     else:
         stale_symbols = []
         for symbol in all_symbols:
@@ -1813,23 +1823,23 @@ def main():
             if cached_meta is None:
                 stale_symbols.append(symbol)
         if stale_symbols:
-            print(f"  {len(stale_symbols)} stale tickers need recomputation")
+            log.info("%d stale tickers need recomputation", len(stale_symbols))
         else:
-            print(f"  All tickers cached and fresh — skipping computation")
+            log.info("All tickers cached and fresh — skipping computation")
 
     # 2. Fetch benchmark once if needed
     bench_daily = None
     if stale_symbols:
-        print("  Fetching benchmark data...")
+        log.info("Fetching benchmark data...")
         bench_daily = fetch_yf(BENCHMARK, period="6mo", interval="1d")
         if bench_daily.empty:
-            print("[ERROR] Could not fetch benchmark data. Exiting.")
+            log.error("Could not fetch benchmark data. Exiting.")
             return
 
     # 3. For stale symbols: fetch OHLCV in parallel → compute → cache
     if stale_symbols:
         # Pre-fetch all ticker data in parallel
-        print(f"  Fetching {len(stale_symbols)} tickers in parallel...")
+        log.info("Fetching %d tickers in parallel...", len(stale_symbols))
         _bulk_data = fetch_bulk(stale_symbols, {
             "daily": ("6mo", "1d"),
             "intra": ("60d", "5m"),
@@ -1837,21 +1847,21 @@ def main():
 
         # Pre-fetch sector indices (deduplicated)
         _sector_keys = list({TICKERS[s]["sector"] for s in stale_symbols if TICKERS[s].get("sector")})
-        print(f"  Fetching {len(_sector_keys)} sector indices...")
+        log.info("Fetching %d sector indices...", len(_sector_keys))
         _sector_cache = fetch_bulk_single(_sector_keys, "6mo", "1d", max_workers=6, label="Sectors")
 
         for i, symbol in enumerate(stale_symbols, 1):
             cfg = TICKERS[symbol]
-            print(f"  [{i}/{len(stale_symbols)}] {symbol} ({cfg['name']})")
+            log.info("[%d/%d] %s (%s)", i, len(stale_symbols), symbol, cfg['name'])
 
             daily_df = _bulk_data.get(symbol, {}).get("daily", pd.DataFrame())
             if daily_df.empty:
-                print(f"    [SKIP] No daily data")
+                log.warning("%s: SKIP — no daily data", symbol)
                 continue
 
             intraday_df = _bulk_data.get(symbol, {}).get("intra", pd.DataFrame())
             if intraday_df.empty:
-                print(f"    [SKIP] No intraday data")
+                log.warning("%s: SKIP — no intraday data", symbol)
                 continue
 
             sector_key = cfg["sector"]
@@ -1862,9 +1872,9 @@ def main():
             try:
                 compute_and_cache_ticker(symbol, cfg, daily_df, intraday_df,
                                           bench_daily, sector_daily, info)
-                print(f"    Computed and cached")
+                log.debug("%s: computed and cached", symbol)
             except Exception as e:
-                print(f"    [ERROR] {e}")
+                log.error("%s: %s", symbol, e)
                 continue
 
     # 4. Process ALL symbols from cache → generate config
@@ -1878,7 +1888,7 @@ def main():
             skipped.append(symbol)
 
     if skipped:
-        print(f"Skipped {len(skipped)} tickers (no cached data): {', '.join(skipped)}")
+        log.warning("Skipped %d tickers (no cached data): %s", len(skipped), ', '.join(skipped))
 
     # 5. Re-score using PCA-derived weights (data-driven)
     configs = compute_pca_edge_strengths(configs)
@@ -1892,11 +1902,11 @@ def main():
     # 8. Build and write YAML
     yaml_str = build_yaml(configs, existing)
     CONFIG_PATH.write_text(yaml_str)
-    print(f"Wrote {CONFIG_PATH} with {len(configs)} tickers")
+    log.info("Wrote %s with %d tickers", CONFIG_PATH, len(configs))
 
     # 9. Generate documentation guide (unless skipped)
     if args.skip_explanation:
-        print("Skipping explanation generation (--skip-explanation)")
+        log.info("Skipping explanation generation (--skip-explanation)")
     else:
         generate_documentation(configs, existing)
 

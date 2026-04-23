@@ -29,6 +29,7 @@ btst/                Buy Today Sell Tomorrow
   regime.py          Overnight DOW/month-period statistics
   convergence.py     Daily convergence scoring + overnight hit rate
   explanations.py    Educational + LLM explanations for BTST
+intra_week/          IntraWeek swing scanner (oversold recovery, vol compression, weekly context)
 intraday/            Time-aware multi-strategy intraday & swing scanner
   scanner.py         Main orchestrator: phase detection → evaluate → rank → dashboard → report
   backtest.py        Replay historical days through scanner pipeline, validate signals
@@ -56,6 +57,8 @@ The system uses a **systematic trade universe** built from Upstox's MTF (Margin 
 
 ### Universe Builder
 
+> **Decision (2026-04-23):** The automated universe builder is **not in active use**. It pulls 1,400+ MTF instruments and produces an overly large universe (~918 stocks). The universe is now **manually curated** in `common/universe.yaml` — stocks are added/removed by editing the YAML directly, typically from broker watchlist exports. Do NOT run these commands unless re-enabling automated universe building.
+
 Screens 1,400+ MTF instruments through a multi-filter pipeline and assigns stocks to three strategy tiers:
 
 ```bash
@@ -64,7 +67,7 @@ python -m common.universe --force      # force full re-download + re-computation
 python -m common.universe --dry-run    # preview results without writing files
 ```
 
-**Run weekly** to refresh. First run takes ~5-8 minutes (fetches OHLCV + sector info for all stocks). Subsequent runs take ~30 seconds (Supabase-cached metrics + sectors).
+**Previously run weekly** to refresh. First run takes ~5-8 minutes (fetches OHLCV + sector info for all stocks). Subsequent runs take ~30 seconds (Supabase-cached metrics + sectors).
 
 ### Filter Pipeline
 
@@ -85,6 +88,7 @@ Upstox MTF list (1,400+ stocks)
 |------|----------|-------------|------------|-------------|
 | **Scalp** | ₹15 Cr | ₹100-5,000 | 1.5-5.0% | ~80 stocks |
 | **Intraday** | ₹8 Cr | ₹50-10,000 | 1.5-7.0% | ~120 stocks |
+| **IntraWeek** | ₹5 Cr | ₹50-10,000 | 2.0-8.0% | ~150 stocks |
 | **BTST** | ₹4 Cr | ₹50-10,000 | 1.0-6.0% | ~150 stocks |
 
 ### How Scanners Use It
@@ -254,6 +258,55 @@ python -m intraday.backtest --date 2026-02-20 --llm                  # Add LLM s
 ```
 
 Reports saved to `intraday/reports/backtest_*.md`.
+
+## IntraWeek Scanner
+
+Systematic swing scanner targeting 10-20% upside within a single trading week. Best run on Monday or Tuesday when there are enough trading days remaining for the thesis to play out.
+
+```bash
+python -m intra_week.scanner           # run on Mon-Wed (auto day check)
+python -m intra_week.scanner --force   # override day/VIX checks
+```
+
+### Strategies
+
+| Strategy | Trigger | Target |
+|----------|---------|--------|
+| **Oversold Recovery** | 5%+ drawdown in 1-3 days, RSI < 35, sector divergence | Mean reversion to 2.5x ATR |
+| **Vol Compression** | Bollinger bandwidth at 20d low, Keltner squeeze | Breakout to 3x ATR |
+| **Weekly Context** | Mon/Tue weakness + holiday/expiry week | Calendar-driven recovery |
+
+### Signal Tiers
+
+| Signal | Criteria |
+|--------|----------|
+| **STRONG** | Score >= 80%, expected upside >= 12% |
+| **ACTIVE** | Score >= 65%, expected upside >= 10% |
+| **WATCH** | Score >= 50%, expected upside >= 8% |
+| **AVOID** | Gate failed, earnings near, or VIX stress |
+
+### Scoring
+
+Composite blend: 40% weighted conditions + 25% convergence (7-indicator alignment) + 20% historical hit rate + 15% regime alignment. VIX stress and bearish market apply multiplicative penalties.
+
+### Risk Limits
+
+- Max 5 concurrent positions, max 40% of capital
+- Max 2 positions per sector
+- Auto-skip on VIX stress or earnings within 5 days
+- Day-of-week gate: best Mon-Wed, skips Thu/Fri unless `--force`
+
+### Backtest
+
+```bash
+python -m intra_week.backtest --last-quarter
+python -m intra_week.backtest --start 2025-01-01 --end 2026-04-01
+python -m intra_week.backtest --start 2025-06-01 --end 2026-01-01 --capital 500000
+```
+
+Reports saved to `intra_week/reports/`.
+
+See [`intra_week/HOW_IT_WORKS.md`](intra_week/HOW_IT_WORKS.md) for full implementation details.
 
 ### MLR Config Generator
 

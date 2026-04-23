@@ -10,6 +10,7 @@ Usage:
 """
 
 import argparse
+import logging
 import math
 from dataclasses import dataclass, field
 from datetime import date, datetime, time as dtime, timedelta
@@ -18,6 +19,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import yaml
+
+log = logging.getLogger(__name__)
 
 from common.data import (
     GAP_THRESHOLDS, IST_WINDOWS, TARGET_PCTS, STOP_PCTS,
@@ -114,7 +117,7 @@ class BacktestEngine:
                 daily_df = fetch_yf(sym, period="6mo", interval="1d")
 
                 if intra_df.empty or daily_df.empty:
-                    print(f"  [SKIP] No data for {sym}")
+                    log.info("%s: SKIP — no data", sym)
                     continue
 
                 # Gap analysis from analysis_cache, fallback to recompute
@@ -145,9 +148,9 @@ class BacktestEngine:
                 }
                 self.ticker_configs[sym] = tc
             except Exception as e:
-                print(f"  [WARN] Failed to load {sym}: {e}")
+                log.warning("Failed to load %s: %s", sym, e)
 
-        print(f"  Loaded {len(self.ticker_data)} tickers with historical data")
+        log.info("Loaded %d tickers with historical data", len(self.ticker_data))
         return len(self.ticker_data) > 0
 
     def _get_gap_type(self, sym, trade_date):
@@ -433,7 +436,7 @@ class BacktestEngine:
         # Filter weekends
         all_dates = [d for d in all_dates if d.weekday() < 5]
 
-        print(f"  Backtesting {len(all_dates)} trading days: {all_dates[0]} to {all_dates[-1]}")
+        log.info("Backtesting %d trading days: %s to %s", len(all_dates), all_dates[0], all_dates[-1])
 
         cumulative_pnl = 0.0
         peak_equity = self.initial_capital
@@ -461,7 +464,7 @@ class BacktestEngine:
             })
 
             if (i + 1) % 10 == 0 or i == len(all_dates) - 1:
-                print(f"  [{i+1}/{len(all_dates)}] {trade_date} | Trades: {len(self.trades)} | Equity: {equity:,.0f}")
+                log.info("[%d/%d] %s | Trades: %d | Equity: %s", i+1, len(all_dates), trade_date, len(self.trades), f"{equity:,.0f}")
 
     def compute_metrics(self) -> dict:
         """Compute overall backtest metrics."""
@@ -753,7 +756,7 @@ class BacktestEngine:
 
         report = "\n".join(lines) + "\n"
         REPORT_PATH.write_text(report)
-        print(f"\n  Report saved: {REPORT_PATH}")
+        log.info("Report saved: %s", REPORT_PATH)
         return metrics
 
 
@@ -764,10 +767,16 @@ def main():
     parser.add_argument("--capital", type=int, default=None, help="Starting capital")
     args = parser.parse_args()
 
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+        datefmt="%H:%M:%S",
+    )
+
     # Load config
     if not CONFIG_PATH.exists():
-        print(f"Error: Config not found: {CONFIG_PATH}")
-        print("Run generate_scalp_config.py first.")
+        log.error("Config not found: %s", CONFIG_PATH)
+        log.error("Run generate_scalp_config.py first.")
         return
 
     with open(CONFIG_PATH) as f:
@@ -775,42 +784,41 @@ def main():
 
     capital = args.capital or config.get("global", {}).get("capital", 1000000)
 
-    print(f"\n  Scalp Backtester")
-    print(f"  Capital: {capital:,.0f}")
+    log.info("Scalp Backtester")
+    log.info("Capital: %s", f"{capital:,.0f}")
 
     # Parse dates
     start_date = date.fromisoformat(args.start) if args.start else None
     end_date = date.fromisoformat(args.end) if args.end else None
 
     if start_date and end_date:
-        print(f"  Period: {start_date} to {end_date}")
+        log.info("Period: %s to %s", start_date, end_date)
 
     # Initialize engine
     engine = BacktestEngine(capital=capital, config=config)
 
-    print("  Loading data...")
+    log.info("Loading data...")
     if not engine.load_data():
-        print("  No data found. Run 'python -m scalp.config' first.")
+        log.error("No data found. Run 'python -m scalp.config' first.")
         return
 
     # Run backtest
-    print("  Running backtest...")
+    log.info("Running backtest...")
     engine.run(start_date=start_date, end_date=end_date)
 
     # Generate report
     metrics = engine.generate_report()
 
     # Print summary
-    print(f"\n  ── Backtest Results ──")
-    print(f"  Total Trades: {metrics['total_trades']}")
-    print(f"  Win Rate: {metrics['win_rate']}%")
-    print(f"  Avg P&L: {metrics['avg_pnl_pct']:+.3f}%")
-    print(f"  Total P&L: {metrics['total_pnl_pct']:+.2f}%")
     sharpe = f"{metrics['sharpe']:.2f}" if metrics['sharpe'] is not None else "N/A"
-    print(f"  Sharpe: {sharpe}")
-    print(f"  Max DD: {metrics['max_drawdown_pct']}%")
-    print(f"  Profit Factor: {metrics['profit_factor']}")
-    print()
+    log.info("── Backtest Results ──")
+    log.info("Total Trades: %s", metrics['total_trades'])
+    log.info("Win Rate: %s%%", metrics['win_rate'])
+    log.info("Avg P&L: %+.3f%%", metrics['avg_pnl_pct'])
+    log.info("Total P&L: %+.2f%%", metrics['total_pnl_pct'])
+    log.info("Sharpe: %s", sharpe)
+    log.info("Max DD: %s%%", metrics['max_drawdown_pct'])
+    log.info("Profit Factor: %s", metrics['profit_factor'])
 
 
 if __name__ == "__main__":

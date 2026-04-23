@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-Trading system for Indian equity markets (NSE) with intraday scalp scanner and overnight BTST analyzer. Organized into packages under `common/`, `scalp/`, and `btst/`.
+Trading system for Indian equity markets (NSE) with intraday scalp scanner, overnight BTST analyzer, and intra-week swing scanner. Organized into packages under `common/`, `scalp/`, `btst/`, and `intra_week/`.
 
 ## Environment
 
@@ -20,6 +20,7 @@ Trading system for Indian equity markets (NSE) with intraday scalp scanner and o
 - `scalp/` — intraday scalp scanner, report generator, config builder, backtester
 - `intraday/` — time-aware intraday scanner (5 strategies, 4 market phases)
 - `btst/` — BTST (Buy Today Sell Tomorrow) scanner
+- `intra_week/` — intra-week swing scanner (3 strategies: oversold recovery, vol compression, weekly context)
 - `main.py` — FastAPI app (unrelated to trading)
 
 ## Running
@@ -34,8 +35,13 @@ Trading system for Indian equity markets (NSE) with intraday scalp scanner and o
 - **Scalp scanner**: `python -m scalp.scanner`
 - **Scalp backtest**: `python -m scalp.backtest`
 - **BTST scanner**: `python -m btst.scanner [--force]`
-- **Trade universe builder**: `python -m common.universe` (weekly — screens MTF instruments, outputs `common/universe.yaml`)
-- **Trade universe (force refresh)**: `python -m common.universe --force` (re-downloads MTF + re-fetches all data)
+- **IntraWeek scanner**: `python -m intra_week.scanner` (best on Mon/Tue)
+- **IntraWeek scanner (force)**: `python -m intra_week.scanner --force` (run any day)
+- **IntraWeek backtest**: `python -m intra_week.backtest --start 2025-01-01 --end 2026-04-01`
+- **IntraWeek backtest (last quarter)**: `python -m intra_week.backtest --last-quarter`
+- **Trade universe builder**: `python -m common.universe` (NOT in active use — overwrites manual curation with 1400+ auto-screened stocks)
+- **Trade universe (force refresh)**: `python -m common.universe --force` (NOT in active use — re-downloads MTF + re-fetches all data)
+- **Trade universe (decision)**: Universe is manually curated in `common/universe.yaml` via broker watchlist exports
 - **FastAPI app**: `uvicorn main:app --reload`
 
 ## Key Dependencies

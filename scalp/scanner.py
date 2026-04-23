@@ -5,6 +5,7 @@ Loads scalp_config.yaml, evaluates all tickers, prints unified dashboard,
 calls LLM for full advisory.
 """
 
+import logging
 import os
 import warnings
 from datetime import datetime, time as dtime
@@ -14,6 +15,8 @@ import numpy as np
 import pandas as pd
 import yaml
 from zoneinfo import ZoneInfo
+
+log = logging.getLogger(__name__)
 
 from common.data import fetch_yf, fetch_bulk, GAP_THRESHOLDS, SCALP_CONFIG_PATH, SCALP_REPORT_DIR
 
@@ -1338,9 +1341,15 @@ def render_dashboard(now_ist, phase, ticker_states, position_states, nifty_state
 # ── Main ────────────────────────────────────────────────────────────────────
 
 def main():
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+        datefmt="%H:%M:%S",
+    )
+
     # Load config
     if not CONFIG_PATH.exists():
-        print(f"  [ERROR] Config not found: {CONFIG_PATH}")
+        log.error("Config not found: %s", CONFIG_PATH)
         return
 
     with open(CONFIG_PATH) as f:
@@ -1360,29 +1369,29 @@ def main():
     t = now_ist.time()
     phase = get_phase(t, phases_cfg)
 
-    print(f"\n  Scalp Scanner - {now_ist.strftime('%Y-%m-%d %H:%M:%S')} IST")
-    print(f"  Phase: {PHASE_LABELS.get(phase, phase)}")
-    print(f"  Tickers: {sum(1 for tc in tickers_cfg if tc.get('enabled', True))}/{len(tickers_cfg)} enabled")
-    print(f"  Capital: {capital:,.0f}\n")
+    log.info("Scalp Scanner - %s IST", now_ist.strftime('%Y-%m-%d %H:%M:%S'))
+    log.info("Phase: %s", PHASE_LABELS.get(phase, phase))
+    log.info("Tickers: %d/%d enabled", sum(1 for tc in tickers_cfg if tc.get('enabled', True)), len(tickers_cfg))
+    log.info("Capital: %s", f"{capital:,.0f}")
 
     # Weekend check
     if now_ist.weekday() >= 5:
-        print("  Market closed (weekend). Run on a weekday.")
+        log.warning("Market closed (weekend). Run on a weekday.")
         return
 
     # Feature 3: Fetch India VIX
-    print("  Fetching India VIX...")
+    log.info("Fetching India VIX...")
     vix_val, vix_regime = fetch_india_vix()
     vix_scale = vix_position_scale(vix_val)
     if vix_val:
-        print(f"  VIX: {vix_val} ({vix_regime}) | Position scale: {vix_scale:.3f}x")
+        log.info("VIX: %s (%s) | Position scale: %.3fx", vix_val, vix_regime, vix_scale)
     else:
         # Conservative default when VIX unavailable — don't trade full size blind
         vix_scale = 0.7
-        print(f"  VIX: unavailable — using conservative {vix_scale}x position scale")
+        log.warning("VIX: unavailable — using conservative %.1fx position scale", vix_scale)
 
     # Fetch benchmark
-    print("  Fetching benchmark data...")
+    log.info("Fetching benchmark data...")
     nifty_intra = fetch_yf(benchmark, period=data_cfg.get("intraday", "5d"),
                            interval=data_cfg.get("intraday_interval", "5m"))
     nifty_ist = compute_vwap(_to_ist(nifty_intra)) if not nifty_intra.empty else pd.DataFrame()
@@ -1401,7 +1410,7 @@ def main():
 
     # Fetch all ticker data (parallel)
     symbols = list({tc["symbol"] for tc in tickers_cfg})
-    print(f"  Fetching {len(symbols)} tickers in parallel...")
+    log.info("Fetching %d tickers in parallel...", len(symbols))
     all_data = fetch_bulk(symbols, {
         "intra": (data_cfg.get("intraday", "5d"), data_cfg.get("intraday_interval", "5m")),
         "daily": (data_cfg.get("daily", "1mo"), data_cfg.get("daily_interval", "1d")),
@@ -1490,7 +1499,7 @@ def main():
                     open_sectors[tag] = open_sectors.get(tag, 0) + 1
 
     # Feature 9: Correlation clusters
-    print("  Computing correlation clusters...")
+    log.info("Computing correlation clusters...")
     daily_data_dict = {sym: all_data[sym]["daily"] for sym in symbols if not all_data[sym]["daily"].empty}
     corr_clusters = compute_correlation_clusters(daily_data_dict)
 
@@ -1508,7 +1517,7 @@ def main():
             open_cluster_counts[cid] = open_cluster_counts.get(cid, 0) + 1
 
     # Feature 10: Earnings proximity check
-    print("  Checking earnings calendar...")
+    log.info("Checking earnings calendar...")
     earnings_warnings = {}
     for tc in tickers_cfg:
         if tc.get("enabled", True):
@@ -1517,14 +1526,14 @@ def main():
                 earnings_warnings[tc["symbol"]] = edate
 
     # Edge decay monitoring — compare recent performance vs config expectation
-    print("  Checking edge decay...")
+    log.info("Checking edge decay...")
     edge_decay = {}
     try:
         edge_decay = compute_edge_decay(tickers_cfg)
         decaying_syms = {sym for sym, d in edge_decay.items() if d["decaying"]}
         if decaying_syms:
             short_names = [s.replace(".NS", "") for s in decaying_syms]
-            print(f"  EDGE DECAY WARNING: {', '.join(short_names)}")
+            log.warning("EDGE DECAY: %s", ', '.join(short_names))
     except Exception:
         pass
     nifty_state["edge_decay"] = edge_decay
@@ -1639,9 +1648,9 @@ def main():
             }
             _insert("trades", row)
         if active_signals:
-            print(f"  Logged {len(active_signals)} signal(s) to Supabase")
+            log.info("Logged %d signal(s) to Supabase", len(active_signals))
     except Exception as e:
-        print(f"  [WARN] Supabase logging failed: {e}")
+        log.warning("Supabase logging failed: %s", e)
 
     # Load portfolio metrics
     portfolio_metrics = None
@@ -1655,7 +1664,7 @@ def main():
 
     if prep_mode:
         # Compute next-session prep for all tickers
-        print("  Computing next-session prep...")
+        log.info("Computing next-session prep...")
         output_dir = g.get("output_dir", "output")
         prep_data = []
         for tc in tickers_cfg:
@@ -1666,14 +1675,14 @@ def main():
             prep_data.append(prep)
 
         # AI advisory (prep mode)
-        print("  Generating AI prep briefing...")
+        log.info("Generating AI prep briefing...")
         ai_context = build_prep_context(now_ist, prep_data, nifty_state, config)
         ai_text = get_ai_advisory(ai_context, config, prep_mode=True)
 
         dashboard = render_prep_dashboard(now_ist, phase, prep_data, nifty_state, ai_text)
     else:
         # Live market mode
-        print("  Generating AI advisory...")
+        log.info("Generating AI advisory...")
         ai_context = build_ai_context(phase, now_ist, ticker_states, position_states, nifty_state, config)
         ai_text = get_ai_advisory(ai_context, config)
 
@@ -1692,7 +1701,7 @@ def main():
         prep_mode,
         portfolio_metrics=portfolio_metrics,
     )
-    print(f"  Report saved: {report_path}\n")
+    log.info("Report saved: %s", report_path)
 
     # Log scan run to Supabase
     try:
@@ -1710,9 +1719,9 @@ def main():
             ai_advisory=ai_text,
         )
     except Exception as e:
-        print(f"  [WARN] Scan run logging failed: {e}")
+        log.warning("Scan run logging failed: %s", e)
 
-    print(dashboard)
+    log.info("\n%s", dashboard)
 
 
 if __name__ == "__main__":

@@ -42,6 +42,10 @@ Trading system for Indian equity markets (NSE) with intraday scalp scanner, over
 - **Trade universe builder**: `python -m common.universe` (NOT in active use — overwrites manual curation with 1400+ auto-screened stocks)
 - **Trade universe (force refresh)**: `python -m common.universe --force` (NOT in active use — re-downloads MTF + re-fetches all data)
 - **Trade universe (decision)**: Universe is manually curated in `common/universe.yaml` via broker watchlist exports
+- **DB maintenance (retention cleanup)**: `python -m common.db_maintenance` (deletes stale rows from all tables)
+- **DB maintenance (dry run)**: `python -m common.db_maintenance --dry-run` (shows what would be deleted)
+- **Backfill OHLCV cache**: `python -m scripts.backfill_ohlcv` (one-time: fetches 1y of 1d+5m bars for 122 symbols)
+- **Backfill specific symbols**: `python -m scripts.backfill_ohlcv --symbols RELIANCE.NS SBIN.NS`
 - **FastAPI app**: `uvicorn main:app --reload`
 
 ## Key Dependencies

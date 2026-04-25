@@ -225,3 +225,30 @@ def is_cache_fresh(symbol: str, interval: str, max_age_seconds: int = 60) -> boo
         return False
 
     return False
+
+
+# ── Chunk Cleanup (TimescaleDB) ─────────────────────────────────────────
+
+def cleanup_old_bars(older_than: str = "365 days"):
+    """Drop TimescaleDB chunks older than the given interval.
+
+    Safety-net complement to the automatic retention policy.
+    Only works when ohlcv_cache is a TimescaleDB hypertable.
+
+    Args:
+        older_than: PostgreSQL interval string, e.g. "365 days", "6 months"
+    """
+    if not _supa_ok():
+        log.warning("Supabase not available — skipping chunk cleanup")
+        return
+
+    try:
+        from common.db import _get_cursor
+        cur = _get_cursor()
+        cur.execute(
+            "SELECT drop_chunks('ohlcv_cache', older_than => INTERVAL %s)",
+            [older_than],
+        )
+        log.info("Dropped ohlcv_cache chunks older than %s", older_than)
+    except Exception as e:
+        log.warning("Chunk cleanup failed: %s", e)
